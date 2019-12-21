@@ -1,4 +1,5 @@
 import { IComparable, isComparable } from '../../interfaces/comparable';
+import { IDictionary } from '../../helpers/objects';
 import { Tree } from './tree';
 
 /**----------------------------------------------------------------------------
@@ -15,7 +16,7 @@ export class BinaryTree<T extends Comparable> extends Tree<T> {
 	//.....................
 	//#region PROPERTIES
 	
-	protected _subTrees: KIP.IDictionary<BinaryTree<T>, ISubTrees>;
+	protected _subTrees: IDictionary<BinaryTree<T>, ISubTrees>;
 
 	protected _parent: BinaryTree<T>;
 

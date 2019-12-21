@@ -1,3 +1,4 @@
+import { IDictionary } from '../../helpers/objects';
 import { BinaryTree, ISubTrees, Comparable } from './binaryTree';
 
 /**----------------------------------------------------------------------------
@@ -20,7 +21,7 @@ export class BalancedBinaryTree<T extends Comparable> extends BinaryTree<T> {
     protected set _data(value: T) { }
 
     /** keep track of the subtrees */
-    protected _subTrees: KIP.IDictionary<BalancedBinaryTree<T>, ISubTrees>;
+    protected _subTrees: IDictionary<BalancedBinaryTree<T>, ISubTrees>;
     
     //#endregion
     //.....................

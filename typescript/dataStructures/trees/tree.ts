@@ -1,3 +1,4 @@
+import { IDictionary, getNextKey, map } from '../../helpers/objects';
 
 export abstract class Tree<T> {
 
@@ -8,7 +9,7 @@ export abstract class Tree<T> {
 	protected _data: T;
 
 	/** subtrees below this tree */
-	protected _subTrees: KIP.IDictionary<Tree<T>>;
+	protected _subTrees: IDictionary<Tree<T>>;
 
 	/** keep track of the parent */
 	protected _parent: Tree<T>;
@@ -25,13 +26,13 @@ export abstract class Tree<T> {
 	//#region IDENTITY FUNCTIONS
 	
 	public isLeafNode(): boolean {
-		let key = KIP.getNextKey(this._subTrees);
+		let key = getNextKey(this._subTrees);
 		return (!key);
 	}
 
 	public getDepth(): number {
 		let depths = [1];
-		KIP.map(this._subTrees, (tree) => {
+		map(this._subTrees, (tree) => {
 			depths.push(tree.getDepth() + 1);
 		});
 		return Math.max(...depths);
@@ -44,7 +45,7 @@ export abstract class Tree<T> {
 
 		// create the string for the subtrees
 		let subTrees = [];
-		KIP.map(this._subTrees, (subTree: Tree<T>) => {
+		map(this._subTrees, (subTree: Tree<T>) => {
 			subTrees.push(subTree.toString());
 		});
 

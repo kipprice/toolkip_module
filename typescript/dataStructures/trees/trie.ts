@@ -1,3 +1,5 @@
+import { IDictionary } from '../../helpers/objects';
+import { rest } from '../../helpers/strings';
 import { Tree } from './tree';
 
 /**----------------------------------------------------------------------------
@@ -16,7 +18,7 @@ export class Trie extends Tree<string> {
     
     protected _terminates: boolean;
 
-    protected _subTrees: KIP.IDictionary<Trie>;
+    protected _subTrees: IDictionary<Trie>;
     
     //#endregion
     //.....................
@@ -85,7 +87,7 @@ export class Trie extends Tree<string> {
     protected _splitWord(word: string): ISplitWord {
         return {
             firstChar : word.charAt(0),
-            restOfWord: KIP.rest(word, 1)
+            restOfWord: rest(word, 1)
         }
     }
     
