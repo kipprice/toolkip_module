@@ -1,0 +1,17 @@
+{
+  "name": "toolkip_module",
+  "version": "1.0.0",
+  "description": "toolkip library turned into standard modules instead of namespaces",
+  "main": "compiled_js/toolkip.js",
+  "repository": "https://github.com/kipprice/toolkip_module",
+  "author": "Kip Price",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {},
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  }
+}
