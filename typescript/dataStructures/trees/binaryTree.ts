@@ -1,5 +1,5 @@
-import { IComparable, isComparable } from '../../interfaces/comparable';
-import { IDictionary } from '../../helpers/objects';
+import { IComparable, isComparable } from '../../structs/comparable';
+import { IDictionary } from '../../objectHelpers/_interfaces';
 import { Tree } from './tree';
 
 /**----------------------------------------------------------------------------

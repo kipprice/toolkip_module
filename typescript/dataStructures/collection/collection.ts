@@ -1,7 +1,13 @@
-import { NamedClass } from '../interfaces/namedClass';
-import  { IEquatable, equals } from '../interfaces/comparable';
-import { IMapFunction } from '../helpers/objects';
-import { format } from '../helpers/strings';
+import NamedClass from '../../structs/namedClass/namedClass';
+import  { IEquatable, equals, IEqualityFunction } from '../../structs/comparable';
+import { format } from '../../primitiveHelpers/strings';
+import { IDictionaryKeys, 
+		CollectionTypeEnum, 
+		ICollectionElement, 
+		CollectionSortFunction, 
+		SortFunction 
+	} from './_interfaces';
+import { IMapFunction } from '../../objectHelpers/_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	Collection
@@ -11,7 +17,7 @@ import { format } from '../helpers/strings';
  * @version	3.0.0
  * ----------------------------------------------------------------------------
  */
-export class Collection<T> extends NamedClass implements IEquatable {
+export default class Collection<T> extends NamedClass implements IEquatable {
 
 	//.....................
 	//#region PROPERTIES
@@ -37,8 +43,8 @@ export class Collection<T> extends NamedClass implements IEquatable {
 	public get length(): number { return this._sortedData.length; }
 
 	/** what to use to check for two elements being equal */
-	protected _equalityTest: EqualityFunction<T>;
-	public set equalityTest(test: EqualityFunction<T>) { this._equalityTest = test; };
+	protected _equalityTest: IEqualityFunction<T>;
+	public set equalityTest(test: IEqualityFunction<T>) { this._equalityTest = test; };
 
 	//#endregion
 	//.....................
@@ -53,7 +59,7 @@ export class Collection<T> extends NamedClass implements IEquatable {
 	 * @param  replace 		True if we should override the values in the list
 	 * @return Collection
 	 */
-	constructor(type?: CollectionTypeEnum, eq_test?: EqualityFunction<T>) {
+	constructor(type?: CollectionTypeEnum, eq_test?: IEqualityFunction<T>) {
 		super("Collection");
 
 		// Initialize our arrays
@@ -690,87 +696,3 @@ export class Collection<T> extends NamedClass implements IEquatable {
 	//...............
 
 }
-
-
-//..........................................
-//#region TYPES AND INTERFACES
-
-/**
- * CollectionTypeEnum
- * ----------------------------------------------------------------------------
- * Keeps track of the different ways we can add to a collection
- */
-export enum CollectionTypeEnum {
-	ReplaceDuplicateKeys = 1,
-	IgnoreDuplicateKeys = 2
-}
-
-/**
- * CollectionSortFunction
- * ----------------------------------------------------------------------------
- * Sort a collection, same as one would sort an array
- * 
- * @param	a	The first element to compare
- * @param	b	The second element to compare
- * 
- * @returns	-1 if the elements are in the wrong order, 1 if they are in the correct order, 0 if they are the same
- */
-export interface CollectionSortFunction<T> {
-	(a: ICollectionElement<T>, b: ICollectionElement<T>): number;
-}
-
-/**
- * SortFunction
- * ----------------------------------------------------------------------------
- * General sort function for comparing two elements of any type
- * 
- * @param	a	The first element to compare
- * @param	b	The second element to compare
- * 
- * @returns	-1 if the elements are in the wrong order, 1 if they are in the correct order, 0 if they are the same
- */
-export interface SortFunction<T> {
-	(a: T, b: T): number;
-}
-
-/**
- * EqualityFunction
- * ----------------------------------------------------------------------------
- * Check if two elements are equal
- */
-export interface EqualityFunction<T> {
-	(a: T, b: T): boolean;
-}
-
-/**
- * ICollectionElement
- * ----------------------------------------------------------------------------
- * The class that stores data within a collection
- */
-export interface ICollectionElement<T> {
-
-	/** the key this element is stored under */
-	key: string;
-
-	/** the actual value for the element */
-	value: T;
-
-	/** where the element sits in the sorted index */
-	sortedIdx: number;
-
-	/** where the element was originally added */
-	origIdx: number;
-}
-
-/**
- * IDisctionaryKeys
- * ----------------------------------------------------------------------------
- * The array that provides the key index within a collection 
- */
-export interface IDictionaryKeys<T> {
-	[key: string]: ICollectionElement<T>;
-}
-
-	//#endregion
-	//..........................................
-

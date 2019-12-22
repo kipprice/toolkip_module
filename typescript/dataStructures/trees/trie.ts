@@ -1,6 +1,7 @@
-import { IDictionary } from '../../helpers/objects';
-import { rest } from '../../helpers/strings';
+import { rest } from '../../primitiveHelpers/strings';
 import { Tree } from './tree';
+import { IDictionary } from '../../objectHelpers/_interfaces';
+
 
 /**----------------------------------------------------------------------------
  * @class	Trie

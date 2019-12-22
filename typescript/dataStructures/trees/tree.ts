@@ -1,4 +1,6 @@
-import { IDictionary, getNextKey, map } from '../../helpers/objects';
+import { getNextKey, map } from "../../objectHelpers/navigate";
+import { IDictionary } from "../../objectHelpers/_interfaces";
+
 
 export abstract class Tree<T> {
 
