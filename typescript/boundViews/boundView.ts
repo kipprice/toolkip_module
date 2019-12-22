@@ -9,7 +9,7 @@ import { BoundUpdateFunction } from "../binding/_interfaces";
 import { isHTMLElement } from "../typeGuards/htmlGuard";
 import { isUpdatable } from "../typeGuards/interfaceGuard";
 import { isDrawable } from "../typeGuards/drawableGuard";
-import { StandardElement } from "../drawable/_interface";
+import { StandardElement } from "../drawable/_interfaces";
 import { ICreateElementFunc } from "../htmlHelpers/_interfaces";
 import { createCustomElement } from "../htmlHelpers/createElement";
 import { wait } from "../async/promiseTypes";
@@ -250,7 +250,7 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
 
     protected async _bindElement(elem: IBindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
         let boundElem: IBindableElement<any> = elem;
-        if (obj.key && obj.drawable) { boundElem = this._elems[obj.key] as IBindableElement<any>; }
+        if (obj.key && obj.drawable) { boundElem = this._elems[obj.key as string] as IBindableElement<any>; }
         this._bind(boundElem, obj.boundTo);
     }
 

@@ -1,4 +1,4 @@
-import { StandardElement } from '../drawable/_interface';
+import { StandardElement } from '../drawable/_interfaces';
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { BoundView } from './boundView';
 import { UpdateableView } from './updateableView';

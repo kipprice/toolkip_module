@@ -1,13 +1,13 @@
-import { IDictionary } from '../helpers/objects';
-import { map } from '../helpers/objects';
-import { nextRender } from '../helpers/promiseTypes';
-import { IEqualityFunction } from '../interfaces/comparable';
+import { IDictionary } from '../objectHelpers/_interfaces';
+import { map } from '../objectHelpers/navigate';
+import { nextRender } from '../async/promiseTypes';
+import { IEqualityFunction } from '../structs/comparable';
 import { 
 		IBindingDetails, 
 		BoundDeleteFunction, 
 		BoundUpdateFunction, 
 		BoundEvalFunction 
-	} from './interfaces';
+	} from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	Binder
