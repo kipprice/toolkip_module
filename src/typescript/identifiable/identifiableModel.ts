@@ -1,6 +1,7 @@
 import IPartial from '../structs/partial';
 import { Identifiable } from './_interfaces';
-import { Serializable } from '../structs/serializable/serializableModel';
+import { Serializable } from '../serializable/serializableModel';
+
 
 /**----------------------------------------------------------------------------
  * @class   Identifiable<T>

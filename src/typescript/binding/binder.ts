@@ -1,7 +1,7 @@
 import { IDictionary } from '../objectHelpers/_interfaces';
 import { map } from '../objectHelpers/navigate';
 import { nextRender } from '../async/promiseTypes';
-import { IEqualityFunction } from '../structs/comparable';
+import { IEqualityFunction } from '../comparable/comparable';
 import { 
 		IBindingDetails, 
 		BoundDeleteFunction, 
@@ -9,6 +9,7 @@ import {
 		BoundEvalFunction 
 	} from './_interfaces';
 
+	
 /**----------------------------------------------------------------------------
  * @class	Binder
  * ----------------------------------------------------------------------------

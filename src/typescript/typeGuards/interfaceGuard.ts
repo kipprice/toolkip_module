@@ -2,6 +2,7 @@ import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { IExtrema } from '../maths/interface';
 import { IUpdatable } from '../structs/updatable';
 
+
 /** 
  * isElemDefinition
  * ----------------------------------------------------------------------------

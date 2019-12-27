@@ -1,8 +1,8 @@
 import { CanvasElement } from "./canvasElement";
-import { IPoint, IBasicRect } from "../geometry/interface";
+import { IPoint, IBasicRect } from "../maths/interface";
 import { ElementType } from "./_interfaces";
 import { clonePointArray } from "../objectHelpers/cloning";
-import { getAngle, getDistance, getEndPoint } from "../geometry/trig";
+import { getAngle, getDistance, getEndPoint } from "../maths/trig";
 
 
 export class PathElement extends CanvasElement {

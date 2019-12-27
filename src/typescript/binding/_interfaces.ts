@@ -1,4 +1,4 @@
-import { IEqualityFunction } from '../structs/comparable';
+import { IEqualityFunction } from '../comparable/comparable';
 
 export interface BoundEvalFunction<T> {
     (): T

@@ -1,5 +1,6 @@
 import LinkedNode from './linkedNode';
-import { isEquatable } from '../../structs/comparable';
+import { isEquatable } from '../../comparable/comparable';
+
 
 /**---------------------------------------------------------------------------
  * @class   LinkedList<T>

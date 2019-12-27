@@ -1,5 +1,5 @@
 import { CanvasElement } from "./canvasElement";
-import { IPoint, IBasicRect } from "../geometry/interface";
+import { IPoint, IBasicRect } from "../maths/interface";
 import { ElementType } from "./_interfaces";
 import { isNumber } from "../typeGuards/simpleGuard";
 import { clonePoint } from "../objectHelpers/cloning";

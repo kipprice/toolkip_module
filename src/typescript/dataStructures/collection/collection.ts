@@ -1,5 +1,5 @@
-import NamedClass from '../../structs/namedClass/namedClass';
-import  { IEquatable, equals, IEqualityFunction } from '../../structs/comparable';
+import NamedClass from '../../namedClass/namedClass';
+import  { IEquatable, equals, IEqualityFunction } from '../../comparable/comparable';
 import { format } from '../../primitiveHelpers/strings';
 import { IDictionaryKeys, 
 		CollectionTypeEnum, 

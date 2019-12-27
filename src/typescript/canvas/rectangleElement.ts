@@ -1,6 +1,6 @@
 import { CanvasElement } from "./canvasElement";
 import { ElementType } from "./_interfaces";
-import { IBasicRect, IPoint } from "../geometry/interface";
+import { IBasicRect, IPoint } from "../maths/interface";
 import { cloneRect } from "../objectHelpers/cloning";
 
 

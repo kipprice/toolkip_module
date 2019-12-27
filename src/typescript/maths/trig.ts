@@ -1,5 +1,5 @@
 import { IPoint } from './interface'
-import { roundToPlace } from '../helpers/maths';
+import { roundToPlace } from './maths';
 
 //..........................................
 //#region CONVERSIONS

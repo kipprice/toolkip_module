@@ -3,8 +3,8 @@ import { ElementType, ICanvasElementTransform, CanvasEventHandler, EventTypeEnum
 import { HTML5Canvas } from "./canvas";
 import { CanvasGroup } from "./canvasGroup";
 import { CanvasElementStyle } from "./canvasStyle";
-import { IBasicRect, IPoint } from "../geometry/interface";
-import { doBasicRectsOverlap } from "../geometry/overlap";
+import { IBasicRect, IPoint } from "../maths/interface";
+import { doBasicRectsOverlap } from "../maths/overlap";
 
 
 /**----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { IPoint } from '../geometry/interface';
+import { IPoint } from '../maths/interface';
 import { map } from '../objectHelpers/navigate';
 
 export var IS_DEBUG: boolean = false;

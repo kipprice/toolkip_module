@@ -1,6 +1,8 @@
 import { BoundEvalFunction, BoundUpdateFunction, BoundDeleteFunction } from './_interfaces';
-import { IEqualityFunction } from '../structs/comparable';
+import { IEqualityFunction } from '../comparable/comparable';
 import Binder from './binder';
+
+
 /**
  * bind
  * ---------------------------------------------------------------------------

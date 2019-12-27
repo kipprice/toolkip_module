@@ -1,6 +1,7 @@
-import { IComparable, isComparable } from '../../structs/comparable';
+import { IComparable, isComparable } from '../../comparable/comparable';
 import { IDictionary } from '../../objectHelpers/_interfaces';
 import { Tree } from './tree';
+
 
 /**----------------------------------------------------------------------------
  * @class	BinaryTree

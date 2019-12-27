@@ -1,7 +1,7 @@
 import { CanvasElement } from "./canvasElement";
 import { ElementType, StyleChangeEnum } from "./_interfaces";
 import { HTML5Canvas } from "./canvas";
-import { IPoint } from "../geometry/interface";
+import { IPoint } from "../maths/interface";
 
 
 /**----------------------------------------------------------------------------

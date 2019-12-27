@@ -2,7 +2,7 @@ import {
         OutgoingMessage,
         MessageReceivedFunc,
         IncomingMessage
-    } from './interface';
+    } from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class   SocketConnection

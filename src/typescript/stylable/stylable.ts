@@ -7,6 +7,7 @@ import { IDictionary, IConstructor } from '../objectHelpers/_interfaces';
 import { map, isEmptyObject } from '../objectHelpers/navigate';
 import { cloneObject } from '../objectHelpers/cloning';
 import { isNullOrUndefined } from '../typeGuards/falsey';
+import NamedClass from '../namedClass/namedClass';
 
 /**----------------------------------------------------------------------------
  * @class Stylable

@@ -1,4 +1,4 @@
-import { IPoint } from "../geometry/interface";
+import { IPoint } from "../maths/interface";
 import { StandardElement } from "../drawable/_interfaces";
 
 //....................................

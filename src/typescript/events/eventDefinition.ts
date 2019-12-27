@@ -1,8 +1,9 @@
 import Collection from '../dataStructures/collection/collection';
 import { IEventContext, IListenerData } from './interface';
 import { CollectionTypeEnum } from '../dataStructures/collection/_interfaces';
-import { equals } from '../structs/comparable';
+import { equals } from '../comparable/comparable';
 import Event from './event';
+
 
 /**----------------------------------------------------------------------------
  * @class	EventDefinition

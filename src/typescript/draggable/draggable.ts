@@ -1,6 +1,6 @@
 import { IStandardStyles } from './../styleHelpers/_interfaces';
 import Drawable from "../drawable/drawable";
-import { IPoint } from "../geometry/interface";
+import { IPoint } from "../maths/interface";
 import { IElemDefinition } from "../htmlHelpers/_interfaces";
 import { StandardElement } from "../drawable/_interfaces";
 import { addClass, removeClass } from "../styleHelpers/css";
