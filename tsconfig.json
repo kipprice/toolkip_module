@@ -1,19 +1,20 @@
-{
-	"compilerOptions" : {
-		"sourceMap" : true,
-		"outDir": "../compiled_js/",
-		"outFile": "../compiled_js/kip.js",
-		"target" : "es2015",
-		"module" : "esnext",
-		"declaration": true,
-		"watch": true
-	},
-	"exclude": [
-		"node_modules",
-		"compiled_js",
-		"typescript/modules",
-		"modules",
-		"**_(wip)_**",
-		"**_(old)_**"
-	]
+{ 
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "target": "es2015",
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "typings/",
+    },
+    
+    "exclude": [
+        "node_modules", 
+        "compiled_js", 
+        "typings", 
+        "src/**/_(wip)_*", 
+        "src/**/_(old)_*", 
+        "modules", 
+        "typescript/modules"
+    ]
 }
