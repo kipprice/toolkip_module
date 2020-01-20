@@ -9,7 +9,7 @@ import { createSVG } from "./svgHelpers";
 import { PathElement } from "./elements/pathElement";
 import { RectangleElement } from "./elements/rectElement";
 import { CircleElement } from "./elements/circleElement";
-import { ArcElement, PieSliceElement, PolygonElement, StarElement, PathExtensionElement } from "./elements/additionalPathElements";
+import { ArcElement, PieSliceElement, PolygonElement, StarElement, PathExtensionElement } from "./additionalPaths";
 import { TextElement } from "./elements/textElement";
 import { GroupElement } from "./elements/groupElement";
 import { SVGDefinitionsElement } from "./svgDefinitions";
