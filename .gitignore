@@ -1,6 +1,7 @@
 node_modules
 **.DS_Store
 modules/
+**_(wip)_**
 **_(WIP)_**
 **_(old)_**
 typescript/oldObjects
