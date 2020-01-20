@@ -27,6 +27,8 @@ class _BucketHelper {
     public bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T> | INumericDictionary<T> {
         let out = {};
 
+        if (!things) { return out; }
+
         for (let t of things) {
             let bucket = getBucket(t, ...addlParams);
             if (!out[bucket]) { out[bucket] = []; }
@@ -39,6 +41,18 @@ class _BucketHelper {
 }
 
 export const BucketHelper = new _BucketHelper();
+
+//..........................................
+//#region HELPER FUNCTIONS
+
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, number>, ...addlParams: any[]): INumericDictionary<T>;
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string>, ...addlParams: any[]): IDictionary<T>;
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T> | INumericDictionary<T> {
+    return BucketHelper.bucket(things, getBucket as any, ...addlParams);
+}
+
+//#endregion
+//..........................................
 
 //..........................................
 //#region TYPES AND INTERFACES

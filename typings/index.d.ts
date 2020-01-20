@@ -36,6 +36,7 @@ export * from './sorting';
 export * from './structs';
 export * from './stylable';
 export * from './styleHelpers';
+export * from './svg';
 export * from './tooltip';
 export * from './typeGuards';
 export * from './unitTests';

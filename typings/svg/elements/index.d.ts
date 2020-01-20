@@ -1,4 +1,3 @@
-export * from './additionalPathElements';
 export * from './circleElement';
 export * from './groupElement';
 export * from './pathElement';

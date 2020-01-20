@@ -8,7 +8,17 @@ import { PathElement } from "./pathElement";
 import { RectangleElement } from "./rectElement";
 import { IAttributes } from "../../htmlHelpers/_interfaces";
 import { CircleElement } from "./circleElement";
-import { ArcElement, PieSliceElement, CurveElement, PolygonElement, StarElement, PathExtensionElement, CheckElement, ExElement, PlusElement } from "./additionalPathElements";
+import { 
+	ArcElement, 
+	PieSliceElement, 
+	CurveElement, 
+	PolygonElement, 
+	StarElement, 
+	PathExtensionElement, 
+	CheckElement, 
+	ExElement, 
+	PlusElement 
+} from "../additionalPaths";
 import { TextElement } from "./textElement";
 
 
