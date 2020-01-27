@@ -260,3 +260,17 @@ export function stripHTML(str: string): string {
 	return out;
 }
 
+/**
+ * join
+ * ----------------------------------------------------------------------------
+ * join a set of strings as if they were in a string array
+ * 
+ * @param	joinChar	The string to use for the join operation
+ * @param	toJoin		All strings that should be joined into a single string
+ * 
+ * @returns	The equivalent of arr.join(joinChar) on the passed in strings
+ */
+export function join(joinChar: string, ...toJoin: string[]): string {
+	return toJoin.join(joinChar);
+}
+
