@@ -120,3 +120,26 @@ export function keyCount(object: any): number {
 export function isEmptyObject(object: any): boolean {
   return (!getNextKey(object));
 }
+
+/**
+ * setDictValue
+ * ----------------------------------------------------------------------------
+ * set a value within a dictionary, by specifying a set of keys that should be 
+ * initialized to get to the value
+ */
+export function setDictValue(object: any, val: any, keys: string[]) {
+  if (!object) { object = {}; }
+
+  let curObj = object;
+  let lastKey = keys[keys.length - 1];
+
+  for (let k of keys) {
+    let initVal = {};
+    if (lastKey === k) { initVal = val; }
+    
+    if (!curObj[k]) { curObj[k] = initVal; }
+    curObj = curObj[k];
+  }
+
+  return object;
+}
