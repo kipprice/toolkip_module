@@ -1,7 +1,6 @@
 import { IAttributes, IChildren, IElemDefinition } from "./_interfaces";
-import { trim } from "../primitiveHelpers/strings";
+import { trim, join } from "../primitiveHelpers/strings";
 import { createElement } from "./createElement";
-import { buildClassString } from "../styleHelpers/styles";
 
 /**
  * createSimpleLabeledElement
@@ -83,7 +82,7 @@ export function createLabeledElement(dataElem: IElemDefinition, labelElem: IElem
     let data: HTMLElement = createElement(dataElem) as HTMLElement;
 
     // create the labeled element
-    labelElem.cls = buildClassString(labelElem.cls as string, "lbl");
+    labelElem.cls = join(" ", labelElem.cls as string, "lbl");
     let lbl: HTMLElement = createElement(labelElem) as HTMLElement;
 
     // craete the wrapper element

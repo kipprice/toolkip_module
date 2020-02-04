@@ -127,7 +127,8 @@ export class Popup extends Drawable {
 	}
 
 	public setThemeColor(colorId: PopupColor, color: string, noReplace?: boolean): void {
-		super.setThemeColor(colorId, color, noReplace);
+		// TODO: convert to new version
+		//super.setThemeColor(colorId, color, noReplace);
 	}
 	//#endregion
 	//...............

@@ -2,6 +2,7 @@ import { removeClass } from "../styleHelpers/css";
 import { IPoint } from "../maths/_interfaces";
 import { isSelectable } from "../typeGuards/htmlGuard";
 import { isNullOrUndefined } from "../typeGuards/falsey";
+import { StandardElement } from "..";
 
 /**
  * removeSubclassFromAllElenents
@@ -291,4 +292,33 @@ export function isVisible(elem: HTMLElement): boolean {
     if (elem.offsetWidth !== 0) { return true; }
     if (elem.offsetHeight !== 0) { return true; }
     return false;
+}
+
+/**
+ * getElementsBySelector
+ * ----------------------------------------------------------------------------
+ * gets all elements in the current page that match the specified query 
+ * selector.wrapper around querySelectorAll
+ * 
+ * @param   selector    The string we should use for selecting elements
+ *
+ * @returns An array of the elements that match the specified selector
+ */
+export function getElementsBySelector(selector: string): Element[] {
+    let list =  document.body.querySelectorAll(selector);
+    let out = [];
+    for (let l of list) {
+        out.push(l)
+    }
+    return out;
+}
+
+/**
+ * doesElementMatchSelector
+ * ----------------------------------------------------------------------------
+ * check if a given element is considered a match for the specified selector
+ * (wrapper around the standard function)
+ */
+export function doesElementMatchSelector(elem: StandardElement, selector: string): boolean {
+    return elem.matches(selector);
 }

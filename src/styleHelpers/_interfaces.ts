@@ -1,12 +1,17 @@
-import { IMappedType } from '../objectHelpers/_interfaces';
+import { IMappedType, IDictionary } from '../objectHelpers/_interfaces';
 
 /**
- * IStandardStyles
- * ----------------------------------------------------------------------------
- * Keep track of a style definition 
+ * Keep track of a style definition with SCSS nesting capabilities
  */
 export interface IStandardStyles {
     [selector: string]: TypedClassDefinition;
+}
+
+/**
+ * track a flattened version of styles
+ */
+export interface IFlatStyles {
+    [selector: string]: FlatClassDefinition;
 }
 
 /**
@@ -23,7 +28,11 @@ export interface IPlaceholderMatchFunction {
  * ----------------------------------------------------------------------------
  * Allow TS users to create a new class
  */
-export interface TypedClassDefinition extends IMappedType<CSSStyleDeclaration> {
+export interface TypedClassDefinition extends FlatClassDefinition {
+    nested?: IStandardStyles;
+}
+
+export interface FlatClassDefinition extends IMappedType<CSSStyleDeclaration> {
     WebkitAppearance?: string;
     WebkitUserSelect?: string;
     MozUserSelect?: string;
@@ -32,11 +41,10 @@ export interface TypedClassDefinition extends IMappedType<CSSStyleDeclaration> {
     khtmlUserSelect?: string;
     oUserSelect?: string;
     appearance?: string;
-    nested?: IStandardStyles;
-    from?: TypedClassDefinition;
-    to?: TypedClassDefinition;
     objectFit?: string;
     src?: string;
+    from?: TypedClassDefinition;
+    to?: TypedClassDefinition;
 }
 
 /**
@@ -75,3 +83,35 @@ export interface ICustomFonts {
 export interface IMediaQueries {
     [screenSize: string]: IStandardStyles;
 }
+
+//..........................................
+//#region TRANSITIONS
+
+export interface ITransitionStyle extends TypedClassDefinition {
+    shouldRemove?: boolean;
+}
+
+export interface ITransitionDetails {
+    elem: HTMLElement;
+    start: ITransitionStyle;
+    end: ITransitionStyle;
+    time: number;
+    delay: number;
+}
+
+//#endregion
+//..........................................
+
+export type Styles = IStandardStyles | ICustomFonts;
+
+export interface ICombineOptions {
+    styles: Styles[]
+    placeholderToReplace?: string;
+}
+
+export interface SplitStyles {
+    standard: IFlatStyles;
+    withPlaceholders: IFlatStyles;
+}
+
+export type PlaceholderIndex = IDictionary<IDictionary<IDictionary<IDictionary<boolean>>>>

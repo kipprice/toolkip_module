@@ -10,7 +10,7 @@ import { IClasses,
 import { StandardElement } from "../drawable/_interfaces";
 import { Drawable } from "../drawable/drawable";
 import { addClass } from "../styleHelpers/css";
-import { createClass } from "../styleHelpers/styles";
+import { oldCreateClass } from "../styleHelpers";
 import { bind } from "../binding/helper";
 import { isDrawable } from "../drawable/_typeguards";
 import { map } from "../objectHelpers/navigate";
@@ -186,7 +186,7 @@ function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
     // If it's an object, we need to create the class(es) first
     } else if (typeof obj.cls === "object") {
         map(obj.cls as IClasses, (value: IClassDefinition, selector: string) => {
-            createClass(selector, value);
+            oldCreateClass(selector, value);
             addClass(elem, selector);
         });
     }

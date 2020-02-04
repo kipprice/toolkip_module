@@ -22,9 +22,9 @@ class _BucketHelper {
      * 
      * @returns A dictionary of items, based on the bucketing specified
      */
-    public bucket<T>(things: T[], getBucket: IBucketFunc<T, number>, ...addlParams: any[]): INumericDictionary<T>;
-    public bucket<T>(things: T[], getBucket: IBucketFunc<T, string>, ...addlParams: any[]): IDictionary<T>;
-    public bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T> | INumericDictionary<T> {
+    public bucket<T>(things: T[], getBucket: IBucketFunc<T, number>, ...addlParams: any[]): INumericDictionary<T[]>;
+    public bucket<T>(things: T[], getBucket: IBucketFunc<T, string>, ...addlParams: any[]): IDictionary<T[]>;
+    public bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T[]> | INumericDictionary<T[]> {
         let out = {};
 
         if (!things) { return out; }
@@ -45,9 +45,9 @@ export const BucketHelper = new _BucketHelper();
 //..........................................
 //#region HELPER FUNCTIONS
 
-export function bucket<T>(things: T[], getBucket: IBucketFunc<T, number>, ...addlParams: any[]): INumericDictionary<T>;
-export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string>, ...addlParams: any[]): IDictionary<T>;
-export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T> | INumericDictionary<T> {
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, number>, ...addlParams: any[]): INumericDictionary<T[]>;
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string>, ...addlParams: any[]): IDictionary<T[]>;
+export function bucket<T>(things: T[], getBucket: IBucketFunc<T, string | number>, ...addlParams: any[]): IDictionary<T[]> | INumericDictionary<T[]> {
     return BucketHelper.bucket(things, getBucket as any, ...addlParams);
 }
 

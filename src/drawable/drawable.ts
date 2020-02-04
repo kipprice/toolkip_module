@@ -6,6 +6,7 @@ import {
 		IDrawableElements, 
 		StandardElement 
 	} from './_interfaces';
+import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 
 /**----------------------------------------------------------------------------
  * @class Drawable
@@ -60,11 +61,9 @@ export abstract class Drawable extends Stylable implements IDrawable {
 
 		// actually create the elements associated with this class
 		this._createElements();
-
-		window.setTimeout(() => {
-			this._registerMediaListeners();
-		}, 100);
+		this._registerMediaListeners();
 	}
+
 
 	/**
 	 * _registerMediaListener
@@ -72,10 +71,11 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 * Replace the stylable default registerMediaListener to try to apply first to 
 	 * our base element, then the document as a whole
 	 */
-	protected _registerMediaListener(matchQuery: string, classToApply: string): void {
-		if (!this._elems) { return; }
-		super._registerMediaListener(matchQuery, classToApply, this._elems.base);
-		super._registerMediaListener(matchQuery, classToApply, document.body);
+	protected _registerMediaListeners(baseOnly?: boolean): void {
+		if (this._elems?.base) { registerStandardMediaQueries(this._elems.base); }
+		if (baseOnly) { return; }
+
+		registerStandardMediaQueries();
 	}
 
 	/**
@@ -85,6 +85,14 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 * the elements that make up a Drawable
 	 */
 	protected abstract _createElements(...args: any[]): void;
+
+	protected _createElement(elemDefinition: IElemDefinition): StandardElement {
+		return createElement(elemDefinition, this._elems as any);
+	}
+
+	protected _elem(elemDefinition: IElemDefinition): StandardElement {
+		return this._createElement(elemDefinition);
+	}
 
 	/**
 	 * _shouldSkipCreateElements
@@ -108,13 +116,6 @@ export abstract class Drawable extends Stylable implements IDrawable {
 
 		// Quit if we don't have anything to draw
 		if (!this._elems || !this._elems.base) { return; }
-
-		if (!this._hasCreatedStyles) {
-			window.setTimeout(() => {
-				this.draw(parent, force);
-			}, 0);
-			return;
-		}
 
 		// Refresh our contents
 		this._refresh();

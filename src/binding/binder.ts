@@ -23,10 +23,13 @@ class _Binder {
 	//.....................
 	//#region PROPERTIES
 	
+	/** keep track of all of the bound functions globally */
 	protected _boundDetails: IDictionary<IBindingDetails<any>>;
 
+	/** assign a unique ID to each bound function */
 	protected _id: number = 0;
 
+	/** check whether we have started binding already */
 	protected _started: boolean = false;
 	
 	//#endregion
@@ -35,6 +38,11 @@ class _Binder {
 	//..........................................
 	//#region HANDLE IDENTIFIERS
 	
+	/**
+	 * _getNextId
+	 * ----------------------------------------------------------------------------
+	 * find the next unique ID
+	 */
 	protected _getNextId(): string {
 		this._id += 1;
 		return this._id.toString();
@@ -46,6 +54,11 @@ class _Binder {
 	//..........................................
 	//#region CONSTRUCTORS
 	
+	/**
+	 * Binder
+	 * ----------------------------------------------------------------------------
+	 * generate a single instance of the binder
+	 */
 	public constructor() {
 		this._boundDetails = {};
 		this._startAnimationLoop();
@@ -57,6 +70,11 @@ class _Binder {
 	//...............................................................
 	//#region PUBLIC FUNCS FOR REGISTERING / UNREGISTERING BINDINGS
 	
+	/**
+	 * bind
+	 * ----------------------------------------------------------------------------
+	 * tie a particular model to an update function
+	 */
 	public bind<T = any>(
 			evalFunc: BoundEvalFunction<T>, 
 			updateFunc: BoundUpdateFunction<T>, 
@@ -70,12 +88,17 @@ class _Binder {
 
 		// initialize appropriately if the value is already set
 		let lastValue = evalFunc();
-		nextRender().then(() => updateFunc(lastValue));
+		if (lastValue) {
+			nextRender().then(() => updateFunc(lastValue));
+		}
+		
 
 		let details: IBindingDetails<T> = {
 			id: this._getNextId(),
 			eval: evalFunc,
-			update: updateFunc,
+			update: (val: T) => {
+				updateFunc(val);
+			},
 			delete: deleteFunc || (() => false),
 			lastValue: lastValue,
 			equals: equalsFunc || ((a, b) => { return a === b} )
@@ -101,11 +124,21 @@ class _Binder {
 	//..........................................
 	//#region SHARED ANIMATION FRAME HANDLING
 
+	/**
+	 * _startAnimationLoop
+	 * ----------------------------------------------------------------------------
+	 * generate the appropriate loop
+	 */
 	protected _startAnimationLoop(): void {
 		if (this._started) { return; }
 		this._onFrame();
 	}
 	
+	/**
+	 * _onFrame
+	 * ----------------------------------------------------------------------------
+	 * update all bound functions 
+	 */
 	protected async _onFrame(): Promise<void> {
 		map(this._boundDetails, (details: IBindingDetails<any>) => {
 			this._handlingBinding(details);
@@ -115,6 +148,11 @@ class _Binder {
 		return nextRender().then(() => this._onFrame());
 	}
 
+	/**
+	 * _handlingBinding
+	 * ----------------------------------------------------------------------------
+	 * evaluate whether a particular binding has been updated
+	 */
 	protected async _handlingBinding<T>(details: IBindingDetails<T>): Promise<void> {
 
 		// check first if this element should be deleted

@@ -166,7 +166,8 @@ export class Editable<T> extends Drawable {
 		this._addListeners();
 
 		// add the BG color of an active editable
-		this.setThemeColor("editableLightBG", options.lightBg || "rgba(0,0,0,.1)");
+		// TODO: convert to new version
+		//this.setThemeColor("editableLightBG", options.lightBg || "rgba(0,0,0,.1)");
 	}
 
 	/**

@@ -2,6 +2,7 @@ export * from './async';
 export * from './binding';
 export * from './boundViews';
 export * from './canvas';
+export * from './codeEvent';
 export * from './color';
 export * from './commands';
 export * from './comparable';

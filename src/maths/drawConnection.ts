@@ -1,7 +1,7 @@
 import { IPoint } from './_interfaces';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
-import { createClass } from '../styleHelpers/styles';
+import { createClass } from '../styleHelpers/styleElement';
 import { createSimpleElement } from '../htmlHelpers/createElement';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '../htmlHelpers/elementPositioning';
 

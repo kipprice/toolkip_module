@@ -131,11 +131,10 @@ export function setDictValue(object: any, val: any, keys: string[]) {
   if (!object) { object = {}; }
 
   let curObj = object;
-  let lastKey = keys[keys.length - 1];
-
-  for (let k of keys) {
+  for (let i = 0; i < keys.length; i += 1) {
+    let k = keys[i];
     let initVal = {};
-    if (lastKey === k) { initVal = val; }
+    if (i === (keys.length - 1)) { initVal = val; }
     
     if (!curObj[k]) { curObj[k] = initVal; }
     curObj = curObj[k];

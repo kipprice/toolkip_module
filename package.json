@@ -5,13 +5,16 @@
     "license": "MIT",
     "author": "Kip Price",
     "test": "jest",
-    "main": "src/index",
-    "module": "src/index",
+    "main": "compiled_js/toolkip",
+    "module": "compiled_js/toolkip",
     "types": "typings/index",
     "scripts": {
         "build": "npm run build:tsc && npm run build:webpack",
         "build:webpack": "webpack",
         "build:tsc": "tsc -p tsconfig.json --emitDeclarationOnly",
+        "watch": "npm run watch:webpack && npm run watch:tsc",
+        "watch:webpack": "webpack -w",
+        "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
         "test": "npx jest -- -t .test.ts"
     },
     "devDependencies": {

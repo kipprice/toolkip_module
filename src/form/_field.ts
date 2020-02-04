@@ -10,10 +10,10 @@ import { Tooltip } from "../tooltip/tooltip";
 import { IConstructor } from "../objectHelpers/_interfaces";
 import { transition } from "../styleHelpers/transition";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
-import { buildClassString } from "../styleHelpers/styles";
 import { formEventHandler, FORM_SAVABLE_CHANGE, FormSavableEvent, FORM_ELEM_CHANGE, FormElemChangeEvent } from "./eventHandler";
 import { isField, createInputElement, createLabelForInput } from "./helpers";
 import { wait } from "../async";
+import { join } from "../primitiveHelpers";
 
 
 /**----------------------------------------------------------------------------
@@ -277,7 +277,8 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
      */
     protected _processTemplateClass(): void {
         let template = this._config;
-        template.cls = buildClassString(
+        template.cls = join(
+            " ",
             this._standardCls,                      // class for all form elements
             this._defaultCls,                       // class for this particular form element
             template.cls,                           // class specified in template

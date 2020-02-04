@@ -14,6 +14,7 @@ import { createCustomElement } from "../htmlHelpers/createElement";
 import { wait } from "../async";
 import { UpdateableView } from "./updateableView";
 import { isUpdatable } from "../structs/_typeguards";
+import { Binder } from "../binding";
 
 /**----------------------------------------------------------------------------
  * @class	BoundView
@@ -246,6 +247,10 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
         if (obj.boundTo) { this._bindElement(elem, obj); }
 
         return elem;
+    }
+
+    protected _elem(obj: IBoundElemDefinition<VM>): StandardElement {
+        return this._createElement(obj);
     }
 
     protected async _bindElement(elem: IBindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {

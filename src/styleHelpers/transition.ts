@@ -2,8 +2,9 @@ import { IDictionary } from "../objectHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";
 import { nextRender, wait } from "../async";
 import { addClass, removeClass } from "./css";
-import { createStyleElement, generateContentForCSSClass } from "./styles";
-import { TypedClassDefinition } from "./_interfaces";
+import { createStyleElement } from "./styleElement";
+import { stringifyStyle } from "./stringifier";
+import { ITransitionStyle, ITransitionDetails } from "./_interfaces";
 
 
 /**----------------------------------------------------------------------------
@@ -62,16 +63,6 @@ class _TransitionController {
         await this._animate(details, startName, endName);
     }
 
-    /**
-     * transitionProoerty
-     * ----------------------------------------------------------------------------
-     * TODO
-     */
-    protected transitionProperty(details: IPropertyTransition): Promise<void> {
-        //TODO
-        return Promise.reject("not implemented");
-    }
-
     //#endregion
     //..........................................
 
@@ -108,6 +99,11 @@ class _TransitionController {
         return name;
     }
 
+    /**
+     * _generateRandomClassName
+     * ----------------------------------------------------------------------------
+     * create a randomized class name to use for this transition
+     */
     protected _generateRandomClassName(): string {
         this._lastClsId += 1;
         return "gencls" + this._lastClsId;
@@ -136,7 +132,7 @@ class _TransitionController {
         if (!this._styleElem) { this._createStyleElem(); }
 
         // generate the new contents for our style tag
-        this._styleElem.innerHTML += generateContentForCSSClass("." + className, classDef, true);
+        this._styleElem.innerHTML += stringifyStyle("." + className, classDef);
     }
 
     /**
@@ -166,7 +162,7 @@ class _TransitionController {
      * to it
      */
     protected _createStyleElem(): void {
-        this._styleElem = createStyleElement(false);
+        this._styleElem = createStyleElement();
         document.head.appendChild(this._styleElem);
     }
 
@@ -209,7 +205,8 @@ class _TransitionController {
     //..........................................
 
 }
-export const TransitionController = new _TransitionController();
+
+const TransitionController = new _TransitionController();
 
 //..........................................
 //#region SHORTENED ACCESS
@@ -242,29 +239,4 @@ export function transition(element: HTMLElement, startStyle: ITransitionStyle, e
 //#endregion
 //..........................................
 
-//..........................................
-//#region TYPES AND INTERFACES
-
-export interface ITransitionStyle extends TypedClassDefinition {
-    shouldRemove?: boolean;
-}
-
-interface IPropertyTransition {
-    name: string;
-    start: any;
-    end: any;
-    duration: number;
-    delay?: number;
-}
-
-interface ITransitionDetails {
-    elem: HTMLElement;
-    start: ITransitionStyle;
-    end: ITransitionStyle;
-    time: number;
-    delay: number;
-}
-
-    //#endregion
-    //..........................................
 

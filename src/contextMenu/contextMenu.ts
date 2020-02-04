@@ -401,7 +401,8 @@ export class ContextMenu extends Drawable {
 	 */
 	protected _setThemeColors(): void {
 		map(this._colors, (color: string, uniqueId: string) => { 
-			this.setThemeColor(uniqueId, color);
+			// TODO: convert over
+			// this.setThemeColor(uniqueId, color);
 		});
 	}
 

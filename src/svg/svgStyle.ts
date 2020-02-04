@@ -1,7 +1,7 @@
 import { ISVGStyle } from "./_interfaces";
 import { map } from "../objectHelpers/navigate";
 import { format } from "../primitiveHelpers/strings";
-import { getPropertyName } from "../styleHelpers/styles";
+import { getPropertyName } from "../styleHelpers/styleElement";
 
 
 /**----------------------------------------------------------------------------
