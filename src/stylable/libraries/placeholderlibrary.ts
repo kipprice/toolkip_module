@@ -83,8 +83,12 @@ export class _PlaceholderLibrary extends _Library{
 
             if (!builtStyles) { return; } // this shouldn't happen
 
-            super._updateElems(builtStyles, this._formatElemString(uniqueKey, placeholder))
+            this._updatePlaceholderElem(builtStyles, uniqueKey, placeholder);
         })
+    }
+
+    protected _updatePlaceholderElem(styles: IFlatStyles, uniqueKey: string, placeholder: string): void {
+        super._updateElems(styles, this._formatElemString(uniqueKey, placeholder))
     }
     
     //#endregion
@@ -128,9 +132,10 @@ export class _PlaceholderLibrary extends _Library{
         const replacedStyles = this._replacePlaceholderViaIndex(opts);
 
         // update the appropriate text in our style element(s)
-        this._updateElems(
+        this._updatePlaceholderElem(
             replacedStyles, 
-            this._formatElemString(opts.uniqueKey, opts.placeholder)
+            opts.uniqueKey, 
+            opts.placeholder
         );
 
     }
