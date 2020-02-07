@@ -71,7 +71,6 @@ function resizeElement(obj) {
 * 
 */
 export function isChildEventTarget(ev: Event, root: HTMLElement): boolean {
-    ;
     return isChild(root, <HTMLElement>ev.target);
 };
 
@@ -201,8 +200,8 @@ export function select(htmlElem: HTMLElement): void {
     if (isSelectable(htmlElem)) {
         htmlElem.select();
 
-        // conte-editable areas are trickier; use some range logic 
-        // (taken from https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element)
+    // content-editable areas are trickier; use some range logic 
+    // (taken from https://stackoverflow.com/questions/6139107/programmatically-select-text-in-a-contenteditable-html-element)
     } else {
         // get the range of the element
         let range = document.createRange();

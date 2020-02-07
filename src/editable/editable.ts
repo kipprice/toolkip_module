@@ -171,7 +171,7 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _addHandlers
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Adds all handlers specified by the user
 	 * @param 	options		Options specified by the user
 	 *  
@@ -267,9 +267,8 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _addListeners
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Add event listeners to the editable 
-	 * 
 	 */
 	private _addListeners(): void {
 
@@ -311,11 +310,10 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _save
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Save the contents of the Editable
 	 * 
 	 * @returns True if the editable was successfully saved
-	 * 
 	 */
 	private _save(): boolean {
 		let validated: IValidateResult
@@ -335,11 +333,9 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _validate
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * validate whether the current data in the input field is valid 
-	 * 
 	 * @param	content		Content to validate
-	 * 
 	 * @returns	Result of the validation
 	 * 
 	 */
@@ -358,13 +354,10 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _onValidationFailed
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * validation failing for this element 
-	 * 
 	 * @param	allowLeave	True if the user should be able to navigate away
-	 * 
-	 * @returns	False
-	 * 
+	 * @returns	false
 	 */
 	private _onValidationFailed(allowLeave: boolean): boolean {
 
@@ -383,11 +376,10 @@ export class Editable<T> extends Drawable {
 
 	/**
 	 * _onValidationPassed
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * handle validation passing for this element 
 	 * @param	content		Content to set for the editable
-	 * @returns	True 
-	 * 
+	 * @returns	True
 	 */
 	private _onValidationPassed(content: string): boolean {
 

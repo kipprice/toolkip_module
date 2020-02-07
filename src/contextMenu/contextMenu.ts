@@ -101,6 +101,8 @@ export class ContextMenu extends Drawable {
 	//..........................................
 
 	/**
+	 * ContextMenu
+	 * ----------------------------------------------------------------------------
 	 * Creates a custom context (right-click) menu for a given element
 	 * @param 	target    	The element to create the custom menu for
 	 * @param 	noStyles	True if we shouldn't create css classes for the standard menu styles
@@ -139,7 +141,7 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * addOption
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * adds an option to our context menu 
 	 * 
 	 * @param	opt			The option to add
@@ -147,7 +149,6 @@ export class ContextMenu extends Drawable {
 	 * @param	parent		What the parent element should be (defaults to option container)
 	 * 
 	 * @returns	True if the option could be added
-	 * 
 	 */
 	public addOption(opt: IOption, subOptions?: IOption[], parent?: HTMLElement): boolean {
 
@@ -178,14 +179,13 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * addSubOption
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Adds a nested option to our context menu
 	 * 
 	 * @param 	srcOption	The option we are nesting under 
 	 * @param 	subOption 	The sub option we are currently adding
 	 * 
 	 * @returns	True if the suboption was added
-	 * 
 	 */
 	public addSubOption(srcOption: IOption, subOption: IOption): boolean {
 
@@ -221,10 +221,9 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _buildSubMenu
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * creates a sub menu 
 	 * @param	srcOption	The option to nest under
-	 * 
 	 */
 	private _buildSubMenu(srcOption: IOption): void {
 
@@ -249,13 +248,10 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _getOption
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * grabs a particular option from our menu 
-	 * 
 	 * @param	lbl		The label of the option we are grabbing
-	 * 
 	 * @returns	The option with this label
-	 * 
 	 */
 	private _getOption(lbl: string): IOption {
 		if (!lbl) { return null; }
@@ -271,13 +267,10 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * removeOption
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * removes an option from our menu 
-	 * 
 	 * @param	lbl		The label of the option being removed
-	 * 
 	 * @returns	True if the option was removed
-	 * 
 	 */
 	public removeOption(lbl: string): boolean {
 		let opt: IOption;
@@ -301,9 +294,8 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * clearOptions
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Removes all of our options
-	 * 
 	 */
 	public clearOptions(): void {
 
@@ -329,9 +321,9 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _addEventListeners
-	 * 
-	 * Adds event listeners to the relevant pieces to show and/or hide the context menu 
-	 * 
+	 * ----------------------------------------------------------------------------
+	 * Adds event listeners to the relevant pieces to show and/or hide the context 
+	 * menu 
 	 */
 	private _addEventListeners(): void {
 
@@ -393,10 +385,9 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _createElements
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Creates the basic elements of the context menu & optionally adds the 
 	 * standard classes
-	 * 
 	 */
 	protected _createElements(): void {
 		this._elems.option_container = createSimpleElement("", "optionContainer", "", null, null, this.base);
@@ -405,9 +396,8 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _setThemeColors
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Sets the theme colors for the context menu
-	 * 
 	 */
 	protected _setThemeColors(): void {
 		map(this._colors, (color: string, uniqueId: string) => { 
@@ -417,9 +407,8 @@ export class ContextMenu extends Drawable {
 
 	/**
 	 * _hideExistingMenu
-	 * 
+	 * ----------------------------------------------------------------------------
 	 * Hides whatever context menu is currently showing 
-	 * 
 	 */
 	private _hideExistingMenu(): void {
 		if (ContextMenu._showingMenu) {
