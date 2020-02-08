@@ -1,4 +1,4 @@
-import { TypedClassDefinition, IFontFaceDefinition } from "./_interfaces";
+import { TypedClassDefinition, IFontFaceDefinition, FlatStyles } from "./_interfaces";
 import { map } from "../objectHelpers";
 
 const MAX_LENGTH = 10000;
