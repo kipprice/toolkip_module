@@ -39,4 +39,19 @@ describe('styleHelpers --> flattener', () => {
         let flattened = flattenStyles(unflattened);
         expect(flattened).toMatchObject(expected);
     })
+
+    it("handles already-flat styles", () => {
+        let preFlattened: IStandardStyles = {
+            "a": {
+                color: "#FFF"
+            },
+
+            "a:hover": {
+                textDecoration: "underline"
+            }
+        };
+
+        let flattened = flattenStyles(preFlattened);
+        expect(flattened).toMatchObject(preFlattened);
+    })
 })
