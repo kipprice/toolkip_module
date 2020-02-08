@@ -50,6 +50,11 @@ export abstract class _Library {
      * standardly called when instantiating the first instance of a stylable 
      * element.
      * 
+     * The general flow is:
+     *  1) verify that these styles don't already exist (or that it is safe to recreate)
+     *  2) merge any existing styles with the newly provided styles
+     *  3) update the style elements that use these styles
+     * 
      * @param   uniqueKey   The key to associate with these styles
      * @param   styles      The styles to add
      * @param   force       If provided, ignores when the styles are already 
@@ -72,16 +77,21 @@ export abstract class _Library {
      * removeStyles
      * ----------------------------------------------------------------------------
      * handle removing style elements from the library
+     * @param   uniqueKey   The set of styles to remove
+     * @returns true if the styles were successfully removed, false otherwise
      */
     public remove(uniqueKey: string): boolean {
         if (!this._rawStyles[uniqueKey]) {
             return false; 
         }
 
+        // delete the style element from the UI
+        removeElement(this._elems[uniqueKey]);
+
         // remove from our data stores
         delete this._rawStyles[uniqueKey];
-        removeElement(this._elems[uniqueKey]);
         delete this._elems[uniqueKey];
+
         return true;
     }
     
