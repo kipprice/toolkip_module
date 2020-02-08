@@ -87,13 +87,22 @@ class _StylePlaceholders {
         return idx;
     }
 
+    /**
+     * mapIndexToStyle
+     * ----------------------------------------------------------------------------
+     * turn an index into the set of styles it corresponds to
+     * @param   index       The index we are mapping
+     * @param   styles      The styles we are applying
+     * @returns the styles that correspond to the index
+     * TODO: evaluate whether this is necessary
+     */
     public mapIndexToStyle(
-        dict: IDictionary<IDictionary<boolean>>, 
+        index: IDictionary<IDictionary<boolean>>, 
         styles: IFlatStyles
     ): IFlatStyles {
 
         let out = {};
-        map(dict, (d, selector: string) => {
+        map(index, (d, selector: string) => {
             map(d, (unused, pName: string) => {
                 if (!styles[selector]) { return; }
                 setDictValue(
@@ -106,6 +115,15 @@ class _StylePlaceholders {
         return out;
     }
 
+    /**
+     * replacePlaceholder
+     * ----------------------------------------------------------------------------
+     * replace all insteances of the specified placeholder in the provided styles
+     * @param   styles      the styles to start from; these will not be modified
+     * @param   placeholder the placeholder we are replacing
+     * @param   replaceWith the value that should be swapped in for the placeholder
+     * @returns a copy of the original styles, with all of the placeholders replaced
+     */
     public replacePlaceholders(
         styles: IFlatStyles,
         placeholder: string,
