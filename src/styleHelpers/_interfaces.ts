@@ -103,6 +103,7 @@ export interface ITransitionDetails {
 //..........................................
 
 export type Styles = IStandardStyles | ICustomFonts;
+export type FlatStyles = IFlatStyles | ICustomFonts;
 
 export interface ICombineOptions {
     styles: Styles[]

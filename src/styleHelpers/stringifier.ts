@@ -1,4 +1,4 @@
-import { IStandardStyles, TypedClassDefinition, IFontFaceDefinition, Styles } from "./_interfaces";
+import { TypedClassDefinition, IFontFaceDefinition } from "./_interfaces";
 import { map } from "../objectHelpers";
 
 const MAX_LENGTH = 10000;
@@ -20,7 +20,7 @@ class _StyleStringifier {
      * turn a set of styles into the string version, such that they can be added
      * to the content of a HTMLStyleElement
      */
-    public stringify(styles: Styles): string[] {
+    public stringify(styles: FlatStyles): string[] {
         if (!styles) { return []; }
         return this._stringify(styles);
     }
@@ -31,7 +31,7 @@ class _StyleStringifier {
      * turn a set fo CSS styles into the string version of those classes. Assumes 
      * that the styles have already been flattened into a single layer
      */
-    private _stringify(styles: Styles): string[] {
+    private _stringify(styles: FlatStyles): string[] {
         let out: string[] = [];
         let curStr: string = "";
 
@@ -198,7 +198,7 @@ const StyleStringifier = new _StyleStringifier();
 //..........................................
 //#region EXPORTED FUNCTIONS
 
-export function stringifyStyles(styles: Styles): string[] {
+export function stringifyStyles(styles: FlatStyles): string[] {
     return StyleStringifier.stringify(styles);
 }
 
