@@ -1,9 +1,9 @@
 import { IPoint } from './_interfaces';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
-import { createClass } from '../styleHelpers/styleElement';
 import { createSimpleElement } from '../htmlHelpers/createElement';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '../htmlHelpers/elementPositioning';
+import { StyleLibrary } from '../stylable/libraries/styleLibrary';
 
 /**
  * arrangeRadially
@@ -96,7 +96,7 @@ export function drawLine(start: IPoint, end: IPoint, host?: HTMLElement, lbl?: s
 		"height": "1px",
 		"transform-origin": "0px 0px"
 	};
-	createClass(".angledLine", cls);
+	StyleLibrary.add("trigDrawing", { ".angledLine": cls });
 
 	// Create the div and give it minimal styling to show the line
 	div = createSimpleElement("", "angledLine");
