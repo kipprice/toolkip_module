@@ -3,7 +3,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { createElement } from "../htmlHelpers/createElement";
 
-export class ImageElement extends Drawable {
+export class ImageElement extends Drawable<"imageElementPrimary"> {
 
     //..................
     //#region STYLES
@@ -39,10 +39,6 @@ export class ImageElement extends Drawable {
                 }
             }
         }
-    }
-
-    public setThemeColor(key: "imageElementPrimary", color: string, noReplace?: boolean): void {
-        super.setThemeColor(key, color, noReplace);
     }
 
     //#endregion
