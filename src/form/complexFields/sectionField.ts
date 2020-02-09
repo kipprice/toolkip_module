@@ -81,7 +81,11 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     /** HTML elements that make up this form */
     protected _elems: ICollapsibleHTMLElements;
 
-    /** update the appropriate theme color for the form */
+    /** 
+     * replacePlaceholder
+     * ----------------------------------------------------------------------------
+     * update the appropriate theme color for the form 
+     */
     public replacePlaceholder(uniqueId: FormColor, color: string, force?: boolean): void {
         super.replacePlaceholder(uniqueId, color, force);
 
@@ -93,6 +97,11 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
                 child.replacePlaceholder(uniqueId, color, force);
             });
         }
+    }
+
+    public overridePlaceholder(pName: FormColor, pVal: any): void {
+        super.overridePlaceholder(pName, pVal);
+        // TODO: pass this along to the appropriate children
     }
 
     /** also allow child elements that are gracefully created */

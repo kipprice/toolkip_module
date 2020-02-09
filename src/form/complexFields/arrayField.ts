@@ -142,6 +142,11 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         });
     }
 
+    public overridePlaceholder(pName: FormColor, pVal: any): void {
+        super.overridePlaceholder(pName, pVal);
+        // TODO: pass this along to the appropriate children
+    }
+
     //#endregion
     //..................
 
