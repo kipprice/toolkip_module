@@ -33,8 +33,8 @@ export class TextElement extends SVGElem {
 	protected static _uncoloredStyles: IStandardStyles = {
 		".unselectable": {
 			userSelect: "none",
-			MozUserSelect: "none",
-			WebkitUserSelect: "none",
+			mozUserSelect: "none",
+			webkitUserSelect: "none",
 			khtmlUserSelect: "none",
 			oUserSelect: "none"
 		}

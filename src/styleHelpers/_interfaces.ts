@@ -37,6 +37,10 @@ export interface FlatClassDefinition extends Partial<CSSStyleDeclaration> {
     webkitAppearance?: string;
     mozAppearance?: string;
 
+    mozUserSelect?: string;
+    khtmlUserSelect?: string;
+    oUserSelect?: string;
+
     objectFit?: string;
     src?: string;
     from?: TypedClassDefinition;
