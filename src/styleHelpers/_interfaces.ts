@@ -1,4 +1,4 @@
-import { IMappedType, IDictionary } from '../objectHelpers/_interfaces';
+import { IDictionary } from '../objectHelpers/_interfaces';
 
 /**
  * Keep track of a style definition with SCSS nesting capabilities
@@ -32,15 +32,11 @@ export interface TypedClassDefinition extends FlatClassDefinition {
     nested?: IStandardStyles;
 }
 
-export interface FlatClassDefinition extends IMappedType<CSSStyleDeclaration> {
-    WebkitAppearance?: string;
-    WebkitUserSelect?: string;
-    MozUserSelect?: string;
-    WebkitFilter?: string;
-    webkitLineClamp?: string;
-    khtmlUserSelect?: string;
-    oUserSelect?: string;
+export interface FlatClassDefinition extends Partial<CSSStyleDeclaration> {
     appearance?: string;
+    webkitAppearance?: string;
+    mozAppearance?: string;
+
     objectFit?: string;
     src?: string;
     from?: TypedClassDefinition;

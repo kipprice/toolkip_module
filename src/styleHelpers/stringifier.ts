@@ -1,4 +1,4 @@
-import { TypedClassDefinition, IFontFaceDefinition, FlatStyles } from "./_interfaces";
+import { TypedClassDefinition, IFontFaceDefinition, FlatStyles, FlatClassDefinition } from "./_interfaces";
 import { map } from "../objectHelpers";
 
 const MAX_LENGTH = 10000;
@@ -115,7 +115,7 @@ class _StyleStringifier {
         let styleString: string[] = [];
 
         // loop through all of the properties and generate appropriate value strings
-        map(attr, (propertyValue: any, propertyName: string) => {
+        map(attr, (propertyValue: any, propertyName: keyof FlatClassDefinition) => {
 
             // generate the appropriate value string
             if (isGeneratingAnimation) { 
@@ -138,18 +138,18 @@ class _StyleStringifier {
      * ----------------------------------------------------------------------------
      * Create the content needed to handle a CSS animation
      */
-    private _buildAnimationValueString(propertyName: string, propertyValue: any): string {
+    private _buildAnimationValueString(propertyName: keyof FlatClassDefinition, propertyValue: any): string {
         let styleString: string = "";
         
         // loop through the nested values of the animation
-        map(propertyValue, (pValue: any, pName: string) => {
+        map(propertyValue, (pValue: any, pName: keyof FlatClassDefinition) => {
             if (!pValue) { return; }
             styleString += this._formatProperty(pName, pValue);
         });
 
         // return the animation value (or nothing, if there's nothing to animate)
         if (!styleString) { return ""; }
-        return this._formatClass(propertyName, styleString);
+        return this._formatClass(propertyName as string, styleString);
     }
 
     //..........................................
@@ -159,30 +159,64 @@ class _StyleStringifier {
      * getPropertyName
      * ----------------------------------------------------------------------------
      * grab the appropriate property name for the CSS class 
-     * @param   jsFriendlyName      The JS version of a CSS property name, usually in camel-case
+     * @param   jsPropName      The JS version of a CSS property name, usually in camel-case
      * @returns The CSS version of the property name
      */
-    private _getPropertyName(jsFriendlyName: string): string {
-        if (jsFriendlyName.toLowerCase() === jsFriendlyName) { return jsFriendlyName; }
+    public getPropertyName(jsPropName: keyof FlatClassDefinition): string {
+        let prop: string = jsPropName as string;
 
-        let chars: string[] = jsFriendlyName.split("");
-        let char: string;
-        for (let idx = 0; idx < chars.length; idx++) {
-            char = chars[idx];
-            if (char.toLowerCase() !== char) {
-                chars[idx] = "-" + char.toLowerCase();
-            }
+        // if there's no difference in casing, 
+        if (prop.toLowerCase() === prop) { return prop; }
+
+        // match / split on capital letters (while also capturing them)
+        const regex = /([A-Z])/g;
+
+        // loop over each segment, determining where (if anywhere) dashes
+        // are required
+        let segments: string[] = prop.split(regex);
+        for (let idx = 0; idx < segments.length; idx++) {
+            segments[idx] = this._getUpdatedSegment(
+                segments[idx],
+                idx === 0
+            );
         }
 
-        return chars.join("");
+        return segments.join("");
+    }
+
+    private _getUpdatedSegment(segment: string, isFirst: boolean): string {
+
+        // handle prefixes
+        if (isFirst && this._isCssPrefix(segment)) {
+            segment = "-" + segment
+        }
+
+        // handle capital letters
+        if (segment.toLowerCase() !== segment) {
+            segment = "-" + segment.toLowerCase();
+        }
+
+        return segment;
+    }
+
+    private _isCssPrefix(test: string): boolean {
+        switch (test) {
+            case "webkit":
+            case "moz":
+            case "ms":
+            case "o":
+                return true;
+        }
+
+        return false;
     }
 
     private _formatClass(selector: string, value: string): string {
         return `\t${selector} {\n${value}}`;
     }
 
-    private _formatProperty(key: string, value: any): string {
-        return `\t\t${this._getPropertyName(key)} : ${value};\n`
+    private _formatProperty(key: keyof FlatClassDefinition, value: any): string {
+        return `\t\t${this.getPropertyName(key)} : ${value};\n`
     }
 
     private _formatFontface(url: string, format: string): string {
@@ -202,9 +236,14 @@ export function stringifyStyles(styles: FlatStyles): string[] {
     return StyleStringifier.stringify(styles);
 }
 
-export function stringifyStyle(selector: string, definition: TypedClassDefinition | IFontFaceDefinition[]): string {
+export function stringifyStyle(selector: string, definition: FlatClassDefinition | IFontFaceDefinition[]): string {
     return StyleStringifier.generateContentForStyle(selector, definition);
 }
 
+export function getCssPropertyName (jsPropName: keyof FlatClassDefinition): string {
+    return StyleStringifier.getPropertyName(jsPropName);
+}
+
+getCssPropertyName("webkitAlignContent")
 //#endregion
 //..........................................
