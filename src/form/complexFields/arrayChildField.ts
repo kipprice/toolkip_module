@@ -114,9 +114,8 @@ export class ArrayChildField<M, T extends IArrayChildTemplate<M> = IArrayChildTe
 
     }
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(ArrayChildField._uncoloredStyles, CollapsibleField._uncoloredStyles, Field._uncoloredStyles);
-    }
+    protected static _styleDependencies = [Field, CollapsibleField];
+    
     //#endregion
     //..................
 

@@ -88,12 +88,7 @@ export abstract class ToggleButtonField<M, T extends IFormToggleButtonTemplate<M
 
     };
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(
-            Field._uncoloredStyles,
-            ToggleButtonField._uncoloredStyles
-        );
-    }
+    protected static _styleDependencies = [Field];
 
     //#endregion
     //..................

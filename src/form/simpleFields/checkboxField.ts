@@ -100,9 +100,7 @@ export class CheckboxField extends Field<boolean> {
         }
     };
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(CheckboxField._uncoloredStyles, Field._uncoloredStyles);
-    }
+    protected static _styleDependencies = [Field];
 
     //#endregion
     //...................................................

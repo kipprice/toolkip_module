@@ -47,12 +47,7 @@ export class PercentageField extends NumberField {
 		}
 	}
 
-	protected _getUncoloredStyles(): IStandardStyles {
-		return this._mergeThemes(
-			PercentageField._uncoloredStyles,
-			Field._uncoloredStyles
-		);
-	}
+	protected static _styleDependencies = [Field];
 
 	//#endregion
 	//...................................................

@@ -360,7 +360,7 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
         // generate the styles for the element 
         // (we need to do this manually because form elements aren't 
         //  Drawable elements)
-        this._createStyles();
+        // this._createStyles();
 
         // detect whether the element starts hidden
         if (hasClass(this._elems.base, "hidden")) { this._isHidden = true; }

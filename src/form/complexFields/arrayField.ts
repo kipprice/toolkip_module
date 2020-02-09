@@ -97,7 +97,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
 
                     userSelect: "none",
                     webkitUserSelect: "none",
-                    MozUserSelect: "none",
+                    mozUserSelect: "none",
                     msUserSelect: "none",
 
                     nested: {
@@ -114,31 +114,30 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         }
     };
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(ArrayField._uncoloredStyles, CollapsibleField._uncoloredStyles, Field._uncoloredStyles);
-    }
+    protected static _styleDependencies = [Field, CollapsibleField];
 
     /** 
      * setThemeColor
      * ----------------------------------------------------------------------------
      * update the appropriate theme color for the form 
      */
-    public setThemeColor(uniqueId: string, color: string, noReplace?: boolean): void {
-        super.setThemeColor(uniqueId, color);
+    public replacePlaceholder(placeholder: string, newValue: string): void {
+        super.replacePlaceholder(placeholder, newValue);
 
         // if there are no children yet, apply to the child template
         if (!this._children || this._children.length === 0) {
             if (isField(this._childTemplate)) {
-                this._childTemplate.setThemeColor(uniqueId, color, noReplace);
+                this._childTemplate.replacePlaceholder(placeholder, newValue);
             } else {
                 map(this._childTemplate, (child: Field<any>) => {
-                    child.setThemeColor(uniqueId, color, noReplace);
+                    child.replacePlaceholder(placeholder, newValue);
                 });
             }
         }
 
+        // loop through the children if we have them
         map(this._children, (child: Field<any>) => {
-            child.setThemeColor(uniqueId, color, noReplace);
+            child.replacePlaceholder(placeholder, newValue);
         });
     }
 
@@ -198,7 +197,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         // handle showing the children
         this._elems.childrenContainer = createElement({ cls: "formChildren", parent: this._elems.base });
         this._createNewButton();
-        this._createStyles();
+        //this._createStyles();
     }
 
     /**
@@ -305,7 +304,8 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
      * add the created child to our style map and our children
      */
     protected _finalizeNewChild(elem: ArrayChildField<M>): void {
-        this._applyColors(elem);
+        // TODO: fix form colors
+        //this._applyColors(elem);
         this._children.push(elem);
 
         removeElement(this._elems.newButton);

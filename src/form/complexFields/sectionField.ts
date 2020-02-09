@@ -67,13 +67,10 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     };
 
     /** section elements are a merged set of themes */
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(
-            SectionField._uncoloredStyles,
-            CollapsibleField._uncoloredStyles,
-            Field._uncoloredStyles
-        );
-    }
+    protected static _styleDependencies = [
+        Field,
+        CollapsibleField
+    ];
 
     //#endregion
     //.................
@@ -85,15 +82,15 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     protected _elems: ICollapsibleHTMLElements;
 
     /** update the appropriate theme color for the form */
-    public setThemeColor(uniqueId: string, color: string, noReplace: boolean): void {
-        super.setThemeColor(uniqueId, color);
+    public replacePlaceholder(uniqueId: string, color: string): void {
+        super.replacePlaceholder(uniqueId, color);
 
         if (!this._children) { return; }
         if (isField(this._children)) {
-            this._children.setThemeColor(uniqueId, color, noReplace);
+            this._children.replacePlaceholder(uniqueId, color);
         } else {
             map(this._children, (child: Field<any>) => {
-                child.setThemeColor(uniqueId, color, noReplace);
+                child.replacePlaceholder(uniqueId, color);
             });
         }
     }
@@ -146,7 +143,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
 
         // Create the form children section
         this._elems.childrenContainer = createSimpleElement("", "formChildren", "", null, null, this._elems.base);
-        this._createStyles();
+        // this._createStyles();
 
         this._updateClsBasedOnLayout();
     }
@@ -203,7 +200,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     protected _parseChild(child: Field<any>): Field<any> {
         let elem: Field<any> = this._cloneFormElement(child);
 
-        this._applyColors(elem);
+        // TODO: fix how form themes will get applied
+        // this._applyColors(elem);
         elem.draw(this._elems.childrenContainer);
 
         formEventHandler.addEventListener(FORM_ELEM_CHANGE, {
