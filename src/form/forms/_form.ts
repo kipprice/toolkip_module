@@ -632,8 +632,6 @@ export abstract class _Form<T> extends Drawable<FormColor> {
     //.................................
     //#region CHANGE THE FORM DISPLAY
 
-    // TODO: Allow changing of the form after it's been created
-
     /**
      * addFormElement
      * ----------------------------------------------------------------------------
