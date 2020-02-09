@@ -4,6 +4,8 @@ import { createElement, createSimpleElement } from "../../htmlHelpers/createElem
 import { addClass, removeClass } from "../../styleHelpers/css";
 import { transition } from "../../styleHelpers/transition";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
+import { map } from "../../objectHelpers";
+import { FormColor } from "..";
 
 
 /**----------------------------------------------------------------------------
@@ -106,11 +108,16 @@ export abstract class CollapsibleField<M, T extends IFormCollapsibleTemplate<M> 
 
         this._elems.title = createSimpleElement("", "sectionHeader", this._config.label, null, null, this._elems.titleContainer);
 
-        if (this._config.uncollapsible) { return; }
+        if (!this._config.uncollapsible) { this._createCollapsibility(); }
+    }
 
-        this._elems.collapseElem = createSimpleElement("", "caret", "\u25B5", null, null, this._elems.titleContainer);
-
-        // add a tracking class to the core element
+    protected _createCollapsibility() {
+        
+        this._elems.collapseElem = createElement({
+            cls: "caret",
+            content: "\u25B5",
+            parent: this._elems.titleContainer
+        });
         addClass(this._elems.base, "collapsible");
 
         // start collapsed
@@ -185,6 +192,18 @@ export abstract class CollapsibleField<M, T extends IFormCollapsibleTemplate<M> 
 
     //#endregion
     //.................................
+
+    //..........................................
+    //#region THEME HELPERS
+    
+    protected _applyThemes(child: Field<any>) {
+        map(this._placeholderValues, (pVal: any, pName: FormColor) => {
+            child.replacePlaceholder(pName, pVal);
+        })
+    }
+    
+    //#endregion
+    //..........................................
 
 }
 

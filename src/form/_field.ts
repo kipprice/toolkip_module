@@ -1,4 +1,4 @@
-import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString } from "./_interfaces";
+import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString, FormColor } from "./_interfaces";
 import { Drawable } from "../drawable/drawable";
 import { isNullOrUndefined } from "../typeGuards/falsey";
 import { hasClass, addClass, removeClass } from "../styleHelpers/css";
@@ -24,7 +24,7 @@ import { join } from "../primitiveHelpers";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> extends Drawable {
+export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> extends Drawable<FormColor> {
 
     //..........................................
     //#region CONSTANTS

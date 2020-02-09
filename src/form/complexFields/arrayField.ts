@@ -1,4 +1,4 @@
-import { FieldTypeEnum, IFields, ICanSaveTracker } from "../_interfaces";
+import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../_interfaces";
 import { CollapsibleField } from "./_collapsibleField";
 import { Field } from "../_field";
 import { isField } from "../helpers";
@@ -121,16 +121,17 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
      * ----------------------------------------------------------------------------
      * update the appropriate theme color for the form 
      */
-    public replacePlaceholder(placeholder: string, newValue: string): void {
-        super.replacePlaceholder(placeholder, newValue);
+    public replacePlaceholder(placeholder: FormColor, newValue: string, force?: boolean): void {
+        super.replacePlaceholder(placeholder, newValue, force);
 
         // if there are no children yet, apply to the child template
+        // TODO: is this really required? or could we just run applyTheme?
         if (!this._children || this._children.length === 0) {
             if (isField(this._childTemplate)) {
-                this._childTemplate.replacePlaceholder(placeholder, newValue);
+                this._childTemplate.replacePlaceholder(placeholder, newValue, force);
             } else {
                 map(this._childTemplate, (child: Field<any>) => {
-                    child.replacePlaceholder(placeholder, newValue);
+                    child.replacePlaceholder(placeholder, newValue, force);
                 });
             }
         }
@@ -304,8 +305,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
      * add the created child to our style map and our children
      */
     protected _finalizeNewChild(elem: ArrayChildField<M>): void {
-        // TODO: fix form colors
-        //this._applyColors(elem);
+        this._applyThemes(elem);
         this._children.push(elem);
 
         removeElement(this._elems.newButton);

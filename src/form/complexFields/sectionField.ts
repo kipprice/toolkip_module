@@ -1,4 +1,4 @@
-import {  IFields, FieldTypeEnum, ICanSaveTracker, FormElementLayoutEnum } from "../_interfaces";
+import {  IFields, FieldTypeEnum, ICanSaveTracker, FormElementLayoutEnum, FormColor } from "../_interfaces";
 import { CollapsibleField } from "./_collapsibleField";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { Field } from "../_field";
@@ -82,15 +82,15 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     protected _elems: ICollapsibleHTMLElements;
 
     /** update the appropriate theme color for the form */
-    public replacePlaceholder(uniqueId: string, color: string): void {
-        super.replacePlaceholder(uniqueId, color);
+    public replacePlaceholder(uniqueId: FormColor, color: string, force?: boolean): void {
+        super.replacePlaceholder(uniqueId, color, force);
 
         if (!this._children) { return; }
         if (isField(this._children)) {
-            this._children.replacePlaceholder(uniqueId, color);
+            this._children.replacePlaceholder(uniqueId, color, force);
         } else {
             map(this._children, (child: Field<any>) => {
-                child.replacePlaceholder(uniqueId, color);
+                child.replacePlaceholder(uniqueId, color, force);
             });
         }
     }
@@ -200,8 +200,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     protected _parseChild(child: Field<any>): Field<any> {
         let elem: Field<any> = this._cloneFormElement(child);
 
-        // TODO: fix how form themes will get applied
-        // this._applyColors(elem);
+        this._applyThemes(elem);
         elem.draw(this._elems.childrenContainer);
 
         formEventHandler.addEventListener(FORM_ELEM_CHANGE, {

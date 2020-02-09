@@ -1,5 +1,5 @@
 import { IStandardStyles, ICustomFonts } from '../styleHelpers/_interfaces';
-import { IConstructor } from '../objectHelpers/_interfaces';
+import { IConstructor, IDictionary } from '../objectHelpers/_interfaces';
 import { isEmptyObject } from '../objectHelpers/navigate';
 import { NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
@@ -28,6 +28,9 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
     protected static _uncoloredStyles: IStandardStyles;
     private get _uncoloredStyles(): IStandardStyles { return (this.constructor as typeof Stylable)._uncoloredStyles; }
     private _mergedStyles: IStandardStyles;
+
+    /** store the values we've set for various placeholders */
+    protected _placeholderValues: Partial<IDictionary<any, P>> = {};
 
     /** store the dependencies that this class has on other stylables */
     protected static _styleDependencies: IStylableDependency[];
@@ -152,7 +155,10 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
      * replace all instances of the specified placeholder with the provided value
      * across all instances of this stylable
      */
-    public replacePlaceholder(placeholderName: P, placeholderValue: any): void {
+    public replacePlaceholder(placeholderName: P, placeholderValue: any, force?: boolean): void {
+        if (this._placeholderValues[placeholderName] && !force) { return; } 
+        this._placeholderValues[placeholderName] = placeholderValue;
+        
         PlaceholderLibrary.replacePlaceholder({
             placeholder: placeholderName, 
             newValue: placeholderValue,
