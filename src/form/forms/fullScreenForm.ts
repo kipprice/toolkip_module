@@ -47,12 +47,7 @@ export class FullScreenForm<T> extends _Form<T> {
         }
     }
 
-    protected _getUncoloredStyles() {
-        return this._mergeThemes(
-            FullScreenForm._uncoloredStyles,
-            _Form._uncoloredStyles
-        );
-    }
+    protected static _styleDependencies = [_Form];
 
     //#endregion
     //..................
