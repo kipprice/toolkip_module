@@ -1,14 +1,12 @@
 import { IStandardStyles, ICustomFonts } from '../styleHelpers/_interfaces';
 import { IConstructor } from '../objectHelpers/_interfaces';
 import { isEmptyObject } from '../objectHelpers/navigate';
-import { cloneObject } from '../objectHelpers/cloning';
 import { NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 import { splitStyles } from "../styleHelpers/placeholders";
 import { StyleLibrary } from './libraries/styleLibrary';
 import { PlaceholderLibrary } from './libraries/placeholderlibrary';
-import { FontLibrary } from './libraries/fontLibrary';
 import { combineStyles } from '../styleHelpers';
 import { StandardElement } from '../drawable';
 
@@ -75,10 +73,23 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
      * render all of the styles that this drawable is dependent on existing
      */
     protected _createStyleDependencies() {
+        const dependencies = (this.constructor as any)._styleDependencies;
+        if (!dependencies) { return; }
+
         // loop through dependencies and ensure they have their styles created
-        for (let s of (this.constructor as any)._styleDependencies) {
-            s._createStyles();
+        for (let s of dependencies) {
+            s.createStyles();
         }
+    }
+
+    /**
+     * createStyles
+     * ----------------------------------------------------------------------------
+     * allow for creating this stylables styles from outside of a specific class
+     * replaces the "preemptivelyCreateStyles" function
+     */
+    public static createStyles() {
+        new (this as any);
     }
 
     /**
