@@ -9,6 +9,7 @@ import { StyleLibrary } from './libraries/styleLibrary';
 import { PlaceholderLibrary } from './libraries/placeholderlibrary';
 import { combineStyles } from '../styleHelpers';
 import { StandardElement } from '../drawable';
+import { IStylableDependency } from '.';
 
 /**----------------------------------------------------------------------------
  * @class Stylable
@@ -29,13 +30,76 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
     private _mergedStyles: IStandardStyles;
 
     /** store the dependencies that this class has on other stylables */
-    protected static _styleDependencies: IConstructor<Stylable>[];
+    protected static _styleDependencies: IStylableDependency[];
 
     /** overridable function for grabbing a unique key for this element */
     protected get _uniqueKey(): string { return (this.constructor as any).name; }
 
     //#endregion
     //................................................
+
+    //..........................................
+    //#region STATIC METHODS
+    
+    /**
+     * createStyles
+     * ----------------------------------------------------------------------------
+     * creates all of the styles that are associated with this stylable, or 
+     * listed as dependencies. This is performed at the class level because an
+     * implementer of the Stylable could legitimately be uninstantiable (e.g. 
+     * an abstract parent class like Shield) 
+     * 
+     * @param   uniqueKey   The identifier for this class; uses the name of the class 
+     *                      if not provided
+     * @param
+     */
+    public static createStyles(uniqueKey?: string, mergedStyles?: IStandardStyles, forceOverride?: boolean) {
+        if (!uniqueKey) { uniqueKey = this.name; }
+        if (!mergedStyles) { mergedStyles = this._uncoloredStyles; }
+        this._createStyleDependencies();
+        this._createSelfStyles(uniqueKey, mergedStyles, forceOverride);
+    }
+
+    /**
+     * _createStyleDependencies
+     * ----------------------------------------------------------------------------
+     * render all of the styles that this drawable is dependent on existing
+     */
+    private static _createStyleDependencies() {
+        const dependencies = this._styleDependencies;
+        if (!dependencies) { return; }
+
+        // loop through dependencies and ensure they have their styles created
+        for (let s of dependencies) {
+            (s as any).createStyles();
+        }
+    }
+
+    /**
+     * _createStyles
+     * ----------------------------------------------------------------------------
+     * Create the styles for this class 
+     * @param   forceOverride   True if we should create the classes even if they 
+     *                          already exist
+     */
+    private static _createSelfStyles(uniqueKey: string, mergedStyles: IStandardStyles, forceOverride?: boolean): void {
+        
+        // if we don't have styles, or we've already created, quit
+        if (isEmptyObject(mergedStyles)) { return; }
+        if (StyleLibrary.hasStyles(uniqueKey) && !forceOverride) { return; }
+
+        // ==> flatten & split our styles
+        let flattenedStyles = flattenStyles(mergedStyles);
+        let split = splitStyles(flattenedStyles);
+
+        // ==> send the styles to their appropriate handlers
+        StyleLibrary.add(uniqueKey, split.standard, forceOverride);
+        PlaceholderLibrary.add(uniqueKey, split.withPlaceholders, forceOverride);
+
+    }
+    
+    //#endregion
+    //..........................................
 
     //...........................
     //#region INSTANCE METHODS
@@ -48,12 +112,9 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
     constructor() {
         super("Stylable");
         this._mergedStyles = this._uncoloredStyles;
-        this._createStyleDependencies();
         this._createStyles();
         registerStandardMediaQueries();
     }
-
-    
 
     /**
      * mergeInStyles
@@ -67,20 +128,7 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
         return this;
     }
 
-    /**
-     * _createStyleDependencies
-     * ----------------------------------------------------------------------------
-     * render all of the styles that this drawable is dependent on existing
-     */
-    protected _createStyleDependencies() {
-        const dependencies = (this.constructor as any)._styleDependencies;
-        if (!dependencies) { return; }
-
-        // loop through dependencies and ensure they have their styles created
-        for (let s of dependencies) {
-            s.createStyles();
-        }
-    }
+    
 
     /**
      * createStyles
@@ -88,32 +136,15 @@ export abstract class Stylable<P extends string = string> extends NamedClass {
      * allow for creating this stylables styles from outside of a specific class
      * replaces the "preemptivelyCreateStyles" function
      */
-    public static createStyles() {
-        new (this as any);
+    private _createStyles(forceOverride?: boolean) {
+        (this.constructor as any).createStyles(
+            this._uniqueKey,
+            this._mergedStyles,
+            forceOverride
+        )
     }
 
-    /**
-     * _createStyles
-     * ----------------------------------------------------------------------------
-     * Create the styles for this class 
-     * @param   forceOverride   True if we should create the classes even if they 
-     *                          already exist
-     */
-    protected _createStyles(forceOverride?: boolean): void {
-        
-        // if we don't have styles, or we've already created, quit
-        if (isEmptyObject(this._mergedStyles)) { return; }
-        if (StyleLibrary.hasStyles(this._uniqueKey) && !forceOverride) { return; }
-
-        // ==> flatten & split our styles
-        let flattenedStyles = flattenStyles(this._mergedStyles);
-        let split = splitStyles(flattenedStyles);
-
-        // ==> send the styles to their appropriate handlers
-        StyleLibrary.add(this._uniqueKey, split.standard, forceOverride);
-        PlaceholderLibrary.add(this._uniqueKey, split.withPlaceholders, forceOverride);
-
-    }
+    
 
     /**
      * replacePlaceholder
