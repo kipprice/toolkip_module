@@ -35,9 +35,7 @@ export class ToastPopup extends Popup {
         }
     }
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(Popup._uncoloredStyles, ToastPopup._uncoloredStyles);
-    }
+    protected static _styleDependencies = [Popup];
 
     constructor(details: string, title?: string, showFor?: number, obj?: IElemDefinition) {
         super(obj);
