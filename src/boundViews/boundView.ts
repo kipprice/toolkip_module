@@ -20,6 +20,7 @@ import { Binder } from "../binding";
  * @class	BoundView
  * ----------------------------------------------------------------------------
  * create a view that binds to a view model
+ * TODO: allow for elems to specify different binding types (e.g. cls)
  * @author	Kip Price
  * @version	1.0.1
  * ----------------------------------------------------------------------------
@@ -237,10 +238,10 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
      * wrapper around the standard function for creating elements that handles 
      * binding a little more nuanced
      */
-    protected _createElement(obj: IBoundElemDefinition<VM>): StandardElement {
+    protected _createBase(obj: IBoundElemDefinition<VM>): StandardElement {
 
         // use the standard function, but recurse with this one
-        let recurseFunc: ICreateElementFunc = (obj: IBoundElemDefinition) => { return this._createElement(obj); }
+        let recurseFunc: ICreateElementFunc = (obj: IBoundElemDefinition) => { return this._createBase(obj); }
         let elem = createCustomElement(obj, this._elems as any, recurseFunc);
 
         // if a binding is specified, set it up
@@ -250,7 +251,7 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
     }
 
     protected _elem(obj: IBoundElemDefinition<VM>): StandardElement {
-        return this._createElement(obj);
+        return this._createBase(obj);
     }
 
     protected async _bindElement(elem: IBindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
