@@ -1,4 +1,4 @@
-import { TestUI } from "../testUi";
+import { _TestUI } from "../testUi";
 import { UI } from "./htmlUi";
 import { TestResults, IVisualTestButton } from "../_interfaces";
 import { VisualResults } from "./_interfaces";
@@ -11,7 +11,7 @@ import { VisualResults } from "./_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class HTMLUnitTestUI extends TestUI {
+export class HTMLUnitTestUI extends _TestUI {
 
     //#region PROPERTIES
     protected _drawable: UI;

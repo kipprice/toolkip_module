@@ -1,5 +1,5 @@
 import { TOOLTIP_MARGIN } from './_constants';
-import {Drawable} from "../drawable/drawable";
+import {_Drawable} from "../drawable/_drawable";
 import { ITooltipElements, TooltipPositionType } from "./_interfaces";
 import { IBasicRect, IPoint } from "../maths/_interfaces";
 import { IElemDefinition } from "../htmlHelpers/_interfaces";
@@ -18,7 +18,7 @@ import { measureElement } from "../htmlHelpers/elementPositioning";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class Tooltip extends Drawable {
+export class Tooltip extends _Drawable {
 
     //.....................
     //#region PROPERTIES

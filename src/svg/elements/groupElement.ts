@@ -1,4 +1,4 @@
-import { SVGElem } from "./svgElement";
+import { _SVGElem } from "./svgElement";
 import { Collection } from "../../dataStructures/collection/collection";
 import { SVGStyle } from "../svgStyle";
 import { ISVGAttributes, IPathPoint, IPathSVGAttributes, ICurvePoint, SVGShapeEnum } from "../_interfaces";
@@ -14,7 +14,7 @@ import {
 	CurveElement, 
 	PolygonElement, 
 	StarElement, 
-	PathExtensionElement, 
+	_PathExtensionElement, 
 	CheckElement, 
 	ExElement, 
 	PlusElement 
@@ -30,7 +30,7 @@ import { TextElement } from "./textElement";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export class GroupElement extends SVGElem {
+export class GroupElement extends _SVGElem {
 
 	//#region ID TRACKING
 	protected static _lastId: number = 0;
@@ -43,11 +43,11 @@ export class GroupElement extends SVGElem {
 	//#region PROPERTIES
 
 	/** all SVG elements in this group */
-	protected _svgElems: Collection<SVGElem>;
+	protected _svgElems: Collection<_SVGElem>;
 
 	/** all elements that should not be scaled in this group */
-	protected _nonScaled: SVGElem[];
-	public get nonScaled(): SVGElem[] { return this._nonScaled; }
+	protected _nonScaled: _SVGElem[];
+	public get nonScaled(): _SVGElem[] { return this._nonScaled; }
 
 	/** override the default style getter; we don't need to apply anything */
 	public get style(): SVGStyle { return this._style; }
@@ -57,7 +57,7 @@ export class GroupElement extends SVGElem {
 		super(attr);
 
 		// Initiate collections
-		this._svgElems = new Collection<SVGElem>();
+		this._svgElems = new Collection<_SVGElem>();
 		this._nonScaled = [];
 	}
 
@@ -82,7 +82,7 @@ export class GroupElement extends SVGElem {
 		if (childExtrema.max.y < this._extrema.max.y) { this._extrema.max.y = childExtrema.max.y; }
 	}
 
-	private _addChildElement(elem: SVGElem, skipUpdateExtrema?: boolean): void {
+	private _addChildElement(elem: _SVGElem, skipUpdateExtrema?: boolean): void {
 
 		// style the element appropriately
 		elem.style.merge(this._style);
@@ -338,7 +338,7 @@ export class GroupElement extends SVGElem {
 	 * @returns The created shape
 	 * 
 	 */
-	public addShape(shapeType: SVGShapeEnum, scale?: number, centerPt?: IPoint, attr?: IAttributes): PathExtensionElement {
+	public addShape(shapeType: SVGShapeEnum, scale?: number, centerPt?: IPoint, attr?: IAttributes): _PathExtensionElement {
 
 		// Use our default scale if one wasn't passed in
 		if (!scale) { scale = 1; }

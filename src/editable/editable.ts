@@ -1,4 +1,4 @@
-import {Drawable} from '../drawable/drawable';
+import {_Drawable} from '../drawable/_drawable';
 import { 
 		ValidateFunction, 
 		UpdateFunction, 
@@ -21,7 +21,7 @@ import { select } from '../htmlHelpers/generalHelpers';
  * @version	1.3.0
  * ---------------------------------------------------------------------------
  */
-export class Editable<T> extends Drawable {
+export class Editable<T> extends _Drawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -71,8 +71,8 @@ export class Editable<T> extends Drawable {
 	protected static _uncoloredStyles: IStandardStyles = {
 		".unselectable": {
 			userSelect: "none",
-			MozUserSelect: "none",
-			WebkitUserSelect: "none",
+			mozUserSelect: "none",
+			webkitUserSelect: "none",
 			khtmlUserSelect: "none",
 			oUserSelect: "none"
 		},

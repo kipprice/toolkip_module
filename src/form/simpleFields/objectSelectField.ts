@@ -1,5 +1,5 @@
 import { IObjectSelectTemplate, FieldTypeEnum, IObjectOption } from "../_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { ISelectOptions } from "../../objectHelpers/_interfaces";
 import { createSelectElement } from "../helpers";
 import { map } from "../../objectHelpers/navigate";
@@ -13,7 +13,7 @@ import { map } from "../../objectHelpers/navigate";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class ObjectSelectField<M, T extends IObjectSelectTemplate<M>> extends Field<M, T> {
+export class ObjectSelectField<M, T extends IObjectSelectTemplate<M>> extends _Field<M, T> {
     //.....................
     //#region PROPERTIES
 

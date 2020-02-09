@@ -1,4 +1,4 @@
-import { UnitTester } from "../test";
+import { _UnitTester } from "../test";
 import { ConsoleUnitTestUI } from "./consoleUnitTestUi";
 
 /**----------------------------------------------------------------------------
@@ -9,7 +9,7 @@ import { ConsoleUnitTestUI } from "./consoleUnitTestUi";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ConsoleUnitTester extends UnitTester {
+export class ConsoleUnitTester extends _UnitTester {
     private __ui: ConsoleUnitTestUI;
     protected get _ui(): ConsoleUnitTestUI { 
         if (this.__ui) { return this.__ui; }

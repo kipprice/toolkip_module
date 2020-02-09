@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 import { createSimpleElement, createElement } from "../../htmlHelpers/createElement";
 import { createInputElement } from "../helpers";
@@ -14,7 +14,7 @@ import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "../../primit
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class DateTimeField extends Field<Date> {
+export class DateTimeField extends _Field<Date> {
 
     //.....................
     //#region PROPERTIES

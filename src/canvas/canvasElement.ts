@@ -15,7 +15,7 @@ import { doBasicRectsOverlap } from "../maths/overlap";
  * @author	Kip Price
  * ----------------------------------------------------------------------------
  */
-export abstract class CanvasElement {
+export abstract class _CanvasElement {
 
 	//#region PROPERTIES
 
@@ -155,7 +155,7 @@ export abstract class CanvasElement {
 		if (!this._parent) { return; }
 
 		// create a clone of this element
-		let clone: CanvasElement = this._cloneForEffect(this.id + "|e");
+		let clone: _CanvasElement = this._cloneForEffect(this.id + "|e");
 		clone._isEffect = true;
 		clone._layer = this._layer;
 		clone.style = this._cloneStyle();
@@ -185,7 +185,7 @@ export abstract class CanvasElement {
 	 * @returns
 	 *  
 	 */
-	protected abstract _cloneForEffect(id: string): CanvasElement;
+	protected abstract _cloneForEffect(id: string): _CanvasElement;
 
 	/**
 	 * _cloneStyle

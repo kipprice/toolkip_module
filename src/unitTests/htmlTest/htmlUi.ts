@@ -1,4 +1,4 @@
-import { Drawable } from "../../drawable/drawable";
+import { _Drawable } from "../../drawable/_drawable";
 import { IUnitTestElems, VisualResults } from "./_interfaces";
 import { createElement } from "../../htmlHelpers/createElement";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
@@ -12,7 +12,7 @@ import { IVisualTestButton } from "../_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class UI extends Drawable {
+export class UI extends _Drawable {
 
     //.....................
     //#region PROPERTIES

@@ -7,16 +7,16 @@ import { addClass, removeClass } from "../../styleHelpers/css";
 import { ErrorPopup } from "../../popups/errorPopup";
 import { YesNoPopup } from "../../popups/yesNoPopup";
 import { YesNoEnum } from "../../popups/_interfaces";
-import { Field } from "../_field";
-import { Drawable } from "../../drawable/drawable";
+import { _Field } from "../_field";
+import { _Drawable } from "../../drawable/_drawable";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { SectionField } from "../complexFields/sectionField";
 import { IFormCollapsibleTemplate } from "../complexFields/_interfaces";
 import { map } from "../../objectHelpers";
-import { Stylable } from "../../stylable";
+import { _Stylable } from "../../stylable";
 
 
-export abstract class _Form<T> extends Drawable<FormColor> {
+export abstract class _Form<T> extends _Drawable<FormColor> {
 
     //..................
     //#region STYLES
@@ -637,11 +637,11 @@ export abstract class _Form<T> extends Drawable<FormColor> {
      * ----------------------------------------------------------------------------
      * Adds a form element to our form after it's been initialized
      */
-    public addFormElement<K extends keyof T>(key: K, formElem: Field<T[K]>): boolean {
+    public addFormElement<K extends keyof T>(key: K, formElem: _Field<T[K]>): boolean {
         return this._elems.coreSection.addChildElement(key, formElem);
     }
 
-    public getField(id: string): Field<any> {
+    public getField(id: string): _Field<any> {
         return this._elems.coreSection.getField(id);
     }
 
@@ -651,7 +651,7 @@ export abstract class _Form<T> extends Drawable<FormColor> {
     //..........................................
     //#region THEMING
     
-    protected _applyThemes(target?: Stylable<FormColor>) {
+    protected _applyThemes(target?: _Stylable<FormColor>) {
         if (!target) { target = this; }
         map(this._placeholderValues, (pVal: any, pName: FormColor) => {
             target.replacePlaceholder(pName, pVal);

@@ -11,7 +11,7 @@ import { cleanURL, splitParams } from "./url";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Router {
+export abstract class _Router {
 
     /** allow loading of script files dynamically */
     protected _loader: ScriptLoader;

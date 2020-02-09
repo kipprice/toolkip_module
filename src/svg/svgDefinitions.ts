@@ -1,8 +1,8 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { createSVGElem } from "./svgHelpers";
 
 
-export class SVGDefinitionsElement extends Drawable {
+export class SVGDefinitionsElement extends _Drawable {
 
     protected _elems: {
         base: SVGElement;

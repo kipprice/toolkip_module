@@ -1,5 +1,5 @@
 import { StandardElement } from "../drawable/_interfaces";
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { BoundEvalFunction } from "../binding/_interfaces";
 import { TypedClassDefinition } from "../styleHelpers/_interfaces";
 import { IKeyValPair, IDictionary, IConstructor } from "../objectHelpers/_interfaces";
@@ -16,7 +16,7 @@ export type IChildren = IChild[];
 export type IChild = 
     StandardElement | 
     IElemDefinition | 
-    Drawable;
+    _Drawable;
 
 export interface IClasses {
     [key: string]: IClassDefinition | IKeyValPair<string>[];
@@ -26,7 +26,7 @@ export interface IClassDefinition {
     [key: string]: string;
 }
 
-export type IKeyedElems = IDictionary<StandardElement | Drawable>;
+export type IKeyedElems = IDictionary<StandardElement | _Drawable>;
 
 /**
  * IElemDefinition
@@ -85,7 +85,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     tooltip?: string;
 
     /** allow the function to spin up a drawable instead of an element (will still apply classes & the like) */
-    drawable?: IConstructor<Drawable>;
+    drawable?: IConstructor<_Drawable>;
 }
 
 /**

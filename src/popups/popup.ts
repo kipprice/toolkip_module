@@ -1,4 +1,4 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { PopupElements, PopupColor, IPopupDefinition } from "./_interfaces";
 import { createSimpleElement, createElement } from "../htmlHelpers/createElement";
 import { addClass, removeClass } from "../styleHelpers/css";
@@ -17,7 +17,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class Popup extends Drawable {
+export class Popup extends _Drawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -273,7 +273,7 @@ export class Popup extends Drawable {
 	 * Allows the caller to add a Drawable to the popup
 	 * @param 	drawable 	The drawable element to add
 	 */
-	public addContent(drawable: Drawable): void;
+	public addContent(drawable: _Drawable): void;
 
 	/**
 	 * addContent
@@ -312,7 +312,7 @@ export class Popup extends Drawable {
 	 * @param	cls
 	 * @param	content
 	 */
-	public addContent(param1?: (HTMLElement | string | Drawable | IElemDefinition), cls?: string | IClasses, content?: string): void {
+	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition), cls?: string | IClasses, content?: string): void {
 		let elem: StandardElement;
 
 		// Create an HTMLElement if one wasn't passed in

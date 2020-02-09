@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 
 
@@ -10,7 +10,7 @@ import { FieldTypeEnum } from "../_interfaces";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export class ColorField extends Field<string> {
+export class ColorField extends _Field<string> {
 
     /** type of element */
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.COLOR; }

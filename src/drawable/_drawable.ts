@@ -1,4 +1,4 @@
-import { Stylable } from '../stylable/stylable';
+import { _Stylable } from '../stylable/stylable';
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { 
@@ -16,7 +16,7 @@ import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
  * @version	2.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Drawable<P extends string = string> extends Stylable<P> implements IDrawable {
+export abstract class _Drawable<P extends string = string> extends _Stylable<P> implements IDrawable {
 
 	//.....................
 	//#region PROPERTIES

@@ -1,4 +1,4 @@
-import { TestUI } from "../testUi";
+import { _TestUI } from "../testUi";
 import { TestResults } from "../_interfaces";
 
 
@@ -10,7 +10,7 @@ import { TestResults } from "../_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ConsoleUnitTestUI extends TestUI {
+export class ConsoleUnitTestUI extends _TestUI {
 
     protected _currentGroup: string;
     protected _currentSubgroup: string;

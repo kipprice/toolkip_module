@@ -1,5 +1,5 @@
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
-import { Drawable } from './drawable';
+import { _Drawable } from './_drawable';
 
 /**----------------------------------------------------------------------------
  * @class	SimpleDrawable
@@ -9,7 +9,7 @@ import { Drawable } from './drawable';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class SimpleDrawable extends Drawable {
+export class Drawable extends _Drawable {
 
 	//.....................
 	//#region PROPERTIES

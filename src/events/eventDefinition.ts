@@ -2,7 +2,7 @@ import {Collection} from '../dataStructures/collection/collection';
 import { IEventContext, IListenerData } from './_interfaces';
 import { CollectionTypeEnum } from '../dataStructures/collection/_interfaces';
 import { equals } from '../comparable/comparable';
-import {Event} from './event';
+import {_Event} from './event';
 
 
 /**----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ export class EventDefinition<C extends IEventContext> {
 	 * @param 	context 	The context to send along with the event
 	 * 
 	 */
-	public notifyListeners(context: Event<C>): void {
+	public notifyListeners(context: _Event<C>): void {
 
 		// loop through the listeners to find one that applies for this context
 		this._listeners.map((elem: IListenerData<C>, key: string) => {

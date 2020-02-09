@@ -1,4 +1,4 @@
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import {Collection} from "../dataStructures/collection/collection";
 import { ElementType, EventTypeEnum } from "./_interfaces";
 import { IPoint, IBasicRect } from "../maths/_interfaces";
@@ -15,12 +15,12 @@ import { isPointContained } from "../maths/containment";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class CanvasGroup extends CanvasElement {
+export class CanvasGroup extends _CanvasElement {
 
 	//#region PROPERTIES
 
 	/** keep track of the elements in this group */
-	protected _elements: Collection<CanvasElement>;
+	protected _elements: Collection<_CanvasElement>;
 
 	/** the type of element this is */
 	public get type(): ElementType { return ElementType.Group; }
@@ -52,7 +52,7 @@ export class CanvasGroup extends CanvasElement {
 	 */
 	public get isHoverTarget(): boolean {
 		let isHoverTarget: boolean = false;
-		this._elements.map((elem: CanvasElement) => {
+		this._elements.map((elem: _CanvasElement) => {
 			if (elem.isHoverTarget) {
 				isHoverTarget = true;
 				return;
@@ -75,7 +75,7 @@ export class CanvasGroup extends CanvasElement {
 	 */
 	constructor(id: string, refPoint?: IPoint) {
 		super(id);
-		this._elements = new Collection<CanvasElement>();
+		this._elements = new Collection<_CanvasElement>();
 
 		if (refPoint) {
 			this._referencePoint = {
@@ -120,7 +120,7 @@ export class CanvasGroup extends CanvasElement {
 	protected _onDraw(context: CanvasRenderingContext2D): void {
 
 		// draw the elements relative to the group
-		this._elements.map((elem: CanvasElement) => {
+		this._elements.map((elem: _CanvasElement) => {
 			elem.draw();
 		});
 
@@ -143,7 +143,7 @@ export class CanvasGroup extends CanvasElement {
 		}
 
 		// Add to each of the elements
-		let elem: CanvasElement;
+		let elem: _CanvasElement;
 		this._elements.map((elem) => {
 			elem.updateDimensions(visibleWindow);
 		});
@@ -158,7 +158,7 @@ export class CanvasGroup extends CanvasElement {
 	 * @param	The element to add to the group
 	 * 
 	 */
-	public addElement(elem: CanvasElement): void {
+	public addElement(elem: _CanvasElement): void {
 
 		// Make sure each element is appropriately shifted
 		elem.adjustDimensions(this._referencePoint);
@@ -186,7 +186,7 @@ export class CanvasGroup extends CanvasElement {
 	 * @param	elem	THe element we're adding to update dimensions for
 	 * 
 	 */
-	private _updateInternalDimensionsFromElement(elem: CanvasElement): void {
+	private _updateInternalDimensionsFromElement(elem: _CanvasElement): void {
 
 		let relDim: IBasicRect = {
 			x: this._dimensions.x,
@@ -237,10 +237,10 @@ export class CanvasGroup extends CanvasElement {
 		if ((eventType === EventTypeEnum.LEAVE) || (eventType === EventTypeEnum.HOVER)) { this._clearHover(pt, e as MouseEvent); }
 
 		// Find the affected elements
-		let elems: CanvasElement[] = this._findElementsAtPoint(pt);
+		let elems: _CanvasElement[] = this._findElementsAtPoint(pt);
 
 		// Loop through affected elements to apply the event to them
-		let elem: CanvasElement;
+		let elem: _CanvasElement;
 		for (elem of elems) {
 			elem.handleEvent(eventType, pt, e);
 		}
@@ -257,16 +257,16 @@ export class CanvasGroup extends CanvasElement {
 	private _clearHover(relativePoint: IPoint, e: MouseEvent): void {
 
 		// loop through all of our elements and apply the unhover class
-		this._elements.map((el: CanvasElement) => {
+		this._elements.map((el: _CanvasElement) => {
 			if (!el.isHoverTarget) { return; }
 			el.leave(relativePoint, e);
 		});
 	}
 
 	/** find the elements that are located at the provided point */
-	private _findElementsAtPoint(pt: IPoint): CanvasElement[] {
-		let out: CanvasElement[] = [];
-		this._elements.map((elem: CanvasElement) => {
+	private _findElementsAtPoint(pt: IPoint): _CanvasElement[] {
+		let out: _CanvasElement[] = [];
+		this._elements.map((elem: _CanvasElement) => {
 			if (elem.isOffScreen) { return; }
 
 			// if the point is contained, consider it an 
@@ -281,7 +281,7 @@ export class CanvasGroup extends CanvasElement {
 
 	/** remove elements from layers */
 	public removeElement(id: string): boolean {
-		let tmp: ICollectionElement<CanvasElement> = this._elements.remove(id);
+		let tmp: ICollectionElement<_CanvasElement> = this._elements.remove(id);
 		if (!tmp) { return false; }
 
 		this._canvas.needsRedraw = true;
@@ -295,8 +295,8 @@ export class CanvasGroup extends CanvasElement {
 		let clonedGrp: CanvasGroup = new CanvasGroup(id);
 
 		// Loop through children & clone
-		this._elements.map((elem: CanvasElement) => {
-			let clone: CanvasElement = (elem as any)._cloneForEffect(elem.id + "|e");
+		this._elements.map((elem: _CanvasElement) => {
+			let clone: _CanvasElement = (elem as any)._cloneForEffect(elem.id + "|e");
 			clonedGrp.addElement(clone);
 		});
 
@@ -313,7 +313,7 @@ export class CanvasGroup extends CanvasElement {
 	 */
 	protected _scale(scaleAmt: number): void {
 		if (!this._isEffect) { return; }
-		this._elements.map((elem: CanvasElement) => {
+		this._elements.map((elem: _CanvasElement) => {
 			(elem as any)._scale(scaleAmt);
 		});
 
@@ -334,7 +334,7 @@ export class CanvasGroup extends CanvasElement {
 		this._referencePoint.x += adjustPt.x;
 		this._referencePoint.y += adjustPt.y;
 
-		this._elements.map((elem: CanvasElement) => {
+		this._elements.map((elem: _CanvasElement) => {
 			elem.adjustDimensions(adjustPt);
 		});
 	}
@@ -350,7 +350,7 @@ export class CanvasGroup extends CanvasElement {
 	protected _setCanvas(canvas: HTML5Canvas): void {
 		super._setCanvas(canvas);
 
-		this._elements.map((elem: CanvasElement) => {
+		this._elements.map((elem: _CanvasElement) => {
 			elem.canvas = this._canvas;
 			this._updateInternalDimensionsFromElement(elem);
 		});

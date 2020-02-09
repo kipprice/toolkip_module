@@ -1,5 +1,5 @@
 import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString, FormColor } from "./_interfaces";
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { isNullOrUndefined } from "../typeGuards/falsey";
 import { hasClass, addClass, removeClass } from "../styleHelpers/css";
 import { createTable } from "../htmlHelpers/tables";
@@ -24,7 +24,7 @@ import { join } from "../primitiveHelpers";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> extends Drawable<FormColor> {
+export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> extends _Drawable<FormColor> {
 
     //..........................................
     //#region CONSTANTS
@@ -213,7 +213,7 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
      * @param   id      The ID of the element; should be unique in the form
      * @param   data    a template or existing form element 
      */
-    constructor(id: string, data?: T | Field<M, T>) {
+    constructor(id: string, data?: T | _Field<M, T>) {
         super();
         this._addClassName("FormElement");
         this._id = id;
@@ -934,7 +934,7 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
      * ----------------------------------------------------------------------------
      * wrapper around the cloning method so we don't run into protection issues 
      */
-    protected _cloneFormElement(elemToClone: Field<any>, appendToID?: string): Field<any> {
+    protected _cloneFormElement(elemToClone: _Field<any>, appendToID?: string): _Field<any> {
         if (!appendToID) { appendToID = ""; }
         return elemToClone._createClonedElement(appendToID);
     }
@@ -949,8 +949,8 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
      * 
      * @returns The cloned form element
      */
-    protected _createClonedElement(appendToID: string): Field<M, T> {
-        return new (this.constructor as IConstructor<Field<M, T>>)(this._id + appendToID, this._config);
+    protected _createClonedElement(appendToID: string): _Field<M, T> {
+        return new (this.constructor as IConstructor<_Field<M, T>>)(this._id + appendToID, this._config);
     }
 
     //#endregion
@@ -959,7 +959,7 @@ export abstract class Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> exte
     //..........................................
     //#region GET ELEMENTS AFTER CREATION
 
-    public getField(id: string): Field<any> {
+    public getField(id: string): _Field<any> {
         if (id === this._id) { return this; }
         return null;
     }

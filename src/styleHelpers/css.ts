@@ -1,7 +1,7 @@
 import { trim } from '../primitiveHelpers/strings';
 import { DrawableElement, StandardElement } from '../drawable/_interfaces';
 import { isDrawable } from '../drawable/_typeguards';
-import { Drawable } from '../drawable/drawable';
+import { _Drawable } from '../drawable/_drawable';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { IKeyValPair } from '../objectHelpers/_interfaces';
 
@@ -87,7 +87,7 @@ export function removeClass(elem: DrawableElement, oldClass: string): void {
  * @return {Boolean}            True if the element has the CSS class applied; false otherwise
  * 
  */
-export function hasClass(elem: HTMLElement | Drawable, cls: string): boolean {
+export function hasClass(elem: HTMLElement | _Drawable, cls: string): boolean {
   let e: DrawableElement;
   let cur_cls: string;
 
@@ -260,13 +260,13 @@ export function oldCreateClass(selector: string, attr: IClassDefinition | IKeyVa
  *
  * @return {string} Either the particular value for the passed in attribute, or the whole style array.
  */
-export function getComputedStyle(elem: Drawable | HTMLElement, attr: string): CSSStyleDeclaration | string {
+export function getComputedStyle(elem: _Drawable | HTMLElement, attr: string): CSSStyleDeclaration | string {
   let style: CSSStyleDeclaration;
   let e: Element;
 
   // Handle Drawables being passed in
-  if ((<Drawable>elem).draw !== undefined) {
-    e = (<Drawable>elem).base;
+  if ((<_Drawable>elem).draw !== undefined) {
+    e = (<_Drawable>elem).base;
   } else {
     e = <HTMLElement>elem;
   }

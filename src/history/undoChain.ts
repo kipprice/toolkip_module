@@ -10,7 +10,7 @@ import { Undoable } from "./_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class UndoChain extends HistoryChain<Undoable> {
+export abstract class _UndoChain extends HistoryChain<Undoable> {
 
     /**
      * UndoChain

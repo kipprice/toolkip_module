@@ -1,15 +1,15 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { ISVGElems, ISVGOptions, IPathPoint, IPathSVGAttributes, ISVGAttributes, SVGShapeEnum } from "./_interfaces";
 import { IBasicRect, IExtrema, IPoint } from "../maths/_interfaces";
 import { SVGStyle } from "./svgStyle";
 import { Collection } from "../dataStructures/collection/collection";
-import { SVGElem } from "./elements/svgElement";
+import { _SVGElem } from "./elements/svgElement";
 import { reconcileOptions } from "../objectHelpers/combine";
 import { createSVG } from "./svgHelpers";
 import { PathElement } from "./elements/pathElement";
 import { RectangleElement } from "./elements/rectElement";
 import { CircleElement } from "./elements/circleElement";
-import { ArcElement, PieSliceElement, PolygonElement, StarElement, PathExtensionElement } from "./additionalPaths";
+import { ArcElement, PieSliceElement, PolygonElement, StarElement, _PathExtensionElement } from "./additionalPaths";
 import { TextElement } from "./elements/textElement";
 import { GroupElement } from "./elements/groupElement";
 import { SVGDefinitionsElement } from "./svgDefinitions";
@@ -24,7 +24,7 @@ import { makeDraggable }  from "../draggable/draggableWrapper";
  * @version 1.1.0
  * ----------------------------------------------------------------------------
  */
-export class SVGDrawable extends Drawable {
+export class SVGDrawable extends _Drawable {
 
 	//#region PROPERTIES
 
@@ -63,7 +63,7 @@ export class SVGDrawable extends Drawable {
 	/** styles for the SVG element */
 	public get style(): SVGStyle { return this._group.style; }
 
-	private _elemCollections: Collection<SVGElem>;
+	private _elemCollections: Collection<_SVGElem>;
 
 	protected _shouldSkipCreateElements(): boolean { return true; }
 
@@ -601,13 +601,13 @@ export class SVGDrawable extends Drawable {
 		return group;
 	}
 
-	public addShape(shapeType: SVGShapeEnum, scale?: number, centerPt?: IPoint, attr?: ISVGAttributes): PathExtensionElement {
+	public addShape(shapeType: SVGShapeEnum, scale?: number, centerPt?: IPoint, attr?: ISVGAttributes): _PathExtensionElement {
 		let shape = this._group.addShape(shapeType, scale, centerPt, attr);
 		this._addElementListener(shape);
 		return shape;
 	}
 
-	protected _addElementListener(elem: SVGElem): void {
+	protected _addElementListener(elem: _SVGElem): void {
 		elem.addUpdateListener(() => {
 			this._updateExtrema(elem.extrema);
 		});
@@ -650,7 +650,7 @@ export class SVGDrawable extends Drawable {
 	 * @returns The rotated SVG Element
 	 * 
 	 */
-	public rotateElement(elem: SVGElem, degree: number, rotateAround?: IPoint): SVGElem {
+	public rotateElement(elem: _SVGElem, degree: number, rotateAround?: IPoint): _SVGElem {
 
 		let box: IBasicRect;
 

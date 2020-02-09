@@ -1,4 +1,4 @@
-import { SVGElem } from "./svgElement";
+import { _SVGElem } from "./svgElement";
 import { IPathElems, IPathPoint, IPathSVGAttributes, ISVGAttributes, ICurvePoint, IArcPoint } from "../_interfaces";
 import { IPoint } from "../../maths/_interfaces";
 import { cloneObject } from "../../objectHelpers/cloning";
@@ -13,7 +13,7 @@ import { isNullOrUndefined } from "../../typeGuards/falsey";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export class PathElement extends SVGElem {
+export class PathElement extends _SVGElem {
 
 	//#region PROPERTIES
 

@@ -1,5 +1,5 @@
 import { IFormFileElemTemplate } from "./_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 import { IAttributes } from "../../htmlHelpers/_interfaces";
 import { createInputElement } from "../helpers";
@@ -13,7 +13,7 @@ import { createInputElement } from "../helpers";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class FileUploadField<T extends IFormFileElemTemplate<FileList> = IFormFileElemTemplate<FileList>> extends Field<FileList, T> {
+export class FileUploadField<T extends IFormFileElemTemplate<FileList> = IFormFileElemTemplate<FileList>> extends _Field<FileList, T> {
 
     //.....................
     //#region PROPERTIES

@@ -1,5 +1,5 @@
 import { IDictionary } from './../objectHelpers/_interfaces';
-import { Color, HexColor, HSLColor } from './color';
+import { _Color, HexColor, HSLColor } from './color';
 import { HSLPieceEnum } from './_interfaces';
 
 
@@ -13,14 +13,14 @@ import { HSLPieceEnum } from './_interfaces';
  */
 class _GlobalColor {
     protected _usedColors: IDictionary<string>;
-    protected _innerColor: Color;
+    protected _innerColor: _Color;
 
     constructor() {
         this._usedColors = {};
         this._innerColor = new HSLColor("hsl(330, 80%, 50%)");
     }
 
-    public generateColor(id: string, firstRotate?: HSLPieceEnum): Color {
+    public generateColor(id: string, firstRotate?: HSLPieceEnum): _Color {
         
         let colorStr: string = this._usedColors[id] || "";
     

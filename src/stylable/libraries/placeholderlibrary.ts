@@ -16,7 +16,7 @@ import { doesElementMatchSelector } from "../../htmlHelpers";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class _PlaceholderLibrary extends _Library{
+class _PlaceholderLibrary extends _Library{
     //.....................
     //#region PROPERTIES
     

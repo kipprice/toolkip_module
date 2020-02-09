@@ -1,4 +1,4 @@
-import { GenericDraggable, DraggableTarget } from "./draggable";
+import { _GenericDraggable, _DraggableTarget } from "./draggable";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { createElement } from "../htmlHelpers/createElement";
 import { StandardElement } from "../drawable/_interfaces";
@@ -11,7 +11,7 @@ import { StandardElement } from "../drawable/_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class HTML5Draggable extends GenericDraggable {
+export class HTML5Draggable extends _GenericDraggable {
 
     /**
      * _createElements
@@ -82,7 +82,7 @@ export class HTML5Draggable extends GenericDraggable {
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class HTML5DragTarget extends DraggableTarget {
+export class HTML5DragTarget extends _DraggableTarget {
 
     protected _addEventListeners(): void {
         this.base.addEventListener("dragover", (e: DragEvent) => { this._onDragEnter(e); });

@@ -1,4 +1,4 @@
-import { GenericDraggable, DraggableTarget } from "./draggable";
+import { _GenericDraggable, _DraggableTarget } from "./draggable";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { StandardElement } from "../drawable/_interfaces";
 
@@ -12,7 +12,7 @@ import { StandardElement } from "../drawable/_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ClassicDraggable extends GenericDraggable {
+export class ClassicDraggable extends _GenericDraggable {
 
     /**
      * _createElements
@@ -91,7 +91,7 @@ export class ClassicDraggable extends GenericDraggable {
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ClassicDraggableTarget extends DraggableTarget {
+export class ClassicDraggableTarget extends _DraggableTarget {
 
     /**
      * _addEventListeners
@@ -100,7 +100,7 @@ export class ClassicDraggableTarget extends DraggableTarget {
      */
     protected _addEventListeners(): void {
         this.addEventListener("mouseup", (e: MouseEvent) => {
-            if (!GenericDraggable.currentDraggable) { return; }
+            if (!_GenericDraggable.currentDraggable) { return; }
             this._onDrop(e);
         });
 

@@ -2,14 +2,14 @@ import { IDictionary } from "../objectHelpers/_interfaces";
 
 
 /**----------------------------------------------------------------------------
- * @class	NavigationState<T>
+ * @class	ApplicationState<T>
  * ----------------------------------------------------------------------------
  * Keep track of state at the navigation level
  * @author	Kip Price
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class ApplicationState<T extends IDictionary<any>> {
+export abstract class _ApplicationState<T extends IDictionary<any>> {
 
 	/** each instance of state will have its own set of data it wants to store */
 	protected _models: T;

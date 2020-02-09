@@ -1,4 +1,4 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { IUpdateFunctions, 
         IBindableElement, 
         IViewUpdateFunc, 
@@ -12,12 +12,12 @@ import { StandardElement } from "../drawable/_interfaces";
 import { ICreateElementFunc } from "../htmlHelpers/_interfaces";
 import { createCustomElement } from "../htmlHelpers/createElement";
 import { wait } from "../async";
-import { UpdateableView } from "./updateableView";
+import { _UpdateableView } from "./updateableView";
 import { isUpdatable } from "../structs/_typeguards";
 import { Binder } from "../binding";
 
 /**----------------------------------------------------------------------------
- * @class	BoundView
+ * @class	_BoundView
  * ----------------------------------------------------------------------------
  * create a view that binds to a view model
  * TODO: allow for elems to specify different binding types (e.g. cls)
@@ -25,7 +25,7 @@ import { Binder } from "../binding";
  * @version	1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class BoundView<VM = any, VC = any> extends Drawable {
+export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
 
     //.....................
     //#region PROPERTIES
@@ -176,7 +176,7 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
             } else if (isUpdatable(elem)) {
                 this._updateUpdateable(elem, value);
             } else {
-                this._updateBoundView(elem as BoundView<VM[K] | VM>, value);
+                this._updateBoundView(elem as _BoundView<VM[K] | VM>, value);
             }
 
         }
@@ -188,11 +188,11 @@ export abstract class BoundView<VM = any, VC = any> extends Drawable {
         elem.innerHTML = value.toString();
     }
 
-    protected _updateUpdateable<K extends keyof VM>(elem: UpdateableView<VM[K] | VM>, value: VM[K] | VM): void {
+    protected _updateUpdateable<K extends keyof VM>(elem: _UpdateableView<VM[K] | VM>, value: VM[K] | VM): void {
         elem.update(value);
     }
 
-    protected _updateBoundView<K extends keyof VM>(elem: BoundView<VM[K] | VM>, value: VM[K] | VM): void {
+    protected _updateBoundView<K extends keyof VM>(elem: _BoundView<VM[K] | VM>, value: VM[K] | VM): void {
         elem.model = value;
     }
 

@@ -1,6 +1,6 @@
 import { IPartial } from '../structs/partial';
 import { Identifiable } from './_interfaces';
-import { Serializable } from '../serializable/serializableModel';
+import { _Serializable } from '../serializable/serializableModel';
 
 
 /**----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ import { Serializable } from '../serializable/serializableModel';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class IdentifiableModel<T extends Identifiable = Identifiable> extends Serializable<T> implements Identifiable {
+export class IdentifiableModel<T extends Identifiable = Identifiable> extends _Serializable<T> implements Identifiable {
 
     //.....................
     //#region PROPERTIES

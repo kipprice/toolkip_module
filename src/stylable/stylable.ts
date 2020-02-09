@@ -1,7 +1,7 @@
 import { IStandardStyles, ICustomFonts } from '../styleHelpers/_interfaces';
 import { IConstructor, IDictionary } from '../objectHelpers/_interfaces';
 import { isEmptyObject } from '../objectHelpers/navigate';
-import { NamedClass } from '../namedClass/namedClass';
+import { _NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 import { splitStyles } from "../styleHelpers/placeholders";
@@ -19,14 +19,14 @@ import { IStylableDependency } from '.';
  * @version 1.1.2
  * ----------------------------------------------------------------------------
  */
-export abstract class Stylable<P extends string = string> extends NamedClass {
+export abstract class _Stylable<P extends string = string> extends _NamedClass {
 
     //................................................
     //#region PROPERTIES
 
     /** keep track of the un-themed version of our styles */
     protected static _uncoloredStyles: IStandardStyles;
-    private get _uncoloredStyles(): IStandardStyles { return (this.constructor as typeof Stylable)._uncoloredStyles; }
+    private get _uncoloredStyles(): IStandardStyles { return (this.constructor as typeof _Stylable)._uncoloredStyles; }
     private _mergedStyles: IStandardStyles;
 
     /** store the values we've set for various placeholders */

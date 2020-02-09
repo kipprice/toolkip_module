@@ -1,4 +1,4 @@
-import { Event } from './event';
+import { _Event } from './event';
 /**
 	 * IEvent
 	 * ----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ export interface IEventDefinition {
  * @param	ev	The Event that is being fired
  */
 export interface IListener<C extends IEventContext> {
-    (ev: Event<C>): void;
+    (ev: _Event<C>): void;
 }
 
 /**

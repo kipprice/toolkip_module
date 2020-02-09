@@ -1,10 +1,10 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { IShieldElements } from "./_interfaces";
 import { createElement } from "../htmlHelpers/createElement";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 
 
-export abstract class Shield extends Drawable {
+export abstract class _Shield extends _Drawable {
 
     protected _elems: IShieldElements;
 

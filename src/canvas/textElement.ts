@@ -1,4 +1,4 @@
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import { ElementType, StyleChangeEnum } from "./_interfaces";
 import { HTML5Canvas } from "./canvas";
 import { IPoint } from "../maths/_interfaces";
@@ -12,7 +12,7 @@ import { IPoint } from "../maths/_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class TextElement extends CanvasElement {
+export class TextElement extends _CanvasElement {
 
 	//#region PROPERTIES
 

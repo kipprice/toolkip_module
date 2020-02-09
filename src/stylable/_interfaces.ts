@@ -1,5 +1,5 @@
 import { IStandardStyles } from "../styleHelpers";
-import { Stylable } from ".";
+import { _Stylable } from ".";
 
 
 export interface ICreatedStyles {
@@ -8,5 +8,5 @@ export interface ICreatedStyles {
 
 export interface IStylableDependency {
     createStyles(uniqueKey?: string, styles?: IStandardStyles, forceOverride?: boolean);
-    new?: (...addlArgs: any[]) => Stylable;
+    new?: (...addlArgs: any[]) => _Stylable;
 }

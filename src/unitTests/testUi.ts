@@ -2,14 +2,14 @@ import { format } from "../primitiveHelpers/strings";
 import { TestResults } from "./_interfaces";
 
 /**----------------------------------------------------------------------------
- * @class   TestUI
+ * @class   _TestUI
  * ----------------------------------------------------------------------------
  * Render the appropriate UI for a set of unit tests
  * @author  Kip Price
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class TestUI {
+export abstract class _TestUI {
 	abstract renderTest<T>(data: TestResults<T>): void;
 	abstract startGroup(groupName: string): void;
 	abstract startSubgroup(subgroupName: string): void;

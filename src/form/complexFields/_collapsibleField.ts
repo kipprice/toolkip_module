@@ -1,5 +1,5 @@
 import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { createElement, createSimpleElement } from "../../htmlHelpers/createElement";
 import { addClass, removeClass } from "../../styleHelpers/css";
 import { transition } from "../../styleHelpers/transition";
@@ -9,14 +9,14 @@ import { FormColor } from "..";
 
 
 /**----------------------------------------------------------------------------
- * @class CollapsibleField
+ * @class _CollapsibleField
  * ----------------------------------------------------------------------------
  * Create a collapsible element of the form
  * @author  Kip Price
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class CollapsibleField<M, T extends IFormCollapsibleTemplate<M> = IFormCollapsibleTemplate<M>> extends Field<M, T> {
+export abstract class _CollapsibleField<M, T extends IFormCollapsibleTemplate<M> = IFormCollapsibleTemplate<M>> extends _Field<M, T> {
 
     //.....................
     //#region PROPERTIES
@@ -196,7 +196,7 @@ export abstract class CollapsibleField<M, T extends IFormCollapsibleTemplate<M> 
     //..........................................
     //#region THEME HELPERS
     
-    protected _applyThemes(child: Field<any>) {
+    protected _applyThemes(child: _Field<any>) {
         map(this._placeholderValues, (pVal: any, pName: FormColor) => {
             child.replacePlaceholder(pName, pVal);
         })

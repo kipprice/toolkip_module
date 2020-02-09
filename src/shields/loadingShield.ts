@@ -1,4 +1,4 @@
-import { Shield } from "./shield";
+import { _Shield } from "./shield";
 import { ILoadingShieldElements } from "./_interfaces";
 import { createElement } from "../htmlHelpers/createElement";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
@@ -12,7 +12,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @author  Kip Price
  * 
  */
-export class LoadingShield extends Shield {
+export class LoadingShield extends _Shield {
 
     //#region PROPERTIES
 
@@ -60,7 +60,7 @@ export class LoadingShield extends Shield {
     //#endregion
 
     /** make sure we return the right set of styles */
-    protected static _styleDependencies = [Shield];
+    protected static _styleDependencies = [_Shield];
 
     /**
      * Create a loading shield

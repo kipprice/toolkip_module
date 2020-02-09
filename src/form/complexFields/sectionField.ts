@@ -1,7 +1,7 @@
 import {  IFields, FieldTypeEnum, ICanSaveTracker, FormElementLayoutEnum, FormColor } from "../_interfaces";
-import { CollapsibleField } from "./_collapsibleField";
+import { _CollapsibleField } from "./_collapsibleField";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { isField } from "../helpers";
 import { map } from "../../objectHelpers/navigate";
 import { createSimpleElement } from "../../htmlHelpers/createElement";
@@ -18,7 +18,7 @@ import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interface
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M> = IFormCollapsibleTemplate<M>> extends CollapsibleField<M, T> {
+export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M> = IFormCollapsibleTemplate<M>> extends _CollapsibleField<M, T> {
 
     //.................
     //#region STYLES
@@ -68,8 +68,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
 
     /** section elements are a merged set of themes */
     protected static _styleDependencies = [
-        Field,
-        CollapsibleField
+        _Field,
+        _CollapsibleField
     ];
 
     //#endregion
@@ -93,7 +93,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.replacePlaceholder(uniqueId, color, force);
         } else {
-            map(this._children, (child: Field<any>) => {
+            map(this._children, (child: _Field<any>) => {
                 child.replacePlaceholder(uniqueId, color, force);
             });
         }
@@ -105,8 +105,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     }
 
     /** also allow child elements that are gracefully created */
-    protected _children: IFields<M> | Field<M>;
-    public get children(): IFields<M> | Field<M> { return this._children; }
+    protected _children: IFields<M> | _Field<M>;
+    public get children(): IFields<M> | _Field<M> { return this._children; }
 
     /** handle the defaults that all form elements need */
     protected get _defaultCls(): string { return "kipFormElem section"; }
@@ -129,7 +129,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
      * @param   config      Template for the section itself
      * @param   children    All child elements of this section
      */
-    public constructor(id: string, config: T | SectionField<M, T>, children?: IFields<M> | Field<M>) {
+    public constructor(id: string, config: T | SectionField<M, T>, children?: IFields<M> | _Field<M>) {
         super(id, config as any);
 
         // grab children from the parent element if appropriate
@@ -174,7 +174,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
      * parse the children array of this form element 
      * @param   children    The children for this section
      */
-    protected _parseChildren<K extends keyof M>(children?: IFields<M> | Field<M>): void {
+    protected _parseChildren<K extends keyof M>(children?: IFields<M> | _Field<M>): void {
 
         // quit if there isn't any data
         if (!children) {
@@ -184,7 +184,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
 
         // Handle when there is just a single element inside of this section
         if (isField(children)) {
-            let elem: Field<M> = this._parseChild(children);
+            let elem: _Field<M> = this._parseChild(children);
             this._children = elem;
             return;
 
@@ -193,8 +193,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             this._children = {} as IFields<M>;
 
             // go through each of the children
-            map(children, (template: Field<M[K]>, key: K) => {
-                let elem: Field<M[K]> = this._parseChild(template);
+            map(children, (template: _Field<M[K]>, key: K) => {
+                let elem: _Field<M[K]> = this._parseChild(template);
                 (this._children as IFields<M>)[key] = elem;
             });
         }
@@ -206,8 +206,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
      * Go through our children array and create the individual children
      * @param   child   The element to parse
      */
-    protected _parseChild(child: Field<any>): Field<any> {
-        let elem: Field<any> = this._cloneFormElement(child);
+    protected _parseChild(child: _Field<any>): _Field<any> {
+        let elem: _Field<any> = this._cloneFormElement(child);
 
         this._applyThemes(elem);
         elem.draw(this._elems.childrenContainer);
@@ -236,7 +236,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
      * @param   internalOnly    If true, indicates that we aren't doing a full save
      */
     protected async _updateInternalData<K extends keyof M>(internalOnly?: boolean): Promise<any> {
-        let elem: Field<M[K]>;
+        let elem: _Field<M[K]>;
         let data: M;
 
         if (isField(this._children)) {
@@ -246,7 +246,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
 
             let promises: Promise<any>[] = map(
                 this._children,
-                async (elem: Field<M[K]>, key: K): Promise<any> => {
+                async (elem: _Field<M[K]>, key: K): Promise<any> => {
                     return this._updateInternalField(key, elem, data, internalOnly);
                 }
             );
@@ -257,7 +257,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         return data;
     }
 
-    protected async _updateInternalField<K extends keyof M>(key: K, elem: Field<M[K]>, data: M, internalOnly?: boolean): Promise<any> {
+    protected async _updateInternalField<K extends keyof M>(key: K, elem: _Field<M[K]>, data: M, internalOnly?: boolean): Promise<any> {
         data[key] = await elem.save(internalOnly);
         return Promise.resolve();
     }
@@ -305,7 +305,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             };
 
             map(this._children,
-                (child: Field<M[K]>) => {
+                (child: _Field<M[K]>) => {
                     let childCanSave: ICanSaveTracker = child.canSave();
                     canSave.hasErrors = canSave.hasErrors || childCanSave.hasErrors;
                     canSave.hasMissingRequired = canSave.hasMissingRequired || childCanSave.hasMissingRequired;
@@ -326,7 +326,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.clear();
         } else {
-            map(this._children, (elem: Field<M[K]>, key: K) => {
+            map(this._children, (elem: _Field<M[K]>, key: K) => {
                 elem.clear();
             });
         }
@@ -343,7 +343,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             return this._children.focus();
         } else {
             let isFocused: boolean;
-            map(this._children, (value: Field<M[K]>, key: K) => {
+            map(this._children, (value: _Field<M[K]>, key: K) => {
                 if (value.focus()) { isFocused = true; }
             }, () => { return isFocused; })
             return isFocused;
@@ -367,7 +367,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.update(data, allowEvents), allowEvents;
         } else {
-            map(this._children, (elem: Field<M[K]>, key: K) => {
+            map(this._children, (elem: _Field<M[K]>, key: K) => {
                 elem.update(data[key], allowEvents);
             });
         }
@@ -397,7 +397,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     //.............................................
     //#region DYNAMICALLY ADD FIELDS TO THIS FORM
 
-    public addChildElement<K extends keyof M>(key: K, formElem: Field<M[K]>): boolean {
+    public addChildElement<K extends keyof M>(key: K, formElem: _Field<M[K]>): boolean {
 
         // if this section doesn't actually have keyed children, we can't do anything
         if (isField(this._children)) { return false; }
@@ -438,7 +438,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
     //..........................................
     //#region GET ELEMENTS AFTER CREATION
 
-    public getField(id: string): Field<any> {
+    public getField(id: string): _Field<any> {
 
         // first check this element
         if (id === this._id) { return this; }
@@ -447,8 +447,8 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             return this._children.getField(id);
         } else {
-            let result: Field<any>;
-            map(this._children, (child: Field<any>) => {
+            let result: _Field<any>;
+            map(this._children, (child: _Field<any>) => {
                 if (result) { return }
                 result = child.getField(id);
             }, () => { return !!result; })

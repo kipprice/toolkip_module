@@ -1,6 +1,6 @@
 import { IComparable, isComparable } from '../../comparable/comparable';
 import { IDictionary } from '../../objectHelpers/_interfaces';
-import { Tree } from './tree';
+import { _Tree } from './tree';
 
 
 /**----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ import { Tree } from './tree';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class BinaryTree<T extends Comparable> extends Tree<T> {
+export class BinaryTree<T extends Comparable> extends _Tree<T> {
 	//.....................
 	//#region PROPERTIES
 	

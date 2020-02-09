@@ -1,4 +1,4 @@
-import { SVGElem } from "./svgElement";
+import { _SVGElem } from "./svgElement";
 import { ICircleSVGAttributes, ISVGAttributes } from "../_interfaces";
 import { IPoint, IExtrema } from "../../maths/_interfaces";
 
@@ -10,7 +10,7 @@ import { IPoint, IExtrema } from "../../maths/_interfaces";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export class CircleElement extends SVGElem {
+export class CircleElement extends _SVGElem {
 
     /** keep track of attributes for this circle */
     protected _attributes: ICircleSVGAttributes;

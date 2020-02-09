@@ -1,6 +1,6 @@
 import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../_interfaces";
-import { CollapsibleField } from "./_collapsibleField";
-import { Field } from "../_field";
+import { _CollapsibleField } from "./_collapsibleField";
+import { _Field } from "../_field";
 import { isField } from "../helpers";
 import { map } from "../../objectHelpers/navigate";
 import { isNullOrUndefined } from "../../typeGuards/falsey";
@@ -21,7 +21,7 @@ import { isArrayChildElement } from "./_typeguards";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<M>> extends CollapsibleField<M[], T> {
+export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<M>> extends _CollapsibleField<M[], T> {
 
     //.....................
     //#region PROPERTIES
@@ -32,10 +32,10 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
     protected _data: M[];
 
 
-    protected _childTemplate: IFields<M> | Field<M>;
-    public get childTemplate(): IFields<M> | Field<M> { return this._childTemplate; }
+    protected _childTemplate: IFields<M> | _Field<M>;
+    public get childTemplate(): IFields<M> | _Field<M> { return this._childTemplate; }
 
-    protected _children: Field<M>[];
+    protected _children: _Field<M>[];
 
     /** elements contained within the array element */
     protected _elems: {
@@ -114,7 +114,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         }
     };
 
-    protected static _styleDependencies = [Field, CollapsibleField];
+    protected static _styleDependencies = [_Field, _CollapsibleField];
 
     /** 
      * setThemeColor
@@ -130,14 +130,14 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
             if (isField(this._childTemplate)) {
                 this._childTemplate.replacePlaceholder(placeholder, newValue, force);
             } else {
-                map(this._childTemplate, (child: Field<any>) => {
+                map(this._childTemplate, (child: _Field<any>) => {
                     child.replacePlaceholder(placeholder, newValue, force);
                 });
             }
         }
 
         // loop through the children if we have them
-        map(this._children, (child: Field<any>) => {
+        map(this._children, (child: _Field<any>) => {
             child.replacePlaceholder(placeholder, newValue);
         });
     }
@@ -161,7 +161,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
      * @param template  Details for the overall array
      * @param children  
      */
-    constructor(id: string, template: T | ArrayField<M, T>, children?: IFields<M> | Field<M>) {
+    constructor(id: string, template: T | ArrayField<M, T>, children?: IFields<M> | _Field<M>) {
         super(id, template);
 
         // copy old template over from an existing element
@@ -367,7 +367,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         return data;
     }
 
-    protected async _updateInternalField(elem: Field<M>, data: M[], internalOnly?: boolean): Promise<any> {
+    protected async _updateInternalField(elem: _Field<M>, data: M[], internalOnly?: boolean): Promise<any> {
         if (isNullOrUndefined(elem)) { return Promise.resolve(); }
 
         let childData: any = await elem.save(internalOnly);
@@ -415,7 +415,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
         };
         map(
             this._children,
-            (child: Field<M[K]>) => {
+            (child: _Field<M[K]>) => {
                 let childCanSave: ICanSaveTracker = child.canSave();
                 canSave.hasErrors = canSave.hasErrors || childCanSave.hasErrors;
                 canSave.hasMissingRequired = canSave.hasMissingRequired || childCanSave.hasMissingRequired;
@@ -488,13 +488,13 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
     //..........................................
     //#region GET ELEMENTS AFTER CREATION
 
-    public getField(id: string): Field<any> {
+    public getField(id: string): _Field<any> {
 
         // first check this element
         if (id === this._id) { return this; }
 
         // then check child elements
-        let result: Field<any>;
+        let result: _Field<any>;
         for (let c of this._children) {
             if (result) { break; }
             result = c.getField(id);

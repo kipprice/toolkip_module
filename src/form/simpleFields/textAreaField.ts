@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 import { createInputElement } from "../helpers";
 import { isNullOrUndefined } from "../../typeGuards/falsey";
@@ -12,7 +12,7 @@ import { isNullOrUndefined } from "../../typeGuards/falsey";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class TextAreaField extends Field<string> {
+export class TextAreaField extends _Field<string> {
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.TEXTAREA; }
     protected get _defaultValue(): string { return ""; }
     protected get _defaultCls(): string { return "textarea"; }

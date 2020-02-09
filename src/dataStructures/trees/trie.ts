@@ -1,5 +1,5 @@
 import { rest } from '../../primitiveHelpers/strings';
-import { Tree } from './tree';
+import { _Tree } from './tree';
 import { IDictionary } from '../../objectHelpers/_interfaces';
 
 
@@ -12,7 +12,7 @@ import { IDictionary } from '../../objectHelpers/_interfaces';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class Trie extends Tree<string> {
+export class Trie extends _Tree<string> {
 
     //.....................
     //#region PROPERTIES

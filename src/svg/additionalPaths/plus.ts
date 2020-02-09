@@ -1,4 +1,4 @@
-import { PathExtensionElement } from "./pathExtension";
+import { _PathExtensionElement } from "./pathExtension";
 import { IPoint } from "../../maths/_interfaces";
 import { IPathPoint } from "../_interfaces";
 
@@ -6,7 +6,7 @@ import { IPathPoint } from "../_interfaces";
  * @class	PlusElement
  * 
  */
-export class PlusElement extends PathExtensionElement {
+export class PlusElement extends _PathExtensionElement {
 	protected _generatePoints(centerPt: IPoint): IPathPoint[] {
 		let pts: IPathPoint[] = [
 			{x: 2, y: 2},

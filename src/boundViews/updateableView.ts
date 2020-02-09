@@ -1,14 +1,14 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 
 /**----------------------------------------------------------------------------
- * @class   UpdateableView
+ * @class   _UpdateableView
  * ----------------------------------------------------------------------------
  * Create a view that will be used in a MVC world
  * @author  Kip Price
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class UpdateableView<I> extends Drawable {
+export abstract class _UpdateableView<I> extends _Drawable {
 
     //.....................
     //#region PROPERTIES

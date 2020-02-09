@@ -1,4 +1,4 @@
-import { UnitTester } from "../test";
+import { _UnitTester } from "../test";
 import { IVisualTestButton } from "../_interfaces";
 import { HTMLUnitTestUI } from "./htmlUnitTestUi";
 
@@ -11,7 +11,7 @@ import { HTMLUnitTestUI } from "./htmlUnitTestUi";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class HTMLUnitTester extends UnitTester {
+export class HTMLUnitTester extends _UnitTester {
     protected static _instance: HTMLUnitTester;
 
     private __ui: HTMLUnitTestUI;

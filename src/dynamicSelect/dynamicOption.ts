@@ -1,4 +1,4 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { IDynamicOption, IDynamicOptionElems, IDynamicSelect } from "./_interfaces";
 import { createElement } from "../htmlHelpers/createElement";
 import { addClass, removeClass } from "../styleHelpers/css";
@@ -14,7 +14,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
      * @version 1.0.0
      * ----------------------------------------------------------------------------
      */
-    export class DynamicOption extends Drawable implements IDynamicOption {
+    export class DynamicOption extends _Drawable implements IDynamicOption {
 
         //.....................
         //#region PROPERTIES

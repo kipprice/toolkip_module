@@ -9,7 +9,7 @@ import { _Model }  from '../model/_model';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Serializable<T> extends _Model<T> {
+export abstract class _Serializable<T> extends _Model<T> {
 
     /**
      * serialize

@@ -8,7 +8,7 @@ import { IClasses,
         IAttribute 
     } from "./_interfaces";
 import { StandardElement } from "../drawable/_interfaces";
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { addClass } from "../styleHelpers/css";
 import { oldCreateClass } from "../styleHelpers";
 import { bind } from "../binding/helper";
@@ -105,7 +105,7 @@ export function createSVGElement<T extends IKeyedElems>(obj: IElemDefinition<T>,
 function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefinition<T>, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): StandardElement {
     
     let elem: StandardElement;
-    let drawable: Drawable;
+    let drawable: _Drawable;
 
     if (obj.drawable) {
         drawable = new obj.drawable();
@@ -159,7 +159,7 @@ function _createStandardElement<T extends IKeyedElems>(obj: IElemDefinition<T>):
  * ---------------------------------------------------------------------------
  * assign an ID to this element, and add it to the keyed array if appropriate
  */
-function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: IKeyedElems, drawable?: Drawable): void {
+function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: IKeyedElems, drawable?: _Drawable): void {
     // set the id on the newly created object
     if (obj.id) { elem.setAttribute("id", obj.id); }
 

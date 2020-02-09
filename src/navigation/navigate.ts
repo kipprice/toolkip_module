@@ -1,5 +1,5 @@
 import { Collection } from "../dataStructures/collection/collection";
-import { View } from "../views/view";
+import { _View } from "../views/view";
 import { INavTransitionType, IHistoryEntry, INavigationData } from "./_interfaces";
 import { ICollectionElement } from "../dataStructures/collection/_interfaces";
 import { HistoryChain } from "../history/history";
@@ -11,7 +11,7 @@ import { isUpdatable } from "../structs/_typeguards";
 //#region STANDARD NAVIGATION
 
 /**----------------------------------------------------------------------------
- * @class	Navigator
+ * @class	_Navigator
  * ----------------------------------------------------------------------------
  * Handles moving between different pages for a single-page application, 
  * including adding navigator history points and updating views / models
@@ -20,13 +20,13 @@ import { isUpdatable } from "../structs/_typeguards";
  * @version 1.2.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Navigator<T extends string> {
+export abstract class _Navigator<T extends string> {
 
 	//.....................
 	//#region PROPERTIES
 
 	/** keep track of the views */
-	private _views: Collection<View> = new Collection<View>();
+	private _views: Collection<_View> = new Collection<_View>();
 
 	/** keep track of the parent element */
 	protected abstract get _parent(): HTMLElement;
@@ -35,8 +35,8 @@ export abstract class Navigator<T extends string> {
 	protected abstract get _transitionType(): INavTransitionType;
 
 	/** keep track of what view is currently showing */
-	protected _currentView: ICollectionElement<View>;
-	public get currentView(): ICollectionElement<View> { return this._currentView; }
+	protected _currentView: ICollectionElement<_View>;
+	public get currentView(): ICollectionElement<_View> { return this._currentView; }
 
 	/** keep track of the historical changes to the navigation */
 	protected _history: HistoryChain<IHistoryEntry<T>>;
@@ -75,7 +75,7 @@ export abstract class Navigator<T extends string> {
 	 * @param	addlData		Anything else that needs to be passed along (e.g. models)
 	 */
 
-	public async navigateTo<D extends View, M>(navigationPath: T, constructor?: IConstructor<D>, addlData?: INavigationData<M>, fromHistoryNavigation?: boolean): Promise<boolean> {
+	public async navigateTo<D extends _View, M>(navigationPath: T, constructor?: IConstructor<D>, addlData?: INavigationData<M>, fromHistoryNavigation?: boolean): Promise<boolean> {
 
 		// initialize the additional data array if unpassed
 		if (!addlData) { addlData = {}; }
@@ -86,7 +86,7 @@ export abstract class Navigator<T extends string> {
 		if (!currentViewHandled) { return false; }
 
 		// try to grab the view from our collection (quit if it doesn't exist and we can't create it)
-		let view: View = this._views.getValue(navigationPath);
+		let view: _View = this._views.getValue(navigationPath);
 		if (!view && !constructor) { return false; }
 
 		// if we couldn't find it, create it
@@ -165,7 +165,7 @@ export abstract class Navigator<T extends string> {
 	 * 
 	 * @returns	The created drawable
 	 */
-	protected _createView<D extends View, M>(constructor: IConstructor<D>, addlData?: INavigationData<M>): D {
+	protected _createView<D extends _View, M>(constructor: IConstructor<D>, addlData?: INavigationData<M>): D {
 		let view = new constructor();
 		return view;
 	}
@@ -179,7 +179,7 @@ export abstract class Navigator<T extends string> {
 	 * @param 	addlData 	Additional data to pass into the view
 	 * 
 	 */
-	protected _updateView<D extends View, M>(view: D, addlData?: INavigationData<M>): void {
+	protected _updateView<D extends _View, M>(view: D, addlData?: INavigationData<M>): void {
 		view.update(addlData.model, addlData);
 	}
 
@@ -208,7 +208,7 @@ export abstract class Navigator<T extends string> {
 	 * ----------------------------------------------------------------------------
 	 * Switches between two separate views in this navigation world
 	 */
-	protected _handleTransition(view: View): void {
+	protected _handleTransition(view: _View): void {
 		// verify we have enough data to handle this
 		if (!view || !this._parent) { return; }
 
@@ -230,7 +230,7 @@ export abstract class Navigator<T extends string> {
 	 * ----------------------------------------------------------------------------
 	 * Swap out the parent contents for the child contents
 	 */
-	protected _noTransition(view: View): void {
+	protected _noTransition(view: _View): void {
 		this._parent.innerHTML = "";
 		view.draw(this._parent);
 	}
@@ -240,7 +240,7 @@ export abstract class Navigator<T extends string> {
 	 * ----------------------------------------------------------------------------
 	 * Fade out the parent, swap out content, then fade back in
 	 */
-	protected _opacityTransition(view: View): void {
+	protected _opacityTransition(view: _View): void {
 		transition(
 			this._parent,
 			{ opacity: "1" },

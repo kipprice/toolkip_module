@@ -1,10 +1,10 @@
-import { Stylable } from "..";
+import { _Stylable } from "..";
 import { IStandardStyles } from "../../styleHelpers";
 import { StyleLibrary } from "../libraries/styleLibrary";
 import { PlaceholderLibrary } from "../libraries/placeholderlibrary";
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
 
-class SampleStylable extends Stylable<"color" | "width"> {
+class SampleStylable extends _Stylable<"color" | "width"> {
     //..................
     //#region STYLES
     
@@ -35,7 +35,7 @@ class SampleStylable extends Stylable<"color" | "width"> {
     //..................
 }
 
-class SiblingStylable extends Stylable {
+class SiblingStylable extends _Stylable {
     protected static _uncoloredStyles = {
         ".parent": {
             alignItems: "center",
@@ -49,7 +49,7 @@ class SiblingStylable extends Stylable {
     }
 }
 
-class ParentStylable extends Stylable {
+class ParentStylable extends _Stylable {
     protected static _uncoloredStyles = {
         ".parent": {
             display: "flex"
@@ -57,7 +57,7 @@ class ParentStylable extends Stylable {
     }
 }
 
-class DependentStylable extends Stylable {
+class DependentStylable extends _Stylable {
     protected static _styleDependencies = [
         ParentStylable,
         SiblingStylable

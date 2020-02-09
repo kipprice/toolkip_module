@@ -1,11 +1,11 @@
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import { IPoint, IBasicRect } from "../maths/_interfaces";
 import { ElementType } from "./_interfaces";
 import { isNumber } from "../typeGuards/simpleGuard";
 import { clonePoint } from "../objectHelpers/cloning";
 
 
-export class CircleElement extends CanvasElement {
+export class CircleElement extends _CanvasElement {
 	private _center: IPoint;
 	private _radius: IPoint;
 	private _displayRadius: IPoint;
