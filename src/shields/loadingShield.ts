@@ -60,7 +60,7 @@ export class LoadingShield extends Shield {
     //#endregion
 
     /** make sure we return the right set of styles */
-    protected _getUncoloredStyles(): IStandardStyles { return this._mergeThemes(LoadingShield._uncoloredStyles, Shield._uncoloredStyles); }
+    protected static _styleDependencies = [Shield];
 
     /**
      * Create a loading shield
