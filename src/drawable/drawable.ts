@@ -16,7 +16,7 @@ import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
  * @version	2.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Drawable extends Stylable implements IDrawable {
+export abstract class Drawable<P extends string = string> extends Stylable<P> implements IDrawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -47,21 +47,18 @@ export abstract class Drawable extends Stylable implements IDrawable {
 		// Initialize both the stylable parts of this and the 
 		super();
 		this._addClassName("Drawable");
+		this._registerMediaListeners();
 
 		// initialize our elements
 		this._elems = {} as IDrawableElements;
-
-		// Handle when we are passed an element to form the base of 
-		if (baseElemTemplate) {
-			this._elems.base = createElement(baseElemTemplate);
-		}
+		if (baseElemTemplate) { this._elems.base = createElement(baseElemTemplate); }
 
 		// check that we have enough data to create elements
 		if (this._shouldSkipCreateElements()) { return; }
 
 		// actually create the elements associated with this class
 		this._createElements();
-		this._registerMediaListeners();
+		this._registerMediaListeners(true);
 	}
 
 
@@ -86,24 +83,9 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 */
 	protected abstract _createElements(...args: any[]): void;
 
-	protected _createElement(elemDefinition: IElemDefinition): StandardElement {
+	protected _createBase(elemDefinition: IElemDefinition): StandardElement {
 		return createElement(elemDefinition, this._elems as any);
 	}
-
-	protected _elem(elemDefinition: IElemDefinition): StandardElement {
-		return this._createElement(elemDefinition);
-	}
-
-	/**
-	 * _shouldSkipCreateElements
-	 * ----------------------------------------------------------------------------
-	 * Function to determine whether we should skip the createElements. Useful in
-	 * cases where data needs to be present in the class before elements can be 
-	 * created.
-	 * 
-	 * @returns	True if we shouldn't create elements
-	 */
-	protected _shouldSkipCreateElements(): boolean { return false; }
 
 	/**
 	 * draw
@@ -169,6 +151,20 @@ export abstract class Drawable extends Stylable implements IDrawable {
 		base.parentNode.removeChild(base);
 	};
 
+	//..........................................
+	//#region METHODS DESIGNED FOR OVERRIDING
+	
+	/**
+	 * _shouldSkipCreateElements
+	 * ----------------------------------------------------------------------------
+	 * Function to determine whether we should skip the createElements. Useful in
+	 * cases where data needs to be present in the class before elements can be 
+	 * created.
+	 * 
+	 * @returns	True if we shouldn't create elements
+	 */
+	protected _shouldSkipCreateElements(): boolean { return false; }
+
 	/**
 	 * _refresh
 	 * ----------------------------------------------------------------------------
@@ -192,6 +188,9 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 * Overridable function to adjust when the screen resizes
 	 */
 	protected _onResize(): void { };
+	
+	//#endregion
+	//..........................................
 
 	/**
 	 * addEventListener
@@ -203,5 +202,19 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	public addEventListener(type: keyof WindowEventMap, listener: Function): void {
 		this._elems.base.addEventListener(type, listener as EventListenerOrEventListenerObject);
 	}
+
+	/**
+     * overridePlaceholder
+     * ----------------------------------------------------------------------------
+     * replace all instancaes of the specified placeholder with the provided value
+     * only for this particular instance 
+     */
+    public overridePlaceholder(placeholderName: P, placeholderValue: any): void {
+        super.overridePlaceholder(
+			placeholderName, 
+			placeholderValue, 
+			this._elems.base
+		)
+    }
 
 }
