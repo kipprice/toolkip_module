@@ -82,7 +82,14 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         }
     }
 
+    /**
+     * _createParentStyles
+     * ----------------------------------------------------------------------------
+     * go through each of the stylables in the inheritance chain and create their
+     * styles if not already created (and there are styles to create)
+     */
     private static _createParentStyles() {
+        
         // first prototype is of this class; second
         // is the parent
         let parent = getPrototype(getPrototype(this));
@@ -108,6 +115,7 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         
         // if we don't have styles, or we've already created, quit
         if (isEmptyObject(mergedStyles)) { return; }
+        if (!this.hasOwnProperty("_uncoloredStyles")) { return; }
         if (StyleLibrary.hasStyles(uniqueKey) && !forceOverride) { return; }
 
         // ==> flatten & split our styles
@@ -167,8 +175,15 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         )
     }
 
+    /**
+     * _shouldSkipStyles
+     * ----------------------------------------------------------------------------
+     * determine if we should create styles for this class, based on whether
+     * there are actually styles to create
+     */
     private _shouldSkipStyles(): boolean {
         const c = this.constructor;
+        
         // check if the properties are our own
         if (c.hasOwnProperty("_uncoloredStyles")) { return false; }
 
@@ -181,41 +196,49 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         return false;
     }
 
-
-
-    protected _defaultPlaceholder(placeholderName: P, defaultValue: any): any[] {
-        return [
-            defaultValue,
-            `<${placeholderName}>`
-        ];
-    }
-
     /**
      * replacePlaceholder
      * ----------------------------------------------------------------------------
      * replace all instances of the specified placeholder with the provided value
      * across all instances of this stylable
      */
-    public replacePlaceholder(placeholderName: P, placeholderValue: any, force?: boolean): void {
-        if (this._placeholderValues[placeholderName] && !force) { return; } 
+    public replacePlaceholder(placeholderName: P, placeholderValue: any, noForce?: boolean): void {
+        if (this._placeholderValues[placeholderName] && noForce) { return; } 
         this._placeholderValues[placeholderName] = placeholderValue;
-        
 
-        // replace in our own styles
-        PlaceholderLibrary.replacePlaceholder({
-            placeholder: placeholderName, 
-            newValue: placeholderValue,
-            uniqueKey: this._uniqueKey
-        });
-
-        // replace in any dependant styles
-        for (let s of this._styleDependencies) {
+        let styleKeys = this._buildStyleMap();
+        for (let k of styleKeys) {
             PlaceholderLibrary.replacePlaceholder({
                 placeholder: placeholderName,
                 newValue: placeholderValue,
-                uniqueKey: s.name
+                uniqueKey: k
             })
         }
+
+    }
+
+    /**
+     * _buildStyleMap
+     * ----------------------------------------------------------------------------
+     * generate the styles that will need to be updated with the provided
+     * placeholder
+     */
+    private _buildStyleMap(): string[] {
+        const out = [this._uniqueKey];
+
+        // loop through all of the dependencies
+        for (let s of this._styleDependencies) {
+            out.push(s.name);
+        }
+
+        // loop through all the parent classes
+        let parent = getPrototype(getPrototype(this));
+        while(parent && isStylable(parent)) {
+            out.push(parent._uniqueKey)
+            parent = getPrototype(parent);
+        }
+
+        return out;
     }
 
     /**
@@ -225,12 +248,16 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
      * only for this particular instance 
      */
     public overridePlaceholder(placeholderName: P, placeholderValue: any, elem: StandardElement): void {
-        PlaceholderLibrary.replacePlaceholder({
-            placeholder: placeholderName, 
-            newValue: placeholderValue,
-            uniqueKey: this._uniqueKey,
-            baseElem: elem
-        });
+        
+        let styleKeys = this._buildStyleMap();
+        for (let k of styleKeys) {
+            PlaceholderLibrary.replacePlaceholder({
+                placeholder: placeholderName,
+                newValue: placeholderValue,
+                uniqueKey: k,
+                baseElem: elem
+            })
+        }
     }
 
     //#endregion
