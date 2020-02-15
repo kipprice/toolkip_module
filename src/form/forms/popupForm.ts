@@ -107,12 +107,7 @@ export class PopupForm<T> extends _Form<T> {
         }
     }
 
-    protected _getUncoloredStyles() {
-        return this._mergeThemes(
-            PopupForm._uncoloredStyles,
-            _Form._uncoloredStyles
-        );
-    }
+    protected static _styleDependencies = [_Form];
 
     //#endregion
     //..................

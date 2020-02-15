@@ -1,4 +1,4 @@
-import { PathExtensionElement } from "./pathExtension";
+import { _PathExtensionElement } from "./pathExtension";
 import { IPathSVGAttributes, IPathPoint } from "../_interfaces";
 import { calculatePolygonInternalAngle, IPoint } from "../../maths";
 
@@ -9,7 +9,7 @@ import { calculatePolygonInternalAngle, IPoint } from "../../maths";
  * @version	1.0
  * ----------------------------------------------------------------------------
  */
-export class PolygonElement extends PathExtensionElement {
+export class PolygonElement extends _PathExtensionElement {
 
 	constructor(centerPt: IPoint, sides: number, radius: number, attr: IPathSVGAttributes, innerRadius?: number) {
 		super(null, attr, centerPt, sides, radius, innerRadius);

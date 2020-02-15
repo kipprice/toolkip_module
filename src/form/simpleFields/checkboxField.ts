@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum, FormElementLayoutEnum } from "../_interfaces";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { createLabelForInput } from "../helpers";
@@ -13,7 +13,7 @@ import { createElement, createSimpleElement } from "../../htmlHelpers/createElem
 * @version 1.0.1
 * ----------------------------------------------------------------------------
 */
-export class CheckboxField extends Field<boolean> {
+export class CheckboxField extends _Field<boolean> {
 
     //.....................
     //#region PROPERTIES
@@ -100,9 +100,7 @@ export class CheckboxField extends Field<boolean> {
         }
     };
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(CheckboxField._uncoloredStyles, Field._uncoloredStyles);
-    }
+    protected static _styleDependencies = [_Field];
 
     //#endregion
     //...................................................

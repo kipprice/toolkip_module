@@ -1,4 +1,4 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { PopupElements, PopupColor, IPopupDefinition } from "./_interfaces";
 import { createSimpleElement, createElement } from "../htmlHelpers/createElement";
 import { addClass, removeClass } from "../styleHelpers/css";
@@ -17,7 +17,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class Popup extends Drawable {
+export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground"> {
 
 	//.....................
 	//#region PROPERTIES
@@ -57,11 +57,11 @@ export class Popup extends Drawable {
 
 		".frame": {
 			position: "absolute",
-			backgroundColor: "#FFF",
+			backgroundColor: "<popupBackground:#FFF>",
 			borderRadius: "3px",
 			boxShadow: "1px 1px 5px 2px rgba(0,0,0,.2)",
 			display: "block",
-			borderTop: "10px solid <popupTheme>",
+			borderTop: "10px solid <stripe>",
 			padding: "10px",
 			maxHeight: "90%",
 			overflowY: "auto"
@@ -88,7 +88,7 @@ export class Popup extends Drawable {
 
 		".popup .buttonContainer .popupButton": {
 			padding: "2px 10px",
-			backgroundColor: "<popupTheme>",
+			backgroundColor: "<btnBackground:#333>",
 			color: "#FFF",
 			cursor: "pointer",
 			marginLeft: "15px",
@@ -126,9 +126,6 @@ export class Popup extends Drawable {
 		}
 	}
 
-	public setThemeColor(colorId: PopupColor, color: string, noReplace?: boolean): void {
-		super.setThemeColor(colorId, color, noReplace);
-	}
 	//#endregion
 	//...............
 
@@ -150,9 +147,7 @@ export class Popup extends Drawable {
 
 		super(obj);
 		if (obj.themeColor) {
-			this.setThemeColor("popupTheme", obj.themeColor);
-		} else {
-			this.setThemeColor("popupTheme", "#06F", true);
+			this.replacePlaceholder("btnBackground", obj.themeColor);
 		}
 
 	}
@@ -272,7 +267,7 @@ export class Popup extends Drawable {
 	 * Allows the caller to add a Drawable to the popup
 	 * @param 	drawable 	The drawable element to add
 	 */
-	public addContent(drawable: Drawable): void;
+	public addContent(drawable: _Drawable): void;
 
 	/**
 	 * addContent
@@ -311,7 +306,7 @@ export class Popup extends Drawable {
 	 * @param	cls
 	 * @param	content
 	 */
-	public addContent(param1?: (HTMLElement | string | Drawable | IElemDefinition), cls?: string | IClasses, content?: string): void {
+	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition), cls?: string | IClasses, content?: string): void {
 		let elem: StandardElement;
 
 		// Create an HTMLElement if one wasn't passed in

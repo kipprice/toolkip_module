@@ -1,4 +1,4 @@
-import { Drawable } from "../../drawable/drawable";
+import { _Drawable } from "../../drawable/_drawable";
 import { createElement } from "../../htmlHelpers/createElement";
 import { ErrorPopup } from "../../popups/errorPopup";
 
@@ -26,7 +26,7 @@ interface IGoogleProfile {
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class GoogleLoginButton extends Drawable {
+export abstract class _GoogleLoginButton extends _Drawable {
     //#region PROPERTIES
 
     private _clientId: string;

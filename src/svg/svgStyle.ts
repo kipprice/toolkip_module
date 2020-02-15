@@ -1,7 +1,7 @@
+import { getCssPropertyName, FlatClassDefinition } from '../styleHelpers';
 import { ISVGStyle } from "./_interfaces";
 import { map } from "../objectHelpers/navigate";
 import { format } from "../primitiveHelpers/strings";
-import { getPropertyName } from "../styleHelpers/styles";
 
 
 /**----------------------------------------------------------------------------
@@ -174,8 +174,8 @@ export class SVGStyle implements ISVGStyle {
 	protected _generateStyleString(): void {
 		this._generatedStyleString = "";
 
-		map(this._innerStyle, (propValue: any, propName: string) => {
-			let formattedPropName: string = getPropertyName(propName);
+		map(this._innerStyle, (propValue: any, propName: keyof FlatClassDefinition) => {
+			let formattedPropName: string = getCssPropertyName(propName);
 			this._generatedStyleString += format("{0}: {1};", formattedPropName, propValue.toString());
 		});
 	}

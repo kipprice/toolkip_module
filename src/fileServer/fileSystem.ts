@@ -8,7 +8,7 @@
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class _FileStorage {
+class _FileStorage {
 
     //.....................
     //#region PROPERTIES

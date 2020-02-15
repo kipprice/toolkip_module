@@ -2,13 +2,13 @@ import { PathElement } from "../elements/pathElement";
 import { IPathSVGAttributes, IPathPoint } from "../_interfaces";
 
 /**----------------------------------------------------------------------------
- * @class	PathExtensionElement
+ * @class	_PathExtensionElement
  * ----------------------------------------------------------------------------
  * @author	Kip Price
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class PathExtensionElement extends PathElement {
+export abstract class _PathExtensionElement extends PathElement {
 
 	/**
 	 * _setAttributes

@@ -1,6 +1,6 @@
 import { NumberField } from "./numberField";
 import { FieldTypeEnum } from "../_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { createElement } from "../../htmlHelpers/createElement";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 
@@ -47,12 +47,7 @@ export class PercentageField extends NumberField {
 		}
 	}
 
-	protected _getUncoloredStyles(): IStandardStyles {
-		return this._mergeThemes(
-			PercentageField._uncoloredStyles,
-			Field._uncoloredStyles
-		);
-	}
+	protected static _styleDependencies = [_Field];
 
 	//#endregion
 	//...................................................

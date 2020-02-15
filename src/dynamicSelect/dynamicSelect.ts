@@ -1,4 +1,4 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { Collection } from "../dataStructures/collection/collection";
 import { DynamicOption } from "./dynamicOption";
 import { IDynamicSelectElems, IDynamicOption } from "./_interfaces";
@@ -19,7 +19,7 @@ import { transition } from "../styleHelpers/transition";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class DynamicSelect extends Drawable {
+export abstract class _DynamicSelect extends _Drawable {
 
     //.....................
     //#region PROPERTIES

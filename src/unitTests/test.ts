@@ -1,4 +1,4 @@
-import { TestUI } from "./testUi";
+import { _TestUI } from "./testUi";
 import { IUnitTestDetails, IVisualTestButton } from "./_interfaces";
 import { format } from "../primitiveHelpers/strings";
 
@@ -10,12 +10,12 @@ import { format } from "../primitiveHelpers/strings";
  * @version	2.1.0
  * ----------------------------------------------------------------------------
  */
-export abstract class UnitTester {
+export abstract class _UnitTester {
 
 	//.....................
 	//#region PROPERTIES
 
-	protected abstract get _ui(): TestUI;
+	protected abstract get _ui(): _TestUI;
 
 	//#endregion
 	//.....................
@@ -92,7 +92,7 @@ export abstract class UnitTester {
 	 * @param 	tests 		Tests to evaluate with this function
 	 * 
 	 */
-	protected _testFunction(funcToTest: Function, title: string, tests: IUnitTestDetails[]): void {
+	public testFunction(funcToTest: Function, title: string, tests: IUnitTestDetails[]): void {
 
 		this._ui.startSubgroup(title);
 

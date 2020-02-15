@@ -7,14 +7,16 @@ import { addClass, removeClass } from "../../styleHelpers/css";
 import { ErrorPopup } from "../../popups/errorPopup";
 import { YesNoPopup } from "../../popups/yesNoPopup";
 import { YesNoEnum } from "../../popups/_interfaces";
-import { Field } from "../_field";
-import { Drawable } from "../../drawable/drawable";
+import { _Field } from "../_field";
+import { _Drawable } from "../../drawable/_drawable";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { SectionField } from "../complexFields/sectionField";
 import { IFormCollapsibleTemplate } from "../complexFields/_interfaces";
+import { map } from "../../objectHelpers";
+import { _Stylable } from "../../stylable";
 
 
-export abstract class _Form<T> extends Drawable {
+export abstract class _Form<T> extends _Drawable<FormColor> {
 
     //..................
     //#region STYLES
@@ -149,19 +151,6 @@ export abstract class _Form<T> extends Drawable {
     //.....................
 
     //..........................................
-    //#region THEMING
-
-    public setThemeColor(colorId: FormColor, color: string, noReplace?: boolean): void {
-        super.setThemeColor(colorId, color, noReplace);
-    }
-
-    protected _getUniqueThemeName(): string {
-        return "Form";
-    }
-    //#endregion
-    //..........................................
-
-    //..........................................
     //#region INITIALIZATION
 
     public constructor(opts: IFormOptions, children?: IFields<T>) {
@@ -169,11 +158,11 @@ export abstract class _Form<T> extends Drawable {
         this._config = opts || {};
         this._addClassName("Form");
 
-        this._colors = combineObjects(
+        this._placeholderValues = combineObjects(
             { formBackgroundTheme: "#FFF", formTheme: "#EFC500", formSubTheme: "#444" },
             this._config.colors || {}
         );
-        this._applyColors();
+        this._applyThemes();
 
         this._createElements(children);
     }
@@ -238,7 +227,7 @@ export abstract class _Form<T> extends Drawable {
 
         // create the core section
         this._elems.coreSection = new SectionField<T>(this._id, template, elems);
-        this._applyColors(this._elems.coreSection);
+        this._applyThemes();
         this._addEventHandlers();
 
         // add the section to the overall form UI
@@ -487,7 +476,7 @@ export abstract class _Form<T> extends Drawable {
         if (!msg) { return; }
 
         let popup: ErrorPopup = new ErrorPopup(msg, "Couldn't Save");
-        popup.setThemeColor("popupTheme", this._colors.formTheme);
+        popup.replacePlaceholder("btnBackground", this._placeholderValues.formTheme);
         popup.draw(document.body);
     }
 
@@ -531,7 +520,7 @@ export abstract class _Form<T> extends Drawable {
                     }
                 }
             );
-            popup.setThemeColor("popupTheme", this._colors.formTheme);
+            popup.replacePlaceholder("btnBackground", this._placeholderValues.formTheme);
             popup.draw(document.body);
         } else {
             this._cancel();
@@ -643,21 +632,42 @@ export abstract class _Form<T> extends Drawable {
     //.................................
     //#region CHANGE THE FORM DISPLAY
 
-    // TODO: Allow changing of the form after it's been created
-
     /**
      * addFormElement
      * ----------------------------------------------------------------------------
      * Adds a form element to our form after it's been initialized
      */
-    public addFormElement<K extends keyof T>(key: K, formElem: Field<T[K]>): boolean {
+    public addFormElement<K extends keyof T>(key: K, formElem: _Field<T[K]>): boolean {
         return this._elems.coreSection.addChildElement(key, formElem);
     }
 
-    public getField(id: string): Field<any> {
+    public getField(id: string): _Field<any> {
         return this._elems.coreSection.getField(id);
     }
 
     //#endregion
     //.................................
+
+    //..........................................
+    //#region THEMING
+    
+    protected _applyThemes(target?: _Stylable<FormColor>) {
+        if (!target) { target = this; }
+        map(this._placeholderValues, (pVal: any, pName: FormColor) => {
+            target.replacePlaceholder(pName, pVal);
+        });
+    }
+
+    public replacePlaceholder(pName: FormColor, pVal: any, force?: boolean) {
+        super.replacePlaceholder(pName, pVal, force);
+        this._elems.coreSection.replacePlaceholder(pName, pVal, force);
+    }
+
+    public overridePlaceholder(pName: FormColor, pVal: any) {
+        super.overridePlaceholder(pName, pVal);
+        this._elems.coreSection.overridePlaceholder(pName, pVal);
+    }
+    
+    //#endregion
+    //..........................................
 }

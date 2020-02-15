@@ -1,4 +1,4 @@
-import { Drawable } from "../../drawable/drawable";
+import { _Drawable } from "../../drawable/_drawable";
 import { Collection } from "../../dataStructures/collection/collection";
 import { SVGStyle } from "../svgStyle";
 import { ISVGElementElems, ISVGAttributes, SVGUpdateListener } from "../_interfaces";
@@ -16,7 +16,7 @@ import { createSVGElem } from "../svgHelpers";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export abstract class SVGElem extends Drawable {
+export abstract class _SVGElem extends _Drawable {
 
     //#region DELEGEATES
 

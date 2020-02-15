@@ -9,7 +9,7 @@ import { IEventContext } from "./_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Event<C extends IEventContext> {
+export abstract class _Event<C extends IEventContext> {
 
 	//.....................
 	//#region PROPERTIES

@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 import { inputToDate, inputTimeFmt } from "../../primitiveHelpers/dates";
 
@@ -11,7 +11,7 @@ import { inputToDate, inputTimeFmt } from "../../primitiveHelpers/dates";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class TimeField extends Field<Date> {
+export class TimeField extends _Field<Date> {
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.TIME; }
     protected get _defaultValue(): Date { return null; }
     protected get _defaultCls(): string { return "time"; }

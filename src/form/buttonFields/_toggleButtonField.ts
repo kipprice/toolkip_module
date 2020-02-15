@@ -1,5 +1,5 @@
 import { IFormToggleButtonTemplate, IToggleButtonElems, IToggleButtonElem } from "./_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
 import { FieldTypeEnum } from "../_interfaces";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
@@ -20,7 +20,7 @@ import { wait } from "../../async";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class ToggleButtonField<M, T extends IFormToggleButtonTemplate<M> = IFormToggleButtonTemplate<M>> extends Field<M, T> {
+export abstract class _ToggleButtonField<M, T extends IFormToggleButtonTemplate<M> = IFormToggleButtonTemplate<M>> extends _Field<M, T> {
 
     //.....................
     //#region PROPERTIES
@@ -88,12 +88,7 @@ export abstract class ToggleButtonField<M, T extends IFormToggleButtonTemplate<M
 
     };
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(
-            Field._uncoloredStyles,
-            ToggleButtonField._uncoloredStyles
-        );
-    }
+    protected static _styleDependencies = [_Field];
 
     //#endregion
     //..................
@@ -105,7 +100,7 @@ export abstract class ToggleButtonField<M, T extends IFormToggleButtonTemplate<M
      * @param   id          The ID to use for the toggle button
      * @param   template    The template for this element
      */
-    constructor(id: string, template: T | ToggleButtonField<M, T>) {
+    constructor(id: string, template: T | _ToggleButtonField<M, T>) {
         super(id, template);
     }
 

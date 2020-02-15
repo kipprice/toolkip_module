@@ -1,4 +1,4 @@
-import { Drawable } from '../drawable/drawable';
+import { _Drawable } from '../drawable/_drawable';
 
 /**----------------------------------------------------------------------------
  * @class   View
@@ -8,7 +8,7 @@ import { Drawable } from '../drawable/drawable';
  * @version 1.1.0
  * ----------------------------------------------------------------------------
  */
-export abstract class View extends Drawable {
+export abstract class _View extends _Drawable {
 
     /**
      * update

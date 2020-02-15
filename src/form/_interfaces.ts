@@ -1,5 +1,5 @@
-import { Field } from "./_field";
-import { Drawable } from "../drawable/drawable";
+import { _Field } from "./_field";
+import { _Drawable } from "../drawable/_drawable";
 import { ISelectOptions, IDictionary } from "../objectHelpers/_interfaces";
 
 
@@ -52,7 +52,7 @@ export enum FormElementLayoutEnum {
 
 /** handle more type safeness of form */
 export type IFields<F> = {
-    [P in keyof F]?: Field<F[P]>;
+    [P in keyof F]?: _Field<F[P]>;
 }
 
 /** handle multiple types of evaluable elements */
@@ -76,7 +76,7 @@ export interface IValidateFunc<T> {
 
 /** handle when another element of the form has changed */
 export interface IOtherChangeFunc<T> {
-    (otherID: string, data: any, formElement: Field<T>, context?: any): void;
+    (otherID: string, data: any, formElement: _Field<T>, context?: any): void;
 }
 
 //#endregion
@@ -94,7 +94,7 @@ export interface IFieldElems {
     helpTextIcon?: HTMLElement;
     input?: EvaluableElem;
     childrenContainer?: HTMLElement;
-    [key: string]: HTMLElement | Drawable;
+    [key: string]: HTMLElement | _Drawable;
 }
 
 /** standard elements for a displayable form element */

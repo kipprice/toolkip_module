@@ -1,5 +1,5 @@
 import { IStandardStyles } from './../../styleHelpers/_interfaces';
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 
 
@@ -11,7 +11,7 @@ import { FieldTypeEnum } from "../_interfaces";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class HiddenField<T> extends Field<T> {
+export class HiddenField<T> extends _Field<T> {
     protected static _uncoloredStyles: IStandardStyles = {
         "kipFormElem.hidden": {
             display: "none"

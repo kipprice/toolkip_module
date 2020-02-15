@@ -1,5 +1,5 @@
 import { IStandardStyles } from './../styleHelpers/_interfaces';
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { IPoint } from "../maths/_interfaces";
 import { IElemDefinition } from "../htmlHelpers/_interfaces";
 import { StandardElement } from "../drawable/_interfaces";
@@ -15,11 +15,11 @@ import { createElement } from "../htmlHelpers/createElement";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class GenericDraggable extends Drawable {
+export abstract class _GenericDraggable extends _Drawable {
 
     //..........................
     //#region STATIC PROPERTIES
-    public static currentDraggable: GenericDraggable;
+    public static currentDraggable: _GenericDraggable;
     //#endregion
     //..........................
 
@@ -27,7 +27,7 @@ export abstract class GenericDraggable extends Drawable {
     //#region PROPERTIES
 
     /** potential targets for this draggable */
-    protected _targets: DraggableTarget[];
+    protected _targets: _DraggableTarget[];
 
     /** the point at which we started dragging (or most recently updated to) */
     protected _startMousePoint: IPoint;
@@ -272,7 +272,7 @@ export abstract class GenericDraggable extends Drawable {
      * @param   target - The HTML element
      * @returns the newly created draggable target
      */
-    protected abstract _createDraggableTarget(target: StandardElement): DraggableTarget;
+    protected abstract _createDraggableTarget(target: StandardElement): _DraggableTarget;
     //#endregion
     //........................................
 
@@ -287,7 +287,7 @@ export abstract class GenericDraggable extends Drawable {
      */
     protected _onDragStart(event: MouseEvent): void {
         this._isDragging = true;
-        GenericDraggable.currentDraggable = this;
+        _GenericDraggable.currentDraggable = this;
         addClass(this._elems.base, "dragging");
         for (let target of this._targets) {
             addClass(target.base, "draggingOver");
@@ -316,8 +316,8 @@ export abstract class GenericDraggable extends Drawable {
     protected _onDrop(event: Event): void {
         if (!this._isDragging) { return; }
 
-        if (DraggableTarget.currentDraggableTarget) {
-            GenericDraggable.currentDraggable = null;
+        if (_DraggableTarget.currentDraggableTarget) {
+            _GenericDraggable.currentDraggable = null;
             this._startMousePoint = null;
             this._currentMousePoint = null;
         }
@@ -354,18 +354,18 @@ export abstract class GenericDraggable extends Drawable {
 }
 
 /**----------------------------------------------------------------------------
- * @class   DraggableTarget
+ * @class   _DraggableTarget
  * ----------------------------------------------------------------------------
  * Target for a draggable to be added to
  * @author  Kip Price
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class DraggableTarget extends Drawable {
+export abstract class _DraggableTarget extends _Drawable {
 
     //...........................
     //#region STATIC PROPERTIES
-    public static currentDraggableTarget: DraggableTarget;
+    public static currentDraggableTarget: _DraggableTarget;
     //#endregion
     //...........................
 
@@ -419,7 +419,7 @@ export abstract class DraggableTarget extends Drawable {
      * Handle 
      */
     protected _onDragEnter(event: Event): void {
-        DraggableTarget.currentDraggableTarget = this;
+        _DraggableTarget.currentDraggableTarget = this;
     }
 
     /**
@@ -428,8 +428,8 @@ export abstract class DraggableTarget extends Drawable {
      * @param event 
      */
     protected _onDragLeave(event: Event): void {
-        if (DraggableTarget.currentDraggableTarget !== this) { return; }
-        DraggableTarget.currentDraggableTarget = null;
+        if (_DraggableTarget.currentDraggableTarget !== this) { return; }
+        _DraggableTarget.currentDraggableTarget = null;
     }
 
     /**
@@ -438,8 +438,8 @@ export abstract class DraggableTarget extends Drawable {
      * @param event 
      */
     protected _onDrop(event: Event): void {
-        if (GenericDraggable.currentDraggable) {
-            DraggableTarget.currentDraggableTarget.base.appendChild(GenericDraggable.currentDraggable.base);
+        if (_GenericDraggable.currentDraggable) {
+            _DraggableTarget.currentDraggableTarget.base.appendChild(_GenericDraggable.currentDraggable.base);
         }
     }
 

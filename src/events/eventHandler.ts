@@ -1,17 +1,17 @@
 import { EventDefinition } from "./eventDefinition";
 import { Collection } from "../dataStructures/collection/collection";
 import { IListenerData, IListener } from "./_interfaces";
-import { Event } from './event';
+import { _Event } from './event';
 
 /**----------------------------------------------------------------------------
- * @class 	EventHandler
+ * @class 	_EventHandler
  * ----------------------------------------------------------------------------
  * Handles all events that are raised by any applications
  * @author	Kip Price
  * @version 1.0.5
  * ----------------------------------------------------------------------------
  */
-export abstract class EventHandler<T = any> {
+export abstract class _EventHandler<T = any> {
 
 	/** keep track of all the events that are registered to this event handler */
 	protected _events: Collection<EventDefinition<any>> = new Collection<EventDefinition<any>>();
@@ -38,7 +38,7 @@ export abstract class EventHandler<T = any> {
 	 * @param	key			The key used by this particular event
 	 * @param	context		THe additional context to use for the event
 	 * */
-	public dispatchEvent<K extends keyof T>(key: K, event: Event<T[K]>): void {
+	public dispatchEvent<K extends keyof T>(key: K, event: _Event<T[K]>): void {
 		let evtDef: EventDefinition<T[K]> = this._events.getValue(event.key);
 		if (!evtDef) { return; }
 		evtDef.notifyListeners(event);

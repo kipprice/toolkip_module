@@ -28,10 +28,7 @@ export class LoginPopup extends Popup {
             marginTop: "10px"
         }
     }
-
-    /** make sure we get a mix of core styles and these styles */
-    protected _getUncoloredStyles(): IStandardStyles { return this._mergeThemes(LoginPopup._uncoloredStyles, Popup._uncoloredStyles); }
-
+    
     /**
      * Creates a LoginPopup object
      * @param   obj     If provided, the data to create the base element of the popup 

@@ -1,4 +1,4 @@
-import { SVGElem } from "./svgElement";
+import { _SVGElem } from "./svgElement";
 import { IRectSVGAttributes } from "../_interfaces";
 import { IBasicRect, IExtrema } from "../../maths/_interfaces";
 
@@ -11,7 +11,7 @@ import { IBasicRect, IExtrema } from "../../maths/_interfaces";
  * @author  Kip Price
  * ----------------------------------------------------------------------------
  */
-export class RectangleElement extends SVGElem {
+export class RectangleElement extends _SVGElem {
 
     protected _attributes: IRectSVGAttributes;
 

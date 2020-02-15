@@ -14,7 +14,10 @@ import { createElement } from "../../htmlHelpers/createElement";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class ExpandableButtonField<M, T extends IFormMultiSelectButtonTemplate<M> = IFormMultiSelectButtonTemplate<M>> extends MultiSelectButtonField<M, T> {
+export abstract class _ExpandableButtonField<
+        M, 
+        T extends IFormMultiSelectButtonTemplate<M> = IFormMultiSelectButtonTemplate<M>
+    > extends MultiSelectButtonField<M, T> {
 
     //.......................................
     //#region STATIC COLLECTION OF OPTIONS
@@ -29,7 +32,7 @@ export abstract class ExpandableButtonField<M, T extends IFormMultiSelectButtonT
         }
     }
 
-    protected static _instances: ExpandableButtonField<any>[] = [];
+    protected static _instances: _ExpandableButtonField<any>[] = [];
 
     //#endregion
     //.......................................
@@ -106,16 +109,16 @@ export abstract class ExpandableButtonField<M, T extends IFormMultiSelectButtonT
     //#endregion
     //..................
 
-    constructor(id: string, template: T | ExpandableButtonField<M, T>) {
+    constructor(id: string, template: T | _ExpandableButtonField<M, T>) {
         super(id, template);
-        ExpandableButtonField._instances.push(this);
+        _ExpandableButtonField._instances.push(this);
     }
     /**
      * _createClonedElement
      * ----------------------------------------------------------------------------
      * @param appendToId 
      */
-    protected _createClonedElement(appendToId: string): ExpandableButtonField<M, T> {
+    protected _createClonedElement(appendToId: string): _ExpandableButtonField<M, T> {
         return new (this.constructor as any)(this._id + appendToId, this.template);
     }
 

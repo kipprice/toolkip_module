@@ -1,4 +1,4 @@
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import { ElementType } from "./_interfaces";
 import { IBasicRect, IPoint } from "../maths/_interfaces";
 import { cloneRect } from "../objectHelpers/cloning";
@@ -12,7 +12,7 @@ import { cloneRect } from "../objectHelpers/cloning";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class RectangleElement extends CanvasElement {
+export class RectangleElement extends _CanvasElement {
 //#region PROPERTIES
 
 /** type of this element */

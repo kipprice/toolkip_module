@@ -1,4 +1,4 @@
-import { SVGElem } from './svgElement';
+import { _SVGElem } from './svgElement';
 import { IPoint, IBasicRect } from '../../maths/_interfaces';
 import { SVGStyle } from '../svgStyle';
 import { addClass } from '../../styleHelpers/css';
@@ -14,7 +14,7 @@ import { ISVGAttributes } from '../_interfaces';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class TextElement extends SVGElem {
+export class TextElement extends _SVGElem {
 
 	protected _text: string;
 	protected _originPt: IPoint;
@@ -33,8 +33,8 @@ export class TextElement extends SVGElem {
 	protected static _uncoloredStyles: IStandardStyles = {
 		".unselectable": {
 			userSelect: "none",
-			MozUserSelect: "none",
-			WebkitUserSelect: "none",
+			mozUserSelect: "none",
+			webkitUserSelect: "none",
 			khtmlUserSelect: "none",
 			oUserSelect: "none"
 		}

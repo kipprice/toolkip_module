@@ -1,4 +1,4 @@
-import { Drawable } from '../drawable/drawable';
+import { _Drawable } from '../drawable/_drawable';
 import { Collection } from '../dataStructures/collection/collection';
 import { ICollectionElement } from '../dataStructures/collection/_interfaces';
 import { createSimpleElement } from '../htmlHelpers/createElement';
@@ -17,7 +17,7 @@ import { map } from '../objectHelpers/navigate';
  * @version 1.0
  * ----------------------------------------------------------------------------
  */
-export class ContextMenu extends Drawable {
+export class ContextMenu extends _Drawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -401,7 +401,8 @@ export class ContextMenu extends Drawable {
 	 */
 	protected _setThemeColors(): void {
 		map(this._colors, (color: string, uniqueId: string) => { 
-			this.setThemeColor(uniqueId, color);
+			// TODO: convert over
+			// this.setThemeColor(uniqueId, color);
 		});
 	}
 

@@ -1,4 +1,4 @@
-import { Shield } from "./shield";
+import { _Shield } from "./shield";
 import { ILoadingShieldElements } from "./_interfaces";
 import { createElement } from "../htmlHelpers/createElement";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
@@ -12,7 +12,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @author  Kip Price
  * 
  */
-export class LoadingShield extends Shield {
+export class LoadingShield extends _Shield {
 
     //#region PROPERTIES
 
@@ -32,7 +32,7 @@ export class LoadingShield extends Shield {
         },
 
         ".kipShield .loadingText": {
-            fontFamily: '"OpenSansLight", "Helvetica"',
+            fontFamily: '"OpenSansLight", "OpenSans", "Helvetica"',
             fontSize: "1.4em",
             color: "#FFF"
         },
@@ -48,19 +48,15 @@ export class LoadingShield extends Shield {
         },
 
         "@keyframes rotate": {
-            from: {
-                transform: "rotate(0deg)"
-            },
-            to: {
-                transform: "rotate(360deg)"
-            }
+            from: { transform: "rotate(0deg)" },
+            to: { transform: "rotate(360deg)" }
         }
     }
 
     //#endregion
 
     /** make sure we return the right set of styles */
-    protected _getUncoloredStyles(): IStandardStyles { return this._mergeThemes(LoadingShield._uncoloredStyles, Shield._uncoloredStyles); }
+    protected static _styleDependencies = [_Shield];
 
     /**
      * Create a loading shield

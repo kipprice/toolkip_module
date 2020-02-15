@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 
 
@@ -10,7 +10,7 @@ import { FieldTypeEnum } from "../_interfaces";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class NumberField extends Field<number> {
+export class NumberField extends _Field<number> {
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.NUMBER; }
     protected get _defaultValue(): number { return 0; }
     protected get _defaultCls(): string { return "number"; }

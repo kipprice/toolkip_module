@@ -2,7 +2,7 @@ import { getNextKey, map } from "../../objectHelpers/navigate";
 import { IDictionary } from "../../objectHelpers/_interfaces";
 
 
-export abstract class Tree<T> {
+export abstract class _Tree<T> {
 
 	//.....................
 	//#region PROPERTIES
@@ -11,10 +11,10 @@ export abstract class Tree<T> {
 	protected _data: T;
 
 	/** subtrees below this tree */
-	protected _subTrees: IDictionary<Tree<T>>;
+	protected _subTrees: IDictionary<_Tree<T>>;
 
 	/** keep track of the parent */
-	protected _parent: Tree<T>;
+	protected _parent: _Tree<T>;
 	
 	//#endregion
 	//.....................
@@ -47,7 +47,7 @@ export abstract class Tree<T> {
 
 		// create the string for the subtrees
 		let subTrees = [];
-		map(this._subTrees, (subTree: Tree<T>) => {
+		map(this._subTrees, (subTree: _Tree<T>) => {
 			subTrees.push(subTree.toString());
 		});
 

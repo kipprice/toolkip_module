@@ -1,6 +1,6 @@
-import { Event } from '../events/event';
+import { _Event } from '../events/event';
 import { IEventContext } from "../events/_interfaces";
-import { EventHandler } from "../events/eventHandler";
+import { _EventHandler } from "../events/eventHandler";
 
 
 /**
@@ -21,7 +21,7 @@ export interface IFormElemChangeEventContext<T> extends IEventContext {
  * @version	1.0.0
  * 
  */
-export class FormElemChangeEvent<T> extends Event<IFormElemChangeEventContext<T>> {
+export class FormElemChangeEvent<T> extends _Event<IFormElemChangeEventContext<T>> {
 	protected get _key(): string { return FORM_ELEM_CHANGE; }
 }
 
@@ -42,7 +42,7 @@ export interface IFormSavableEventContext extends IEventContext {
  * @version 1.0.0
  * 
  */
-export class FormSavableEvent extends Event<IEventContext> {
+export class FormSavableEvent extends _Event<IEventContext> {
 	protected get _key(): string { return FORM_SAVABLE_CHANGE; }
 }
 
@@ -63,7 +63,7 @@ export interface IFormEventTypes<T> {
 }
 
 /** generate the class that will handle all of the form event handling */
-class FormEventHandler extends EventHandler<IFormEventTypes<any>> { }
+class FormEventHandler extends _EventHandler<IFormEventTypes<any>> { }
 export const formEventHandler = new FormEventHandler();
 
 formEventHandler.createEvent(FORM_ELEM_CHANGE, "Form Element Changed");

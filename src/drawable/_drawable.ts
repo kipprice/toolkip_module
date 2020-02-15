@@ -1,4 +1,4 @@
-import { Stylable } from '../stylable/stylable';
+import { _Stylable } from '../stylable/stylable';
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { 
@@ -6,6 +6,7 @@ import {
 		IDrawableElements, 
 		StandardElement 
 	} from './_interfaces';
+import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 
 /**----------------------------------------------------------------------------
  * @class Drawable
@@ -15,7 +16,7 @@ import {
  * @version	2.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class Drawable extends Stylable implements IDrawable {
+export abstract class _Drawable<P extends string = string> extends _Stylable<P> implements IDrawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -46,25 +47,20 @@ export abstract class Drawable extends Stylable implements IDrawable {
 		// Initialize both the stylable parts of this and the 
 		super();
 		this._addClassName("Drawable");
+		this._registerMediaListeners();
 
 		// initialize our elements
 		this._elems = {} as IDrawableElements;
-
-		// Handle when we are passed an element to form the base of 
-		if (baseElemTemplate) {
-			this._elems.base = createElement(baseElemTemplate);
-		}
+		if (baseElemTemplate) { this._elems.base = createElement(baseElemTemplate); }
 
 		// check that we have enough data to create elements
 		if (this._shouldSkipCreateElements()) { return; }
 
 		// actually create the elements associated with this class
 		this._createElements();
-
-		window.setTimeout(() => {
-			this._registerMediaListeners();
-		}, 100);
+		this._registerMediaListeners(true);
 	}
+
 
 	/**
 	 * _registerMediaListener
@@ -72,10 +68,11 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 * Replace the stylable default registerMediaListener to try to apply first to 
 	 * our base element, then the document as a whole
 	 */
-	protected _registerMediaListener(matchQuery: string, classToApply: string): void {
-		if (!this._elems) { return; }
-		super._registerMediaListener(matchQuery, classToApply, this._elems.base);
-		super._registerMediaListener(matchQuery, classToApply, document.body);
+	protected _registerMediaListeners(baseOnly?: boolean): void {
+		if (this._elems?.base) { registerStandardMediaQueries(this._elems.base); }
+		if (baseOnly) { return; }
+
+		registerStandardMediaQueries();
 	}
 
 	/**
@@ -86,16 +83,9 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 */
 	protected abstract _createElements(...args: any[]): void;
 
-	/**
-	 * _shouldSkipCreateElements
-	 * ----------------------------------------------------------------------------
-	 * Function to determine whether we should skip the createElements. Useful in
-	 * cases where data needs to be present in the class before elements can be 
-	 * created.
-	 * 
-	 * @returns	True if we shouldn't create elements
-	 */
-	protected _shouldSkipCreateElements(): boolean { return false; }
+	protected _createBase(elemDefinition: IElemDefinition): StandardElement {
+		return createElement(elemDefinition, this._elems as any);
+	}
 
 	/**
 	 * draw
@@ -108,13 +98,6 @@ export abstract class Drawable extends Stylable implements IDrawable {
 
 		// Quit if we don't have anything to draw
 		if (!this._elems || !this._elems.base) { return; }
-
-		if (!this._hasCreatedStyles) {
-			window.setTimeout(() => {
-				this.draw(parent, force);
-			}, 0);
-			return;
-		}
 
 		// Refresh our contents
 		this._refresh();
@@ -168,6 +151,20 @@ export abstract class Drawable extends Stylable implements IDrawable {
 		base.parentNode.removeChild(base);
 	};
 
+	//..........................................
+	//#region METHODS DESIGNED FOR OVERRIDING
+	
+	/**
+	 * _shouldSkipCreateElements
+	 * ----------------------------------------------------------------------------
+	 * Function to determine whether we should skip the createElements. Useful in
+	 * cases where data needs to be present in the class before elements can be 
+	 * created.
+	 * 
+	 * @returns	True if we shouldn't create elements
+	 */
+	protected _shouldSkipCreateElements(): boolean { return false; }
+
 	/**
 	 * _refresh
 	 * ----------------------------------------------------------------------------
@@ -191,6 +188,9 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	 * Overridable function to adjust when the screen resizes
 	 */
 	protected _onResize(): void { };
+	
+	//#endregion
+	//..........................................
 
 	/**
 	 * addEventListener
@@ -202,5 +202,19 @@ export abstract class Drawable extends Stylable implements IDrawable {
 	public addEventListener(type: keyof WindowEventMap, listener: Function): void {
 		this._elems.base.addEventListener(type, listener as EventListenerOrEventListenerObject);
 	}
+
+	/**
+     * overridePlaceholder
+     * ----------------------------------------------------------------------------
+     * replace all instancaes of the specified placeholder with the provided value
+     * only for this particular instance 
+     */
+    public overridePlaceholder(placeholderName: P, placeholderValue: any): void {
+        super.overridePlaceholder(
+			placeholderName, 
+			placeholderValue, 
+			this._elems.base
+		)
+    }
 
 }

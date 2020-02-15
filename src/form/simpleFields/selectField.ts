@@ -1,5 +1,5 @@
 import { ISelectFieldTemplate, FieldTypeEnum } from "../_interfaces";
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { ISelectOptions } from "../../objectHelpers/_interfaces";
 import { createSelectElement } from "../helpers";
 import { isNumeric } from "../../primitiveHelpers/strings";
@@ -13,7 +13,7 @@ import { isNumeric } from "../../primitiveHelpers/strings";
  * @version 2.0.0
  * ----------------------------------------------------------------------------
  */
-export class SelectField<M extends string | number, T extends ISelectFieldTemplate<M> = ISelectFieldTemplate<M>> extends Field<M, T> {
+export class SelectField<M extends string | number, T extends ISelectFieldTemplate<M> = ISelectFieldTemplate<M>> extends _Field<M, T> {
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.SELECT; }
     protected get _defaultValue(): M { return null; }
     protected get _defaultCls(): string { return "select"; }

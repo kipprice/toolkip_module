@@ -1,4 +1,4 @@
-import { Drawable } from "../../drawable/drawable";
+import { _Drawable } from "../../drawable/_drawable";
 import { IUnitTestElems, VisualResults } from "./_interfaces";
 import { createElement } from "../../htmlHelpers/createElement";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
@@ -12,7 +12,7 @@ import { IVisualTestButton } from "../_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class UI extends Drawable {
+export class UI extends _Drawable {
 
     //.....................
     //#region PROPERTIES
@@ -52,7 +52,7 @@ export class UI extends Drawable {
 
         ".tests": {
             marginLeft: "50px",
-            fontFamily: "Segoe UI, Calibri, Helvetica"
+            fontFamily: "OpenSans, Segoe UI, Calibri, Helvetica"
         },
 
         ".tests .testContainer": {
@@ -61,45 +61,47 @@ export class UI extends Drawable {
         },
 
         ".test": {
-            display: "table-row"
-        },
+            display: "table-row",
 
-        ".test > div": {
-            border: "solid transparent",
-            borderWidth: "10px",
-            borderRightWidth: "20px",
-            marginRight: "10px",
-            display: "table-cell"
-        },
+            nested: {
+                "> div": {
+                    border: "solid transparent",
+                    borderWidth: "10px",
+                    borderRightWidth: "20px",
+                    marginRight: "10px",
+                    display: "table-cell"
+                },
 
-        ".test .fail": {
-            color: "rgb(190,50,30)",
-            fontWeight: "bold"
-        },
+                ".fail": {
+                    color: "rgb(190,50,30)",
+                    fontWeight: "bold"
+                },
 
-        ".test .pass": {
-            color: "rgb(50,190,30)",
-            fontWeight: "bold",
-            marginRight: "10px",
-            display: "table-cell"
-        },
+                ".pass": {
+                    color: "rgb(50,190,30)",
+                    fontWeight: "bold",
+                    marginRight: "10px",
+                    display: "table-cell"
+                },
 
-        ".test .name": {
-            color: "#333",
-            marginRight: "10px",
-            display: "table-cell"
-        },
+                ".name": {
+                    color: "#333",
+                    marginRight: "10px",
+                    display: "table-cell"
+                },
 
-        ".test .err": {
-            fontStyle: "italic",
-            color: "#666",
-            fontSize: "0.8em"
-        },
-
-        ".test .message": {
-            color: "#888",
-            marginRight: "10px",
-            display: "table-cell"
+                ".err": {
+                    fontStyle: "italic",
+                    color: "#666",
+                    fontSize: "0.8em"
+                },
+        
+                ".message": {
+                    color: "#888",
+                    marginRight: "10px",
+                    display: "table-cell"
+                }
+            }
         },
 
         ".visualTestBtn": {

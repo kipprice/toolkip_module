@@ -1,4 +1,4 @@
-import { NamedClass } from '../../namedClass/namedClass';
+import { _NamedClass } from '../../namedClass/namedClass';
 import  { IEquatable, equals, IEqualityFunction } from '../../comparable/comparable';
 import { format } from '../../primitiveHelpers/strings';
 import { IDictionaryKeys, 
@@ -17,7 +17,7 @@ import { IMapFunction } from '../../objectHelpers/_interfaces';
  * @version	3.0.0
  * ----------------------------------------------------------------------------
  */
-export class Collection<T> extends NamedClass implements IEquatable {
+export class Collection<T> extends _NamedClass implements IEquatable {
 
 	//.....................
 	//#region PROPERTIES

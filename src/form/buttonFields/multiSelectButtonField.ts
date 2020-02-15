@@ -1,5 +1,5 @@
 import { IFormMultiSelectButtonTemplate } from "./_interfaces";
-import { ToggleButtonField } from "./_toggleButtonField";
+import { _ToggleButtonField } from "./_toggleButtonField";
 import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
 import { isNullOrUndefined } from "../../typeGuards/falsey";
 import { removeClass, addClass } from "../../styleHelpers/css";
@@ -14,7 +14,7 @@ import { shortDate } from "../../primitiveHelpers/dates";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class MultiSelectButtonField<M, T extends IFormMultiSelectButtonTemplate<M> = IFormMultiSelectButtonTemplate<M>> extends ToggleButtonField<M[], T> {
+export class MultiSelectButtonField<M, T extends IFormMultiSelectButtonTemplate<M> = IFormMultiSelectButtonTemplate<M>> extends _ToggleButtonField<M[], T> {
 
     //.....................
     //#region PROPERTIES

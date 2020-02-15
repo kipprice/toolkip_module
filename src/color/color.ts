@@ -1,4 +1,4 @@
-import { NamedClass } from "../namedClass/namedClass";
+import { _NamedClass } from "../namedClass/namedClass";
 import { IEquatable } from "../comparable/comparable";
 import { isNullOrUndefined } from "../typeGuards/falsey";
 import { fullHexString } from "../primitiveHelpers/numbers";
@@ -17,7 +17,7 @@ import { roundToPlace } from "../maths/maths";
  * @version 1.1
  * 
  */
-export abstract class Color extends NamedClass implements IEquatable {
+export abstract class _Color extends _NamedClass implements IEquatable {
 
 	//#region PROPERTIES
 
@@ -837,14 +837,14 @@ export abstract class Color extends NamedClass implements IEquatable {
 	 * @returns True if we were successfully able to calculate the apparent color.
 	 * 
 	 */
-	public getApparentColor(backColor: Color | string): boolean {
+	public getApparentColor(backColor: _Color | string): boolean {
 		;
-		let c: Color;
+		let c: _Color;
 		let antiAlpha: number;
 
 		// Parse the backColor if it is a string, or just leave it if it is an object
-		if ((backColor as Color)._red) {
-			c = (backColor as Color);
+		if ((backColor as _Color)._red) {
+			c = (backColor as _Color);
 		} else {
 			c = new AnyColor(backColor as string);
 		}
@@ -866,12 +866,12 @@ export abstract class Color extends NamedClass implements IEquatable {
 	 * compare
 	 * 
 	 * Finds how similar two colors are based on their HSL values
-	 * @param {Color} otherColor  - The color we are comparing to
+	 * @param {_Color} otherColor  - The color we are comparing to
 	 * @param multipliers - The multipliers we should use to calculate the diff
 	 * @returns An object containing the total diff calculation as well as the raw diff values
 	 * 
 	 */
-	public compare(other_color: Color, multipliers: IColorMultipliers): IColorMultipliers {
+	public compare(other_color: _Color, multipliers: IColorMultipliers): IColorMultipliers {
 		;
 		var diffs;
 
@@ -911,12 +911,12 @@ export abstract class Color extends NamedClass implements IEquatable {
 	 * averageIn
 	 * 
 	 * Averages in another color into this one
-	 * @param   {Color}   other_color The other color to average in
+	 * @param   {_Color}   other_color The other color to average in
 	 * @param   {boolean} no_merge    True if we should just return the averages instead of merging them in to this color
-	 * @returns {Color}               The resulting merged color
+	 * @returns {_Color}               The resulting merged color
 	 * 
 	 */
-	public averageIn(other_color: Color, no_merge: boolean): Color | { hue: number, saturation: number, lightness: number, alpha: number } {
+	public averageIn(other_color: _Color, no_merge: boolean): _Color | { hue: number, saturation: number, lightness: number, alpha: number } {
 		;
 		let avgs: { hue: number, saturation: number, lightness: number, alpha: number };
 
@@ -956,7 +956,7 @@ export abstract class Color extends NamedClass implements IEquatable {
 	 * @returns	True if the colors have the same values
 	 *  
 	 */
-	public equals(other: Color): boolean {
+	public equals(other: _Color): boolean {
 		return (this.toHexString(true) === other.toHexString(true));
 	}
 
@@ -1027,7 +1027,7 @@ export abstract class Color extends NamedClass implements IEquatable {
  * @version 1.0
  * 
  */
-export class RGBColor extends Color {
+export class RGBColor extends _Color {
 
 
 	/**
@@ -1092,7 +1092,7 @@ export class RGBColor extends Color {
  * @version 1.0
  * 
  */
-export class HSLColor extends Color {
+export class HSLColor extends _Color {
 
 	/**
 	 * Creates an HSL Color
@@ -1149,7 +1149,7 @@ export class HSLColor extends Color {
 //#endregion
 
 //#region HEX COLOR
-export class HexColor extends Color {
+export class HexColor extends _Color {
 
 	/**
 	 * Creates a hex color
@@ -1188,7 +1188,7 @@ export class HexColor extends Color {
  * @version 1.0
  * 
  */
-export class AnyColor extends Color {
+export class AnyColor extends _Color {
 
 	/**
 	 * Creates a color

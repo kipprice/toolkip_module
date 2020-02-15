@@ -1,14 +1,14 @@
 import { StandardElement } from '../drawable/_interfaces';
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
-import { BoundView } from './boundView';
-import { UpdateableView } from './updateableView';
-import { Drawable } from '../drawable/drawable';
+import { _BoundView } from './boundView';
+import { _UpdateableView } from './updateableView';
+import { _Drawable } from '../drawable/_drawable';
 
 
 export type IBoundChild<VM> = 
     StandardElement | 
     IBoundElemDefinition<VM> | 
-    Drawable;
+    _Drawable;
 
 export interface IBoundElemDefinition<VM = any> extends IElemDefinition {
     boundTo?: keyof VM;
@@ -23,4 +23,4 @@ export type IUpdateFunctions<VM> = {
     [K in keyof VM]: IViewUpdateFunc<VM[K]>
 }
 
-export type IBindableElement<T> = StandardElement | BoundView<T> | UpdateableView<T>;
+export type IBindableElement<T> = StandardElement | _BoundView<T> | _UpdateableView<T>;

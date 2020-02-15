@@ -1,5 +1,5 @@
 import { IFormSingleSelectButtonTemplate } from "./_interfaces";
-import { ToggleButtonField } from "./_toggleButtonField";
+import { _ToggleButtonField } from "./_toggleButtonField";
 import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
 import { removeClass, addClass } from "../../styleHelpers/css";
 
@@ -12,7 +12,7 @@ import { removeClass, addClass } from "../../styleHelpers/css";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class SingleSelectButtonField<M, T extends IFormSingleSelectButtonTemplate<M> = IFormSingleSelectButtonTemplate<M>> extends ToggleButtonField<M, T> {
+export class SingleSelectButtonField<M, T extends IFormSingleSelectButtonTemplate<M> = IFormSingleSelectButtonTemplate<M>> extends _ToggleButtonField<M, T> {
 
     protected _selectedBtn: HTMLElement;
     protected _options: IToggleBtnOption<M>[];

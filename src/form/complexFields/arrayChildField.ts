@@ -1,6 +1,6 @@
 import { FieldTypeEnum, IFields } from "../_interfaces";
-import { CollapsibleField } from "./_collapsibleField";
-import { Field } from "../_field";
+import { _CollapsibleField } from "./_collapsibleField";
+import { _Field } from "../_field";
 import { createElement, createSimpleElement } from "../../htmlHelpers/createElement";
 import { SectionField } from "./sectionField";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
@@ -114,9 +114,8 @@ export class ArrayChildField<M, T extends IArrayChildTemplate<M> = IArrayChildTe
 
     }
 
-    protected _getUncoloredStyles(): IStandardStyles {
-        return this._mergeThemes(ArrayChildField._uncoloredStyles, CollapsibleField._uncoloredStyles, Field._uncoloredStyles);
-    }
+    protected static _styleDependencies = [_Field, _CollapsibleField];
+    
     //#endregion
     //..................
 
@@ -124,7 +123,7 @@ export class ArrayChildField<M, T extends IArrayChildTemplate<M> = IArrayChildTe
     //#region CONSTRUCT AN ARRAY CHILD ELEMENT
 
     /** create an element of an array */
-    constructor(id: string, children: IFields<M> | Field<M>, template?: T) {
+    constructor(id: string, children: IFields<M> | _Field<M>, template?: T) {
         super(id ? id.toString() : "", template || {} as any, children);
     }
 
@@ -166,7 +165,7 @@ export class ArrayChildField<M, T extends IArrayChildTemplate<M> = IArrayChildTe
         return new ArrayChildField<M, T>(this._id + appendToID, this._children);
     }
 
-    protected _cloneFormElement(child: Field<any>): Field<any> {
+    protected _cloneFormElement(child: _Field<any>): _Field<any> {
         return super._cloneFormElement(child, "|" + this._id);
     }
     //#endregion

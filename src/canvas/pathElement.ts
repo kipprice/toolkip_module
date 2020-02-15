@@ -1,11 +1,11 @@
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import { IPoint, IBasicRect } from "../maths/_interfaces";
 import { ElementType } from "./_interfaces";
 import { clonePointArray } from "../objectHelpers/cloning";
 import { getAngle, getDistance, getEndPoint } from "../maths/trig";
 
 
-export class PathElement extends CanvasElement {
+export class PathElement extends _CanvasElement {
 	protected _points: IPoint[];
 	protected _displayPoints: IPoint[];
 

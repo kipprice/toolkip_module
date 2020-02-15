@@ -1,4 +1,4 @@
-import { PathExtensionElement } from "./pathExtension";
+import { _PathExtensionElement } from "./pathExtension";
 import { IPathPoint } from "../_interfaces";
 
 /**----------------------------------------------------------------------------
@@ -9,7 +9,7 @@ import { IPathPoint } from "../_interfaces";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class CurveElement extends PathExtensionElement {
+export class CurveElement extends _PathExtensionElement {
 
 	protected _generatePoints(): IPathPoint[] {
 		return [];

@@ -4,7 +4,7 @@ import { isNullOrUndefined } from "../typeGuards/falsey";
 import { createElement, createSimpleElement } from "../htmlHelpers/createElement";
 import { IElemDefinition, IAttributes, IChildren } from "../htmlHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";
-import { Field } from "./_field";
+import { _Field } from "./_field";
 import { inputDateFmt } from "../primitiveHelpers/dates";
 
 
@@ -223,10 +223,10 @@ export function createInputElement(id: string, cls: string, type: string, value?
  * @param elem - Either a FormElement or a FormTemplate
  * @returns True if elem is a form Element
  */
-export function isField<T>(elem: IFieldConfig<T> | Field<T> | IFields<any>): elem is Field<T> {
+export function isField<T>(elem: IFieldConfig<T> | _Field<T> | IFields<any>): elem is _Field<T> {
     if (!elem) { return false; }
 
-    return ((elem as Field<T>).id !== undefined) &&
-        ((elem as Field<T>).type !== undefined) &&
-        ((elem as Field<T>).template !== undefined);
+    return ((elem as _Field<T>).id !== undefined) &&
+        ((elem as _Field<T>).type !== undefined) &&
+        ((elem as _Field<T>).template !== undefined);
 }

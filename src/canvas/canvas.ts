@@ -1,10 +1,10 @@
-import { Drawable } from "../drawable/drawable";
+import { _Drawable } from "../drawable/_drawable";
 import { IBasicRect, IPoint } from "../maths/_interfaces";
 import { IHTML5CanvasOptions, IHTML5CanvasElems, IDimensions, EventTypeEnum } from "./_interfaces";
 import { CanvasGroup } from "./canvasGroup";
 import { reconcileOptions } from "../objectHelpers/combine";
 import { addClass } from "../styleHelpers/css";
-import { CanvasElement } from "./canvasElement";
+import { _CanvasElement } from "./canvasElement";
 import { normalizeValue, roundToPlace } from "../maths/maths";
 
 /**----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ import { normalizeValue, roundToPlace } from "../maths/maths";
  * @version 1.1
  * ----------------------------------------------------------------------------
  */
-export class HTML5Canvas extends Drawable {
+export class HTML5Canvas extends _Drawable {
 
 	//#region PROPERTIES
 
@@ -322,7 +322,7 @@ export class HTML5Canvas extends Drawable {
 	 * @param	elem	The element to add to the canvas
 	 * 
 	 */
-	public addElement(elem: CanvasElement): void {
+	public addElement(elem: _CanvasElement): void {
 
 		// grab the appropriate layer to add to (or create it if it doesn't yet exist)
 		let layer: CanvasGroup = this._getOrCreateLayer(elem.layer);

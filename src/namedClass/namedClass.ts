@@ -2,7 +2,7 @@ import { INamedClass } from './_interfaces';
 import { contains } from '../primitiveHelpers/arrays';
 
 /**----------------------------------------------------------------------------
- * NamedClass
+ * _NamedClass
  * ----------------------------------------------------------------------------
  * A class that contains a set of names that apply to this class. Used for
  * easier typing.
@@ -10,7 +10,7 @@ import { contains } from '../primitiveHelpers/arrays';
  * @version 1.0
  * ----------------------------------------------------------------------------
  */
-export abstract class NamedClass implements INamedClass {
+export abstract class _NamedClass implements INamedClass {
 
 	/** keep track of all layers of the class name */
 	private _class_names: string[];

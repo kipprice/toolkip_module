@@ -1,4 +1,4 @@
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
 
 
@@ -10,7 +10,7 @@ import { FieldTypeEnum } from "../_interfaces";
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class TextField extends Field<string> {
+export class TextField extends _Field<string> {
     protected get _type(): FieldTypeEnum { return FieldTypeEnum.TEXT; }
     protected get _defaultValue(): string { return ""; }
     protected get _defaultCls(): string { return "text"; }

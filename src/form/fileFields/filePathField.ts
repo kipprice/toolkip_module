@@ -1,5 +1,5 @@
 import { IStandardStyles } from './../../styleHelpers/_interfaces';
-import { Field } from "../_field";
+import { _Field } from "../_field";
 import { IAttributes } from "../../htmlHelpers/_interfaces";
 import { createSimpleElement } from "../../htmlHelpers/createElement";
 import { createInputElement, createLabelForInput } from "../helpers";
@@ -16,7 +16,7 @@ import { FieldTypeEnum } from '../_interfaces';
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export class FilePathField<T extends IFormFilePathElemTemplate = IFormFilePathElemTemplate> extends Field<string, T> {
+export class FilePathField<T extends IFormFilePathElemTemplate = IFormFilePathElemTemplate> extends _Field<string, T> {
 
     //..................
     //#region STYLES
