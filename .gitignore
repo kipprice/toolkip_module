@@ -6,3 +6,5 @@ modules/
 **_(old)_**
 typescript/oldObjects
 typings
+coverage
+compiled_js
