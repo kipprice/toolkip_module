@@ -5,8 +5,8 @@
     "license": "MIT",
     "author": "Kip Price",
     "test": "jest",
-    "main": "compiled_js/toolkip",
-    "module": "compiled_js/toolkip",
+    "main": "src/index.ts",
+    "module": "src/index.ts",
     "types": "typings/index",
     "scripts": {
         "build": "npm run build:tsc && npm run build:webpack",
@@ -21,6 +21,7 @@
         "@types/jest": "^24.9.0",
         "jest": "^24.9.0",
         "jest-cli": "^24.9.0",
+        "terser-webpack-plugin": "^2.3.4",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
         "typescript": "^3.8.0-beta",
