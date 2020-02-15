@@ -4,6 +4,8 @@ import { isDrawable } from '../drawable/_typeguards';
 import { _Drawable } from '../drawable/_drawable';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { IKeyValPair } from '../objectHelpers/_interfaces';
+import { FlatClassDefinition } from './_interfaces';
+import { StyleLibrary } from '../styleLibraries/styleLibrary';
 
 
 /**
@@ -207,7 +209,7 @@ export function getProperty(cls, item) {
 };
 
 /**
- * oldCreateClass
+ * _old_CreateClass
  * ----------------------------------------------------------------------------
  * @deprecated
  * Creates a CSS class and adds it to the style of the document
@@ -216,7 +218,8 @@ export function getProperty(cls, item) {
  * @param  {boolean}     [noAppend] True if we shouldn't actually add the class to the documment yet
  * @return {HTMLElement}            The CSS style tag that was created
  */
-export function oldCreateClass(selector: string, attr: IClassDefinition | IKeyValPair<string>[], noAppend?: boolean): HTMLElement {
+function _old_CreateClass(selector: string, attr: IClassDefinition | IKeyValPair<string>[], noAppend?: boolean): HTMLStyleElement {
+  //TODO: verify this can be removed entirely
   let cls: HTMLElement;
   let a: string;
   let styles: HTMLCollectionOf<HTMLStyleElement>;
@@ -247,7 +250,13 @@ export function oldCreateClass(selector: string, attr: IClassDefinition | IKeyVa
   if (!noAppend) { document.head.appendChild(cls); }
 
   // Return the style node
-  return cls;
+  return cls as HTMLStyleElement;
+}
+
+export function createCssClass(selector: string, def: FlatClassDefinition): HTMLStyleElement {
+  let key = StyleLibrary.getNextId();
+  StyleLibrary.add(key, { [selector] : def } );
+  return StyleLibrary.getElemForKey(key);
 }
 
 /**
@@ -301,7 +310,7 @@ export function addHiddenClass(): void {
   cls = {
     "display": "none"
   };
-  oldCreateClass(".hidden", cls);
+  createCssClass(".hidden", cls);
 }
 
 /** Adds the "unselectable" class definition to the document */
@@ -314,6 +323,6 @@ export function addUnselectableClass(): HTMLStyleElement {
     "khtml-user-select": "none",
     "o-user-select": "none"
   };
-  return oldCreateClass(".unselectable", cls, true) as HTMLStyleElement;
+  return createCssClass(".unselectable", cls) as HTMLStyleElement;
 
 }

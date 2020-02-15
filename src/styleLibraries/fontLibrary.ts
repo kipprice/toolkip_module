@@ -1,6 +1,6 @@
 import { _Library } from "./_library";
-import { map, IDictionary } from "../../objectHelpers";
-import { IFontFaceDefinition } from "../../styleHelpers";
+import { map, IDictionary } from "../objectHelpers";
+import { IFontFaceDefinition } from "../styleHelpers";
 
 /**----------------------------------------------------------------------------
  * @class	FontLibrary

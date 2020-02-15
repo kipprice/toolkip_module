@@ -25,6 +25,12 @@ const secondaryStyles = {
     }
 }
 
+const defaultPlaceholderStyles = {
+    ".default": {
+        backgroundColor: "<default:#444>"
+    }
+}
+
 const index = {
     "hello": {
         "styles": {
@@ -115,6 +121,16 @@ describe('styleHelpers --> placeholders', () => {
                 font: "<hello>"
             }
         })
+    })
+
+    it("replaces default placeholders", () => {
+        let replaced = replacePlaceholders(defaultPlaceholderStyles, "default", "#FFF");
+        const expected = {
+            ".default": {
+                backgroundColor: "#FFF"
+            }
+        }
+        expect(replaced).toMatchObject(expected);
     })
 
     it('replaces placeholders', () => {

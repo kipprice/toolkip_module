@@ -1,7 +1,7 @@
 import { _Stylable } from "..";
 import { IStandardStyles } from "../../styleHelpers";
-import { StyleLibrary } from "../libraries/styleLibrary";
-import { PlaceholderLibrary } from "../libraries/placeholderlibrary";
+import { StyleLibrary } from "../../styleLibraries/styleLibrary";
+import { PlaceholderLibrary } from "../../styleLibraries/placeholderlibrary";
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
 
 class SampleStylable extends _Stylable<"color" | "width"> {

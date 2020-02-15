@@ -9,4 +9,5 @@ export interface ICreatedStyles {
 export interface IStylableDependency {
     createStyles(uniqueKey?: string, styles?: IStandardStyles, forceOverride?: boolean);
     new?: (...addlArgs: any[]) => _Stylable;
+    name: string;
 }

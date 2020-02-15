@@ -1,5 +1,8 @@
 import { IStandardStyles, stringifyStyles, ICustomFonts, getCssPropertyName, stringifyStyle } from ".."
 
+
+const strip = (toStrip: string) => toStrip.replace(/[\t\n]/g, "");
+
 describe("styleHelpers -> stringifier -> stringifyStyles", () => {
     it("stringifies a simple class", () => {
         let cls: IStandardStyles = {
@@ -8,10 +11,22 @@ describe("styleHelpers -> stringifier -> stringifyStyles", () => {
             }
         }
 
-        let expected = "\t.primary {\n\t\tfont-family : Arial;\n}";
-        let stringified = stringifyStyles(cls);
-        expect(stringified[0]).toEqual(expected);
+        let expected = ".primary {font-family : Arial;}";
+        let stringified = strip(stringifyStyles(cls)[0]);
+        expect(stringified).toEqual(expected);
     });
+
+    it("stringifies a set of classes", () => {
+        let classes: IStandardStyles = {
+            ".primary" : { fontFamily: "Arial" },
+            ".secondary": { fontSize: "2em" }
+        }
+
+        let expected = ".primary {font-family : Arial;}" +
+                        ".secondary {font-size : 2em;}";
+        let stringified = strip(stringifyStyles(classes)[0]);
+        expect(stringified).toEqual(expected);
+    })
 
     it('stringifies a set of fonts', () => {
         let fonts: ICustomFonts = {
@@ -21,16 +36,47 @@ describe("styleHelpers -> stringifier -> stringifyStyles", () => {
             ]
         };
 
-        let expected = "\t@font-face {\n\t\tfont-family : font;\n\t\tsrc : url(url) format(fmt),url(url2) format(fmt2);\n}";
-        let stringified = stringifyStyles(fonts);
-        expect(stringified[0]).toEqual(expected);
+        let expected = "@font-face {font-family : font;src : url(url) format(fmt),url(url2) format(fmt2);}";
+        let stringified = strip(stringifyStyles(fonts)[0]);
+        expect(stringified).toEqual(expected);
     })
 });
 
 describe("styleHelpers -> stringifier -> stringifyStyle", () => {
     it('stringifies a simple class', () => {
-        expect(stringifyStyle(".primary", { "fontFamily": "Arial" } ))
-            .toEqual("\t.primary {\n\t\tfont-family : Arial;\n}")
+        expect(strip(stringifyStyle(".primary", { "fontFamily": "Arial" } )))
+            .toEqual(".primary {font-family : Arial;}")
+    })
+
+    it('stringifies an animation appropriately', () => {
+        const expected = '@keyframes rotate {' +
+                            'from {transform : rotate(0deg);}' + 
+                            'to {transform : rotate(360deg);}' +
+                        '}';
+
+        const stringified = strip(stringifyStyle("@keyframes rotate", { 
+            from: {
+                transform: "rotate(0deg)"
+            },
+            to: {
+                transform: "rotate(360deg)"
+            }
+         }));
+         expect(stringified).toEqual(expected);
+    })
+
+    it("renders a default value for a placeholder", () => {
+        let style = { boxShadow: "0 1px 5px 3px <shadow:rgba(0,0,0,.2)>"};
+        let expected = ".test {box-shadow : 0 1px 5px 3px rgba(0,0,0,.2);}";
+        let stringified = strip(stringifyStyle(".test", style));
+        expect(stringified).toEqual(expected);
+    })
+
+    it("renders the placeholder when there is no default value", () => {
+        let style = { boxShadow: "0 1px 5px 3px <shadow>"};
+        let expected = ".test {box-shadow : 0 1px 5px 3px <shadow>;}";
+        let stringified = strip(stringifyStyle(".test", style));
+        expect(stringified).toEqual(expected);
     })
 })
 

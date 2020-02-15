@@ -1,12 +1,12 @@
 import { IStandardStyles, ICustomFonts } from '../styleHelpers/_interfaces';
 import { IConstructor, IDictionary } from '../objectHelpers/_interfaces';
-import { isEmptyObject } from '../objectHelpers/navigate';
+import { isEmptyObject, getPrototype } from '../objectHelpers/navigate';
 import { _NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 import { splitStyles } from "../styleHelpers/placeholders";
-import { StyleLibrary } from './libraries/styleLibrary';
-import { PlaceholderLibrary } from './libraries/placeholderlibrary';
+import { StyleLibrary } from '../styleLibraries/styleLibrary';
+import { PlaceholderLibrary } from '../styleLibraries/placeholderlibrary';
 import { combineStyles } from '../styleHelpers';
 import { StandardElement } from '../drawable';
 import { IStylableDependency } from '.';
@@ -26,14 +26,16 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
 
     /** keep track of the un-themed version of our styles */
     protected static _uncoloredStyles: IStandardStyles;
-    private get _uncoloredStyles(): IStandardStyles { return (this.constructor as typeof _Stylable)._uncoloredStyles; }
+    protected get _uncoloredStyles(): IStandardStyles { return (this.constructor as typeof _Stylable)._uncoloredStyles; }
+
     private _mergedStyles: IStandardStyles;
 
     /** store the values we've set for various placeholders */
     protected _placeholderValues: Partial<IDictionary<any, P>> = {};
 
     /** store the dependencies that this class has on other stylables */
-    protected static _styleDependencies: IStylableDependency[];
+    protected static _styleDependencies: IStylableDependency[] = [];
+    private get _styleDependencies() { return (this.constructor as typeof _Stylable)._styleDependencies; }
 
     /** overridable function for grabbing a unique key for this element */
     protected get _uniqueKey(): string { return (this.constructor as any).name; }
@@ -59,6 +61,8 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
     public static createStyles(uniqueKey?: string, mergedStyles?: IStandardStyles, forceOverride?: boolean) {
         if (!uniqueKey) { uniqueKey = this.name; }
         if (!mergedStyles) { mergedStyles = this._uncoloredStyles; }
+        
+        this._createParentStyles();
         this._createStyleDependencies();
         this._createSelfStyles(uniqueKey, mergedStyles, forceOverride);
     }
@@ -76,6 +80,21 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         for (let s of dependencies) {
             (s as any).createStyles();
         }
+    }
+
+    private static _createParentStyles() {
+        // first prototype is of this class; second
+        // is the parent
+        let parent = getPrototype(getPrototype(this));
+        while(parent && isStylable(parent)) {
+            const pConstructor = parent.constructor as any;
+            if (pConstructor.hasOwnProperty("_uncoloredStyles")) {
+                (pConstructor as any).createStyles();
+            }
+
+            parent = getPrototype(parent)
+        }
+
     }
 
     /**
@@ -140,6 +159,7 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
      * replaces the "preemptivelyCreateStyles" function
      */
     private _createStyles(forceOverride?: boolean) {
+        if (this._shouldSkipStyles()) { return; }
         (this.constructor as any).createStyles(
             this._uniqueKey,
             this._mergedStyles,
@@ -147,7 +167,28 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         )
     }
 
-    
+    private _shouldSkipStyles(): boolean {
+        const c = this.constructor;
+        // check if the properties are our own
+        if (c.hasOwnProperty("_uncoloredStyles")) { return false; }
+
+        // check if the parent styles were already created
+        const parentProto = getPrototype(getPrototype(c));
+        if (PlaceholderLibrary.hasStyles(parentProto._uniqueKey)) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    protected _defaultPlaceholder(placeholderName: P, defaultValue: any): any[] {
+        return [
+            defaultValue,
+            `<${placeholderName}>`
+        ];
+    }
 
     /**
      * replacePlaceholder
@@ -159,11 +200,22 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         if (this._placeholderValues[placeholderName] && !force) { return; } 
         this._placeholderValues[placeholderName] = placeholderValue;
         
+
+        // replace in our own styles
         PlaceholderLibrary.replacePlaceholder({
             placeholder: placeholderName, 
             newValue: placeholderValue,
             uniqueKey: this._uniqueKey
-        })
+        });
+
+        // replace in any dependant styles
+        for (let s of this._styleDependencies) {
+            PlaceholderLibrary.replacePlaceholder({
+                placeholder: placeholderName,
+                newValue: placeholderValue,
+                uniqueKey: s.name
+            })
+        }
     }
 
     /**
@@ -183,4 +235,8 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
 
     //#endregion
     //...........................
+}
+
+function isStylable (obj: any): obj is _Stylable {
+    return !!(obj as _Stylable).mergeInStyles;
 }

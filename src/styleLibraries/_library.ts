@@ -1,9 +1,9 @@
-import { Styles, createStyleElement } from "../../styleHelpers";
-import { IDictionary, isEmptyObject } from "../../objectHelpers";
-import { removeElement } from "../../htmlHelpers";
-import { combineStyles } from "../../styleHelpers/combiner";
-import { stringifyStyles } from "../../styleHelpers/stringifier";
-import { nextRender } from "../../async";
+import { Styles, createStyleElement } from "../styleHelpers";
+import { IDictionary, isEmptyObject } from "../objectHelpers";
+import { removeElement } from "../htmlHelpers";
+import { combineStyles } from "../styleHelpers/combiner";
+import { stringifyStyles } from "../styleHelpers/stringifier";
+import { nextRender } from "../async";
 
 /**----------------------------------------------------------------------------
  * @class	Library
@@ -27,6 +27,19 @@ export abstract class _Library {
     
     //#endregion
     //.....................
+
+    //..........................................
+    //#region MANAGE IDENTFIERS
+
+    protected _lastId: number = 0;
+
+    public getNextId() {
+        this._lastId += 1;
+        return this._lastId.toString()
+    }
+    
+    //#endregion
+    //..........................................
 
     //..........................................
     //#region PUBLIC ACCESSORS
@@ -133,4 +146,14 @@ export abstract class _Library {
         return this._rawStyles[uniqueKey];
     }
     
+    //..........................................
+    //#region RETRIEVE ELEMENTS AS NEEDED
+    
+    public getElemForKey(uniqueKey: string): HTMLStyleElement {
+        if (!this._elems[uniqueKey]) { return null; }
+        return this._elems[uniqueKey];
+    }
+    
+    //#endregion
+    //..........................................
 }

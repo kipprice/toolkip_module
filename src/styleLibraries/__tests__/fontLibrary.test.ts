@@ -1,4 +1,4 @@
-import { ICustomFonts, stringifyStyles } from "../../../styleHelpers"
+import { ICustomFonts, stringifyStyles } from "../../styleHelpers"
 import { FontLibrary } from "../fontLibrary"
 
 const fontsA: ICustomFonts = {

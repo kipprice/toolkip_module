@@ -1,5 +1,6 @@
 import { TypedClassDefinition, IFontFaceDefinition, FlatStyles, FlatClassDefinition } from "./_interfaces";
 import { map } from "../objectHelpers";
+import { findContainedPlaceholder } from "./placeholders";
 
 const MAX_LENGTH = 10000;
 
@@ -211,12 +212,28 @@ class _StyleStringifier {
         return false;
     }
 
+    //#endregion
+    //..........................................
+
+    //..........................................
+    //#region FORMATTING
+    
     private _formatClass(selector: string, value: string): string {
-        return `\t${selector} {\n${value}}`;
+        return `${selector} {\n${value}}\n`;
     }
 
     private _formatProperty(key: keyof FlatClassDefinition, value: any): string {
-        return `\t\t${this.getPropertyName(key)} : ${value};\n`
+        
+        // some special handling for placeholders
+        let placeholder = findContainedPlaceholder(value);
+        if (placeholder) {
+            value = value.replace(
+                `<${placeholder.name}:${placeholder.defaultValue}>`, 
+                placeholder.defaultValue
+            )
+        }
+
+        return `\t${this.getPropertyName(key)} : ${value};\n`
     }
 
     private _formatFontface(url: string, format: string): string {
@@ -225,6 +242,7 @@ class _StyleStringifier {
     
     //#endregion
     //..........................................
+
 }
 
 const StyleStringifier = new _StyleStringifier();

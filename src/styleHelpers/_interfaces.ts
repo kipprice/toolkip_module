@@ -115,4 +115,9 @@ export interface SplitStyles {
     withPlaceholders: IFlatStyles;
 }
 
+export interface IPlaceholder {
+    name: string;
+    defaultValue?: string;
+}
+
 export type PlaceholderIndex = IDictionary<IDictionary<IDictionary<IDictionary<boolean>>>>

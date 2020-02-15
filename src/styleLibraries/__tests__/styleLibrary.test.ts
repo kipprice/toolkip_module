@@ -1,7 +1,7 @@
-import { IFlatStyles, stringifyStyles } from "../../../styleHelpers";
+import { IFlatStyles, stringifyStyles } from "../../styleHelpers";
 import { StyleLibrary } from "../styleLibrary";
-import { stripSpaces } from "../../../primitiveHelpers/strings";
-import { nextRender } from "../../../async";
+import { stripSpaces } from "../../primitiveHelpers/strings";
+import { nextRender } from "../../async";
 
 const stylesA: IFlatStyles = {
     ".one": {

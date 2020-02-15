@@ -1,6 +1,6 @@
 import { PlaceholderLibrary } from "../placeholderlibrary";
-import { stringifyStyles, IFlatStyles } from "../../../styleHelpers";
-import { createElement } from "../../../htmlHelpers";
+import { stringifyStyles, IFlatStyles } from "../../styleHelpers";
+import { createElement } from "../../htmlHelpers";
 
 const stylesA: IFlatStyles = {
     ".one": {

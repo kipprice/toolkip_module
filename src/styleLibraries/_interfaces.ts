@@ -1,4 +1,4 @@
-import { StandardElement } from "../../drawable";
+import { StandardElement } from "../drawable";
 
 export interface IPlaceholderReplaceOptions {
     placeholder: string;

@@ -1,4 +1,4 @@
-import { IFlatStyles, TypedClassDefinition, SplitStyles, FlatClassDefinition, PlaceholderIndex } from "./_interfaces";
+import { IFlatStyles, TypedClassDefinition, SplitStyles, FlatClassDefinition, PlaceholderIndex, IPlaceholder } from "./_interfaces";
 import { IDictionary, map, setDictValue, cloneObject } from "../objectHelpers";
 
 /**----------------------------------------------------------------------------
@@ -40,11 +40,17 @@ class _StylePlaceholders {
      * @param   value   The value to check
      * @returns True if a placeholder is found
      */
-    public findContainedPlaceholder(value: string): string {
+    public findContainedPlaceholder(value: string): IPlaceholder {
         let placeholderRegex: RegExp = /<(.+?)>/;
         let result: RegExpExecArray = placeholderRegex.exec(value);
-        if (!result || !result[1]) { return ""; }
-        return result[1];
+        if (!result || !result[1]) { return null; }
+
+        // handle default values
+        let splitPlaceholder = result[1].split(":");
+        return {
+            name: splitPlaceholder[0],
+            defaultValue: splitPlaceholder[1]
+        };
     }
 
     /**
@@ -79,7 +85,7 @@ class _StylePlaceholders {
 
                     // set the property name into the index in the position
                     // placeholder -> uniqueKey -> selector
-                    setDictValue(idx, true, [placeholder, uniqueKey, selector, pName])
+                    setDictValue(idx, true, [placeholder.name, uniqueKey, selector, pName])
                 })
             })
         })
@@ -130,7 +136,7 @@ class _StylePlaceholders {
         replaceWith: any
     ): IFlatStyles {
 
-        let matchRegex = new RegExp("<?" + placeholder + ">?", "g");
+        let matchRegex = new RegExp("<" + placeholder + ".*?>", "g");
 
         let out = cloneObject(styles);
 
@@ -149,7 +155,7 @@ export const StylePlaceholders = new _StylePlaceholders();
 //..........................................
 //#region PUBLIC FUNCTIONS
 
-export function findContainedPlaceholder(value: string): string {
+export function findContainedPlaceholder(value: string): IPlaceholder {
     return StylePlaceholders.findContainedPlaceholder(value);
 }
 
