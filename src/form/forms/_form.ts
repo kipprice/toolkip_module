@@ -476,7 +476,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
         if (!msg) { return; }
 
         let popup: ErrorPopup = new ErrorPopup(msg, "Couldn't Save");
-        popup.setThemeColor("popupTheme", this._placeholderValues.formTheme);
+        popup.replacePlaceholder("btnBackground", this._placeholderValues.formTheme);
         popup.draw(document.body);
     }
 
@@ -520,7 +520,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
                     }
                 }
             );
-            popup.setThemeColor("popupTheme", this._placeholderValues.formTheme);
+            popup.replacePlaceholder("btnBackground", this._placeholderValues.formTheme);
             popup.draw(document.body);
         } else {
             this._cancel();

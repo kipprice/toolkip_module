@@ -320,5 +320,7 @@ export function getElementsBySelector(selector: string): Element[] {
  * (wrapper around the standard function)
  */
 export function doesElementMatchSelector(elem: StandardElement, selector: string): boolean {
+    if (!elem) { return false; }
+    if (!elem.matches) { return false; }
     return elem.matches(selector);
 }

@@ -32,7 +32,7 @@ export class LoadingShield extends _Shield {
         },
 
         ".kipShield .loadingText": {
-            fontFamily: '"OpenSansLight", "Helvetica"',
+            fontFamily: '"OpenSansLight", "OpenSans", "Helvetica"',
             fontSize: "1.4em",
             color: "#FFF"
         },
@@ -48,12 +48,8 @@ export class LoadingShield extends _Shield {
         },
 
         "@keyframes rotate": {
-            from: {
-                transform: "rotate(0deg)"
-            },
-            to: {
-                transform: "rotate(360deg)"
-            }
+            from: { transform: "rotate(0deg)" },
+            to: { transform: "rotate(360deg)" }
         }
     }
 

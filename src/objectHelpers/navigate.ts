@@ -142,3 +142,9 @@ export function setDictValue(object: any, val: any, keys: string[]) {
 
   return object;
 }
+
+export function getPrototype(obj: any): any {
+  if (obj.prototype) { return obj.prototype; }
+  if (obj.__proto__) { return obj.__proto__; }
+  return null;
+}

@@ -21,7 +21,7 @@ import { select } from '../htmlHelpers/generalHelpers';
  * @version	1.3.0
  * ---------------------------------------------------------------------------
  */
-export class Editable<T> extends _Drawable {
+export class Editable<T> extends _Drawable<"editableLightBG"> {
 
 	//.....................
 	//#region PROPERTIES
@@ -166,8 +166,7 @@ export class Editable<T> extends _Drawable {
 		this._addListeners();
 
 		// add the BG color of an active editable
-		// TODO: convert to new version
-		//this.setThemeColor("editableLightBG", options.lightBg || "rgba(0,0,0,.1)");
+		this.replacePlaceholder("editableLightBG", options.lightBg || "rgba(0,0,0,.2)" );
 	}
 
 	/**

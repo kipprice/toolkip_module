@@ -92,7 +92,7 @@ export abstract class _UnitTester {
 	 * @param 	tests 		Tests to evaluate with this function
 	 * 
 	 */
-	protected _testFunction(funcToTest: Function, title: string, tests: IUnitTestDetails[]): void {
+	public testFunction(funcToTest: Function, title: string, tests: IUnitTestDetails[]): void {
 
 		this._ui.startSubgroup(title);
 

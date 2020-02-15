@@ -28,9 +28,6 @@ export class LoginPopup extends Popup {
             marginTop: "10px"
         }
     }
-
-    /** make sure we get a mix of core styles and these styles */
-    protected static _styleDependencies = [Popup];
     
     /**
      * Creates a LoginPopup object

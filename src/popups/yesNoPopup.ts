@@ -23,7 +23,7 @@ export class YesNoPopup extends Popup {
 
     /**
      * _createButtons
-     * 
+     * ----------------------------------------------------------------------------
      * Create the yes/no buttons for the popup
      * 
      */
@@ -34,9 +34,8 @@ export class YesNoPopup extends Popup {
 
     /**
      * _createButton
-     * 
+     * ----------------------------------------------------------------------------
      * Create a button in the yes / no form
-     * 
      */
     protected _createButton(label: string, value: YesNoEnum): void {
 

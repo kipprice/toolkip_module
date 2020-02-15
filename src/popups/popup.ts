@@ -17,7 +17,7 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class Popup extends _Drawable {
+export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground"> {
 
 	//.....................
 	//#region PROPERTIES
@@ -57,11 +57,11 @@ export class Popup extends _Drawable {
 
 		".frame": {
 			position: "absolute",
-			backgroundColor: "#FFF",
+			backgroundColor: "<popupBackground:#FFF>",
 			borderRadius: "3px",
 			boxShadow: "1px 1px 5px 2px rgba(0,0,0,.2)",
 			display: "block",
-			borderTop: "10px solid <popupTheme>",
+			borderTop: "10px solid <stripe>",
 			padding: "10px",
 			maxHeight: "90%",
 			overflowY: "auto"
@@ -88,7 +88,7 @@ export class Popup extends _Drawable {
 
 		".popup .buttonContainer .popupButton": {
 			padding: "2px 10px",
-			backgroundColor: "<popupTheme>",
+			backgroundColor: "<btnBackground:#333>",
 			color: "#FFF",
 			cursor: "pointer",
 			marginLeft: "15px",
@@ -126,10 +126,6 @@ export class Popup extends _Drawable {
 		}
 	}
 
-	public setThemeColor(colorId: PopupColor, color: string, noReplace?: boolean): void {
-		// TODO: convert to new version
-		//super.setThemeColor(colorId, color, noReplace);
-	}
 	//#endregion
 	//...............
 
@@ -151,9 +147,7 @@ export class Popup extends _Drawable {
 
 		super(obj);
 		if (obj.themeColor) {
-			this.setThemeColor("popupTheme", obj.themeColor);
-		} else {
-			this.setThemeColor("popupTheme", "#06F", true);
+			this.replacePlaceholder("btnBackground", obj.themeColor);
 		}
 
 	}

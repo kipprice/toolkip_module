@@ -3,7 +3,7 @@ import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { createSimpleElement } from '../htmlHelpers/createElement';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '../htmlHelpers/elementPositioning';
-import { StyleLibrary } from '../stylable/libraries/styleLibrary';
+import { StyleLibrary } from '../styleLibraries/styleLibrary';
 
 /**
  * arrangeRadially

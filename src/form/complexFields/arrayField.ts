@@ -117,7 +117,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
     protected static _styleDependencies = [_Field, _CollapsibleField];
 
     /** 
-     * setThemeColor
+     * replacePlaceholder
      * ----------------------------------------------------------------------------
      * update the appropriate theme color for the form 
      */
