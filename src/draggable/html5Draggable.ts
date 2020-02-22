@@ -1,7 +1,7 @@
 import { _GenericDraggable, _DraggableTarget } from "./draggable";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { createElement } from "../htmlHelpers/createElement";
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement } from "../shared";
 
 /**----------------------------------------------------------------------------
  * @class   HTML5Draggable

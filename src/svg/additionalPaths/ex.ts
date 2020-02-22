@@ -1,5 +1,5 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { IPoint } from "../../maths/_interfaces";
+import { IPoint } from "../../shared";
 import { IPathPoint } from "../_interfaces";
 
 /**

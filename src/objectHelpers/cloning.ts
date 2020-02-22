@@ -1,5 +1,6 @@
-import { IBasicRect, IPoint } from "../maths/_interfaces";
+import { IBasicRect } from "../maths/_interfaces";
 import { combineObjects } from "./combine";
+import { IPoint } from "../shared";
 
 
 export function cloneRect(rect: IBasicRect): IBasicRect {

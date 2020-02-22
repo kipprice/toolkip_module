@@ -6,15 +6,14 @@ import { IClasses,
         ICreateElementFunc, 
         IClassDefinition, 
         IAttribute 
-    } from "./_interfaces";
-import { StandardElement } from "../drawable/_interfaces";
+    } from ".";
+import { StandardElement, isNullOrUndefined } from "../shared";
 import { _Drawable } from "../drawable/_drawable";
 import { addClass } from "../styleHelpers/css";
 import { createCssClass } from "../styleHelpers";
 import { bind } from "../binding/helper";
 import { isDrawable } from "../drawable/_typeguards";
 import { map } from "../objectHelpers/navigate";
-import { isNullOrUndefined } from "../typeGuards/falsey";
 import { IKeyValPair } from "../objectHelpers/_interfaces";
 
 //................................................

@@ -1,4 +1,4 @@
-import { IPoint } from './_interfaces'
+import { IPoint } from '../shared'
 import { roundToPlace } from './maths';
 
 //..........................................

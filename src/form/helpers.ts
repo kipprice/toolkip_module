@@ -1,6 +1,6 @@
 import { IFieldConfig, IFields, FieldTypeEnum } from "./_interfaces";
 import { ISelectOptions } from "../objectHelpers/_interfaces";
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined } from "../shared";
 import { createElement, createSimpleElement } from "../htmlHelpers/createElement";
 import { IElemDefinition, IAttributes, IChildren } from "../htmlHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";

@@ -1,5 +1,10 @@
-import { IPoint, IBasicRect } from './_interfaces';
-import { isIBasicRect, isClientRect, isSVGRect } from './_typeguards';
+import { IPoint } from '../shared';
+import { 
+	IBasicRect, 
+	isIBasicRect, 
+	isClientRect, 
+	isSVGRect 
+} from '.';
 
 /**
  * clientRectToShape

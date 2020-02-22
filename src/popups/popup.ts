@@ -3,8 +3,7 @@ import { PopupElements, PopupColor, IPopupDefinition } from "./_interfaces";
 import { createSimpleElement, createElement } from "../htmlHelpers/createElement";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { IClasses, IElemDefinition } from "../htmlHelpers/_interfaces";
-import { StandardElement } from "../drawable/_interfaces";
-import { isString } from "../typeGuards/simpleGuard";
+import { StandardElement, isString } from '../shared';
 import { isDrawable } from "../drawable/_typeguards";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 

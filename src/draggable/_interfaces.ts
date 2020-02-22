@@ -1,4 +1,4 @@
-import { IPoint } from "../maths/_interfaces";
+import { IPoint } from "../shared";
 
 
 export interface OnDragEnterFunction {

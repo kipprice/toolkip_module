@@ -1,5 +1,5 @@
 import { MOBILE_MAX_DIM } from "./_constants";
-import { StandardElement } from "../drawable";
+import { StandardElement } from "../shared";
 import { addClass, removeClass } from "../styleHelpers";
 
 /**----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
-import { IStandardStyles, ICustomFonts } from '../styleHelpers/_interfaces';
-import { IConstructor, IDictionary } from '../objectHelpers/_interfaces';
+import { IStandardStyles } from '../styleHelpers/_interfaces';
+import { IDictionary } from '../objectHelpers/_interfaces';
 import { isEmptyObject, getPrototype } from '../objectHelpers/navigate';
 import { _NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
@@ -8,7 +8,7 @@ import { splitStyles } from "../styleHelpers/placeholders";
 import { StyleLibrary } from '../styleLibraries/styleLibrary';
 import { PlaceholderLibrary } from '../styleLibraries/placeholderlibrary';
 import { combineStyles } from '../styleHelpers';
-import { StandardElement } from '../drawable';
+import { StandardElement } from '../shared';
 import { IStylableDependency } from '.';
 
 /**----------------------------------------------------------------------------

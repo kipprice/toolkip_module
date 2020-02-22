@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined } from "../shared";
 
 /**
  * piece

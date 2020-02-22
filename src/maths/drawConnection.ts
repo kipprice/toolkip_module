@@ -1,4 +1,4 @@
-import { IPoint } from './_interfaces';
+import { IPoint } from '../shared';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { createSimpleElement } from '../htmlHelpers/createElement';

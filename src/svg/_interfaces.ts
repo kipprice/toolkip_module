@@ -1,6 +1,6 @@
 import { IDrawableElements } from '../drawable/_interfaces';
 import { IAttributes } from '../htmlHelpers/_interfaces';
-import { IPoint } from '../maths/_interfaces';
+import { IPoint } from '../shared';
 
 export interface ISVGElems extends IDrawableElements {
     base: SVGElement;

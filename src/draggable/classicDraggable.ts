@@ -1,6 +1,6 @@
 import { _GenericDraggable, _DraggableTarget } from "./draggable";
 import { addClass, removeClass } from "../styleHelpers/css";
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement } from "../shared";
 
 
 /**----------------------------------------------------------------------------

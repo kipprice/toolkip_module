@@ -3,7 +3,7 @@ import { _CollapsibleField } from "./_collapsibleField";
 import { _Field } from "../_field";
 import { isField } from "../helpers";
 import { map } from "../../objectHelpers/navigate";
-import { isNullOrUndefined } from "../../typeGuards/falsey";
+import { isNullOrUndefined } from "../../shared";
 import { createElement } from "../../htmlHelpers/createElement";
 import { ArrayChildField } from "./arrayChildField";
 import { removeElement } from "../../htmlHelpers/generalHelpers";

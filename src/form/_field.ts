@@ -1,6 +1,6 @@
 import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString, FormColor } from "./_interfaces";
 import { _Drawable } from "../drawable/_drawable";
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined } from "../shared";
 import { hasClass, addClass, removeClass } from "../styleHelpers/css";
 import { createTable } from "../htmlHelpers/tables";
 import { equals } from "../comparable/comparable";

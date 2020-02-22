@@ -1,6 +1,6 @@
 import { _Form } from "./_form";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { StandardElement } from "../../drawable/_interfaces";
+import { StandardElement } from "../../shared";
 import { addClass, removeClass } from "../../styleHelpers/css";
 import { createElement } from "../../htmlHelpers/createElement";
 import { wait } from "../../async";

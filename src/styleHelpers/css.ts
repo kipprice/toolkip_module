@@ -1,12 +1,12 @@
 import { trim } from '../primitiveHelpers/strings';
-import { DrawableElement, StandardElement } from '../drawable/_interfaces';
+import { DrawableElement } from '../drawable/_interfaces';
 import { isDrawable } from '../drawable/_typeguards';
 import { _Drawable } from '../drawable/_drawable';
 import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { IKeyValPair } from '../objectHelpers/_interfaces';
 import { FlatClassDefinition } from './_interfaces';
 import { StyleLibrary } from '../styleLibraries/styleLibrary';
-
+import { StandardElement } from "../shared";
 
 /**
  * addClass
@@ -103,7 +103,7 @@ export function hasClass(elem: HTMLElement | _Drawable, cls: string): boolean {
   }
 
   // Grab the current CSS class and check if the passed-in class is present
-  cur_cls = " " + e.getAttribute("class") + " ";
+  cur_cls = " " + (e as StandardElement).getAttribute("class") + " ";
   if (cur_cls.indexOf(" " + cls + " ") === -1) {
     return false;
   }

@@ -1,4 +1,4 @@
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement } from "../shared";
 import { _Drawable } from "../drawable/_drawable";
 import { BoundEvalFunction } from "../binding/_interfaces";
 import { TypedClassDefinition } from "../styleHelpers/_interfaces";
@@ -98,3 +98,9 @@ export type IEventListeners = {
 export interface ICreateElementFunc<T extends IKeyedElems = IKeyedElems, I extends IElemDefinition<T> = IElemDefinition<T>> {
     (obj: I, keyedElems?: T): StandardElement;
 }
+
+export interface ISelectable {
+    select(): void;
+}
+
+export type IOffsetable = { offsetWidth: number, offsetHeight: number } & HTMLElement

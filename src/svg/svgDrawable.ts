@@ -1,6 +1,7 @@
 import { _Drawable } from "../drawable/_drawable";
+import { IPoint } from "../shared";
 import { ISVGElems, ISVGOptions, IPathPoint, IPathSVGAttributes, ISVGAttributes, SVGShapeEnum } from "./_interfaces";
-import { IBasicRect, IExtrema, IPoint } from "../maths/_interfaces";
+import { IBasicRect, IExtrema } from "../maths/_interfaces";
 import { SVGStyle } from "./svgStyle";
 import { Collection } from "../dataStructures/collection/collection";
 import { _SVGElem } from "./elements/svgElement";

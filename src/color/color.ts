@@ -1,6 +1,6 @@
 import { _NamedClass } from "../namedClass/namedClass";
 import { IEquatable } from "../comparable/comparable";
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined } from "../shared";
 import { fullHexString } from "../primitiveHelpers/numbers";
 import { charAt, rest } from "../primitiveHelpers/strings";
 import { RGBEnum, IColorMultipliers } from "../_(wip)_/_(wip)_color/_interfaces";

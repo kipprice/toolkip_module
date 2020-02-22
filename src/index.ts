@@ -39,6 +39,5 @@ export * from './stylable';
 export * from './styleHelpers';
 export * from './svg';
 export * from './tooltip';
-export * from './typeGuards';
 export * from './unitTests';
 export * from './views';

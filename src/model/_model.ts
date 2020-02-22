@@ -2,9 +2,17 @@ import { IDictionary, IConstructor } from '../objectHelpers/_interfaces';
 import { rest } from '../primitiveHelpers/strings'; 
 import {IPartial} from '../structs/partial';
 import { map } from '../objectHelpers/navigate';
-import { isArray, isObject } from '../typeGuards/simpleGuard';
-import { isNullOrUndefined } from '../typeGuards/falsey';
-import { IPropertyChangeListener, IModel, IPropertyChangeListeners, IModelChangeListener } from './_interfaces';
+import { 
+    isNullOrUndefined, 
+    isArray, 
+    isObject 
+} from '../shared';
+import { 
+    IPropertyChangeListener, 
+    IModel, 
+    IPropertyChangeListeners, 
+    IModelChangeListener 
+} from './_interfaces';
 import { isUpdatable } from '../structs/_typeguards';
 
 

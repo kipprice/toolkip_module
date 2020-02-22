@@ -1,6 +1,6 @@
 import { map } from "./navigate";
 import { IDictionary } from './_interfaces';
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined } from "../shared";
 
 /**
  * combineObjects

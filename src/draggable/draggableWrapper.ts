@@ -1,5 +1,5 @@
 import { IDraggableOptions } from './_interfaces';
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement } from "../shared";
 import { ExistingHTML5Draggable } from "./existingDraggable";
 
 /**

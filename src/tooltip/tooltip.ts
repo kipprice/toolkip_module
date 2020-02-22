@@ -1,9 +1,9 @@
 import { TOOLTIP_MARGIN } from './_constants';
 import {_Drawable} from "../drawable/_drawable";
 import { ITooltipElements, TooltipPositionType } from "./_interfaces";
-import { IBasicRect, IPoint } from "../maths/_interfaces";
+import { IBasicRect } from "../maths/_interfaces";
 import { IElemDefinition } from "../htmlHelpers/_interfaces";
-import { isNullOrUndefined } from "../typeGuards/falsey";
+import { isNullOrUndefined, IPoint } from "../shared";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 import { clientRectToBasicRect } from "../maths/rectConversion";

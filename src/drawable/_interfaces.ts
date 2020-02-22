@@ -1,6 +1,4 @@
-
-
-export type StandardElement = HTMLElement | SVGElement;
+import { StandardElement } from "../shared";
 
 export type DrawableElement = StandardElement | IDrawable;
 

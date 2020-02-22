@@ -1,7 +1,7 @@
 import { _SVGElem } from "./svgElement";
 import { ICircleSVGAttributes, ISVGAttributes } from "../_interfaces";
-import { IPoint, IExtrema } from "../../maths/_interfaces";
-
+import { IExtrema } from "../../maths/_interfaces";
+import { IPoint } from "../../shared";
 
 /**----------------------------------------------------------------------------
  * @class   CircleElement

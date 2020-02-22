@@ -1,6 +1,6 @@
 import { IDraggableOptions, OnDragEnterFunction, OnDragLeaveFunction, OnMoveFunction, OnDropFunction } from './_interfaces';
 import { ClassicDraggable } from "./classicDraggable";
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement } from "../shared";
 import { HTML5Draggable } from "./html5Draggable";
 
 // TODO: finish mapping over from the old make draggable function

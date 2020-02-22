@@ -1,6 +1,6 @@
 import { IExtrema } from "./_interfaces";
-import { isInterface } from "../typeGuards/interfaceGuard";
-import { IBasicRect, IPoint } from './_interfaces';
+import { isInterface, IPoint } from "../shared";
+import { IBasicRect } from './_interfaces';
 
 /** 
  * isExtrema

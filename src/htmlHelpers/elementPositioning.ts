@@ -1,5 +1,4 @@
-import { IPoint } from "../maths/_interfaces";
-import { StandardElement } from "../drawable/_interfaces";
+import { IPoint, StandardElement } from "../shared";
 
 //....................................
 //#region CALCULATE OFFSET FUNCTIONS

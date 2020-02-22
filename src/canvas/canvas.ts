@@ -1,11 +1,12 @@
 import { _Drawable } from "../drawable/_drawable";
-import { IBasicRect, IPoint } from "../maths/_interfaces";
+import { IBasicRect } from "../maths/_interfaces";
 import { IHTML5CanvasOptions, IHTML5CanvasElems, IDimensions, EventTypeEnum } from "./_interfaces";
 import { CanvasGroup } from "./canvasGroup";
 import { reconcileOptions } from "../objectHelpers/combine";
 import { addClass } from "../styleHelpers/css";
 import { _CanvasElement } from "./canvasElement";
 import { normalizeValue, roundToPlace } from "../maths/maths";
+import { IPoint } from "../shared";
 
 /**----------------------------------------------------------------------------
  * @class HTML5Canvas

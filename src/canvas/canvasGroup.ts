@@ -1,11 +1,12 @@
 import { _CanvasElement } from "./canvasElement";
 import {Collection} from "../dataStructures/collection/collection";
 import { ElementType, EventTypeEnum } from "./_interfaces";
-import { IPoint, IBasicRect } from "../maths/_interfaces";
+import { IBasicRect } from "../maths/_interfaces";
 import { ICollectionElement } from "../dataStructures/collection/_interfaces";
 import { clonePoint } from "../objectHelpers/cloning";
 import { HTML5Canvas } from "./canvas";
 import { isPointContained } from "../maths/containment";
+import { IPoint } from "../shared";
 
 /**----------------------------------------------------------------------------
  * @class	CanvasGroup

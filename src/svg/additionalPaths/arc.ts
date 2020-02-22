@@ -1,7 +1,8 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { IPoint, degreesToRadians } from "../../maths";
+import { degreesToRadians } from "../../maths";
 import { IAttributes } from "../../htmlHelpers";
 import { IPathPoint, IArcPoint } from "../_interfaces";
+import { IPoint } from "../../shared";
 
 /**----------------------------------------------------------------------------
  * @class	ArcElement

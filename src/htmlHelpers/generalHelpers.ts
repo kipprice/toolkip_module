@@ -1,8 +1,7 @@
 import { removeClass } from "../styleHelpers/css";
-import { IPoint } from "../maths/_interfaces";
-import { isSelectable } from "../typeGuards/htmlGuard";
-import { isNullOrUndefined } from "../typeGuards/falsey";
-import { StandardElement } from "..";
+import { isSelectable, hasOffsets } from "./_typeguards";
+import { isNullOrUndefined, StandardElement, IPoint } from "../shared";
+
 
 /**
  * removeSubclassFromAllElenents

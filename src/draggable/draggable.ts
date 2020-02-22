@@ -1,8 +1,7 @@
 import { IStandardStyles } from './../styleHelpers/_interfaces';
 import { _Drawable } from "../drawable/_drawable";
-import { IPoint } from "../maths/_interfaces";
 import { IElemDefinition } from "../htmlHelpers/_interfaces";
-import { StandardElement } from "../drawable/_interfaces";
+import { StandardElement, IPoint } from "../shared";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { moveElemRelativePosition } from "../htmlHelpers/generalHelpers";
 import { createElement } from "../htmlHelpers/createElement";

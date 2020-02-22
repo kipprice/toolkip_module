@@ -2,7 +2,7 @@ import { _Library } from "./_library";
 import { map, combineObjects, setDictValue, isEmptyObject, IDictionary, getKeys } from "../objectHelpers";
 import { IFlatStyles, indexByPlaceholder, PlaceholderIndex, mapIndexToStyle, replacePlaceholders } from "../styleHelpers";
 import { IPlaceholderReplaceOptions } from "./_interfaces";
-import { StandardElement } from "../drawable";
+import { StandardElement } from "../shared";
 import { doesElementMatchSelector } from "../htmlHelpers";
 
 // TODO: clean up this class once there is enough test coverage to do so safely

@@ -1,6 +1,6 @@
 import { _Form } from "./_form";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { StandardElement } from "../../drawable/_interfaces";
+import { StandardElement } from "../../shared";
 import { addClass } from "../../styleHelpers/css";
 import { FormElemChangeEvent } from "../eventHandler";
 

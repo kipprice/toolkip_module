@@ -1,14 +1,4 @@
-/**---------------------------------------------------------------------------
- * @interface 	IPoint
- * ---------------------------------------------------------------------------
- * Defines a basic point in space
- * ---------------------------------------------------------------------------
- */
-export interface IPoint {
-	x: number; 	/** The x-coordinate of the point @type {number} */
-	y: number; 	/** The y coordinate of the point @type {number} */
-	z?: number;	/** The z-coordinate of the point, if available @type {number} */
-}
+import { IPoint } from "../shared";
 
 /**---------------------------------------------------------------------------
  * @interface 	IBasicRect

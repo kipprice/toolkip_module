@@ -1,5 +1,5 @@
-import { IPoint, IBasicRect } from './_interfaces';
-import { toBasicRect } from './rectConversion';
+import { IPoint } from '../shared';
+import { toBasicRect, IBasicRect } from '.';
 
 /**
  * isWithin

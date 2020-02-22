@@ -1,9 +1,8 @@
 import { _SVGElem } from "./svgElement";
 import { IPathElems, IPathPoint, IPathSVGAttributes, ISVGAttributes, ICurvePoint, IArcPoint } from "../_interfaces";
-import { IPoint } from "../../maths/_interfaces";
+import { IPoint, isNullOrUndefined } from "../../shared";
 import { cloneObject } from "../../objectHelpers/cloning";
 import { roundToPlace } from "../../maths/maths";
-import { isNullOrUndefined } from "../../typeGuards/falsey";
 
 
 /**----------------------------------------------------------------------------

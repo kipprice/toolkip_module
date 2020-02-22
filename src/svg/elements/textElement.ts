@@ -1,5 +1,6 @@
 import { _SVGElem } from './svgElement';
-import { IPoint, IBasicRect } from '../../maths/_interfaces';
+import { IPoint } from "../../shared";
+import { IBasicRect } from '../../maths/_interfaces';
 import { SVGStyle } from '../svgStyle';
 import { addClass } from '../../styleHelpers/css';
 import { IStandardStyles } from '../../styleHelpers/_interfaces';

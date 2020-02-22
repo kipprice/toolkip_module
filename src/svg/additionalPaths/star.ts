@@ -1,5 +1,6 @@
 import { PolygonElement } from "./polygon";
-import { IPoint, calculatePolygonInternalAngle } from "../../maths";
+import { calculatePolygonInternalAngle } from "../../maths";
+import { IPoint } from "../../shared";
 import { IPathSVGAttributes, IPathPoint } from "../_interfaces";
 
 /**----------------------------------------------------------------------------

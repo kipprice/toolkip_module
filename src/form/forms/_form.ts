@@ -1,6 +1,6 @@
 import { IFormOptions, ICanSaveTracker, FormColor, IFields, IFormButton } from "../_interfaces";
 import { combineObjects } from "../../objectHelpers/combine";
-import { StandardElement } from "../../drawable/_interfaces";
+import { StandardElement } from "../../shared";
 import { createElement } from "../../htmlHelpers/createElement";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent, FORM_SAVABLE_CHANGE, FormSavableEvent } from "../eventHandler";
 import { addClass, removeClass } from "../../styleHelpers/css";

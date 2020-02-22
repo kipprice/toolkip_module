@@ -3,9 +3,9 @@ import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { 
 		IDrawable, 
-		IDrawableElements, 
-		StandardElement 
+		IDrawableElements 
 	} from './_interfaces';
+import { StandardElement } from "../shared";
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 
 /**----------------------------------------------------------------------------
