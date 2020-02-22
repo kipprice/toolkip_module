@@ -355,9 +355,10 @@ function _setElemBaseContent<T extends IKeyedElems>(elem: StandardElement, obj: 
 
     // also check for bound content; if we find it, add our own content updater
     if (obj.boundContent) {
-        elem.innerHTML = bind(obj.boundContent, (newVal: string) => {
+        bind(obj.boundContent, (newVal: string) => {
             elem.innerHTML = newVal;
         });
+        elem.innerHTML = obj.boundContent();
     }
 }
 

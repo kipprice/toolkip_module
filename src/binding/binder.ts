@@ -1,10 +1,9 @@
-import { IDictionary } from '../objectHelpers/_interfaces';
-import { map } from '../objectHelpers/navigate';
+import { IDictionary, map } from '../objectHelpers';
 import { nextRender } from '../async';
 import { IEqualityFunction } from '../comparable/comparable';
 import { 
 		IBindingDetails, 
-		BoundDeleteFunction, 
+		BoundDeleteFunction as BoundSkipFunction, 
 		BoundUpdateFunction, 
 		BoundEvalFunction 
 	} from './_interfaces';
@@ -78,7 +77,7 @@ class _Binder {
 	public bind<T = any>(
 			evalFunc: BoundEvalFunction<T>, 
 			updateFunc: BoundUpdateFunction<T>, 
-			deleteFunc?: BoundDeleteFunction, 
+			skipFunc?: BoundSkipFunction, 
 			equalsFunc?: IEqualityFunction<T>
 		): string {
 
@@ -99,7 +98,7 @@ class _Binder {
 			update: (val: T) => {
 				updateFunc(val);
 			},
-			delete: deleteFunc || (() => false),
+			skip: skipFunc || (() => false),
 			lastValue: lastValue,
 			equals: equalsFunc || ((a, b) => { return a === b} )
 		}
@@ -107,10 +106,15 @@ class _Binder {
 		// add to our dictionary
 		this._boundDetails[details.id] = details;
 		
-		// return the identifier of the
+		// return the identifier of the bound function
 		return details.id;
 	}
 
+	/**
+	 * unbind
+	 * ----------------------------------------------------------------------------
+	 * unregister a binding if appropriate
+	 */
 	public unbind(key: string): boolean {
 		if (!this._boundDetails[key]) { return false; }
 
@@ -155,9 +159,8 @@ class _Binder {
 	 */
 	protected async _handlingBinding<T>(details: IBindingDetails<T>): Promise<void> {
 
-		// check first if this element should be deleted
-		if (details.delete()) { 
-			this.unbind(details.id);
+		// check first if this element should be skipped
+		if (details.skip()) { 
 			return;
 		}
 

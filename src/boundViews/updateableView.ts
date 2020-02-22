@@ -8,7 +8,7 @@ import { _Drawable } from "../drawable/_drawable";
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _UpdateableView<I> extends _Drawable {
+export abstract class _UpdateableView<I = any> extends _Drawable {
 
     //.....................
     //#region PROPERTIES

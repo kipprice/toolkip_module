@@ -1,20 +1,28 @@
 import { _Drawable } from "../drawable/_drawable";
-import { IUpdateFunctions, 
-        IBindableElement, 
-        IViewUpdateFunc, 
-        IBoundElemDefinition 
-    } from "./_interfaces";
-import { bind } from "../binding/helper";
-import { BoundUpdateFunction } from "../binding/_interfaces";
-import { isHTMLElement } from "../typeGuards/htmlGuard";
+import { bind, BoundUpdateFunction, unbind } from "../binding";
+import { 
+    isHTMLElement, 
+    isVisible,
+    ICreateElementFunc,
+    createCustomElement
+} from "../htmlHelpers";
 import { isDrawable } from "../drawable/_typeguards";
-import { StandardElement } from "../drawable/_interfaces";
-import { ICreateElementFunc } from "../htmlHelpers/_interfaces";
-import { createCustomElement } from "../htmlHelpers/createElement";
-import { wait } from "../async";
-import { _UpdateableView } from "./updateableView";
+import { StandardElement, isStandardElement, isString, isKeyof } from "../shared";
 import { isUpdatable } from "../structs/_typeguards";
-import { Binder } from "../binding";
+import { IUpdateFunctions, 
+    IBindableElement, 
+    IViewUpdateFunc, 
+    IBoundElemDefinition,
+    _UpdateableView,
+    IViewBindingDetails, 
+    BoundPair,
+    BoundValue,
+    BoundProperty,
+    isBoundView,
+    isUpdatableView,
+    IBoundChildren
+} from ".";
+import { IConstructor, map, IDictionary, setDictValue } from "../objectHelpers";
 
 /**----------------------------------------------------------------------------
  * @class	_BoundView
@@ -25,16 +33,10 @@ import { Binder } from "../binding";
  * @version	1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
+export abstract class _BoundView<VM = any, P extends string = string> extends _Drawable<P> {
 
     //.....................
     //#region PROPERTIES
-
-    /** allow passing in configurable parameters to the view, separate
-     * from the model itself. Controls how elements are created */
-    protected _config: VC;
-    public get config(): VC { return this._getConfig(); }
-    public set config(data: VC) { this._setConfig(data); }
 
     /** keep track of the model associated with this view */
     protected _model: VM;
@@ -42,9 +44,12 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
     public set model(data: VM) { this._setModel(data); }
 
     /** keep track of each of the update functions */
-    protected _updateFunctions: IUpdateFunctions<VM>;
+    protected _updateFunctions: IUpdateFunctions<VM>
     public get updateFunctions(): IUpdateFunctions<VM> { return this._updateFunctions; }
     public set updateFunctions(data: IUpdateFunctions<VM>) { this._updateFunctions = data; }
+
+    protected _bindings: string[];
+    protected _boundChildren: IBoundChildren<VM>;
 
     //#endregion
     //.....................
@@ -52,11 +57,14 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
     //..........................................
     //#region CREATE THE VIEW
 
-    public constructor(config?: VC) {
+    public constructor() {
         super();
-        this._config = config || {} as VC;
+
         this._updateFunctions = {} as any;
         this._model = {} as any;
+        this._bindings = [];
+        this._boundChildren = {} as any;
+
         this._createElements();
     }
 
@@ -90,30 +98,6 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
     //..........................................
 
     //..........................................
-    //#region CONFIG HANDLING
-
-    protected _getConfig(): VC {
-        let oldConfig: VC = JSON.parse(JSON.stringify(this._config));
-        wait(0)
-            .then(() => this._onPotentialConfigChange(oldConfig))
-        return this._config;
-    }
-
-    protected _setConfig(data: VC): void {
-        let oldConfig: VC = this._config;
-        this._config = data;
-        wait(0)
-            .then(() => this._onPotentialConfigChange(oldConfig))
-    }
-
-    protected _onPotentialConfigChange(oldConfig: VC): void {
-
-    }
-
-    //#endregion
-    //..........................................
-
-    //..........................................
     //#region EVENT HANDLERS
 
     /**
@@ -134,21 +118,39 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
      * ----------------------------------------------------------------------------
      * bind a particular element of the view model to the specified element
      */
-    protected _bind<K extends keyof VM>(elem: IBindableElement<VM[K] | VM>, key?: K): void {
-        bind(
+    protected _bind(elem: IBindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
+        if (!bindingInfo.func) { return; }
+
+        const bindKey = bind(
             () => {
                 // handle the null case
                 if (!this._model) { return ""; }
 
                 // handle if the user specified a specific key in the model
-                if (key) { return this._model[key]; }
+                if (bindingInfo.key) { 
+                    return this._model[bindingInfo.key as keyof VM]; 
+                }
 
                 // otherwise, just return the model
                 return this._model;
             },
-            this._createUpdateFunc(elem, key),
-            () => this._shouldDelete(elem)
+            (value: BoundValue<VM>) => { 
+                bindingInfo.func(value, elem) 
+            },
+            () => this._shouldSkipBindUpdate(elem),
+            (a: BoundValue<VM>, b: BoundValue<VM>) => {
+                return (JSON.stringify(a) === JSON.stringify(b));
+            }
         );
+
+        // keep track of all of the bindings we've created
+        this._bindings.push(bindKey);
+    }
+
+    protected _unbindAll(): void {
+        for (let b of this._bindings) {
+            unbind(b);
+        }
     }
 
     /**
@@ -156,8 +158,8 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
      * ----------------------------------------------------------------------------
      * helper that will generate an update function for binding
      */
-    protected _createUpdateFunc<K extends keyof VM>(elem: IBindableElement<VM[K] | VM>, key?: K): BoundUpdateFunction<any> {
-        return (value: VM[K] | VM) => {
+    protected _createUpdateFunc(elem: IBindableElement<VM>, key: BoundProperty<VM>): BoundUpdateFunction<any> {
+        return (value: BoundValue<VM>) => {
 
             // always prefer a user-specified function over the default behavior
             if (this._updateFunctions[key as string]) {
@@ -165,25 +167,45 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
                 return;
             }
 
-            if (this._updateFunctions["_"]) {
-                this._updateFunctions["_"](value, elem);
-                return;
-            }
-
             // otherwise, fall back on a default appropriate to the element type
-            if (isHTMLElement(elem)) {
-                this._updateHtmlElement(elem, value);
-            } else if (isUpdatable(elem)) {
-                this._updateUpdateable(elem, value);
-            } else {
-                this._updateBoundView(elem as _BoundView<VM[K] | VM>, value);
-            }
-
+            this._updateElem(elem, value);
         }
-
     }
 
-    protected _updateHtmlElement<K extends keyof VM>(elem: HTMLElement, value: VM[K] | VM): void {
+    protected _createMapFunc(elem: IBindableElement<VM>, mapDetails: IViewBindingDetails<VM>): BoundUpdateFunction<any> {
+        const key = mapDetails.key
+        this._boundChildren[key] = this._boundChildren[key] || [];
+
+        return ((value: BoundValue<VM>) => {
+
+            // erase all of the old children, which also unbinds them
+            for (let c of this._boundChildren[key]) {
+                c.erase();
+            }
+            
+            // create the new children
+            map(value, (v: any, k: string | number) => {
+                const child = new mapDetails.mapToDrawable();
+                this._updateElem(child, v);
+                child.draw(isDrawable(elem) ? elem.base : elem);
+                this._boundChildren[key].push(child);
+            })
+        })
+    }
+
+    protected _updateElem(elem: IBindableElement<VM>, value: BoundValue<VM>): void {
+        if (isStandardElement(elem)) {
+            this._updateStandardElement(elem, value);
+        } else if (isUpdatableView(elem)) {
+            this._updateUpdateable(elem, value);
+        } else if (isBoundView(elem)) {
+            this._updateBoundView(elem as _BoundView<BoundValue<VM>>, value);
+        } else {
+            this._updateStandardElement(elem.base, value);
+        }
+    }
+
+    protected _updateStandardElement<K extends keyof VM>(elem: StandardElement, value: VM[K] | VM): void {
         if (!value) { value = "" as any; }
         elem.innerHTML = value.toString();
     }
@@ -206,24 +228,14 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
         this._updateFunctions[key as string] = updateFunc;
     }
 
-    protected _shouldDelete<K extends keyof VM>(elem: IBindableElement<VM[K] | VM>): boolean {
+    protected _shouldSkipBindUpdate<K extends keyof VM>(elem: IBindableElement<VM>): boolean {
 
-        // if this element is no longer rendered, we should kill its bindings
+        // if this element is no longer rendered, we should ignore new bindings
         if (isDrawable(elem)) {
-            return (!elem.base.parentNode);
+            return !(isVisible(elem.base))
         } else {
-            return (!elem.parentNode)
+            return !(isVisible(elem));
         }
-    }
-
-    //#endregion
-    //..........................................
-
-    //..........................................
-    //#region UNRENDERING
-
-    public erase() {
-        super.erase();
     }
 
     //#endregion
@@ -233,7 +245,7 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
     //#region HELPERS
 
     /**
-     * _createElement
+     * _createBase
      * ----------------------------------------------------------------------------
      * wrapper around the standard function for creating elements that handles 
      * binding a little more nuanced
@@ -245,21 +257,56 @@ export abstract class _BoundView<VM = any, VC = any> extends _Drawable {
         let elem = createCustomElement(obj, this._elems as any, recurseFunc);
 
         // if a binding is specified, set it up
-        if (obj.boundTo) { this._bindElement(elem, obj); }
+        if (obj.bindTo) { this._bindElement(elem, obj); }
 
         return elem;
     }
 
-    protected _elem(obj: IBoundElemDefinition<VM>): StandardElement {
-        return this._createBase(obj);
-    }
-
+    /**
+     * _bindElement
+     * ----------------------------------------------------------------------------
+     * handle binding the element
+     */
     protected async _bindElement(elem: IBindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
         let boundElem: IBindableElement<any> = elem;
-        if (obj.key && obj.drawable) { boundElem = this._elems[obj.key as string] as IBindableElement<any>; }
-        this._bind(boundElem, obj.boundTo);
+
+        // TODO: don't require that key be specified to get at a drawable
+        if (obj.key && obj.drawable) { 
+            boundElem = this._elems[obj.key as string] as IBindableElement<any>; 
+        }
+
+        let bindingInfo = {} as IViewBindingDetails<VM>
+
+        // handle the simple case
+        if (isKeyof<VM>(obj.bindTo)) {
+            bindingInfo = {
+                key: obj.bindTo,
+                func: this._createUpdateFunc(boundElem, obj.bindTo)
+            }; 
+
+        // pass along the binding details
+        } else {
+            const bindToObj = obj.bindTo as IViewBindingDetails<VM>;
+            bindingInfo = {...bindToObj};
+            if (!bindingInfo.func && bindingInfo.mapToDrawable) {
+                bindingInfo.func = this._createMapFunc(boundElem, bindToObj);
+            }
+        }
+
+        this._bind( boundElem, bindingInfo )
     }
 
+    //#endregion
+    //..........................................
+
+    //..........................................
+    //#region OVERRIDE SUPER METHODS
+    
+    public erase() {
+        this._unbindAll();
+        super.erase();
+    }
+    
     //#endregion
     //..........................................
 }

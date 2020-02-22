@@ -19,9 +19,11 @@ export function bind<T>(
         updateFunc: BoundUpdateFunction<T>, 
         deleteFunc?: BoundDeleteFunction, 
         equalsFunc?: IEqualityFunction<T>
-    ): T {
+    ): string {
     let id = Binder.bind(evalFunc, updateFunc, deleteFunc, equalsFunc);
-    if (!id) { return null; }
+    return id;
+}
 
-    return evalFunc();
+export function unbind<T>(key: string): boolean {
+    return Binder.unbind(key);
 }

@@ -1,4 +1,4 @@
 export * from './_interfaces';
 export * from './boundView';
-export * from './typeGuards';
+export * from './_typeGuards';
 export * from './updateableView';

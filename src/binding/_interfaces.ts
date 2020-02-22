@@ -16,7 +16,7 @@ export interface IBindingDetails<T> {
     id: string;
     eval: BoundEvalFunction<T>;
     update: BoundUpdateFunction<T>;
-    delete: BoundDeleteFunction;
+    skip: BoundDeleteFunction;
     lastValue: T;
     equals: IEqualityFunction<T>;
 }

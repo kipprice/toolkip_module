@@ -287,9 +287,14 @@ export function replaceElemWithElem(elemToReplace: HTMLElement, replacement: HTM
  * @param   elem    The element to check
  * @returns True if the element is visible; false otherwise
  */
-export function isVisible(elem: HTMLElement): boolean {
-    if (elem.offsetWidth !== 0) { return true; }
-    if (elem.offsetHeight !== 0) { return true; }
+export function isVisible(elem: StandardElement): boolean {
+    if (hasOffsets(elem)) {
+        if (elem.offsetWidth !== 0) { return true; }
+        if (elem.offsetHeight !== 0) { return true; }
+    } else {
+        if (elem.clientWidth !== 0) { return true; }
+        if (elem.clientHeight !== 0) { return true; }
+    }
     return false;
 }
 
