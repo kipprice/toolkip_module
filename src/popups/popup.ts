@@ -138,13 +138,8 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * @param 	obj 	If included, contains info on how to create this popup
 	 */
 	constructor(obj?: IPopupDefinition) {
-		if (!obj) {
-			obj = { cls: "popup" };
-		} else {
-			obj.cls = (obj.cls || "") + " popup";
-		}
-
-		super(obj);
+		super();
+		
 		if (obj.themeColor) {
 			this.replacePlaceholder("btnBackground", obj.themeColor);
 		}

@@ -96,11 +96,12 @@ export class Tooltip extends _Drawable {
      * @param   offset          Any offset that should be applied to this tooltip
      */
     constructor (template?: IElemDefinition, sourceElem?: HTMLElement, offset?: IPoint) {
+        super();
 
-        // create the elements
+        // create elements
         if (!template) { template = {}; }
         template.cls = "tooltip hidden" + (template.cls? " " + template.cls : "");
-        super(template);
+        this._createBase(template);
 
         // assign the offset point
         this._offset = offset || {x: 0, y: 0};

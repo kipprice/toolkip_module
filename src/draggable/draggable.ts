@@ -134,8 +134,8 @@ export abstract class _GenericDraggable extends _Drawable {
      * @param   obj     Definition of the element being created
      * @param   target  The target of 
      */
-    constructor(obj?: IElemDefinition, target?: StandardElement) {
-        super(obj);
+    constructor(target?: StandardElement) {
+        super();
         this._targets = [];
         this.addTarget(target);
         this._onRender();

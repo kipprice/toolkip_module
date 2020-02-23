@@ -38,17 +38,22 @@ export interface IEditableElems extends IDrawableElements {
  * ---------------------------------------------------------------------------
  * Keep track of the information a caller can create an Editable with
  */
-export interface IEditableOptions<T> extends IElemDefinition {
-
-    /** value for the Editable */
-    value?: T;
+export interface IEditableOptions<T> {
 
     /** value to use by default */
-    defaultValue?: string;
+    defaultValue?: T;
 
     /** type of editable element */
     inputType: string;
 
+    /** allow for multi-line editable fields, but by default, keep the editable to a single line */
+    isMultiline?: boolean;
+
+    /** color to use for the BG of the editable */
+    lightBg?: string;
+}
+
+export interface IEditableHandlers<T> {
     /** handle validation */
     onValidate?: ValidateFunction;
 
@@ -60,10 +65,4 @@ export interface IEditableOptions<T> extends IElemDefinition {
 
     /** handle when we need to convert data to the unformatted version */
     onParseContent?: ParseContentFunction<T>;
-
-    /** allow for multi-line editable fields, but by default, keep the editable to a single line */
-    isMultiline?: boolean;
-
-    /** color to use for the BG of the editable */
-    lightBg?: string;
 }

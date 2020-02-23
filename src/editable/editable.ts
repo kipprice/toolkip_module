@@ -6,56 +6,40 @@ import {
 		ParseContentFunction, 
 		IEditableElems, 
 		IEditableOptions, 
-		IValidateResult 
+		IValidateResult, 
+		IEditableHandlers
 	} from './_interfaces';
 import { addClass, removeClass } from '../styleHelpers/css';
 import { IStandardStyles } from '../styleHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { select } from '../htmlHelpers/generalHelpers';
+import { _BoundView } from '../boundViews';
+import { wait } from '../async';
 
 /**---------------------------------------------------------------------------
  * @class	Editable<T>
  * ---------------------------------------------------------------------------
  * Drawable element that also allows for editing inline
  * @author	Kip Price
- * @version	1.3.0
+ * @version	1.4.0
  * ---------------------------------------------------------------------------
  */
-export class Editable<T> extends _Drawable<"editableLightBG"> {
+export class Editable<T> extends _BoundView<T, "editableLightBG"> {
 
 	//.....................
 	//#region PROPERTIES
 
-	/** type of input field this editable contains */
-	public type: string;
+	/** use value syntax as wrapper for model */
+	public get value(): T { return this.model; }
+	public set value(val: T) { this.model = val; }
 
-	/** value for the field */
-	protected _value: T;
-	public get value(): T { return this._value; }
-	public set value(val: T) {
-		this._value = val;
-		this._elems.input.value = this.format(val);
-	}
+	/** the user specified options for this editable */
+	protected _options: IEditableOptions<T>;
 
-	protected _defaultValue: string;
-
-	/** function to use on validation */
-	public onValidate: ValidateFunction;
-
-	/** function to use when data gets updated */
-	public onUpdate: UpdateFunction<T>;
-
-	/** function to use to format data */
-	public format: FormatFunction<T>;
-
-	/** function to use to unformat data */
-	public parseContent: ParseContentFunction<T>;
+	protected _handlers: IEditableHandlers<T>;
 
 	/** internal flag to detect if we are modifying */
 	private _isModifying: boolean;
-
-	/** track whether this editable supports multi-line input */
-	private _isMultiline: boolean;
 
 	/** elements we care about */
 	protected _elems: IEditableElems;
@@ -64,6 +48,19 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	//#endregion
 	//.....................
 
+	//..........................................
+	//#region DELEGATES
+	
+	/** allow parents to listen for events that occur on this editable */
+	protected _onUpdate: (newValue: T) => void;
+	public set onUpdate (f: (newValue: T) => void) { this._onUpdate = f; }
+	protected _notifyUpdate(newValue: T) {
+		if (!this._onUpdate) { return; }
+		this._onUpdate(newValue);
+	}
+	
+	//#endregion
+	//..........................................
 	//..........................................
 	//#region STYLES
 	
@@ -138,35 +135,39 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	 * @param	options		Any options needed to configure the editable
 	 * 
 	 */
-	constructor(options?: IEditableOptions<T>) {
+	constructor(options?: IEditableOptions<T> & IEditableHandlers<T>) {
 
 		// initialize options if they weren't passed in
 		if (!options) { options = {} as IEditableOptions<T>; }
-		options.cls = (options.cls || "") + " editable";
-		if (options.isMultiline) { options.cls += " multiline"; }
 
 		// Call the Drawable constructor
-		super(options);
+		super();
 		this._addClassName("Editable");
+		this.replacePlaceholder("editableLightBG", options.lightBg || "rgba(0,0,0,.2)" );
 
-		// Store our properties
-		this.type = options.inputType;
-		this._value = options.value;
-		this._defaultValue = options.defaultValue;
-		this._isMultiline = options.isMultiline;
-
-		// add the validation + formatting handlers
+		// Store details about the options
+		this._addProperties(options);
 		this._addHandlers(options);
 
-		// Initialize our modifying flag
+		// set our top level properties
+		this._model = options.defaultValue || null;
 		this._isModifying = false;
 
-		// Create the elements, along with their listeners
 		this._createElements();
-		this._addListeners();
+	}
 
-		// add the BG color of an active editable
-		this.replacePlaceholder("editableLightBG", options.lightBg || "rgba(0,0,0,.2)" );
+	/**
+	 * _addProperties
+	 * ----------------------------------------------------------------------------
+	 * add the properties that are relevant to the editable
+	 */
+	private _addProperties(options: IEditableOptions<T>) {
+		this._options = {
+			inputType: options.inputType,
+			defaultValue: options.defaultValue,
+			isMultiline: options.isMultiline,
+			lightBg: options.lightBg
+		}
 	}
 
 	/**
@@ -176,52 +177,64 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	 * @param 	options		Options specified by the user
 	 *  
 	 */
-	private _addHandlers(options: IEditableOptions<T>) {
-		this.onValidate = options.onValidate;
-		this.onUpdate = options.onUpdate;
-		this.format = options.onFormat;
-		this.parseContent = options.onParseContent;
+	private _addHandlers(options: IEditableHandlers<T>) {
+		this._handlers = {
+			onValidate: options.onValidate,
+			onFormat: options.onFormat,
+			onParseContent: options.onParseContent
+		}
 
-		this._addDefaultFormatHandlers();
+		// TODO: clean this up
+		if (options.onUpdate) {
+			this.onUpdate = options.onUpdate;
+		}
 	}
 
 	/**
-	 * _addDefaultFormatHandlers
-	 * ---------------------------------------------------------------------------
-	 * Adds default handlers for dealing with formatting of the Editable
+	 * _format
+	 * ----------------------------------------------------------------------------
+	 * handle rendering the value as a string
 	 */
-	private _addDefaultFormatHandlers() {
-		if (!this.format) { this._addDefaultFormatHandler(); }
-		if (!this.parseContent) { this._addDefaultParseHandler(); }
+	protected _format(value: T, forEdit?: boolean): string {
+
+		// use the user-specified function if available
+		if (this._handlers.onFormat) { 
+			return this._handlers.onFormat(value, forEdit); 
+		}
+
+		// otherwise, fall back to the default
+		if (!value) { value = this._options.defaultValue; }
+		if (!value) { return ""; }
+		return value.toString();
 	}
 
 	/**
-	 * _addDefaultParseHandler
-	 * ---------------------------------------------------------------------------
-	 * Handle parsing through type override if the user didn't specify anything
+	 * _parse
+	 * ----------------------------------------------------------------------------
+	 * handle converting the string version into a value
 	 */
-	private _addDefaultParseHandler(): void {
-		this.parseContent = function (value: string): T {
-			return (value as any as T);
-		};
+	protected _parse(value: string): T {
+
+		if (this._handlers.onParseContent) {
+			return this._handlers.onParseContent(value);
+		}
+
+		return (value as any as T);
 	}
 
 	/**
-	 * _addDefaultFormatHandler
-	 * ---------------------------------------------------------------------------
-	 * Handle formatting through toString if the user didn't specify anything
+	 * _validate
+	 * ----------------------------------------------------------------------------
+	 * validate whether the current data in the input field is valid 
+	 * @param	content		Content to validate
+	 * @returns	Result of the validation
 	 */
-	private _addDefaultFormatHandler(): void {
-		this.format = function (value: T, forEdit?: boolean): string {
-			if (!value) {
-				let ret = "";
-				if (!forEdit) {
-					ret = this._defaultValue || "";
-				}
-				return ret;
-			}
-			return value.toString();
-		};
+	protected _validate(value: string): IValidateResult {
+		if (this._handlers.onValidate) {
+			return this._handlers.onValidate(value);
+		}
+
+		return { passed: true }
 	}
 
 	/**
@@ -244,25 +257,17 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	 */
 	protected _createElements(): void {
 
-		let base: HTMLElement = this._elems.base;
-
-		this._elems.display = createElement({
-			cls: "display unselectable",
-			parent: this._elems.base,
-			focusable: true
+		this._createBase({
+			key: "base",
+			cls: "editable" + (this._options.isMultiline ? " multiline" : ""),
+			children: [
+				{ key: "display", cls: "display unselectable", focusable: true },
+				{ key: "label", type: "input", cls: "input hidden", attr: { type: this._options.inputType } }
+			]
 		});
 
-		this._elems.input = createElement({
-			type: "input",
-			cls: "input hidden",
-			content: "",
-			attr: {
-				"type": this.type,
-			},
-			parent: this._elems.base
-		}) as HTMLInputElement;
-
 		this._renderDisplayView();
+		this._addListeners();
 	}
 
 	/**
@@ -284,7 +289,7 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 					ev.preventDefault();
 
 				// don't process enter key except for multi line elements with shift key
-				} else if (!this._isMultiline || !ev.shiftKey) {
+				} else if (!this._options.isMultiline || !ev.shiftKey) {
 					ev.stopPropagation();
 					ev.preventDefault();
 				}
@@ -332,27 +337,6 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	//#region VALIDATE USER INPUT IN THE ELEMENT
 
 	/**
-	 * _validate
-	 * ----------------------------------------------------------------------------
-	 * validate whether the current data in the input field is valid 
-	 * @param	content		Content to validate
-	 * @returns	Result of the validation
-	 * 
-	 */
-	private _validate(content: string): IValidateResult {
-		let validated: IValidateResult
-
-		// Check if the editable could be validated
-		if (this.onValidate) {
-			validated = this.onValidate(content);
-		} else {
-			validated = { passed: true };
-		}
-
-		return validated;
-	}
-
-	/**
 	 * _onValidationFailed
 	 * ----------------------------------------------------------------------------
 	 * validation failing for this element 
@@ -387,7 +371,7 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 		removeClass(this._elems.input, "error");
 
 		// Resave our value through our unformat function
-		this._value = this.parseContent(content);
+		this._model = this._parse(content);
 
 		// Call our update function in order to notify our parent
 		if (this.onUpdate) {
@@ -427,7 +411,7 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 		this._isModifying = true;
 
 		// Grab the appropriately formatted string for this element
-		this._elems.input.value = this.format(this.value, true);
+		this._elems.input.value = this._format(this.value, true);
 
 		// get the appropriate size for the element
 		let size = this._elems.display.offsetWidth;
@@ -438,7 +422,7 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 		this._showElement(this._elems.input);
 
 		// Select our input
-		window.setTimeout(() => select(this._elems.input), 100);
+		wait(100).then(() => select(this._elems.input));
 		this._elems.input.focus();
 
 		return true;
@@ -464,7 +448,7 @@ export class Editable<T> extends _Drawable<"editableLightBG"> {
 	 * Overridable function that creates the display-version of the editable
 	 */
 	protected _renderDisplayView(): void {
-		this._elems.display.innerHTML = this.format(this._value);
+		this._elems.display.innerHTML = this._format(this._model);
 	}
 
 };

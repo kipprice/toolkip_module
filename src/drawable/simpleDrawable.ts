@@ -1,5 +1,6 @@
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { _Drawable } from './_drawable';
+import { createElement } from '../htmlHelpers';
 
 /**----------------------------------------------------------------------------
  * @class	SimpleDrawable
@@ -23,12 +24,19 @@ export class Drawable extends _Drawable {
 	//.....................
 
 	/**
-	 * SimpleDrawable
+	 * Drawable
 	 * ----------------------------------------------------------------------------
-	 * create a simple Drawable element 
-	 * @param	obj		The details about the element we should draw
+	 * create a simple Drawable element that renders whatever is passed into its
+	 * constructor
+	 * @param	baseElem		The details about the element we should draw
 	 */
-	constructor(obj: IElemDefinition) { super(obj); }
+	constructor(baseElem: IElemDefinition) { 
+		super(); 
+		
+		if (baseElem) { 
+			this._createBase(baseElem);
+		}
+	}
 
 	/**
 	 * _createElements

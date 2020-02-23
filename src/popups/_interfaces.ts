@@ -14,7 +14,7 @@ export interface PopupElements extends IDrawableElements {
     buttonContainer: HTMLElement;
 }
 
-export interface IPopupDefinition extends IElemDefinition {
+export interface IPopupDefinition {
     themeColor?: string;
 }
 

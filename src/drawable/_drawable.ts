@@ -42,7 +42,7 @@ export abstract class _Drawable<P extends string = string> extends _Stylable<P> 
 	 * Create a Drawable element
 	 * @param	baseElemTemplate	If provided, the template upon which to create the base element
 	 */
-	constructor(baseElemTemplate?: IElemDefinition) {
+	constructor() {
 
 		// Initialize both the stylable parts of this and the 
 		super();
@@ -51,8 +51,7 @@ export abstract class _Drawable<P extends string = string> extends _Stylable<P> 
 
 		// initialize our elements
 		this._elems = {} as IDrawableElements;
-		if (baseElemTemplate) { this._elems.base = createElement(baseElemTemplate); }
-
+		
 		// check that we have enough data to create elements
 		if (this._shouldSkipCreateElements()) { return; }
 
