@@ -10,7 +10,7 @@ import { isDrawable } from "../drawable/_typeguards";
 import { StandardElement, isStandardElement, isString, isKeyof } from "../shared";
 import { isUpdatable } from "../structs/_typeguards";
 import { IUpdateFunctions, 
-    IBindableElement, 
+    BindableElement, 
     IViewUpdateFunc, 
     IBoundElemDefinition,
     _UpdateableView,
@@ -20,7 +20,8 @@ import { IUpdateFunctions,
     BoundProperty,
     isBoundView,
     isUpdatableView,
-    IBoundChildren
+    IBoundChildren,
+    IDrawableFactory
 } from ".";
 import { IConstructor, map, IDictionary, setDictValue } from "../objectHelpers";
 
@@ -118,7 +119,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
      * ----------------------------------------------------------------------------
      * bind a particular element of the view model to the specified element
      */
-    protected _bind(elem: IBindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
+    protected _bind(elem: BindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
         if (!bindingInfo.func) { return; }
 
         const bindKey = bind(
@@ -158,7 +159,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
      * ----------------------------------------------------------------------------
      * helper that will generate an update function for binding
      */
-    protected _createUpdateFunc(elem: IBindableElement<VM>, key: BoundProperty<VM>): BoundUpdateFunction<any> {
+    protected _createUpdateFunc(elem: BindableElement<VM>, key: BoundProperty<VM>): BoundUpdateFunction<any> {
         return (value: BoundValue<VM>) => {
 
             // always prefer a user-specified function over the default behavior
@@ -172,8 +173,8 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         }
     }
 
-    protected _createMapFunc(elem: IBindableElement<VM>, mapDetails: IViewBindingDetails<VM>): BoundUpdateFunction<any> {
-        const key = mapDetails.key
+    protected _createMapFunc(elem: BindableElement<VM>, mapDetails: IViewBindingDetails<VM>): BoundUpdateFunction<any> {
+        const key = mapDetails.key;
         this._boundChildren[key] = this._boundChildren[key] || [];
 
         return ((value: BoundValue<VM>) => {
@@ -185,7 +186,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
             
             // create the new children
             map(value, (v: any, k: string | number) => {
-                const child = new mapDetails.mapToDrawable();
+                const child = this._createChild(v, mapDetails.mapToDrawable);
                 this._updateElem(child, v);
                 child.draw(isDrawable(elem) ? elem.base : elem);
                 this._boundChildren[key].push(child);
@@ -193,7 +194,19 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         })
     }
 
-    protected _updateElem(elem: IBindableElement<VM>, value: BoundValue<VM>): void {
+    protected _createChild(value: BoundValue<VM>, mapToDrawable: IDrawableFactory<VM> | IConstructor<_Drawable>): _Drawable {
+        let child: _Drawable;
+
+        try {
+            child = (mapToDrawable as IDrawableFactory<VM>)(value);
+        } catch(e) {
+            child = new (mapToDrawable as IConstructor<_Drawable>)();
+        }
+
+        return child
+    }
+
+    protected _updateElem(elem: BindableElement<VM>, value: BoundValue<VM>): void {
         if (isStandardElement(elem)) {
             this._updateStandardElement(elem, value);
         } else if (isUpdatableView(elem)) {
@@ -228,7 +241,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         this._updateFunctions[key as string] = updateFunc;
     }
 
-    protected _shouldSkipBindUpdate<K extends keyof VM>(elem: IBindableElement<VM>): boolean {
+    protected _shouldSkipBindUpdate<K extends keyof VM>(elem: BindableElement<VM>): boolean {
 
         // if this element is no longer rendered, we should ignore new bindings
         if (isDrawable(elem)) {
@@ -267,12 +280,12 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
      * ----------------------------------------------------------------------------
      * handle binding the element
      */
-    protected async _bindElement(elem: IBindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
-        let boundElem: IBindableElement<any> = elem;
+    protected async _bindElement(elem: BindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
+        let boundElem: BindableElement<any> = elem;
 
         // TODO: don't require that key be specified to get at a drawable
         if (obj.key && obj.drawable) { 
-            boundElem = this._elems[obj.key as string] as IBindableElement<any>; 
+            boundElem = this._elems[obj.key as string] as BindableElement<any>; 
         }
 
         let bindingInfo = {} as IViewBindingDetails<VM>

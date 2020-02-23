@@ -1,6 +1,6 @@
 import { _BoundView } from ".."
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
-import { nextRender } from "../..";
+import { nextRender, IDictionary } from "../..";
 
 describe("bound view", () => {
     setupMatchMedia();
@@ -34,7 +34,8 @@ describe("bound view", () => {
     it("creates a nested bound view", async () => {
         const complexView = new ComplexBoundView();
         complexView.model = {
-            children: [], 
+            childArray: [], 
+            childDict: {},
             coreChild: { name: "Kip", count: 0 }
         };
 
@@ -53,10 +54,11 @@ describe("bound view", () => {
     it("creates an array of nested views", async () => {
         const complexView = new ComplexBoundView();
         complexView.model = {
-            children: [
+            childArray: [
                 { name: "c1", count: 1 },
                 { name: "c2", count: 2 }
             ], 
+            childDict: {},
             coreChild: { name: "Kip", count: 0 }
         };
 
@@ -64,7 +66,32 @@ describe("bound view", () => {
         await nextRender();
         await nextRender();
 
-        const childView = complexView.elems.children;
+        const childView = complexView.elems.childArray;
+        expect(childView).toBeInstanceOf(HTMLElement);
+        expect(childView.childElementCount).toEqual(2);
+        
+        const grandChildView = childView.children[0];
+        expect(grandChildView.childElementCount).toEqual(2);
+        expect(grandChildView.children[0].innerHTML).toEqual("c1");
+        expect(grandChildView.children[1].innerHTML).toEqual("Total: 1");
+    })
+
+    it ("creates dict of nested views", async () => {
+        const complexView = new ComplexBoundView();
+        complexView.model = {
+            childArray: [],
+            childDict: {
+                c1: { name: "c1", count: 1 },
+                c2: { name: "c2", count: 2 }
+            }, 
+            coreChild: { name: "Kip", count: 0 }
+        };
+
+        // need a render per layer that's being updated
+        await nextRender();
+        await nextRender();
+
+        const childView = complexView.elems.childDict;
         expect(childView).toBeInstanceOf(HTMLElement);
         expect(childView.childElementCount).toEqual(2);
         
@@ -81,8 +108,9 @@ interface SimpleModel {
 }
 
 interface ComplexModel {
-    children: SimpleModel[];
+    childArray: SimpleModel[];
     coreChild: SimpleModel;
+    childDict: IDictionary<SimpleModel>
 }
 
 abstract class SampleBV<M> extends _BoundView<M> {
@@ -135,7 +163,8 @@ class ComplexBoundView extends SampleBV<ComplexModel> {
 
     protected _elems: {
         base: HTMLElement;
-        children: HTMLElement;
+        childArray: HTMLElement;
+        childDict: HTMLElement;
         coreChild: SimpleBoundView;
     }
 
@@ -145,10 +174,16 @@ class ComplexBoundView extends SampleBV<ComplexModel> {
         this._createBase({
             key: "base",
             children: [
-                { key: "children", bindTo: {
-                    key: 'children',
+                { key: "childArray", bindTo: {
+                    key: 'childArray',
                     mapToDrawable: SimpleBoundView
                 }},
+
+                { key: "childDict", bindTo: {
+                    key: 'childDict',
+                    mapToDrawable: () => new SimpleBoundView()
+                }},
+
                 { key: "coreChild", bindTo: "coreChild", drawable: SimpleBoundView }
             ]
         })

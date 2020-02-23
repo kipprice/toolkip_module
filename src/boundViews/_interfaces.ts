@@ -12,32 +12,32 @@ export type BoundProperty<VM = any> = keyof VM |  "_";
 export type BoundValue<VM = any, K extends keyof VM = keyof VM> = VM | VM[K];
 
 /** the types of elements that can be included as a child within a bound view */
-export type IBoundChild<VM> = 
+export type BoundChild<VM> = 
     StandardElement | 
     IBoundElemDefinition<VM> | 
     _Drawable;
 
 export interface BoundPair<VM = any> {
-    elem: IBindableElement<VM>;
+    elem: BindableElement<VM>;
     key: BoundProperty<VM>
 }
 
 /** override the default elem definition */
 export interface IBoundElemDefinition<VM = any> extends IElemDefinition {
     bindTo?: BoundProperty<VM> | IViewBindingDetails<VM>;
-    children?: IBoundChild<VM>[];
+    children?: BoundChild<VM>[];
 }
 
 /** allow for overriding the default binding behavior */
 export interface IViewBindingDetails<VM = any> {
     key: BoundProperty<VM>;
     func?: IViewUpdateFunc<VM>
-    mapToDrawable?: IConstructor<_Drawable>;
+    mapToDrawable?: IConstructor<_Drawable> | IDrawableFactory<VM>;
 }
 
 /** handle updating a particular piece of the view */
 export interface IViewUpdateFunc<T> {
-    (newValue: BoundValue<T>, elem: IBindableElement<T>): void
+    (newValue: BoundValue<T>, elem: BindableElement<T>): void
 }
 
 /** handle setting specific update functions */
@@ -49,8 +49,12 @@ export type IBoundChildren<VM> = {
     [K in BoundProperty<VM>]: _Drawable[];
 }
 
+export interface IDrawableFactory<VM> {
+    (v: BoundValue<VM>): _Drawable;
+}
+
 /** the elements that can be bound */
-export type IBindableElement<T> = 
+export type BindableElement<T> = 
     StandardElement | 
     _Drawable |
     _BoundView<BoundValue<T>> | 
