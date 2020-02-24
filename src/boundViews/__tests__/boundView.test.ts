@@ -189,7 +189,7 @@ class ComplexBoundView extends SampleBV<ComplexModel> {
         })
 
         this.setUpdateFunction("coreChild", (v, e) => {
-            this._updateElem(e, v);
+            this._updateElem(v, e);
         })
     }
 }
