@@ -174,7 +174,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
             }
 
             // otherwise, fall back on a default appropriate to the element type
-            this._updateElem(elem, value);
+            this._updateElem(value, elem);
         }
     }
 
@@ -192,7 +192,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
             // create the new children
             map(value, (v: any, k: string | number) => {
                 const child = this._createChild(v, mapDetails.mapToDrawable);
-                this._updateElem(child, v);
+                this._updateElem(v, child);
                 child.draw(isDrawable(elem) ? elem.base : elem);
                 this._boundChildren[key].push(child);
             })
@@ -204,6 +204,8 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
 
         // first, treat this as not a constructor
         try {
+            child = (mapToDrawable as IDrawableFactory<VM>)(value);
+        
         // if it fails, fall back to using it as a constructor
         } catch(e) {
             child = new (mapToDrawable as IConstructor<_Drawable>)();
@@ -217,6 +219,8 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
      * ----------------------------------------------------------------------------
      * handle updating the specified element
      */
+    protected _updateElem(value: BoundValue<VM>, elem: BindableElement<VM>) {
+       
         // ==> Regular HTML element
         if (isStandardElement(elem)) {
             elem.innerHTML = value ? value.toString() : "";
@@ -232,7 +236,7 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         // ==> Drawable
         } else {
             elem.base.innerHTML = value ? value.toString() : "";
-    }
+        }
     }
 
     /**
@@ -246,11 +250,12 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
     }
 
     /**
-     * _shouldSkipBindingUpdate
+     * _shouldSkipBindUpdate
      * ----------------------------------------------------------------------------
      * determines whether this view is currently visible; if not, skips updates 
      * related to bound model
      */
+    protected _shouldSkipBindUpdate(elem: BindableElement<VM>) {
         if (isDrawable(elem)) {
             return !(isVisible(elem.base))
         } else {
