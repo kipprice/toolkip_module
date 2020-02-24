@@ -8,7 +8,6 @@ import { TestResults } from "../_interfaces";
  */
 export interface IUnitTestElems extends IDrawableElements {
     testContainer: HTMLElement;
-    groups: HTMLElement[];
 }
 
 export interface VisualResults<T> extends TestResults<T> {

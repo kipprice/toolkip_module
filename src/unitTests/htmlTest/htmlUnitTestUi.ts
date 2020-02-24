@@ -15,6 +15,7 @@ export class HTMLUnitTestUI extends _TestUI {
 
     //#region PROPERTIES
     protected _drawable: UI;
+    
     //#endregion
 
     /**
