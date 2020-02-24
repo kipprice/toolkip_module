@@ -112,7 +112,8 @@ export class ContextMenu extends _Drawable {
 	constructor(target: HTMLElement, noStyles?: boolean, colors?: IContextMenuThemeColors) {
 
 		// Initialize our Drawable
-		super({cls: "ctxMenu"});
+		super();
+		//super({cls: "ctxMenu"});
 		this._addClassName("ContextMenu");
 
 		// Set our initial properties
@@ -390,7 +391,12 @@ export class ContextMenu extends _Drawable {
 	 * standard classes
 	 */
 	protected _createElements(): void {
-		this._elems.option_container = createSimpleElement("", "optionContainer", "", null, null, this.base);
+		this._createBase({
+			cls: "ctxMenu",
+			children: [{
+				cls: "optionContainer", key: "option_container"
+			}]
+		});
 		this._setThemeColors();
 	};
 
