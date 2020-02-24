@@ -31,7 +31,7 @@ export class ExistingClassicDraggable extends ClassicDraggable {
      * @param   target      The target for the element
      */
     constructor(elem: StandardElement, target?: StandardElement) {
-        super(null, target);
+        super(target);
         this._elems.base = elem;
 
         this._addEventListeners();
@@ -76,7 +76,7 @@ export class ExistingHTML5Draggable extends HTML5Draggable {
      * @param   target      The target for the element
      */
     constructor(elem: StandardElement, target?: StandardElement) {
-        super(null, target);
+        super(target);
         this._elems.base = elem;
 
         this._addEventListeners();
