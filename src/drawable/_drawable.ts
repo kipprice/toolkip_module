@@ -3,10 +3,12 @@ import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { 
 		IDrawable, 
-		IDrawableElements 
-	} from './_interfaces';
+		IDrawableElements, 
+		DrawableElement
+	} from '.';
 import { StandardElement } from "../shared";
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
+import { IDictionary } from '../objectHelpers';
 
 /**----------------------------------------------------------------------------
  * @class Drawable
@@ -82,10 +84,10 @@ export abstract class _Drawable<Placeholders extends string = string> extends _S
 	 */
 	protected abstract _createElements(...args: any[]): void;
 
-	protected _createBase(elemDefinition: IElemDefinition): StandardElement {
+	protected _createBase<T extends IDrawableElements>(elemDefinition: IElemDefinition<T>): StandardElement {
 		// ensure that we always have our base element
 		if (!elemDefinition.key) { elemDefinition.key = "base" };
-		return createElement(elemDefinition, this._elems);
+		return createElement<T>(elemDefinition, this._elems as T);
 	}
 
 	/**
