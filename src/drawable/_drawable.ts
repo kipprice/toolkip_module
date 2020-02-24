@@ -16,7 +16,7 @@ import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
  * @version	2.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Drawable<P extends string = string> extends _Stylable<P> implements IDrawable {
+export abstract class _Drawable<Placeholders extends string = string> extends _Stylable<Placeholders> implements IDrawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -83,7 +83,9 @@ export abstract class _Drawable<P extends string = string> extends _Stylable<P> 
 	protected abstract _createElements(...args: any[]): void;
 
 	protected _createBase(elemDefinition: IElemDefinition): StandardElement {
-		return createElement(elemDefinition, this._elems as any);
+		// ensure that we always have our base element
+		if (!elemDefinition.key) { elemDefinition.key = "base" };
+		return createElement(elemDefinition, this._elems);
 	}
 
 	/**
@@ -208,7 +210,7 @@ export abstract class _Drawable<P extends string = string> extends _Stylable<P> 
      * replace all instancaes of the specified placeholder with the provided value
      * only for this particular instance 
      */
-    public overridePlaceholder(placeholderName: P, placeholderValue: any): void {
+    public overridePlaceholder(placeholderName: Placeholders, placeholderValue: any): void {
         super.overridePlaceholder(
 			placeholderName, 
 			placeholderValue, 

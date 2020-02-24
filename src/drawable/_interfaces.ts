@@ -1,6 +1,8 @@
 import { StandardElement } from "../shared";
+import { _Drawable } from ".";
+import { IDictionary } from "../objectHelpers";
 
-export type DrawableElement = StandardElement | IDrawable;
+export type DrawableElement = StandardElement | _Drawable;
 
 /**
  * IDrawable
@@ -17,11 +19,6 @@ export interface IDrawable {
  * ----------------------------------------------------------------------------
  * Collection of elements that make up a Drawable
  */
-export interface IDrawableElements {
-
-    /** the lowest level element of this Drawable */
+export interface IDrawableElements extends IDictionary<DrawableElement> {
     base: StandardElement;
-
-    /** any additional elements */
-    [key: string]: DrawableElement | DrawableElement[];
 }
