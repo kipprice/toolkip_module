@@ -148,6 +148,11 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         this._bindings.push(bindKey);
     }
 
+    /**
+     * _unbindAll
+     * ----------------------------------------------------------------------------
+     * unregister all of the bindings associated with this view
+     */
     protected _unbindAll(): void {
         for (let b of this._bindings) {
             unbind(b);
@@ -197,8 +202,9 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
     protected _createChild(value: BoundValue<VM>, mapToDrawable: IDrawableFactory<VM> | IConstructor<_Drawable>): _Drawable {
         let child: _Drawable;
 
+        // first, treat this as not a constructor
         try {
-            child = (mapToDrawable as IDrawableFactory<VM>)(value);
+        // if it fails, fall back to using it as a constructor
         } catch(e) {
             child = new (mapToDrawable as IConstructor<_Drawable>)();
         }
@@ -206,29 +212,27 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         return child
     }
 
-    protected _updateElem(elem: BindableElement<VM>, value: BoundValue<VM>): void {
+    /**
+     * _updateElem
+     * ----------------------------------------------------------------------------
+     * handle updating the specified element
+     */
+        // ==> Regular HTML element
         if (isStandardElement(elem)) {
-            this._updateStandardElement(elem, value);
+            elem.innerHTML = value ? value.toString() : "";
+
+        // ==> Updatable
         } else if (isUpdatableView(elem)) {
-            this._updateUpdateable(elem, value);
-        } else if (isBoundView(elem)) {
-            this._updateBoundView(elem as _BoundView<BoundValue<VM>>, value);
+            elem.update(value);
+
+        // ==> Bound View
+        } else if (isBoundView<BoundValue<VM>>(elem)) {
+            elem.model = value;
+
+        // ==> Drawable
         } else {
-            this._updateStandardElement(elem.base, value);
-        }
+            elem.base.innerHTML = value ? value.toString() : "";
     }
-
-    protected _updateStandardElement<K extends keyof VM>(elem: StandardElement, value: VM[K] | VM): void {
-        if (!value) { value = "" as any; }
-        elem.innerHTML = value.toString();
-    }
-
-    protected _updateUpdateable<K extends keyof VM>(elem: _UpdateableView<VM[K] | VM>, value: VM[K] | VM): void {
-        elem.update(value);
-    }
-
-    protected _updateBoundView<K extends keyof VM>(elem: _BoundView<VM[K] | VM>, value: VM[K] | VM): void {
-        elem.model = value;
     }
 
     /**
@@ -241,9 +245,12 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
         this._updateFunctions[key as string] = updateFunc;
     }
 
-    protected _shouldSkipBindUpdate<K extends keyof VM>(elem: BindableElement<VM>): boolean {
-
-        // if this element is no longer rendered, we should ignore new bindings
+    /**
+     * _shouldSkipBindingUpdate
+     * ----------------------------------------------------------------------------
+     * determines whether this view is currently visible; if not, skips updates 
+     * related to bound model
+     */
         if (isDrawable(elem)) {
             return !(isVisible(elem.base))
         } else {
@@ -290,14 +297,14 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
 
         let bindingInfo = {} as IViewBindingDetails<VM>
 
-        // handle the simple case
+        // ==> simple case: just the property name
         if (isKeyof<VM>(obj.bindTo)) {
             bindingInfo = {
                 key: obj.bindTo,
                 func: this._createUpdateFunc(boundElem, obj.bindTo)
             }; 
 
-        // pass along the binding details
+        // ==> complex case: binding model
         } else {
             const bindToObj = obj.bindTo as IViewBindingDetails<VM>;
             bindingInfo = {...bindToObj};
