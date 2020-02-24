@@ -1,6 +1,4 @@
 import { Popup } from "./popup";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
-
 
 /**----------------------------------------------------------------------------
  * @class	ErrorPopup
@@ -25,8 +23,8 @@ export class ErrorPopup extends Popup {
      * ----------------------------------------------------------------------------
      * create a popup that shows an error to the user
      */
-    constructor(details: string, title?: string, obj?: IElemDefinition) {
-        super(obj);
+    constructor(details: string, title?: string) {
+        super();
         this.setTitle(title || "Uh-oh...that wasn't supposed to happen");
         this.addContent("", "", details);
         this.addButton("Okay", () => {

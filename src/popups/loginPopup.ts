@@ -1,6 +1,5 @@
 import { Popup } from "./popup";
 import { LoginPopupElements } from "./_interfaces";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
 import { ILabeledElement, createLabeledElement } from "../htmlHelpers/createSpecificElements";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 
@@ -15,6 +14,9 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  */
 export class LoginPopup extends Popup {
 
+    //.....................
+    //#region PROPERTIES
+    
     /** elems contained within this popup */
     protected _elems: LoginPopupElements;
 
@@ -22,26 +24,16 @@ export class LoginPopup extends Popup {
     protected _loginCallback: Function;
     public set loginCallback(func: Function) { this._loginCallback = func; }
 
+    protected get _addlCls() { return "login"; }
+    
+    //#endregion
+    //.....................
+
     /** draw specific styles for this particular popup */
     protected static _uncoloredStyles: IStandardStyles = {
         ".popup.login .wrapper + .wrapper": {
             marginTop: "10px"
         }
-    }
-    
-    /**
-     * Creates a LoginPopup object
-     * @param   obj     If provided, the data to create the base element of the popup 
-     */
-    constructor(obj?: IElemDefinition) {
-
-        if (obj) {
-            obj.cls += " login";
-        } else {
-            obj = { cls: "login popup" }
-        }
-
-        super(obj);
     }
 
     /**

@@ -24,6 +24,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	/** elements contained within the popup */
 	protected _elems: PopupElements;
 
+	protected get _addlCls(): string { return ""; }
 	//#endregion
 	//.....................
 
@@ -157,76 +158,22 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * Creates all of the elements needed for this popup
 	 */
 	protected _createElements(): void {
-		this._createOverlay();				// BG layer to shield the rest of the page from this popup
-		this._createFrame();				// The frame hosting the popup content
-		this._createTitle();				// create the elem that will become the title of the form
-		this._createCloseButton();			// Button to close the form
-		this._createContentElement();		// Element that will be added to to show data in the popup
-		this._createButtonContainer();		// create the container for the buttons
-	}
-
-	/**
-	 * _createOverlay
-	 * ----------------------------------------------------------------------------
-	 * Creates the overlay for the popup to shield the rest of the page
-	 */
-	private _createOverlay(): void {
-		this._elems.overlay = createSimpleElement("", "overlay");
-		this._elems.overlay.addEventListener("click", () => {
-			this.erase();
-		});
-		this._elems.base.appendChild(this._elems.overlay);
-	}
-
-	/**
-	 * _createFrame
-	 * ----------------------------------------------------------------------------
-	 * Create the frame of the popup
-	 */
-	private _createFrame(): void {
-		this._elems.frame = createSimpleElement("", "frame");
-		this._elems.base.appendChild(this._elems.frame);
-	}
-
-	/**
-	 * _createTitle
-	 * ----------------------------------------------------------------------------
-	 * Create the title of the popup
-	 */
-	private _createTitle(): void {
-		this._elems.title = createElement({ cls: "popupTitle", parent: this._elems.frame });
-	}
-
-	/**
-	 * _createCloseButton
-	 * ----------------------------------------------------------------------------
-	 * Create the close button for the form
-	 */
-	private _createCloseButton(): void {
-		this._elems.closeBtn = createSimpleElement("", "closeBtn", "", null, [{ content: "x", cls: "x" }]);
-		this._elems.closeBtn.addEventListener("click", () => {
-			this.erase();
-		});
-		this._elems.frame.appendChild(this._elems.closeBtn);
-	}
-
-	/**
-	 * _createContentElement
-	 * ----------------------------------------------------------------------------
-	 * Create the element taht will hold all content for the popup
-	 */
-	private _createContentElement(): void {
-		this._elems.content = createSimpleElement("", "content");
-		this._elems.frame.appendChild(this._elems.content);
-	}
-
-	/**
-	 * _createButtonContainer
-	 * ----------------------------------------------------------------------------
-	 * Create the container that will hold buttons
-	 */
-	private _createButtonContainer(): void {
-		this._elems.buttonContainer = createElement({ cls: "buttonContainer", parent: this._elems.frame });
+		this._createBase<PopupElements>({
+			cls: "popup" + (this._addlCls ? " " + this._addlCls : ""),
+			children: [
+				{ key: "overlay", cls: "overlay", eventListeners: { click: () => this.erase() } },
+				
+				{ key: "frame", cls: "frame", children: [
+					{ key: "title", cls: "popupTitle" },
+					{ key: "closeBtn", cls: "closeBtn",  
+						children: [{ cls: "x", content: "x" }], 
+						eventListeners: { click: () => this.erase() } 
+					},
+					{ key: "content", cls: "content"},
+					{ key: "buttonContainer", cls: "buttonContainer" }
+				]},
+			]
+		})
 	}
 	//#endregion
 	//........................

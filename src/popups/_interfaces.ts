@@ -1,7 +1,5 @@
 import { IDrawableElements } from "../drawable/_interfaces";
 
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
-
 export type PopupColor = "popupTheme";
 
 export interface PopupElements extends IDrawableElements {

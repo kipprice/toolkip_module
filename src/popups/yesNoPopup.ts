@@ -1,6 +1,5 @@
 import { Popup } from "./popup";
 import { IYesNoCallback, YesNoEnum } from "./_interfaces";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
 
 
 export class YesNoPopup extends Popup {
@@ -11,11 +10,10 @@ export class YesNoPopup extends Popup {
     /**
      * Creates a YesNoPopup
      * @param   prompt  What to ask the user
-     * @param   obj     
      * 
      */
-    constructor(prompt: string, onSelection: IYesNoCallback, obj?: IElemDefinition) {
-        super(obj);
+    constructor(prompt: string, onSelection: IYesNoCallback) {
+        super();
         this._onSelection = onSelection;
         this.addContent("", "", prompt);
         this._createButtons();

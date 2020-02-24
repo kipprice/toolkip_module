@@ -1,8 +1,5 @@
 import { Popup } from "./popup";
-import { IStandardStyles } from "../styleHelpers/_interfaces";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
-import { addClass } from "../styleHelpers/css";
-import { transition } from "../styleHelpers/transition";
+import { IStandardStyles, addClass, transition } from "../styleHelpers";
 
 
 export class ToastPopup extends Popup {
@@ -37,8 +34,8 @@ export class ToastPopup extends Popup {
 
     protected static _styleDependencies = [Popup];
 
-    constructor(details: string, title?: string, showFor?: number, obj?: IElemDefinition) {
-        super(obj);
+    constructor(details: string, title?: string, showFor?: number) {
+        super();
         addClass(this._elems.base, "toast");
         this._showFor = showFor || 2000;
         if (title) { this.setTitle(title); }
