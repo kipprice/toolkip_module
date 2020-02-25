@@ -20,6 +20,8 @@ export class UI extends _Drawable {
     /** drawable associated with this class */
     protected _elems: IUnitTestElems;
 
+    protected _groups: HTMLElement[];
+
     //#endregion
     //.....................
 
@@ -124,11 +126,12 @@ export class UI extends _Drawable {
     //..................
 
     protected _createElements(): void {
+        this._groups = [];
+
         this._elems = {
             base: createElement({
                 cls: "tests"
-            }),
-            groups: []
+            })
         } as IUnitTestElems;
 
         this._elems.testContainer = createElement({
@@ -185,7 +188,7 @@ export class UI extends _Drawable {
             cls: "group", 
             parent: this._elems.testContainer 
         });
-        this._elems.groups.push(group);
+        this._groups.push(group);
         
         // add the name of the group
         createElement({ 
@@ -210,7 +213,7 @@ export class UI extends _Drawable {
     }
 
     protected _getParentElement(): HTMLElement {
-        return this._elems.groups[this._elems.groups.length - 1] || this._elems.testContainer;
+        return this._groups[this._groups.length - 1] || this._elems.testContainer;
     }
 
 
