@@ -1,6 +1,7 @@
 import { IPartial } from '../structs/partial';
-import { Identifiable } from './_interfaces';
+import { IIdentifiable } from './_interfaces';
 import { _Serializable } from '../serializable/serializableModel';
+import { generateUniqueId, registerUniqueId } from '.';
 
 
 /**----------------------------------------------------------------------------
@@ -11,7 +12,7 @@ import { _Serializable } from '../serializable/serializableModel';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class IdentifiableModel<T extends Identifiable = Identifiable> extends _Serializable<T> implements Identifiable {
+export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends _Serializable<T> implements IIdentifiable {
 
     //.....................
     //#region PROPERTIES
@@ -20,12 +21,9 @@ export class IdentifiableModel<T extends Identifiable = Identifiable> extends _S
     protected _id: string;
     public get id(): string { return this._id; }
     public set id(data: string) { this._id = data; }
-    
-    /** track the last ID used in a model */
-    protected static _lastId: number = 0;
 
     /** allow classes to specify a prefix to their ID easily */
-    protected static get _prefix(): string { return ""; }
+    protected static get _prefix(): string { return this.name; }
 
     //#endregion
     //.....................
@@ -38,8 +36,7 @@ export class IdentifiableModel<T extends Identifiable = Identifiable> extends _S
      * @returns A new ID 
      */
     protected static _generateNewId(): string {
-        this._lastId += 1;
-        return this._prefix + this._lastId.toString();
+        return generateUniqueId(this._prefix);
     }
 
     /**
@@ -49,22 +46,7 @@ export class IdentifiableModel<T extends Identifiable = Identifiable> extends _S
      * @param   lastId  Most recent iD used in a model  
      */
     protected static _updateLastId(lastId: string): void {
-
-        // make sure we aren't including the prefix
-        let prefixReg = new RegExp(this._prefix, "g");
-        lastId = lastId.replace(prefixReg, "");
-
-        let lastNumericId = parseInt(lastId);
-
-        // don't fail on NaN conditions; just increment
-        if (isNaN(lastNumericId)) {
-            this._lastId += 1;      
-
-        // update the last id if this is greater
-        } else if (lastNumericId > this._lastId) {
-            this._lastId = lastNumericId;
-        }
-        
+        registerUniqueId(lastId);
     }
 
     /**

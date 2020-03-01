@@ -1,6 +1,6 @@
 import { _Model }  from '../model/_model';
 import { IdentifiableModel } from './identifiableModel';
-import { Identifiable } from './_interfaces';
+import { IIdentifiable } from './_interfaces';
 
 
 export function isIdentifiableModel(model: _Model<any>): model is IdentifiableModel {

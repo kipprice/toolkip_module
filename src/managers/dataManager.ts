@@ -1,4 +1,4 @@
-import { Identifiable } from "../identifiable/_interfaces";
+import { IIdentifiable } from "../identifiable/_interfaces";
 import { ManagedId } from "./_interfaces";
 import { IDictionary } from "../objectHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";
@@ -12,7 +12,7 @@ import { map } from "../objectHelpers/navigate";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _DataManager<I extends Identifiable> {
+export abstract class _DataManager<I extends IIdentifiable> {
 
     //.....................
     //#region PROPERTIES

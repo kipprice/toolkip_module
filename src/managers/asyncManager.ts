@@ -1,4 +1,4 @@
-import { Identifiable } from "../identifiable/_interfaces";
+import { IIdentifiable } from "../identifiable/_interfaces";
 import { _DataManager } from "./dataManager";
 import { Loadable, Creatable, ManagedId } from "./_interfaces";
 import { IdentifiableModel } from "../identifiable/identifiableModel";
@@ -13,7 +13,7 @@ import { IDictionary } from "../objectHelpers/_interfaces";
  * @version	1.1.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _AsyncManager<I extends Identifiable>
+export abstract class _AsyncManager<I extends IIdentifiable>
     extends _DataManager<I>
     implements Loadable<I>, Creatable<I>
 {
