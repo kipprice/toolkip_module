@@ -14,7 +14,7 @@ import { createCssClass } from "../styleHelpers";
 import { bind } from "../binding/helper";
 import { isDrawable } from "../drawable/_typeguards";
 import { map } from "../objectHelpers/navigate";
-import { IKeyValPair } from "../objectHelpers/_interfaces";
+import { IKeyValPair, IConstructor } from "../objectHelpers/_interfaces";
 
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
@@ -107,7 +107,7 @@ function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefin
     let drawable: _Drawable;
 
     if (obj.drawable) {
-        drawable = new obj.drawable();
+        drawable = _createDrawable(obj.drawable);
         elem = drawable.base;
     } else {
         elem = _createStandardElement(obj);
@@ -133,6 +133,18 @@ function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefin
     _appendElemToParent(obj, elem);
 
     return elem;
+}
+
+function _createDrawable(ctor: IConstructor<_Drawable> | (() => _Drawable)): _Drawable {
+    let child: _Drawable;
+    try {
+        child = (ctor as (() => _Drawable))();
+    
+    // if it fails, fall back to using it as a constructor
+    } catch(e) {
+        child = new (ctor as IConstructor<_Drawable>)();
+    }
+    return child;
 }
 
 /**

@@ -85,7 +85,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     tooltip?: string;
 
     /** allow the function to spin up a drawable instead of an element (will still apply classes & the like) */
-    drawable?: IConstructor<_Drawable>;
+    drawable?: IConstructor<_Drawable> | (() => _Drawable);
 }
 
 /**
