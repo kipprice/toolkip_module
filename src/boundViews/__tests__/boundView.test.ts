@@ -1,6 +1,7 @@
-import { _BoundView } from ".."
+import { _BoundView, IBoundElemDefinition } from ".."
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
-import { nextRender, IDictionary } from "../..";
+import { nextRender, IDictionary, IDrawableElements, IElemDefinition } from "../..";
+import { BoundView } from "../boundView";
 
 describe("bound view", () => {
     setupMatchMedia();
@@ -102,18 +103,79 @@ describe("bound view", () => {
     })
 })
 
-interface SimpleModel {
+describe("composable bound view", () => {
+    it("creates a composed bound view", async () => {
+        const composed = new ComposableView<ISimpleModel>({
+            cls: "base",
+            children: [
+                { key: "name", bindTo: "name" },
+                { bindTo: "count" }
+            ]
+        });
+        
+        expect(composed.elems.base).toBeTruthy();
+        expect(composed.elems.base.childElementCount).toEqual(2);
+        
+        expect(composed.elems.name).toBeTruthy();
+        expect(composed.elems.count).toBeFalsy();
+
+        composed.model = {
+            name: "kip",
+            count: 21
+        };
+
+        await nextRender();
+        await nextRender();
+
+        expect((composed.elems.name as any).innerHTML).toEqual("kip");
+    })
+
+    it("creates a nested composed view", async () => {
+        const composed = new ComposableView<IComplexModel>({
+            children: [
+                { key: "core", bindTo: "coreChild", drawable: () => new ComposableView<ISimpleModel>({
+                    children: [
+                        { bindTo: "name" },
+                        { bindTo: "count", key: "count" }
+                    ]
+                }) },
+                { bindTo: "childArray", key: "array" },
+                { bindTo: "childDict" }
+            ]
+        });
+
+        expect(composed.elems.core).toBeTruthy();
+        expect((composed.elems.core as any).base.childElementCount).toEqual(2);
+        
+        composed.model = {
+            coreChild: {
+                name: "abc",
+                count: -1
+            }, 
+            childArray: [],
+            childDict: {}
+        }
+
+        await nextRender();
+        await nextRender();
+
+        const countElem = (composed.elems.core as ComposableView<IComplexModel>).elems.count as HTMLElement;
+        expect(countElem.innerHTML).toEqual("-1");
+    })
+})
+
+interface ISimpleModel {
     name: string;
     count: number;
 }
 
-interface ComplexModel {
-    childArray: SimpleModel[];
-    coreChild: SimpleModel;
-    childDict: IDictionary<SimpleModel>
+interface IComplexModel {
+    childArray: ISimpleModel[];
+    coreChild: ISimpleModel;
+    childDict: IDictionary<ISimpleModel>
 }
 
-abstract class SampleBV<M> extends _BoundView<M> {
+abstract class SampleBV<M, E extends IDrawableElements = IDrawableElements> extends _BoundView<M> {
     protected _checkVisibility: boolean;
 
     constructor(doVizCheck?: boolean) {
@@ -129,7 +191,7 @@ abstract class SampleBV<M> extends _BoundView<M> {
     }
 }
 
-class SimpleBoundView extends SampleBV<SimpleModel> {
+class SimpleBoundView extends SampleBV<ISimpleModel> {
 
     protected _elems: {
         base: HTMLElement;
@@ -159,14 +221,14 @@ class SimpleBoundView extends SampleBV<SimpleModel> {
     
 }
 
-class ComplexBoundView extends SampleBV<ComplexModel> {
+class ComplexBoundView extends SampleBV<IComplexModel> {
 
     protected _elems: {
         base: HTMLElement;
         childArray: HTMLElement;
         childDict: HTMLElement;
         coreChild: SimpleBoundView;
-    }
+    };
 
     public get elems() { return this._elems; }
     
@@ -191,5 +253,11 @@ class ComplexBoundView extends SampleBV<ComplexModel> {
         this.setUpdateFunction("coreChild", (v, e) => {
             this._updateElem(v, e);
         })
+    }
+}
+
+class ComposableView<T> extends BoundView<T> {
+    protected _shouldSkipBindUpdate(elem) { 
+        return false;
     }
 }
