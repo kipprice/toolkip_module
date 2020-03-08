@@ -1,4 +1,5 @@
 import { IBoundElemDefinition, _BoundView } from ".";
+import { IDrawableElements } from "../drawable";
 
 /**----------------------------------------------------------------------------
  * @class	BoundView
@@ -8,26 +9,24 @@ import { IBoundElemDefinition, _BoundView } from ".";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class BoundView<VM, P extends string = ""> extends _BoundView<VM, P> {
+export class BoundView<VM, E extends IDrawableElements = IDrawableElements, P extends string = ""> extends _BoundView<VM, P> {
 
     //.....................
-    //#region PROPERTIES 
+    //#region PROPERTIES
     
-    /** when we're composing, we're going to want access 
-     *  to the elements we composed after the fact */
-    public get elems() { return this._elems; }
+    protected _elems: E;
     
     //#endregion
     //.....................
-
+    
     /**
      * BoundView
      * ----------------------------------------------------------------------------
      * creates a bound view with the specified 
      */
-    constructor (def: IBoundElemDefinition<VM>) {
+    constructor (def: IBoundElemDefinition<VM>, elems?: E) {
         super();
-        this._createElements(def);
+        this._createElements(def, elems);
     }
 
     /**
@@ -35,7 +34,8 @@ export class BoundView<VM, P extends string = ""> extends _BoundView<VM, P> {
      * ----------------------------------------------------------------------------
      * generate the elements contained within this 
      */
-    protected _createElements(def: IBoundElemDefinition<VM>) {
+    protected _createElements(def: IBoundElemDefinition<VM>, elems?: E) {
+        if (elems) { this._elems = elems; }
         if (!def) { return; }
         this._createBase(def);
     }

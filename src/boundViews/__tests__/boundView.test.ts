@@ -105,19 +105,25 @@ describe("bound view", () => {
 
 describe("composable bound view", () => {
     it("creates a composed bound view", async () => {
+        const elems: {
+            base: HTMLElement;
+            name: HTMLElement;
+            count: HTMLElement
+        } = {} as any;
+
         const composed = new ComposableView<ISimpleModel>({
             cls: "base",
             children: [
                 { key: "name", bindTo: "name" },
                 { bindTo: "count" }
             ]
-        });
+        }, elems);
         
-        expect(composed.elems.base).toBeTruthy();
-        expect(composed.elems.base.childElementCount).toEqual(2);
+        expect(elems.base).toBeTruthy();
+        expect(elems.base.childElementCount).toEqual(2);
         
-        expect(composed.elems.name).toBeTruthy();
-        expect(composed.elems.count).toBeFalsy();
+        expect(elems.name).toBeTruthy();
+        expect(elems.count).toBeFalsy();
 
         composed.model = {
             name: "kip",
@@ -127,10 +133,16 @@ describe("composable bound view", () => {
         await nextRender();
         await nextRender();
 
-        expect((composed.elems.name as any).innerHTML).toEqual("kip");
+        expect((elems.name as any).innerHTML).toEqual("kip");
     })
 
     it("creates a nested composed view", async () => {
+
+        const elems: {
+            base: HTMLElement;
+            core: ComposableView<ISimpleModel>;
+        } = {} as any;
+
         const composed = new ComposableView<IComplexModel>({
             children: [
                 { key: "core", bindTo: "coreChild", drawable: () => new ComposableView<ISimpleModel>({
@@ -142,10 +154,10 @@ describe("composable bound view", () => {
                 { bindTo: "childArray", key: "array" },
                 { bindTo: "childDict" }
             ]
-        });
+        }, elems);
 
-        expect(composed.elems.core).toBeTruthy();
-        expect((composed.elems.core as any).base.childElementCount).toEqual(2);
+        expect(elems.core).toBeTruthy();
+        expect((elems.core as any).base.childElementCount).toEqual(2);
         
         composed.model = {
             coreChild: {
@@ -159,7 +171,7 @@ describe("composable bound view", () => {
         await nextRender();
         await nextRender();
 
-        const countElem = (composed.elems.core as ComposableView<IComplexModel>).elems.count as HTMLElement;
+        const countElem = elems.core.elems.count as HTMLElement;
         expect(countElem.innerHTML).toEqual("-1");
     })
 })
@@ -217,8 +229,6 @@ class SimpleBoundView extends SampleBV<ISimpleModel> {
             ]
         })
     }
-
-    
 }
 
 class ComplexBoundView extends SampleBV<IComplexModel> {
@@ -257,7 +267,9 @@ class ComplexBoundView extends SampleBV<IComplexModel> {
 }
 
 class ComposableView<T> extends BoundView<T> {
-    protected _shouldSkipBindUpdate(elem) { 
+    public get elems() { return this._elems; }
+
+    protected _shouldSkipBindUpdate() { 
         return false;
     }
 }
