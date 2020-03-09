@@ -46,7 +46,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     cls?: string | IClasses;
 
     /** the type of HTML element we are creating */
-    type?: "div" | "span" | "input" | "select" | "option" | "textarea" | "li" | "ul" | "p" | "br" | string;
+    type?: keyof HTMLElementTagNameMap;
 
     /** content that should be added to the element */
     content?: string;
