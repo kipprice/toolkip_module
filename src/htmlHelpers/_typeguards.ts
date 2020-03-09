@@ -26,7 +26,7 @@ export function isIElemDefinition(test: any): test is IElemDefinition {
         content: "",
         id: "",
         parent: null,
-        type: ""
+        type: "" as any
     }
 
     if (isInterface<IElemDefinition>(test, comp)) { return true; }

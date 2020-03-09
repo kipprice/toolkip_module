@@ -180,7 +180,7 @@ export function createRadioButtons(): void {
  */
 export function createInputElement(id: string, cls: string, type: string, value?: any, attr?: IAttributes, children?: IChildren, parent?: HTMLElement): HTMLInputElement {
 
-    let elemType: string = "input";
+    let elemType: keyof HTMLElementTagNameMap = "input";
 
     // handle the type
     type = type.toLowerCase();
