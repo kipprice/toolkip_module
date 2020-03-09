@@ -1,6 +1,6 @@
 import { StandardElement } from "../shared";
 import { _Drawable } from ".";
-import { IDictionary } from "../objectHelpers";
+import { IKeyedElems } from "../htmlHelpers";
 
 export type DrawableElement = StandardElement | _Drawable;
 
@@ -19,6 +19,6 @@ export interface IDrawable {
  * ----------------------------------------------------------------------------
  * Collection of elements that make up a Drawable
  */
-export interface IDrawableElements extends IDictionary<DrawableElement> {
+export interface IDrawableElements extends IKeyedElems {
     base: StandardElement;
 }
