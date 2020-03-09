@@ -32,7 +32,14 @@ import { IKeyValPair, IConstructor } from "../objectHelpers/_interfaces";
  * @return {HTMLElement} The created element, with all specified parameters included.
  * 
  */
-export function createSimpleElement(id?: string, cls?: string | IClasses, content?: string, attr?: IAttributes, children?: IChildren, parent?: HTMLElement) {
+export function createSimpleElement(
+    id?: string, 
+    cls?: string | IClasses, 
+    content?: string, 
+    attr?: IAttributes, 
+    children?: IChildren, 
+    parent?: HTMLElement
+) {
     let obj: IElemDefinition;
 
     obj = {};
