@@ -9,22 +9,18 @@ import { IDrawableElements } from "../drawable";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class BoundView<VM, E extends IDrawableElements = IDrawableElements, P extends string = ""> extends _BoundView<VM, P> {
-
-    //.....................
-    //#region PROPERTIES
-    
-    protected _elems: E;
-    
-    //#endregion
-    //.....................
+export class BoundView<
+    VM = any, 
+    E extends IDrawableElements = IDrawableElements, 
+    P extends string = ""
+> extends _BoundView<VM, P, E> {
     
     /**
      * BoundView
      * ----------------------------------------------------------------------------
      * creates a bound view with the specified 
      */
-    constructor (def: IBoundElemDefinition<VM>, elems?: E) {
+    constructor (def: IBoundElemDefinition<VM, E>, elems?: E) {
         super();
         this._createElements(def, elems);
     }
@@ -34,7 +30,7 @@ export class BoundView<VM, E extends IDrawableElements = IDrawableElements, P ex
      * ----------------------------------------------------------------------------
      * generate the elements contained within this 
      */
-    protected _createElements(def: IBoundElemDefinition<VM>, elems?: E) {
+    protected _createElements(def: IBoundElemDefinition<VM, E>, elems?: E) {
         if (elems) { this._elems = elems; }
         if (!def) { return; }
         this._createBase(def);

@@ -1,21 +1,21 @@
+//..........................................
+//#region IMPORTS
+
 import { _Drawable } from "../drawable/_drawable";
 import { bind, BoundUpdateFunction, unbind } from "../binding";
 import { 
-    isHTMLElement, 
     isVisible,
     ICreateElementFunc,
     createCustomElement
 } from "../htmlHelpers";
 import { isDrawable } from "../drawable/_typeguards";
-import { StandardElement, isStandardElement, isString, isKeyof } from "../shared";
-import { isUpdatable } from "../structs/_typeguards";
+import { StandardElement, isStandardElement, isKeyof } from "../shared";
 import { IUpdateFunctions, 
     BindableElement, 
     IViewUpdateFunc, 
     IBoundElemDefinition,
     _UpdateableView,
-    IViewBindingDetails, 
-    BoundPair,
+    IViewBindingDetails,
     BoundValue,
     BoundProperty,
     isBoundView,
@@ -23,8 +23,11 @@ import { IUpdateFunctions,
     IBoundChildren,
     IDrawableFactory
 } from ".";
-import { IConstructor, map, IDictionary, setDictValue } from "../objectHelpers";
+import { IConstructor, map } from "../objectHelpers";
 import { IDrawableElements } from "../drawable";
+
+//#endregion
+//..........................................
 
 /**----------------------------------------------------------------------------
  * @class	_BoundView
@@ -35,7 +38,11 @@ import { IDrawableElements } from "../drawable";
  * @version	1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class _BoundView<VM = any, P extends string = string> extends _Drawable<P> {
+export abstract class _BoundView<
+    VM = any, 
+    P extends string = string, 
+    E extends IDrawableElements = IDrawableElements
+> extends _Drawable<P, E> {
 
     //.....................
     //#region PROPERTIES
@@ -71,6 +78,74 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
     }
 
     protected _shouldSkipCreateElements(): boolean { return true; }
+
+    //#endregion
+    //..........................................
+
+    //..........................................
+    //#region CREATE ELEMENTS
+
+    /**
+     * _createBase
+     * ----------------------------------------------------------------------------
+     * wrapper around the standard function for creating elements that handles 
+     * binding a little more nuanced
+     */
+    protected _createBase(obj: IBoundElemDefinition<VM, E>): StandardElement {
+        if (!obj.key) { obj.key = "base"; }
+        return this._createElem(obj);
+    }
+
+    /**
+     * _createElem
+     * ----------------------------------------------------------------------------
+     * handle creating any individual element that's a part of this view
+     */
+    protected _createElem(obj: IBoundElemDefinition<VM, E>): StandardElement {
+        
+        // use the standard function, but recurse with this one
+        let recurseFunc: ICreateElementFunc<E> = (obj: IBoundElemDefinition<VM, E>) => { return this._createElem(obj); }
+        let elem = createCustomElement<E, IBoundElemDefinition<VM, E>>(obj, this._elems, recurseFunc);
+
+        // if a binding is specified, set it up
+        if (obj.bindTo) { this._bindElement(elem, obj); }
+
+        return elem;
+    }
+
+    /**
+     * _bindElement
+     * ----------------------------------------------------------------------------
+     * handle binding the element
+     */
+    protected async _bindElement(elem: BindableElement<any>, obj: IBoundElemDefinition<VM, E>): Promise<void> {
+        let boundElem: BindableElement<any> = elem;
+
+        // TODO: don't require that key be specified to get at a drawable
+        if (obj.key && obj.drawable) { 
+            boundElem = this._elems[obj.key as string] as BindableElement<any>; 
+        }
+
+        let bindingInfo = {} as IViewBindingDetails<VM>
+
+        // ==> simple case: just the property name
+        if (isKeyof<VM>(obj.bindTo)) {
+            bindingInfo = {
+                key: obj.bindTo,
+                func: this._createUpdateFunc(boundElem, obj.bindTo)
+            }; 
+
+        // ==> complex case: binding model
+        } else {
+            const bindToObj = obj.bindTo as IViewBindingDetails<VM>;
+            bindingInfo = {...bindToObj};
+            if (!bindingInfo.func && bindingInfo.mapToDrawable) {
+                bindingInfo.func = this._createMapFunc(boundElem, bindToObj);
+            }
+        }
+
+        this._bind( boundElem, bindingInfo )
+    }
 
     //#endregion
     //..........................................
@@ -265,72 +340,10 @@ export abstract class _BoundView<VM = any, P extends string = string> extends _D
     }
 
     //#endregion
-    //..........................................
+    //..........................................    
 
     //..........................................
-    //#region HELPERS
-
-    /**
-     * _createBase
-     * ----------------------------------------------------------------------------
-     * wrapper around the standard function for creating elements that handles 
-     * binding a little more nuanced
-     */
-    protected _createBase(obj: IBoundElemDefinition<VM>): StandardElement {
-        if (!obj.key) { obj.key = "base"; }
-        return this._createElem(obj);
-    }
-
-    protected _createElem(obj: IBoundElemDefinition<VM>): StandardElement {
-        // use the standard function, but recurse with this one
-        let recurseFunc: ICreateElementFunc = (obj: IBoundElemDefinition<VM>) => { return this._createElem(obj); }
-        let elem = createCustomElement(obj, this._elems, recurseFunc);
-
-        // if a binding is specified, set it up
-        if (obj.bindTo) { this._bindElement(elem, obj); }
-
-        return elem;
-    }
-
-    /**
-     * _bindElement
-     * ----------------------------------------------------------------------------
-     * handle binding the element
-     */
-    protected async _bindElement(elem: BindableElement<any>, obj: IBoundElemDefinition<VM>): Promise<void> {
-        let boundElem: BindableElement<any> = elem;
-
-        // TODO: don't require that key be specified to get at a drawable
-        if (obj.key && obj.drawable) { 
-            boundElem = this._elems[obj.key as string] as BindableElement<any>; 
-        }
-
-        let bindingInfo = {} as IViewBindingDetails<VM>
-
-        // ==> simple case: just the property name
-        if (isKeyof<VM>(obj.bindTo)) {
-            bindingInfo = {
-                key: obj.bindTo,
-                func: this._createUpdateFunc(boundElem, obj.bindTo)
-            }; 
-
-        // ==> complex case: binding model
-        } else {
-            const bindToObj = obj.bindTo as IViewBindingDetails<VM>;
-            bindingInfo = {...bindToObj};
-            if (!bindingInfo.func && bindingInfo.mapToDrawable) {
-                bindingInfo.func = this._createMapFunc(boundElem, bindToObj);
-            }
-        }
-
-        this._bind( boundElem, bindingInfo )
-    }
-
-    //#endregion
-    //..........................................
-
-    //..........................................
-    //#region OVERRIDE SUPER METHODS
+    //#region OVERRIDES
     
     public erase() {
         this._unbindAll();

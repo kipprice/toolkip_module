@@ -1,8 +1,10 @@
 import { StandardElement } from '../shared';
-import { IElemDefinition } from '../htmlHelpers/_interfaces';
+import { IElemDefinition, IKeyedElems } from '../htmlHelpers/_interfaces';
 import { _BoundView, _UpdateableView } from '.';
 import { _Drawable } from '../drawable/_drawable';
 import { IConstructor } from '../objectHelpers';
+import { IDrawableElements } from '../drawable';
+import { createElement } from '../htmlHelpers';
 
 
 /** the types of properties that can be bound */
@@ -12,9 +14,12 @@ export type BoundProperty<VM = any> = keyof VM |  "_";
 export type BoundValue<VM = any, K extends keyof VM = keyof VM> = VM | VM[K];
 
 /** the types of elements that can be included as a child within a bound view */
-export type BoundChild<VM> = 
+export type BoundChild<
+    VM, 
+    E extends IDrawableElements
+> = 
     StandardElement | 
-    IBoundElemDefinition<VM> | 
+    IBoundElemDefinition<VM, E> | 
     _Drawable;
 
 export interface BoundPair<VM = any> {
@@ -23,9 +28,12 @@ export interface BoundPair<VM = any> {
 }
 
 /** override the default elem definition */
-export interface IBoundElemDefinition<VM = any> extends IElemDefinition {
+export interface IBoundElemDefinition<
+    VM = any, 
+    E extends IDrawableElements = IDrawableElements
+> extends IElemDefinition<E> {
     bindTo?: BoundProperty<VM> | IViewBindingDetails<VM>;
-    children?: BoundChild<VM>[];
+    children?: BoundChild<VM, E>[];
 }
 
 /** allow for overriding the default binding behavior */
