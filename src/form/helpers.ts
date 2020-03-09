@@ -2,7 +2,7 @@ import { IFieldConfig, IFields, FieldTypeEnum } from "./_interfaces";
 import { ISelectOptions } from "../objectHelpers/_interfaces";
 import { isNullOrUndefined } from "../shared";
 import { createElement, createSimpleElement } from "../htmlHelpers/createElement";
-import { IElemDefinition, IAttributes, IChildren } from "../htmlHelpers/_interfaces";
+import { IElemDefinition, IAttributes, IChild } from "../htmlHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";
 import { _Field } from "./_field";
 import { inputDateFmt } from "../primitiveHelpers/dates";
@@ -178,7 +178,7 @@ export function createRadioButtons(): void {
  * @param children 
  * @param parent 
  */
-export function createInputElement(id: string, cls: string, type: string, value?: any, attr?: IAttributes, children?: IChildren, parent?: HTMLElement): HTMLInputElement {
+export function createInputElement(id: string, cls: string, type: string, value?: any, attr?: IAttributes, children?: IChild[], parent?: HTMLElement): HTMLInputElement {
 
     let elemType: keyof HTMLElementTagNameMap = "input";
 

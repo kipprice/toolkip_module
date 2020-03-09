@@ -1,6 +1,6 @@
 import { IClasses, 
         IAttributes, 
-        IChildren, 
+        IChild, 
         IElemDefinition, 
         IKeyedElems, 
         ICreateElementFunc, 
@@ -37,7 +37,7 @@ export function createSimpleElement(
     cls?: string | IClasses, 
     content?: string, 
     attr?: IAttributes, 
-    children?: IChildren, 
+    children?: IChild[], 
     parent?: HTMLElement
 ) {
     let obj: IElemDefinition;

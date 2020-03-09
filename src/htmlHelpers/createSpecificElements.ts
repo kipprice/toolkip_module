@@ -1,4 +1,4 @@
-import { IAttributes, IChildren, IElemDefinition } from "./_interfaces";
+import { IAttributes, IChild, IElemDefinition } from "./_interfaces";
 import { trim, join } from "../primitiveHelpers/strings";
 import { createElement } from "./createElement";
 
@@ -18,8 +18,17 @@ import { createElement } from "./createElement";
  * @returns The created element + label
  * 
  */
-export function createSimpleLabeledElement(id: string, cls: string, lbl: string, content: any, attr: IAttributes, children: IChildren, parent: HTMLElement, skipZero: boolean): HTMLElement {
-    ;
+export function createSimpleLabeledElement(
+    id: string, 
+    cls: string, 
+    lbl: string, 
+    content: any, 
+    attr: IAttributes, 
+    children: IChild[], 
+    parent: HTMLElement, 
+    skipZero: boolean
+): HTMLElement {
+    
     let obj: any;
     let cLbl: any;
     let cContent: any;

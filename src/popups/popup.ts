@@ -16,13 +16,10 @@ import { IStandardStyles } from "../styleHelpers/_interfaces";
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground"> {
+export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground", PopupElements> {
 
 	//.....................
 	//#region PROPERTIES
-
-	/** elements contained within the popup */
-	protected _elems: PopupElements;
 
 	protected get _addlCls(): string { return ""; }
 	//#endregion
@@ -158,7 +155,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * Creates all of the elements needed for this popup
 	 */
 	protected _createElements(): void {
-		this._createBase<PopupElements>({
+		this._createBase({
 			cls: "popup" + (this._addlCls ? " " + this._addlCls : ""),
 			children: [
 				{ key: "overlay", cls: "overlay", eventListeners: { click: () => this.erase() } },

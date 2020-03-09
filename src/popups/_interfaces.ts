@@ -2,7 +2,7 @@ import { IDrawableElements } from "../drawable/_interfaces";
 
 export type PopupColor = "popupTheme";
 
-export interface PopupElements extends IDrawableElements {
+export type PopupElements = {
     base: HTMLElement;
     overlay: HTMLElement;
     frame: HTMLElement;
