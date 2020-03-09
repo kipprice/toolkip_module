@@ -144,7 +144,7 @@ export abstract class _SVGElem extends _Drawable {
         }
 
         // determine the type of the SVG element
-        let type: string = attributes.type;
+        let type: keyof SVGElementTagNameMap = attributes.type;
         delete attributes.type;
 
         // if a class was provided, use it
@@ -152,7 +152,7 @@ export abstract class _SVGElem extends _Drawable {
         delete attributes.cls;
 
         // Throw an error if no data was provided
-        if (type === "") {
+        if (!type) {
             throw new Error("no SVG element type provided");
         }
 

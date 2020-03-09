@@ -29,7 +29,7 @@ export interface ISVGAttributes extends IAttributes {
     unscalable?: boolean;
     svgStyle?: ISVGStyle;
     parent?: SVGElement;
-    type?: string;
+    type?: keyof SVGElementTagNameMap;
     [key: string]: any;
 }
 

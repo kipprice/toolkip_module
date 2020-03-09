@@ -1,5 +1,6 @@
 import { _Drawable } from "../drawable/_drawable";
 import { createSVGElem } from "./svgHelpers";
+import { IElemDefinition } from "../htmlHelpers";
 
 
 export class SVGDefinitionsElement extends _Drawable {
@@ -32,7 +33,7 @@ export class SVGDefinitionsElement extends _Drawable {
 
     protected _addDropShadow(): void {
         // Taken from this SO post: https://stackoverflow.com/questions/6088409/svg-drop-shadow-using-css3
-        let def = {
+        let def: IElemDefinition = {
             type: "filter",
             id: "dropshadow",
             attr: {

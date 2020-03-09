@@ -46,7 +46,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     cls?: string | IClasses;
 
     /** the type of HTML element we are creating */
-    type?: keyof HTMLElementTagNameMap;
+    type?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
 
     /** content that should be added to the element */
     content?: string;
