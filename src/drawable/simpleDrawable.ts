@@ -1,6 +1,7 @@
 import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { _Drawable } from './_drawable';
 import { createElement } from '../htmlHelpers';
+import { IDrawableElements } from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	SimpleDrawable
@@ -10,15 +11,13 @@ import { createElement } from '../htmlHelpers';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class Drawable extends _Drawable {
+export class Drawable<
+	P extends string = string, 
+	E extends IDrawableElements = IDrawableElements
+> extends _Drawable<P, E> {
 
 	//.....................
 	//#region PROPERTIES
-
-	/** Simple Drawables only have a base element */
-	protected _elems: {
-		base: HTMLElement;
-	}
 
 	//#endregion
 	//.....................
@@ -30,7 +29,7 @@ export class Drawable extends _Drawable {
 	 * constructor
 	 * @param	baseElem		The details about the element we should draw
 	 */
-	constructor(baseElem: IElemDefinition) { 
+	constructor(baseElem: IElemDefinition<E>) { 
 		super(); 
 		
 		if (baseElem) { 

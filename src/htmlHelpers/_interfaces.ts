@@ -12,10 +12,9 @@ export interface IAttributes {
     [key: string]: IAttribute;
 }
 
-export type IChildren = IChild[];
-export type IChild = 
+export type IChild<T extends IKeyedElems = IKeyedElems> = 
     StandardElement | 
-    IElemDefinition | 
+    IElemDefinition<T> | 
     _Drawable;
 
 export interface IClasses {
@@ -64,7 +63,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     style?: TypedClassDefinition;
 
     /** any children that should be added for this element */
-    children?: IChildren;
+    children?: IChild<T>[];
 
     /** the parent element that this should be added to */
     parent?: StandardElement;

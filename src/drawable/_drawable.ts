@@ -3,12 +3,10 @@ import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { createElement } from '../htmlHelpers/createElement';
 import { 
 		IDrawable, 
-		IDrawableElements, 
-		DrawableElement
+		IDrawableElements
 	} from '.';
 import { StandardElement } from "../shared";
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
-import { IDictionary } from '../objectHelpers';
 
 /**----------------------------------------------------------------------------
  * @class Drawable
@@ -18,7 +16,10 @@ import { IDictionary } from '../objectHelpers';
  * @version	2.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Drawable<Placeholders extends string = string> extends _Stylable<Placeholders> implements IDrawable {
+export abstract class _Drawable<
+	Placeholders extends string = string,
+	Elems extends IDrawableElements = IDrawableElements
+> extends _Stylable<Placeholders> implements IDrawable {
 
 	//.....................
 	//#region PROPERTIES
@@ -27,7 +28,7 @@ export abstract class _Drawable<Placeholders extends string = string> extends _S
 	protected _id: string;
 
 	/** elements that make up this Drawable */
-	protected _elems: IDrawableElements;
+	protected _elems: Elems;
 
 	/** expose the base element externally for anyone who needs it */
 	public get base(): StandardElement { return this._elems.base; }
@@ -52,7 +53,7 @@ export abstract class _Drawable<Placeholders extends string = string> extends _S
 		this._registerMediaListeners();
 
 		// initialize our elements
-		this._elems = {} as IDrawableElements;
+		this._elems = {} as Elems;
 		
 		// check that we have enough data to create elements
 		if (this._shouldSkipCreateElements()) { return; }
@@ -84,10 +85,10 @@ export abstract class _Drawable<Placeholders extends string = string> extends _S
 	 */
 	protected abstract _createElements(...args: any[]): void;
 
-	protected _createBase<T extends IDrawableElements>(elemDefinition: IElemDefinition<T>): StandardElement {
+	protected _createBase(elemDefinition: IElemDefinition<Elems>): StandardElement {
 		// ensure that we always have our base element
 		if (!elemDefinition.key) { elemDefinition.key = "base" };
-		return createElement<T>(elemDefinition, this._elems as T);
+		return createElement<Elems>(elemDefinition, this._elems);
 	}
 
 	/**
@@ -110,7 +111,7 @@ export abstract class _Drawable<Placeholders extends string = string> extends _S
 		if (!this._parent) { return; }
 
 		// Draw the base element
-		this._drawBase();
+		this._drawBase(force);
 
 		// Make sure we have a touchpoint for refreshing after the draw step
 		this._afterDraw();
