@@ -12,11 +12,12 @@ import { StandardElement } from "../shared";
  * addClass
  * ----------------------------------------------------------------------------
  * Allows a user to safely add a CSS class to an element's existing list of CSS classes
- * @param {HTMLElement}   elem      The element that should have its class updated
- * @param {string}        newClass  The class to add the element
+ * @param   elem      The element that should have its class updated
+ * @param   newClass  The class to add the element
  * 
+ * @returns the provided element
  */
-export function addClass(elem: DrawableElement, newClass: string): void {
+export function addClass(elem: DrawableElement, newClass: string): DrawableElement {
   let cls: string;
   let e: StandardElement;
 
@@ -42,17 +43,22 @@ export function addClass(elem: DrawableElement, newClass: string): void {
     cls = cls + newClass;
     e.setAttribute("class", trim(cls));
   }
+
+  return elem;
 };
 
 /**
  * removeClass
  * ----------------------------------------------------------------------------
- * Allows a user to safely remove a CSS class to an element's existing list of CSS classes
- * @param {HTMLElement} elem      The element that should have its class updated
- * @param {string}      newClass  The class to remove from the element
+ * Allows a user to safely remove a CSS class to an element's existing list of 
+ * CSS classes
  * 
+ * @param   elem      The element that should have its class updated
+ * @param   newClass  The class to remove from the element
+ * 
+ * @returns the provided element
  */
-export function removeClass(elem: DrawableElement, oldClass: string): void {
+export function removeClass(elem: DrawableElement, oldClass: string): DrawableElement {
   ;
   let cls: string;
   let len: number;
@@ -78,16 +84,40 @@ export function removeClass(elem: DrawableElement, oldClass: string): void {
     e.setAttribute("class", trim(cls));
   }
 
+  return elem;
+
 };
+
+/**
+ * addOrRemoveClass
+ * ----------------------------------------------------------------------------
+ * handle selection-state style decisions where we will want to add or remove
+ * a particular class based on the result of a particular evaluation
+ * 
+ * @param   elem      the element to update classes on
+ * @param   clsName   the name of the class to add or remove
+ * @param   shouldAdd if true, adds the class instead of removing
+ * 
+ * @returns the element that was updated
+ */
+export function addOrRemoveClass(elem: DrawableElement, clsName: string, shouldAdd: boolean): DrawableElement {
+  if (shouldAdd) {
+    addClass(elem, clsName);
+  } else {
+    removeClass(elem, clsName);
+  }
+  return elem;
+}
 
 /**
  * hasClass
  * ----------------------------------------------------------------------------
  * Checks whether a provided HTML element has a CSS class applied
- * @param  {HTMLElement}  elem  The element to check
- * @param  {String}       cls   The CSS class to check for
- * @return {Boolean}            True if the element has the CSS class applied; false otherwise
  * 
+ * @param   elem  The element to check
+ * @param   cls   The CSS class to check for
+ * 
+ * @returns True if the element has the CSS class applied; false otherwise
  */
 export function hasClass(elem: HTMLElement | _Drawable, cls: string): boolean {
   let e: DrawableElement;
