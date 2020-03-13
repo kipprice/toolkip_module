@@ -37,15 +37,21 @@ export interface IBoundElemDefinition<
 }
 
 /** allow for overriding the default binding behavior */
-export interface IViewBindingDetails<VM = any> {
-    key: BoundProperty<VM>;
+export interface IViewBindingDetails<VM = any, AV = any> {
+    key?: BoundProperty<VM>;
+    value?: IViewValueFunc<VM>;
     func?: IViewUpdateFunc<VM>
     mapToDrawable?: IConstructor<_Drawable> | IDrawableFactory<VM>;
 }
 
 /** handle updating a particular piece of the view */
-export interface IViewUpdateFunc<T> {
-    (newValue: BoundValue<T>, elem: BindableElement<T>): void
+export interface IViewUpdateFunc<T, A = any> {
+    (newValue: BoundValue<T> | A, elem: BindableElement<T>): void
+}
+
+/** shortcut for setting innerHTML to anything but the standard keys */
+export interface IViewValueFunc<T> {
+    (model: T): any;
 }
 
 /** handle setting specific update functions */

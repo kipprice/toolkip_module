@@ -203,6 +203,11 @@ export abstract class _BoundView<
                 // handle the null case
                 if (!this._model) { return ""; }
 
+                // handle the case where the user defined a custom value getter
+                if (bindingInfo.value) { 
+                    return bindingInfo.value(this._model);
+                }
+
                 // handle if the user specified a specific key in the model
                 if (bindingInfo.key) { 
                     return this._model[bindingInfo.key as keyof VM]; 
