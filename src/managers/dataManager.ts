@@ -12,7 +12,7 @@ import { map } from "../objectHelpers/navigate";
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _DataManager<I extends IIdentifiable> {
+export class DataManager<I extends IIdentifiable> {
 
     //.....................
     //#region PROPERTIES
@@ -151,11 +151,3 @@ export abstract class _DataManager<I extends IIdentifiable> {
     //...........................................
 
 }
-
-    //..........................................
-    //#region TYPES AND INTERFACES
-
-
-
-    //#endregion
-    //..........................................
