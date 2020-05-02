@@ -1,5 +1,5 @@
 import { createElement } from "..";
-import { IDrawable } from "../_interfaces";
+import { IDrawable } from "../../shared";
 import { StandardElement } from "../../shared";
 
 describe('basic element creation', () => {

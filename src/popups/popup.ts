@@ -1,8 +1,8 @@
 import { _Drawable } from "../drawable/_drawable";
 import { PopupElements, IPopupDefinition } from "./_interfaces";
-import { createSimpleElement, createElement, isDrawable, IElemDefinition, IClassDefinition, ClassName } from "../createElements";
+import { createSimpleElement, createElement, IElemDefinition, IClassDefinition, ClassName } from "../createElements";
 import { addClass, removeClass } from "../styleHelpers/css";
-import { StandardElement, isString } from '../shared';
+import { StandardElement, isString, isDrawable } from '../shared';
 import { IStandardStyles } from "../styleHelpers";
 
 

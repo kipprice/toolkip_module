@@ -2,7 +2,7 @@ import { trim } from '../primitiveHelpers/strings';
 import { _Drawable } from '../drawable/_drawable';
 import { IKeyValPair } from '../objectHelpers/_interfaces';
 import { StandardElement } from "../shared";
-import { DrawableElement, isDrawable } from '../createElements';
+import { DrawableElement, isDrawable } from '../shared';
 import { TypedClassDefinition } from './_interfaces';
 
 /**

@@ -1,4 +1,4 @@
-import { IDrawableElements } from "../../drawable";
+import { IDrawableElements } from "../../../drawable";
 import { _BoundView } from "../..";
 
 export abstract class SampleBV<M, E extends IDrawableElements = IDrawableElements> extends _BoundView<M> {

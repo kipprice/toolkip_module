@@ -1,21 +1,18 @@
 import { 
-    IElemDefinition, 
-    IClassDefinition,
+    IElemDefinition,
     IKeyedElems,
     ICreateElementFunc, 
     IAttribute,
-    IDrawable,
     ClassName
  } from "./_interfaces";
-import { StandardElement, isNullOrUndefined, isArray, isString } from "../shared";
+import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable } from "../shared";
 import { addClass } from "../styleHelpers/css";
 import { createCssClass } from "../styleLibraries";
 import { bind } from "../binding/helper";
 import { map } from "../objectHelpers";
 import { IKeyValPair, IConstructor } from "../objectHelpers/_interfaces";
-import { isDrawable, isClassDefinition } from "./_typeGuards";
-import { warn } from "../errors";
-import { TypedClassDefinition, flattenStyles, FlatClassDefinition } from "../styleHelpers";
+import { isClassDefinition } from "./_typeGuards";
+import { flattenStyles, FlatClassDefinition } from "../styleHelpers";
 
 
 //................................................

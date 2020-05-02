@@ -1,6 +1,6 @@
 import { TypedClassDefinition, IStandardStyles } from "../styleHelpers";
 import { IKeyValPair, IDictionary, IConstructor } from "../objectHelpers";
-import { StandardElement } from "../shared";
+import { StandardElement, IDrawable, DrawableElement } from "../shared";
 import { BoundEvalFunction } from "../binding";
 
 export type IAttribute = IKeyValPair<string> | string | number;
@@ -104,19 +104,6 @@ export type IEventListeners = {
 export interface ICreateElementFunc<T extends IKeyedElems = IKeyedElems, I extends IElemDefinition<T> = IElemDefinition<T>> {
     (obj: I, keyedElems?: T): StandardElement;
 }
-
-/**
- * IDrawable
- * ----------------------------------------------------------------------------
- * The core pieecs that are required by our Drawable
- */
-export interface IDrawable {
-    draw(parent?: DrawableElement): void;
-    erase(): void;
-    base: StandardElement;
-}
-
-export type DrawableElement = StandardElement | IDrawable;
 
 export interface ILabeledElement {
     data: HTMLElement;

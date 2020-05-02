@@ -1,4 +1,4 @@
-import { StandardElement } from ".";
+import { StandardElement, IDrawable, DrawableElement } from ".";
 
 /**
  * isNullOrUndefined
@@ -129,4 +129,14 @@ export function isStandardElement(test: any): test is StandardElement {
   if (test instanceof HTMLElement) { return true; }
   if (test instanceof SVGElement) { return true; }
   return false;
+}
+
+/** check if the element implements the drawable class */
+export function isDrawable(test: any): test is IDrawable {
+  return !!(test as IDrawable).draw;
+}
+
+/** check if the element is one that can be used as a drawable base */
+export function isDrawableElement(test: any): test is DrawableElement {
+  return (!!(test.appendChild));
 }

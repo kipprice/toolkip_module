@@ -4,8 +4,8 @@
 import { _Drawable } from "../drawable/_drawable";
 import { bind, BoundUpdateFunction, unbind } from "../binding";
 import { isVisible } from "../htmlHelpers";
-import { ICreateElementFunc, createCustomElement, isDrawable } from "../createElements";
-import { StandardElement, isStandardElement, isKeyof } from "../shared";
+import { ICreateElementFunc, createCustomElement } from "../createElements";
+import { StandardElement, isStandardElement, isKeyof, isDrawable } from "../shared";
 import { IUpdateFunctions, 
     BindableElement, 
     IViewUpdateFunc, 

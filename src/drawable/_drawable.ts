@@ -1,7 +1,7 @@
 import { _Stylable } from '../stylable/stylable';
-import { createElement, IElemDefinition, IDrawable } from '../createElements';
+import { createElement, IElemDefinition } from '../createElements';
 import { IDrawableElements } from '.';
-import { StandardElement } from "../shared";
+import { StandardElement, IDrawable } from "../shared";
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 
 /**----------------------------------------------------------------------------
