@@ -1,13 +1,13 @@
-import { generateUniqueId, Identifier, registerUniqueId } from "..";
+import { generateUniqueId, IdentifierAssigner, registerUniqueId } from "..";
 
 describe("identifier", () => {
     beforeEach(() => {
-        Identifier.reset();
+        IdentifierAssigner.reset();
     })
     it("registers a new id under the default prefix", () => {
         const id = generateUniqueId();
         expect(id).toEqual("1-id");
-        expect(Identifier.getLastId("id")).toEqual(1);
+        expect(IdentifierAssigner.getLastId("id")).toEqual(1);
     })
 
     it("registers a new id under the ", () => {
@@ -34,7 +34,7 @@ describe("identifier", () => {
         const idToUpdate = "10-id";
         const result = registerUniqueId(idToUpdate);
         expect(result).toBeTruthy();
-        expect(Identifier.getLastId("id")).toEqual(10);
+        expect(IdentifierAssigner.getLastId("id")).toEqual(10);
     });
 
     it("doesn't update a lesser id", () => {
@@ -46,7 +46,7 @@ describe("identifier", () => {
         const idToUpdate = "2-id";
         const result = registerUniqueId(idToUpdate);
         expect(result).toBeFalsy();
-        expect(Identifier.getLastId("id")).toEqual(3);
+        expect(IdentifierAssigner.getLastId("id")).toEqual(3);
     })
 
     it("doesn't update a non numeric id", () => {
@@ -58,7 +58,7 @@ describe("identifier", () => {
         const idToUpdate = "abc-id";
         const result = registerUniqueId(idToUpdate);
         expect(result).toBeFalsy();
-        expect(Identifier.getLastId("id")).toEqual(3);
+        expect(IdentifierAssigner.getLastId("id")).toEqual(3);
     })
 
     it("handles a non-prefixed id", () => {
@@ -70,6 +70,6 @@ describe("identifier", () => {
         const idToUpdate = "10";
         const result = registerUniqueId(idToUpdate);
         expect(result).toBeTruthy();
-        expect(Identifier.getLastId("id")).toEqual(10);
+        expect(IdentifierAssigner.getLastId("id")).toEqual(10);
     })
 })

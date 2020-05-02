@@ -1,14 +1,14 @@
 import { IDictionary } from "..";
 
 /**----------------------------------------------------------------------------
- * @class	Identifier
+ * @class	IdentifierAssigner
  * ----------------------------------------------------------------------------
  * keep track of unique IDs across the application
  * @author	Kip Price
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-class _Identifier {
+class _IdentifierAssigner {
 
     //.....................
     //#region PROPERTIES
@@ -78,13 +78,13 @@ class _Identifier {
     }
 }
 
-export const Identifier = new _Identifier();
+export const IdentifierAssigner = new _IdentifierAssigner();
 
 
 export function generateUniqueId(prefix?: string): string {
-    return Identifier.generateUniqueId(prefix);
+    return IdentifierAssigner.generateUniqueId(prefix);
 }
 
 export function registerUniqueId(lastId: string): boolean {
-    return this.Identifier.registerId(lastId);
+    return this.IdentifierAssigner.registerId(lastId);
 }
