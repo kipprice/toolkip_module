@@ -1,0 +1,14 @@
+{
+  "npmClient": "npm",
+  "bootstrap": {
+
+  },
+  "publish": {
+    "ignoreChanges": ["*.md", "*(wip)*"],
+    "message": "chore(release): publish"
+  },
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent"
+}
