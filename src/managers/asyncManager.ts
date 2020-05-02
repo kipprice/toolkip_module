@@ -1,6 +1,6 @@
-import { IIdentifiable } from "../identifiable/_interfaces";
-import { _DataManager } from "./dataManager";
-import { Loadable, Creatable, ManagedId } from "./_interfaces";
+import { IIdentifiable, Identifier } from "../identifiable/_interfaces";
+import { DataManager } from "./dataManager";
+import { Loadable, Creatable, ILoadFunction, ICreateFunction } from "./_interfaces";
 import { IdentifiableModel } from "../identifiable/identifiableModel";
 import { IDictionary } from "../objectHelpers/_interfaces";
 
@@ -13,8 +13,8 @@ import { IDictionary } from "../objectHelpers/_interfaces";
  * @version	1.1.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _AsyncManager<I extends IIdentifiable>
-    extends _DataManager<I>
+export class AsyncManager<I extends IIdentifiable>
+    extends DataManager<I>
     implements Loadable<I>, Creatable<I>
 {
 
@@ -24,14 +24,19 @@ export abstract class _AsyncManager<I extends IIdentifiable>
     /** track any requests that are currently being loaded */
     protected _inFlight: IDictionary<Promise<I>>;
 
+    protected _innerLoad: ILoadFunction<I>;
+    protected _innerCreate: ICreateFunction<I>
+
     //#endregion
     //.....................
 
     //..........................................
     //#region CREATE THE MANAGER
 
-    public constructor() {
+    public constructor(load: ILoadFunction<I>, create?: ICreateFunction<I>) {
         super();
+        this._innerLoad = load;
+        this._innerCreate = create;
         this._inFlight = {};
     }
 
@@ -56,7 +61,7 @@ export abstract class _AsyncManager<I extends IIdentifiable>
      * ----------------------------------------------------------------------------
      * get the data associated with a particular ID
      */
-    public async getOrCreate(id: ManagedId): Promise<I> {
+    public async getOrCreate(id: Identifier): Promise<I> {
 
         // validate input
         if (!id) { throw new Error("no ID provided"); }
@@ -79,7 +84,7 @@ export abstract class _AsyncManager<I extends IIdentifiable>
      * ---------------------------------------------------------------------------
      * create a new element via the appropriate loading call
      */
-    protected async _loadAndCreate(id: ManagedId): Promise<I> {
+    protected async _loadAndCreate(id: Identifier): Promise<I> {
         let d = await this.load(id);
         if (!d) { throw new Error("no data found for id '" + id + "'") };
 
@@ -101,14 +106,20 @@ export abstract class _AsyncManager<I extends IIdentifiable>
      * ----------------------------------------------------------------------------
      * create a new element
      */
-    public abstract create(d: Partial<I>): IdentifiableModel<I>;
+    public create(d: Partial<I>): I {
+        if (this._innerCreate) { return this._innerCreate(d); }
+        else return d as I;
+    }
 
     /**
      * load
      * ----------------------------------------------------------------------------
      * load details about the element tied to the specified ID
      */
-    public abstract async load(id: ManagedId): Promise<I>;
+    public async load(id: Identifier): Promise<I> {
+        if (!this._innerLoad) { Promise.reject('innerLoad not defined')}
+        return this._innerLoad(id);
+    }
 
     //#endregion
     //..........................................

@@ -2,6 +2,10 @@ import { _BoundView, IBoundElemDefinition } from ".."
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
 import { nextRender, IDictionary, IDrawableElements, IElemDefinition } from "../..";
 import { BoundView } from "../boundView";
+import { SimpleBoundView } from "./simpleview";
+import { ComplexBoundView } from "./complexView";
+import { ComposableView } from "./composableView";
+import { ISimpleModel, IComplexModel } from "./_interfaces";
 
 describe("bound view", () => {
     setupMatchMedia();
@@ -176,100 +180,4 @@ describe("composable bound view", () => {
     })
 })
 
-interface ISimpleModel {
-    name: string;
-    count: number;
-}
 
-interface IComplexModel {
-    childArray: ISimpleModel[];
-    coreChild: ISimpleModel;
-    childDict: IDictionary<ISimpleModel>
-}
-
-abstract class SampleBV<M, E extends IDrawableElements = IDrawableElements> extends _BoundView<M> {
-    protected _checkVisibility: boolean;
-
-    constructor(doVizCheck?: boolean) {
-        super();
-        this._checkVisibility = doVizCheck;
-    }
-
-    protected _shouldSkipBindUpdate(elem) { 
-        if (this._checkVisibility) {
-            return super._shouldSkipBindUpdate(elem)
-        }
-        return false;
-    }
-}
-
-class SimpleBoundView extends SampleBV<ISimpleModel> {
-
-    protected _elems: {
-        base: HTMLElement;
-        name: HTMLElement;
-        count: HTMLElement;
-    }
-
-    public get elems() { return this._elems; }
-
-    protected _createElements() {
-        this._createBase({
-            key: "base",
-            children: [
-                { bindTo: "name", key: "name" },
-                { 
-                    bindTo: {
-                        key: "count",
-                        func: (v: number, elem: HTMLElement) => {
-                            elem.innerHTML = "Total: " + v.toString();
-                        }
-                    }, 
-                    key: "count" }
-            ]
-        })
-    }
-}
-
-class ComplexBoundView extends SampleBV<IComplexModel> {
-
-    protected _elems: {
-        base: HTMLElement;
-        childArray: HTMLElement;
-        childDict: HTMLElement;
-        coreChild: SimpleBoundView;
-    };
-
-    public get elems() { return this._elems; }
-    
-    protected _createElements() {
-        this._createBase({
-            key: "base",
-            children: [
-                { key: "childArray", bindTo: {
-                    key: 'childArray',
-                    mapToDrawable: SimpleBoundView
-                }},
-
-                { key: "childDict", bindTo: {
-                    key: 'childDict',
-                    mapToDrawable: () => new SimpleBoundView()
-                }},
-
-                { key: "coreChild", bindTo: "coreChild", drawable: SimpleBoundView }
-            ]
-        })
-
-        this.setUpdateFunction("coreChild", (v, e) => {
-            this._updateElem(v, e);
-        })
-    }
-}
-
-class ComposableView<T> extends BoundView<T> {
-    public get elems() { return this._elems; }
-
-    protected _shouldSkipBindUpdate() { 
-        return false;
-    }
-}

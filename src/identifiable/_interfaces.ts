@@ -1,3 +1,5 @@
+export type Identifier = string | number;
+
 export interface IIdentifiable {
-    id: string | number;
+    id: Identifier;
 }

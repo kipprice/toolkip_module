@@ -1,5 +1,4 @@
-import { IIdentifiable } from "../identifiable/_interfaces";
-import { ManagedId } from "./_interfaces";
+import { IIdentifiable, Identifier } from "../identifiable/_interfaces";
 import { IDictionary } from "../objectHelpers/_interfaces";
 import { map } from "../objectHelpers/navigate";
 
@@ -74,7 +73,7 @@ export class DataManager<I extends IIdentifiable> {
      * ----------------------------------------------------------------------------
      * remove an element from this manager
      */
-    public remove(id: ManagedId): I {
+    public remove(id: Identifier): I {
         if (!this.contains(id)) { return null; }
         let out = this.get(id);
         delete this._data[id];
@@ -86,7 +85,7 @@ export class DataManager<I extends IIdentifiable> {
      * ----------------------------------------------------------------------------
      * test if a particular element is present in the manager
      */
-    public contains(id: ManagedId): boolean {
+    public contains(id: Identifier): boolean {
         return !!this._data[id];
     }
 
@@ -110,7 +109,7 @@ export class DataManager<I extends IIdentifiable> {
      * ----------------------------------------------------------------------------
      * get the element with the specified ID
      */
-    public get(id: ManagedId): I {
+    public get(id: Identifier): I {
         if (!this.contains(id)) { return null; }
         return this._data[id];
     }
@@ -141,7 +140,7 @@ export class DataManager<I extends IIdentifiable> {
      */
     public toDictionary(): IDictionary<I> {
         let out: IDictionary<I> = {};
-        map(this._data, (elem: I, id: ManagedId) => {
+        map(this._data, (elem: I, id: Identifier) => {
             out[id] = elem;
         });
         return out;

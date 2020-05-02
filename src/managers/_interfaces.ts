@@ -1,12 +1,18 @@
-import { IIdentifiable } from "../identifiable/_interfaces";
+import { IIdentifiable, Identifier } from "../identifiable/_interfaces";
 import {IdentifiableModel} from "../identifiable/identifiableModel";
 
-export type ManagedId = string | number;
-
 export interface Creatable<I extends IIdentifiable> {
-    create(d: Partial<I>): IdentifiableModel<I>;
+    create: ICreateFunction<I>;
+}
+
+export interface ICreateFunction<I extends IIdentifiable> {
+    (d: Partial<I>): I;
 }
 
 export interface Loadable<I extends IIdentifiable> {
-    load(id: ManagedId): Promise<I>;
+    load: ILoadFunction<I>
+}
+
+export interface ILoadFunction<I extends IIdentifiable> {
+    (id: Identifier): Promise<I>;
 }

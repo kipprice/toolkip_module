@@ -14,20 +14,20 @@ import {
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _CodeEvent<D = any, T = any> {
+export class CodeEvent<D = any, T = any> {
 
     //.....................
     //#region PROPERTIES
 
     protected _listeners: Map<T, ICodeEventCallback<D>[]>;
-    
-    /** keep track of the name of this handler */
-    protected abstract get _name(): string;
+
+    protected _name: string;
     
     //#endregion
     //.....................
 
-    constructor() {
+    constructor(name: string) {
+        this._name = name;
         this._listeners = new Map();
     }
 
