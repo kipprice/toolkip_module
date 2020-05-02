@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-async",
+    "version": "1.0.0",
+    "description": "helpers for general async functions (e.g. wait) as promise form",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "src/async/index.ts",
+    "module": "src/async/index.ts",
+    "types": "typings/async/index"
+}
