@@ -1,5 +1,4 @@
 import { IDrawableElements } from "../drawable/_interfaces";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
 
 /** Interface for the result of a validate function */
 export interface IValidateResult {

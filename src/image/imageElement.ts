@@ -1,7 +1,7 @@
 import { _Drawable } from "../drawable/_drawable";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 import { addClass, removeClass } from "../styleHelpers/css";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 
 export class ImageElement extends _Drawable<"imageElementPrimary"> {
 

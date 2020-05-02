@@ -1,5 +1,5 @@
 import { format } from "../primitiveHelpers/strings";
-import { map } from "./navigate";
+import { map } from "./manipulate";
 
 /**
  * stringify

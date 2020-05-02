@@ -1,4 +1,4 @@
-import { map } from "../objectHelpers/navigate";
+import { map } from "../objectHelpers";
 import { IAjaxParams, IAjaxDetails } from "./_interfaces";
 
 /**

@@ -1,7 +1,7 @@
 import { IFormFileElemTemplate } from "./_interfaces";
 import { _Field } from "../_field";
 import { FieldTypeEnum } from "../_interfaces";
-import { IAttributes } from "../../htmlHelpers/_interfaces";
+import { IAttributes } from "../../createElements";
 import { createInputElement } from "../helpers";
 
 

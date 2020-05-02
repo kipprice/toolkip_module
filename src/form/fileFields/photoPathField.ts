@@ -1,6 +1,6 @@
 import { IPhotoPathElemTemplate } from "./_interfaces";
 import { FilePathField } from "./filePathField";
-import { createSimpleElement, createElement } from "../../htmlHelpers/createElement";
+import { createSimpleElement, createElement } from "../../createElements";
 import { isNullOrUndefined } from "../../shared";
 import { createInputElement, createLabelForInput } from "../helpers";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";

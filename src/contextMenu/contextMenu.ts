@@ -1,13 +1,13 @@
 import { _Drawable } from '../drawable/_drawable';
 import { Collection } from '../dataStructures/collection/collection';
 import { ICollectionElement } from '../dataStructures/collection/_interfaces';
-import { createSimpleElement } from '../htmlHelpers/createElement';
+import { createSimpleElement } from '../createElements';
 import { IStandardStyles } from '../styleHelpers/_interfaces';
 import { 
 		IContextMenuThemeColors, 
 		IOption
 	} from './_interfaces';
-import { map } from '../objectHelpers/navigate';
+import { map } from '../objectHelpers';
 
 /**----------------------------------------------------------------------------
  * @class ContextMenu

@@ -1,5 +1,4 @@
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
-import { createSVGElement } from "../htmlHelpers/createElement";
+import { createSVGElement, IElemDefinition } from "../createElements";
 
 
 /**----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { getNextKey, map } from "../../objectHelpers/navigate";
+import { getNextKey, map } from "../../objectHelpers";
 import { IDictionary } from "../../objectHelpers/_interfaces";
 
 

@@ -1,4 +1,4 @@
-import { IDictionary } from "../../objectHelpers";
+import { IDictionary } from "../../../objectHelpers";
 
 export interface ISimpleModel {
     name: string;

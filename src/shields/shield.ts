@@ -1,6 +1,6 @@
 import { _Drawable } from "../drawable/_drawable";
 import { IShieldElements } from "./_interfaces";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 
 

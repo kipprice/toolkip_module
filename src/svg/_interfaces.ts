@@ -1,5 +1,5 @@
-import { IDrawableElements } from '../drawable/_interfaces';
-import { IAttributes } from '../htmlHelpers/_interfaces';
+import { IDrawableElements } from '../drawable';
+import { IAttributes } from '../createElements';
 import { IPoint } from '../shared';
 
 export interface ISVGElems extends IDrawableElements {

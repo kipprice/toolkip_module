@@ -1,7 +1,7 @@
 import { IDictionary, IConstructor } from '../objectHelpers/_interfaces';
 import { rest } from '../primitiveHelpers/strings'; 
 import {IPartial} from '../structs/partial';
-import { map } from '../objectHelpers/navigate';
+import { map } from '../objectHelpers';
 import { 
     isNullOrUndefined, 
     isArray, 

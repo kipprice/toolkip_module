@@ -1,11 +1,7 @@
 import { _Stylable } from '../stylable/stylable';
-import { IElemDefinition } from '../htmlHelpers/_interfaces';
-import { createElement } from '../htmlHelpers/createElement';
-import { 
-		IDrawable, 
-		IDrawableElements
-	} from '.';
-import { StandardElement } from "../shared";
+import { createElement, IElemDefinition } from '../createElements';
+import { IDrawableElements } from '.';
+import { StandardElement, IDrawable } from "../shared";
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';
 
 /**----------------------------------------------------------------------------

@@ -1,6 +1,5 @@
 import { StyleLibrary } from './styleLibrary';
-import { FlatClassDefinition } from '../styleHelpers';
-import { IClassDefinition } from '../htmlHelpers';
+import { FlatClassDefinition, TypedClassDefinition } from '../styleHelpers';
 
 /**
  * createCssClass
@@ -15,22 +14,20 @@ export function createCssClass(selector: string, def: FlatClassDefinition): HTML
 
 /** adds a generic hidden class to the document */
 export function addHiddenClass(): void {
-    let cls: IClassDefinition;
-    cls = {
-      "display": "none"
+    const cls: TypedClassDefinition = {
+      display: "none"
     };
     createCssClass(".hidden", cls);
   }
   
   /** Adds the "unselectable" class definition to the document */
   export function addUnselectableClass(): HTMLStyleElement {
-    let cls: IClassDefinition;
-    cls = {
-      "user-select": "none",
-      "-moz-user-select": "none",
-      "-webkit-user-select": "none",
-      "khtml-user-select": "none",
-      "o-user-select": "none"
+    const cls: TypedClassDefinition = {
+      userSelect: "none",
+      mozUserSelect: "none",
+      webkitUserSelect: "none",
+      khtmlUserSelect: "none",
+      oUserSelect: "none"
     };
     return createCssClass(".unselectable", cls) as HTMLStyleElement;
   

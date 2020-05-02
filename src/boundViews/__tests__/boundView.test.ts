@@ -1,11 +1,10 @@
-import { _BoundView, IBoundElemDefinition } from ".."
+import { _BoundView } from ".."
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
-import { nextRender, IDictionary, IDrawableElements, IElemDefinition } from "../..";
-import { BoundView } from "../boundView";
-import { SimpleBoundView } from "./simpleview";
-import { ComplexBoundView } from "./complexView";
-import { ComposableView } from "./composableView";
-import { ISimpleModel, IComplexModel } from "./_interfaces";
+import { nextRender } from "../..";
+import { SimpleBoundView } from "./classes/simpleview";
+import { ComplexBoundView } from "./classes/complexView";
+import { ComposableView } from "./classes/composableView";
+import { ISimpleModel, IComplexModel } from "./classes/_interfaces";
 
 describe("bound view", () => {
     setupMatchMedia();

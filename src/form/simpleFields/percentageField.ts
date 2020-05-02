@@ -1,7 +1,7 @@
 import { NumberField } from "./numberField";
 import { FieldTypeEnum } from "../_interfaces";
 import { _Field } from "../_field";
-import { createElement } from "../../htmlHelpers/createElement";
+import { createElement } from "../../createElements";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 
 

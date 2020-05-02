@@ -1,6 +1,6 @@
 import { _Drawable } from "../drawable/_drawable";
 import { IDynamicOption, IDynamicOptionElems, IDynamicSelect } from "./_interfaces";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { nextRender } from "../async";
 import { transition } from "../styleHelpers/transition";

@@ -1,5 +1,5 @@
 import { IDictionary } from "../objectHelpers/_interfaces";
-import { map } from "../objectHelpers/navigate";
+import { map } from "../objectHelpers/manipulate";
 import { nextRender, wait } from "../async";
 import { addClass, removeClass } from "./css";
 import { createStyleElement } from "./styleElement";

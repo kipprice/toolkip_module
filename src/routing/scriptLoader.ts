@@ -1,5 +1,5 @@
 import { format } from "../primitiveHelpers/strings";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 
 
 /**----------------------------------------------------------------------------

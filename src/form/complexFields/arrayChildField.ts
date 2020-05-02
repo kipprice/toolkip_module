@@ -1,7 +1,7 @@
 import { FieldTypeEnum, IFields } from "../_interfaces";
 import { _CollapsibleField } from "./_collapsibleField";
 import { _Field } from "../_field";
-import { createElement, createSimpleElement } from "../../htmlHelpers/createElement";
+import { createElement, createSimpleElement } from "../../createElements";
 import { SectionField } from "./sectionField";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { IArrayChildTemplate, IArrayChildHTMLElements, DirectionType, IArrayField } from "./_interfaces";

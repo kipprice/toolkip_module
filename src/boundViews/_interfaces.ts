@@ -1,10 +1,9 @@
 import { StandardElement } from '../shared';
-import { IElemDefinition, IKeyedElems } from '../htmlHelpers/_interfaces';
+import { IElemDefinition } from '../createElements';
 import { _BoundView, _UpdateableView } from '.';
 import { _Drawable } from '../drawable/_drawable';
 import { IConstructor } from '../objectHelpers';
 import { IDrawableElements } from '../drawable';
-import { createElement } from '../htmlHelpers';
 
 
 /** the types of properties that can be bound */

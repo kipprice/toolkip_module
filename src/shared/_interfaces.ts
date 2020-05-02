@@ -1,7 +1,20 @@
 export type StandardElement = HTMLElement | SVGElement;
 
 /**
- * @interface 	IPoint
+ * IDrawable
+ * ----------------------------------------------------------------------------
+ * The core pieecs that are required by our Drawable
+ */
+export interface IDrawable {
+    draw(parent?: DrawableElement): void;
+    erase(): void;
+    base: StandardElement;
+}
+
+export type DrawableElement = StandardElement | IDrawable;
+
+/**
+ * IPoint
  * ---------------------------------------------------------------------------
  * Defines a basic point in space
  */
@@ -10,3 +23,4 @@ export interface IPoint {
 	y: number;
 	z?: number;
 }
+

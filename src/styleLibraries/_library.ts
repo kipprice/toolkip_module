@@ -1,8 +1,6 @@
-import { Styles, createStyleElement } from "../styleHelpers";
+import { Styles, createStyleElement, combineStyles, stringifyStyles } from "../styleHelpers";
 import { IDictionary, isEmptyObject } from "../objectHelpers";
 import { removeElement } from "../htmlHelpers";
-import { combineStyles } from "../styleHelpers/combiner";
-import { stringifyStyles } from "../styleHelpers/stringifier";
 import { nextRender } from "../async";
 
 /**----------------------------------------------------------------------------

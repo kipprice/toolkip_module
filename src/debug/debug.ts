@@ -1,5 +1,5 @@
 import { IPoint } from '../shared';
-import { map } from '../objectHelpers/navigate';
+import { map } from '../objectHelpers';
 
 export var IS_DEBUG: boolean = false;
 
