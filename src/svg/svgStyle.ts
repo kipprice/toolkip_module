@@ -1,6 +1,6 @@
 import { getCssPropertyName, FlatClassDefinition } from '../styleHelpers';
 import { ISVGStyle } from "./_interfaces";
-import { map } from "../objectHelpers/navigate";
+import { map } from "../objectHelpers/manipulate";
 import { format } from "../primitiveHelpers/strings";
 
 

@@ -1,8 +1,8 @@
 import { _Drawable } from "../../drawable/_drawable";
 import { IUnitTestElems, VisualResults } from "./_interfaces";
-import { createElement } from "../../htmlHelpers/createElement";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { IVisualTestButton } from "../_interfaces";
+import { createElement } from "../../createElements";
 
 /**----------------------------------------------------------------------------
  * @class   HTMLTest

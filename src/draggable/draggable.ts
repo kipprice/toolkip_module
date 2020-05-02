@@ -1,10 +1,9 @@
 import { IStandardStyles } from './../styleHelpers/_interfaces';
 import { _Drawable } from "../drawable/_drawable";
-import { IElemDefinition } from "../htmlHelpers/_interfaces";
 import { StandardElement, IPoint } from "../shared";
 import { addClass, removeClass } from "../styleHelpers/css";
 import { moveElemRelativePosition } from "../htmlHelpers/generalHelpers";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 
 /**----------------------------------------------------------------------------
  * @class   GenericDraggable

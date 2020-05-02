@@ -3,12 +3,8 @@
 
 import { _Drawable } from "../drawable/_drawable";
 import { bind, BoundUpdateFunction, unbind } from "../binding";
-import { 
-    isVisible,
-    ICreateElementFunc,
-    createCustomElement
-} from "../htmlHelpers";
-import { isDrawable } from "../drawable/_typeguards";
+import { isVisible } from "../htmlHelpers";
+import { ICreateElementFunc, createCustomElement, isDrawable } from "../createElements";
 import { StandardElement, isStandardElement, isKeyof } from "../shared";
 import { IUpdateFunctions, 
     BindableElement, 

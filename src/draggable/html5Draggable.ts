@@ -1,6 +1,6 @@
 import { _GenericDraggable, _DraggableTarget } from "./draggable";
 import { addClass, removeClass } from "../styleHelpers/css";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 import { StandardElement } from "../shared";
 
 /**----------------------------------------------------------------------------

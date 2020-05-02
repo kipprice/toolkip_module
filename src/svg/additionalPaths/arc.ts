@@ -1,6 +1,6 @@
 import { _PathExtensionElement } from "./pathExtension";
 import { degreesToRadians } from "../../maths";
-import { IAttributes } from "../../htmlHelpers";
+import { IAttributes } from "../../createElements";
 import { IPathPoint, IArcPoint } from "../_interfaces";
 import { IPoint } from "../../shared";
 

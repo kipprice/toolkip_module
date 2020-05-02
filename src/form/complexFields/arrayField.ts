@@ -2,9 +2,9 @@ import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../_interfac
 import { _CollapsibleField } from "./_collapsibleField";
 import { _Field } from "../_field";
 import { isField } from "../helpers";
-import { map } from "../../objectHelpers/navigate";
+import { map } from "../../objectHelpers";
 import { isNullOrUndefined } from "../../shared";
-import { createElement } from "../../htmlHelpers/createElement";
+import { createElement } from "../../createElements";
 import { ArrayChildField } from "./arrayChildField";
 import { removeElement } from "../../htmlHelpers/generalHelpers";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from "../eventHandler";

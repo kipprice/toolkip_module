@@ -7,7 +7,7 @@ import { IPoint } from "../../shared";
 import { cloneObject } from "../../objectHelpers/cloning";
 import { PathElement } from "./pathElement";
 import { RectangleElement } from "./rectElement";
-import { IAttributes } from "../../htmlHelpers/_interfaces";
+import { IAttributes } from "../../createElements";
 import { CircleElement } from "./circleElement";
 import { 
 	ArcElement, 

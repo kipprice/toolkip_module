@@ -1,6 +1,6 @@
 import { IIdentifiable, Identifier } from "../identifiable/_interfaces";
 import { IDictionary } from "../objectHelpers/_interfaces";
-import { map } from "../objectHelpers/navigate";
+import { map } from "../objectHelpers";
 
 
 /**----------------------------------------------------------------------------

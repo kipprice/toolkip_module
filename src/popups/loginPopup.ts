@@ -1,6 +1,6 @@
 import { Popup } from "./popup";
 import { LoginPopupElements } from "./_interfaces";
-import { ILabeledElement, createLabeledElement } from "../htmlHelpers/createSpecificElements";
+import { ILabeledElement, createLabeledElement } from "../createElements";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 
 

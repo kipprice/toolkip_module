@@ -2,7 +2,7 @@ import { _Form } from "./_form";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
 import { StandardElement } from "../../shared";
 import { addClass, removeClass } from "../../styleHelpers/css";
-import { createElement } from "../../htmlHelpers/createElement";
+import { createElement } from "../../createElements";
 import { wait } from "../../async";
 import { SectionField } from "../complexFields/sectionField";
 

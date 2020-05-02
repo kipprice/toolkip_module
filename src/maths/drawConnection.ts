@@ -1,9 +1,9 @@
 import { IPoint } from '../shared';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
-import { IClassDefinition } from '../htmlHelpers/_interfaces';
-import { createSimpleElement } from '../htmlHelpers/createElement';
+import { createSimpleElement, IClassDefinition } from '../createElements';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '../htmlHelpers/elementPositioning';
 import { StyleLibrary } from '../styleLibraries/styleLibrary';
+import { TypedClassDefinition } from '../styleHelpers';
 
 /**
  * arrangeRadially
@@ -84,19 +84,19 @@ export function drawLine(start: IPoint, end: IPoint, host?: HTMLElement, lbl?: s
 	let angle: number;
 	let distance: number;
 	let div: HTMLElement;
-	let cls: IClassDefinition;
 	let lblElem: HTMLElement;
 
 	distance = getDistance(start, end);
 	angle = getAngle(start, end);
 
 	// Create a CSS class that can be overridden for general options
-	cls = {
-		"position": "absolute",
-		"height": "1px",
-		"transform-origin": "0px 0px"
+	const cls = {
+		position: "absolute",
+		height: "1px",
+		transformOrigin: "0px 0px"
 	};
-	StyleLibrary.add("trigDrawing", { ".angledLine": cls });
+
+	StyleLibrary.add("trigDrawing", { ".angledLine" : cls });
 
 	// Create the div and give it minimal styling to show the line
 	div = createSimpleElement("", "angledLine");

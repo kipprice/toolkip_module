@@ -1,7 +1,6 @@
-import { _BoundView, IBoundElemDefinition } from ".."
+import { _BoundView } from ".."
 import { setupMatchMedia } from "../../mediaQueries/__tests__/matchMediaMock.test";
-import { nextRender, IDictionary, IDrawableElements, IElemDefinition } from "../..";
-import { BoundView } from "../boundView";
+import { nextRender } from "../..";
 import { SimpleBoundView } from "./simpleview";
 import { ComplexBoundView } from "./complexView";
 import { ComposableView } from "./composableView";

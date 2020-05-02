@@ -2,10 +2,8 @@ import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, 
 import { _Drawable } from "../drawable/_drawable";
 import { isNullOrUndefined } from "../shared";
 import { hasClass, addClass, removeClass } from "../styleHelpers/css";
-import { createTable } from "../htmlHelpers/tables";
+import { createTable, createElement, IAttributes } from "../createElements";
 import { equals } from "../comparable/comparable";
-import { IAttributes } from "../htmlHelpers/_interfaces";
-import { createElement } from "../htmlHelpers/createElement";
 import { Tooltip } from "../tooltip/tooltip";
 import { IConstructor } from "../objectHelpers/_interfaces";
 import { transition } from "../styleHelpers/transition";

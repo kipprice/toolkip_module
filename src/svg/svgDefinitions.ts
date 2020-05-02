@@ -1,6 +1,6 @@
 import { _Drawable } from "../drawable/_drawable";
 import { createSVGElem } from "./svgHelpers";
-import { IElemDefinition } from "../htmlHelpers";
+import { IElemDefinition } from "../createElements";
 
 
 export class SVGDefinitionsElement extends _Drawable {

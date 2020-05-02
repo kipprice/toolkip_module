@@ -3,7 +3,7 @@ import { Collection } from "../dataStructures/collection/collection";
 import { DynamicOption } from "./dynamicOption";
 import { IDynamicSelectElems, IDynamicOption } from "./_interfaces";
 import { CollectionTypeEnum, ICollectionElement } from "../dataStructures/collection/_interfaces";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 import { removeClass, addClass } from "../styleHelpers/css";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 import { transition } from "../styleHelpers/transition";

@@ -1,6 +1,6 @@
 import { IStandardStyles } from '../styleHelpers/_interfaces';
 import { IDictionary } from '../objectHelpers/_interfaces';
-import { isEmptyObject, getPrototype } from '../objectHelpers/navigate';
+import { isEmptyObject, getPrototype } from '../objectHelpers';
 import { _NamedClass } from '../namedClass/namedClass';
 import { flattenStyles } from '../styleHelpers/flattener';
 import { registerStandardMediaQueries } from '../mediaQueries/mediaQueries';

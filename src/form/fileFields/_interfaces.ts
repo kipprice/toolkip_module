@@ -1,5 +1,5 @@
 import { IFieldConfig } from "../_interfaces";
-import { IAttributes } from "../../htmlHelpers/_interfaces";
+import { IAttributes } from "../../createElements";
 
 
 export interface IFileSaveCallback {

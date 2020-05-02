@@ -1,7 +1,6 @@
 import { IStandardStyles } from './../../styleHelpers/_interfaces';
 import { _Field } from "../_field";
-import { IAttributes } from "../../htmlHelpers/_interfaces";
-import { createSimpleElement } from "../../htmlHelpers/createElement";
+import { createSimpleElement, IAttributes } from "../../createElements";
 import { createInputElement, createLabelForInput } from "../helpers";
 import { isNullOrUndefined } from "../../shared";
 import { IFormFilePathElemTemplate, IFileSaveCallback } from './_interfaces';

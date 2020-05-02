@@ -1,5 +1,5 @@
 import { _Drawable } from "../../drawable/_drawable";
-import { createElement } from "../../htmlHelpers/createElement";
+import { createElement } from "../../createElements";
 import { ErrorPopup } from "../../popups/errorPopup";
 
 //#region GOOGLE SPECIFIC VARIABLES

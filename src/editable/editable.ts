@@ -1,9 +1,5 @@
 import {_Drawable} from '../drawable/_drawable';
 import { 
-		ValidateFunction, 
-		UpdateFunction, 
-		FormatFunction, 
-		ParseContentFunction, 
 		IEditableElems, 
 		IEditableOptions, 
 		IValidateResult, 
@@ -11,7 +7,6 @@ import {
 	} from './_interfaces';
 import { addClass, removeClass } from '../styleHelpers/css';
 import { IStandardStyles } from '../styleHelpers/_interfaces';
-import { createElement } from '../htmlHelpers/createElement';
 import { select } from '../htmlHelpers/generalHelpers';
 import { _BoundView } from '../boundViews';
 import { wait } from '../async';
@@ -24,7 +19,7 @@ import { wait } from '../async';
  * @version	1.4.0
  * ---------------------------------------------------------------------------
  */
-export class Editable<T> extends _BoundView<T, "editableLightBG"> {
+export class Editable<T> extends _BoundView<T, "editableLightBG", IEditableElems> {
 
 	//.....................
 	//#region PROPERTIES
@@ -262,7 +257,7 @@ export class Editable<T> extends _BoundView<T, "editableLightBG"> {
 			cls: "editable" + (this._options.isMultiline ? " multiline" : ""),
 			children: [
 				{ key: "display", cls: "display unselectable", focusable: true },
-				{ key: "label", type: "input", cls: "input hidden", attr: { type: this._options.inputType } }
+				{ key: "label", type: "input", cls: "input hidden", attr: { type: this._options.inputType } },
 			]
 		});
 

@@ -11,7 +11,7 @@ import { StandardElement, isNullOrUndefined, isArray, isString } from "../shared
 import { addClass } from "../styleHelpers/css";
 import { createCssClass } from "../styleLibraries";
 import { bind } from "../binding/helper";
-import { map } from "../objectHelpers/navigate";
+import { map } from "../objectHelpers";
 import { IKeyValPair, IConstructor } from "../objectHelpers/_interfaces";
 import { isDrawable, isClassDefinition } from "./_typeGuards";
 import { warn } from "../errors";

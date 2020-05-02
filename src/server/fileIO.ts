@@ -1,4 +1,4 @@
-import { createElement } from '../htmlHelpers/createElement';
+import { createElement } from '../createElements';
 import { IFileDetails } from './_interfaces';
 
 export function loadFile(fileDetails: IFileDetails): Promise<string> {

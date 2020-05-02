@@ -3,9 +3,9 @@ import { _Field } from "../_field";
 import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
 import { FieldTypeEnum } from "../_interfaces";
 import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { createSimpleElement, createElement } from "../../htmlHelpers/createElement";
+import { createSimpleElement, createElement } from "../../createElements";
 import { addClass } from "../../styleHelpers/css";
-import { map } from "../../objectHelpers/navigate";
+import { map } from "../../objectHelpers";
 import { indexOf } from "../../primitiveHelpers/arrays";
 import { wait } from "../../async";
 

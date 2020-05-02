@@ -1,6 +1,6 @@
 import { _Shield } from "./shield";
 import { ILoadingShieldElements } from "./_interfaces";
-import { createElement } from "../htmlHelpers/createElement";
+import { createElement } from "../createElements";
 import { IStandardStyles } from "../styleHelpers/_interfaces";
 
 

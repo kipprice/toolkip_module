@@ -1,6 +1,5 @@
-import { IElemDefinition } from '../htmlHelpers/_interfaces';
 import { _Drawable } from './_drawable';
-import { createElement } from '../htmlHelpers';
+import { createElement, IElemDefinition } from '../createElements';
 import { IDrawableElements } from './_interfaces';
 
 /**----------------------------------------------------------------------------

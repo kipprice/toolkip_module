@@ -2,7 +2,7 @@ import { IObjectSelectTemplate, FieldTypeEnum, IObjectOption } from "../_interfa
 import { _Field } from "../_field";
 import { ISelectOptions } from "../../objectHelpers/_interfaces";
 import { createSelectElement } from "../helpers";
-import { map } from "../../objectHelpers/navigate";
+import { map } from "../../objectHelpers";
 
 
 /**----------------------------------------------------------------------------

@@ -1,11 +1,9 @@
 import { _Drawable } from "../drawable/_drawable";
-import { PopupElements, PopupColor, IPopupDefinition } from "./_interfaces";
-import { createSimpleElement, createElement } from "../htmlHelpers/createElement";
+import { PopupElements, IPopupDefinition } from "./_interfaces";
+import { createSimpleElement, createElement, isDrawable, IElemDefinition, IClassDefinition, ClassName } from "../createElements";
 import { addClass, removeClass } from "../styleHelpers/css";
-import { IClasses, IElemDefinition } from "../htmlHelpers/_interfaces";
 import { StandardElement, isString } from '../shared';
-import { isDrawable } from "../drawable/_typeguards";
-import { IStandardStyles } from "../styleHelpers/_interfaces";
+import { IStandardStyles } from "../styleHelpers";
 
 
 /**----------------------------------------------------------------------------
@@ -224,7 +222,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * @param	cls		Class of the element to be created
 	 * @param	content	What content the element should contain
 	 */
-	public addContent(id?: string, cls?: string | IClasses, content?: string): void;
+	public addContent(id?: string, cls?: ClassName | IClassDefinition, content?: string): void;
 
 	/**
 	 * addContent
@@ -244,7 +242,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * @param	cls
 	 * @param	content
 	 */
-	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition), cls?: string | IClasses, content?: string): void {
+	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition), cls?: ClassName | IClassDefinition, content?: string): void {
 		let elem: StandardElement;
 
 		// Create an HTMLElement if one wasn't passed in

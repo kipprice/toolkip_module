@@ -1,6 +1,6 @@
 import { IBasicRect } from "../maths/_interfaces";
 import { combineObjects } from "./combine";
-import { IPoint } from "@kipprice/toolkip-shared-types";
+import { IPoint } from "../shared";
 
 
 export function cloneRect(rect: IBasicRect): IBasicRect {
