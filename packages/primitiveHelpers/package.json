@@ -1,0 +1,15 @@
+{
+    "name": "@kipprice/toolkip-primitive-helpers",
+    "version": "1.0.0",
+    "description": "helper functions to deal with bulid in Javascript types",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "src/primitiveHelpers/index.ts",
+    "module": "src/primitiveHelpers/index.ts",
+    "types": "typings/primitiveHelpers/index",
+    
+    "dependencies": {
+        "@kipprice/toolkip-shared-types": "^1.0.0"
+    }
+}

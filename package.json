@@ -9,18 +9,28 @@
     "module": "src/index.ts",
     "types": "typings/index",
     "scripts": {
-        "build": "npm run build:tsc && npm run build:webpack",
+        "build": "yarn build:tsc && yarn build:webpack",
         "build:webpack": "webpack",
         "build:tsc": "tsc -p tsconfig.json --emitDeclarationOnly",
-        "watch": "npm run watch:webpack && npm run watch:tsc",
+        "watch": "yarn watch:webpack && yarn watch:tsc",
         "watch:webpack": "webpack -w",
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
-        "test": "npx jest -- -t .test.ts"
+        "test": "jest -- -t .test.ts",
+        "bootstrap": "lerna bootstrap",
+        "publish": "lerna publish"
     },
+
+    "dependencies": {
+        "@kipprice/toolkip-shared-types": "^1.0.0",
+        "@kipprice/toolkip-async": "^1.0.0",
+        "@kipprice/toolkip-primitive-helpers": "^1.0.0"
+    },
+
     "devDependencies": {
         "@types/jest": "^24.9.0",
         "jest": "^25.1.0",
         "jest-cli": "^24.9.0",
+        "lerna": "^3.20.2",
         "terser-webpack-plugin": "^2.3.4",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
