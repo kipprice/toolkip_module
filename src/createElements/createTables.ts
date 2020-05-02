@@ -1,8 +1,8 @@
 import { createElement } from "./createElement";
 
-// CreateTable
-//-------------------------------------------------------------------------------------
 /**
+ * createTable
+ *-------------------------------------------------------------------------------------
  * Creates a table with a specified set of cell elements
  * @param {string} tableID - The unique identifier to use for this table
  * @param {string} [tableClass] - The CSS class to use for the table
@@ -16,7 +16,6 @@ import { createElement } from "./createElement";
  *
  * */
 export function createTable(tableID?: string, tableClass?: string, elements?: any[], rowNum?: number, colNum?: number): HTMLTableElement {
-  ;
 
   let tbl: HTMLTableElement;
   let row: HTMLTableRowElement;
@@ -56,6 +55,8 @@ export function createTable(tableID?: string, tableClass?: string, elements?: an
 }
 
 /**
+ * processCellContents
+ * ----------------------------------------------------------------------------
  * Processes data that can be used to populate a table cell
  * @param  {any}                  data The data to populate the cell with
  * @param  {HTMLTableCellElement} cell The cell to populate
@@ -100,6 +101,8 @@ export function processCellContents(data: any, cell: HTMLTableCellElement): HTML
 };
 
 /**
+ * addRow
+ * ----------------------------------------------------------------------------
  * Adds a row to an HTML table element
  * @param  {HTMLTableElement} table      The table element to add to
  * @param  {any[]}            [elements] Any elements that should be inccluded as cells in this row

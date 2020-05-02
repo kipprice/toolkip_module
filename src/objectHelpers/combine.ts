@@ -1,4 +1,4 @@
-import { map } from "./navigate";
+import { map } from "./manipulate";
 import { IDictionary } from './_interfaces';
 import { isNullOrUndefined } from "../shared";
 

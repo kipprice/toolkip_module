@@ -101,7 +101,8 @@ describe('styleHelpers --> placeholders', () => {
         let inputWithPlaceholder = "has <placeholder>!";
         let inputWithoutPlaceholder = "has no placeholder";
 
-        expect(findContainedPlaceholder(inputWithPlaceholder).name).toEqual("placeholder");
+        const foundPlaceholder = findContainedPlaceholder(inputWithPlaceholder);
+        expect(foundPlaceholder.name).toEqual("placeholder");
         expect(findContainedPlaceholder(inputWithoutPlaceholder)).toBeFalsy();
     })
 

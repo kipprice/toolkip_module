@@ -1,12 +1,9 @@
 import { trim } from '../primitiveHelpers/strings';
-import { DrawableElement } from '../drawable/_interfaces';
-import { isDrawable } from '../drawable/_typeguards';
 import { _Drawable } from '../drawable/_drawable';
-import { IClassDefinition } from '../htmlHelpers/_interfaces';
 import { IKeyValPair } from '../objectHelpers/_interfaces';
-import { FlatClassDefinition } from './_interfaces';
-import { StyleLibrary } from '../styleLibraries/styleLibrary';
 import { StandardElement } from "../shared";
+import { DrawableElement, isDrawable } from '../createElements';
+import { TypedClassDefinition } from './_interfaces';
 
 /**
  * addClass
@@ -248,7 +245,7 @@ export function getProperty(cls, item) {
  * @param  {boolean}     [noAppend] True if we shouldn't actually add the class to the documment yet
  * @return {HTMLElement}            The CSS style tag that was created
  */
-function _old_CreateClass(selector: string, attr: IClassDefinition | IKeyValPair<string>[], noAppend?: boolean): HTMLStyleElement {
+function _old_CreateClass(selector: string, attr: TypedClassDefinition | IKeyValPair<string>[], noAppend?: boolean): HTMLStyleElement {
   //TODO: verify this can be removed entirely
   let cls: HTMLElement;
   let a: string;

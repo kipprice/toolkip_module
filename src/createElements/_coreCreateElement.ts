@@ -1,117 +1,38 @@
-import { IClasses, 
-        IAttributes, 
-        IChild, 
-        IElemDefinition, 
-        IKeyedElems, 
-        ICreateElementFunc, 
-        IClassDefinition, 
-        IAttribute 
-    } from ".";
-import { StandardElement, isNullOrUndefined } from "../shared";
-import { _Drawable } from "../drawable/_drawable";
+import { 
+    IElemDefinition, 
+    IClassDefinition,
+    IKeyedElems,
+    ICreateElementFunc, 
+    IAttribute,
+    IDrawable,
+    ClassName
+ } from "./_interfaces";
+import { StandardElement, isNullOrUndefined, isArray, isString } from "../shared";
 import { addClass } from "../styleHelpers/css";
-import { createCssClass } from "../styleHelpers";
+import { createCssClass } from "../styleLibraries";
 import { bind } from "../binding/helper";
-import { isDrawable } from "../drawable/_typeguards";
 import { map } from "../objectHelpers/navigate";
 import { IKeyValPair, IConstructor } from "../objectHelpers/_interfaces";
+import { isDrawable, isClassDefinition } from "./_typeGuards";
+import { warn } from "../errors";
+import { TypedClassDefinition, flattenStyles, FlatClassDefinition } from "../styleHelpers";
+
 
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
-
-/**
- * createSimpleElement
- * ----------------------------------------------------------------------------
- * Creates a div element with the provided id, class, content, and attributes.
- *
- * @param {string} id - The ID to assign the element {optional}
- * @param {string} cls - The class to assign the element {optional}
- * @param {string} content - What to include as the contents of the div {optional}
- * @param {arr} attr - An array of key-value pairs that sets all other attributes for the element
- *
- * @return {HTMLElement} The created element, with all specified parameters included.
- * 
- */
-export function createSimpleElement(
-    id?: string, 
-    cls?: string | IClasses, 
-    content?: string, 
-    attr?: IAttributes, 
-    children?: IChild[], 
-    parent?: HTMLElement
-) {
-    let obj: IElemDefinition;
-
-    obj = {};
-    obj.id = id;              // Set the element's ID
-    obj.type = "div";         // Set the type of element to create
-    obj.content = content;    // Set what the content of the element should be
-    obj.cls = cls;            // Set the appropriate CSS class for the element
-    obj.attr = attr;          // Set a list of attributes for the element
-    obj.children = children;  // Attach children to to the element
-    obj.parent = parent;      // Attach the created element to the appropriate parent
-
-    // Use our standard function for creating elements
-    return createElement(obj);
-};
-
-/**
- * createElement
- * ---------------------------------------------------------------------------
- * Creates an HTML element with the attributes that are passed in through the
- * object.
- *
- * @param   obj             The object to base the element off of
- * @param   [keyedElems]    If provided, the elements that were created with a key
- * 
- * @returns The HTML element with all attributes specified by the object
- */
-export function createElement<T extends IKeyedElems>(obj: IElemDefinition<T>, keyedElems?: T): HTMLElement {
-    if (!obj) { return; }
-    return _createElementCore(obj, keyedElems) as HTMLElement;
-}
-
-/**
- * createCustomElement
- * ----------------------------------------------------------------------------
- * Creates an HTML element with the specified attributes, but allows for 
- * additional processing on the element.
- * 
- * @param obj           The object to base the element off of
- * @param keyedElems    If provided, the elements that were created via a key
- * @param recurseVia    The custom function we should recurse through
- * 
- * @returns The created element
- */
-export function createCustomElement<T extends IKeyedElems, I extends IElemDefinition<T>>(obj: I, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): HTMLElement {
-    if (!obj) { return; }
-    return _createElementCore(obj, keyedElems, recurseVia) as HTMLElement;
-}
-
-/**
- * createSVGElement
- * ---------------------------------------------------------------------------
- * create a SVG element specifically
- */
-export function createSVGElement<T extends IKeyedElems>(obj: IElemDefinition<T>, keyedElems?: T): SVGElement {
-    if (!obj) { return; }
-    if (!obj.namespace) { obj.namespace = "http://www.w3.org/2000/svg"; }
-    return _createElementCore(obj, keyedElems) as SVGElement;
-}
-
 
 //...................................................
 //#region INTERNAL FUNCTIONS FOR CREATING ELEMENTS
 
 /**
- * _createElementCore
+ * _coreCreateElement
  * ---------------------------------------------------------------------------
  * create a DOM element with the specified details
  */
-function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefinition<T>, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): StandardElement {
+export function _coreCreateElement<T extends IKeyedElems = IKeyedElems>(obj: IElemDefinition<T>, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): StandardElement {
     
     let elem: StandardElement;
-    let drawable: _Drawable;
+    let drawable: IDrawable;
 
     if (obj.drawable) {
         drawable = _createDrawable(obj.drawable);
@@ -121,7 +42,7 @@ function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefin
     }
 
     // make sure we can recurse effectively
-    if (!recurseVia) { recurseVia = _createElementCore; }
+    if (!recurseVia) { recurseVia = _coreCreateElement; }
 
     // set attributes of the element
     _setElemIdentfiers(elem, obj, keyedElems, drawable);
@@ -142,14 +63,14 @@ function _createElementCore<T extends IKeyedElems = IKeyedElems>(obj: IElemDefin
     return elem;
 }
 
-function _createDrawable(ctor: IConstructor<_Drawable> | (() => _Drawable)): _Drawable {
-    let child: _Drawable;
+function _createDrawable(ctor: IConstructor<IDrawable> | (() => IDrawable)): IDrawable {
+    let child: IDrawable;
     try {
-        child = (ctor as (() => _Drawable))();
+        child = (ctor as (() => IDrawable))();
     
     // if it fails, fall back to using it as a constructor
     } catch(e) {
-        child = new (ctor as IConstructor<_Drawable>)();
+        child = new (ctor as IConstructor<IDrawable>)();
     }
     return child;
 }
@@ -177,7 +98,7 @@ function _createStandardElement<T extends IKeyedElems>(obj: IElemDefinition<T>):
  * ---------------------------------------------------------------------------
  * assign an ID to this element, and add it to the keyed array if appropriate
  */
-function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: IKeyedElems, drawable?: _Drawable): void {
+function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: IKeyedElems, drawable?: IDrawable): void {
     // set the id on the newly created object
     if (obj.id) { elem.setAttribute("id", obj.id); }
 
@@ -195,20 +116,31 @@ function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: I
  * exist)
  */
 function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
-    if (!obj.cls) { return; }
+    const cls = obj.cls;
+    if (!cls) { return; }
+    
+    if (isClassDefinition(cls)) {
 
-    // Check that the class is a string before setting it
-    if (typeof obj.cls === typeof "string") {
-        addClass(elem, obj.cls as string);
-
-    // If it's an object, we need to create the class(es) first
-    } else if (typeof obj.cls === "object") {
-        map(obj.cls as IClasses, (value: IClassDefinition, selector: string) => {
+        // create the styles generally on the page
+        const flattenedStyles = flattenStyles(cls.styles);
+        map(flattenedStyles, (value: FlatClassDefinition, selector: string) => {
             createCssClass(selector, value);
-            addClass(elem, selector);
-        });
+        })
+
+        _setElemClassName(elem, cls.name);
+
+    } else {
+        _setElemClassName(elem, cls);
     }
 
+}
+
+function _setElemClassName(elem: StandardElement, name: ClassName): void {
+    if (isString(name)) {
+        addClass(elem, name);
+    } else {
+        addClass(elem, name.join(" "));
+    }
 }
 
 //...................................................

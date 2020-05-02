@@ -109,7 +109,7 @@ export function isFunction(test: any): test is Function {
   * @param   test  The data to check
   * @returns True (with type safety) if the data is an array
   */
-export function isArray(test: any): test is Array<any> {
+export function isArray<T>(test: any): test is Array<T> {
   return (test instanceof Array);
 }
 

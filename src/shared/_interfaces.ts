@@ -1,7 +1,7 @@
 export type StandardElement = HTMLElement | SVGElement;
 
 /**
- * @interface 	IPoint
+ * IPoint
  * ---------------------------------------------------------------------------
  * Defines a basic point in space
  */
