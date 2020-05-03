@@ -1,108 +1,80 @@
-import { rest } from '@kipprice/toolkip-primitive-helpers';
-import { _Tree } from './tree';
-import { IDictionary } from '@kipprice/toolkip-object-helpers';
-
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const toolkip_primitive_helpers_1 = require("@kipprice/toolkip-primitive-helpers");
+const tree_1 = require("./tree");
 /**----------------------------------------------------------------------------
  * @class	Trie
  * ----------------------------------------------------------------------------
- * Special form of tree that is really good at keeping track of words and 
+ * Special form of tree that is really good at keeping track of words and
  * prefixes
  * @author	Kip Price
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class Trie extends _Tree<string> {
-
-    //.....................
-    //#region PROPERTIES
-    
-    protected _terminates: boolean;
-
-    protected _subTrees: IDictionary<Trie>;
-    
+class Trie extends tree_1._Tree {
     //#endregion
     //.....................
-
     //..........................................
     //#region HANDLE ADDING WORDS
-    
-    public add(word: string): void {
+    add(word) {
         if (word.length === 0) {
             this._handleTerminatingWord();
-        } else {
+        }
+        else {
             this._handleNonTerminatingWord(word);
         }
     }
-
-    protected _handleTerminatingWord(): void {
+    _handleTerminatingWord() {
         this._terminates = true;
     }
-
-    protected _handleNonTerminatingWord(word: string): void {
+    _handleNonTerminatingWord(word) {
         let splitWord = this._splitWord(word);
-
         if (!this._subTrees[splitWord.firstChar]) {
             this._subTrees[splitWord.firstChar] = new Trie(splitWord.firstChar);
         }
-        
         this._subTrees[splitWord.firstChar].add(splitWord.restOfWord);
     }
-    
     //#endregion
     //..........................................
-
     //..........................................
     //#region REMOVE A WORD
-    
-    public remove (word: string): void {
+    remove(word) {
         if (word.length === 0) {
             this._terminates = false;
-        } else {
+        }
+        else {
             let splitWord = this._splitWord(word);
-            if (!this._subTrees[splitWord.firstChar]) { return; }
+            if (!this._subTrees[splitWord.firstChar]) {
+                return;
+            }
             this._subTrees[splitWord.firstChar].remove(splitWord.restOfWord);
         }
     }
-    
     //#endregion
     //..........................................
     //..........................................
     //#region HANDLE FINDING A WORD
-    
-    public exists(word: string): boolean {
-        if (word.length === 0) { return this._terminates; }
-
+    exists(word) {
+        if (word.length === 0) {
+            return this._terminates;
+        }
         let splitWord = this._splitWord(word);
-        if (!this._subTrees[splitWord.firstChar]) { return false; }
-        
+        if (!this._subTrees[splitWord.firstChar]) {
+            return false;
+        }
         return this._subTrees[splitWord.firstChar].exists(splitWord.restOfWord);
     }
-    
     //#endregion
     //..........................................
-
     //..........................................
     //#region HELPERS
-    
-    protected _splitWord(word: string): ISplitWord {
+    _splitWord(word) {
         return {
-            firstChar : word.charAt(0),
-            restOfWord: rest(word, 1)
-        }
+            firstChar: word.charAt(0),
+            restOfWord: toolkip_primitive_helpers_1.rest(word, 1)
+        };
     }
-    
-    //#endregion
-    //..........................................
 }
-
-//..........................................
-//#region TYPES AND INTERFACES
-
-interface ISplitWord {
-    firstChar: string;
-    restOfWord: string;
-}
-
+exports.Trie = Trie;
 //#endregion
 //..........................................

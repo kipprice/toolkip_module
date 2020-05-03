@@ -1,5 +1,5 @@
 import { LinkedNode } from './linkedNode';
-import { isEquatable } from '../../comparable/comparable';
+import { isEquatable } from '@kipprice/toolkip-comparable';
 
 
 /**---------------------------------------------------------------------------

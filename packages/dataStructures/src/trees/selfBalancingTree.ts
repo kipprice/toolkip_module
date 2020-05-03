@@ -1,5 +1,5 @@
 import { BinaryTree, ISubTrees, Comparable } from './binaryTree';
-import { IDictionary } from '../../objectHelpers/_interfaces';
+import { IDictionary } from '@kipprice/toolkip-object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	BalancedBinaryTree

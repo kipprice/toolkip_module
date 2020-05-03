@@ -1,13 +1,13 @@
-import { _NamedClass } from '../../namedClass/namedClass';
-import  { IEquatable, equals, IEqualityFunction } from '../../comparable/comparable';
-import { format } from '../../primitiveHelpers/strings';
+import { _NamedClass } from '@kipprice/toolkip-named-class';
+import  { IEquatable, equals, IEqualityFunction } from '@kipprice/toolkip-comparable';
+import { format } from '@kipprice/toolkip-primitive-helpers';
 import { IDictionaryKeys, 
 		CollectionTypeEnum, 
 		ICollectionElement, 
 		CollectionSortFunction, 
 		SortFunction 
 	} from './_interfaces';
-import { IMapFunction } from '../../objectHelpers/_interfaces';
+import { IMapFunction } from '@kipprice/toolkip-object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	Collection
