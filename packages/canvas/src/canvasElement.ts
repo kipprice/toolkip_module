@@ -1,11 +1,10 @@
-import { IDrawableElements } from '@kipprice/toolkip-drawable/_interfaces";
+import { IDrawableElements } from '@kipprice/toolkip-drawable';
 import { ElementType, ICanvasElementTransform, CanvasEventHandler, EventTypeEnum } from "./_interfaces";
 import { HTML5Canvas } from "./canvas";
 import { CanvasGroup } from "./canvasGroup";
 import { CanvasElementStyle } from "./canvasStyle";
-import { IBasicRect } from '@kipprice/toolkip-maths/_interfaces";
-import { doBasicRectsOverlap } from '@kipprice/toolkip-maths/overlap";
-import { IPoint } from '@kipprice/toolkip-shared";
+import { IBasicRect, doBasicRectsOverlap } from '@kipprice/toolkip-maths';
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 
 /**----------------------------------------------------------------------------

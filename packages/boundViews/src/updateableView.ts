@@ -1,4 +1,4 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
+import { _Drawable } from '@kipprice/toolkip-drawable';
 
 /**----------------------------------------------------------------------------
  * @class   _UpdateableView

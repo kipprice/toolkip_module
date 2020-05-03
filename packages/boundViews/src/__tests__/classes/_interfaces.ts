@@ -1,4 +1,4 @@
-import { IDictionary } from "../../../objectHelpers";
+import { IDictionary } from "@kipprice/toolkip-object-helpers";
 
 export interface ISimpleModel {
     name: string;

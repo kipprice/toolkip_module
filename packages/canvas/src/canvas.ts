@@ -1,12 +1,11 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
-import { IBasicRect } from '@kipprice/toolkip-maths/_interfaces";
+import { _Drawable } from '@kipprice/toolkip-drawable';
+import { IBasicRect, roundToPlace, normalizeValue } from '@kipprice/toolkip-maths';
 import { IHTML5CanvasOptions, IHTML5CanvasElems, IDimensions, EventTypeEnum } from "./_interfaces";
 import { CanvasGroup } from "./canvasGroup";
-import { reconcileOptions } from '@kipprice/toolkip-objectHelpers/combine";
-import { addClass } from '@kipprice/toolkip-styleHelpers/css";
+import { reconcileOptions } from '@kipprice/toolkip-object-helpers';
+import { addClass } from '@kipprice/toolkip-style-helpers';
 import { _CanvasElement } from "./canvasElement";
-import { normalizeValue, roundToPlace } from '@kipprice/toolkip-maths/maths";
-import { IPoint } from '@kipprice/toolkip-shared";
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 /**----------------------------------------------------------------------------
  * @class HTML5Canvas

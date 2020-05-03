@@ -1,6 +1,6 @@
-import { IIdentifiable, Identifier } from '@kipprice/toolkip-identifiable";
+import { IIdentifiable, Identifier } from '@kipprice/toolkip-identifiable';
 import { _BoundView } from "./_boundView";
-import { IDrawableElements } from '@kipprice/toolkip-drawable";
+import { IDrawableElements } from '@kipprice/toolkip-drawable';
 
 export abstract class _BoundIdentifiableView<
     VM extends IIdentifiable, 

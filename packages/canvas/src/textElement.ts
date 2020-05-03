@@ -1,7 +1,7 @@
 import { _CanvasElement } from "./canvasElement";
 import { ElementType, StyleChangeEnum } from "./_interfaces";
 import { HTML5Canvas } from "./canvas";
-import { IPoint } from '@kipprice/toolkip-shared";
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 
 /**----------------------------------------------------------------------------

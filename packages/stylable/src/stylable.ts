@@ -1,10 +1,11 @@
 import { IStandardStyles, flattenStyles, splitStyles, combineStyles } from '@kipprice/toolkip-style-helpers';
+import { registerStandardMediaQueries } from '@kipprice/toolkip-media-queries';
 import { IDictionary, isEmptyObject, getPrototype } from '@kipprice/toolkip-object-helpers';
 import { _NamedClass } from '@kipprice/toolkip-named-class';
 import { StyleLibrary, PlaceholderLibrary,  } from '@kipprice/toolkip-style-libraries';
 import { StandardElement } from '@kipprice/toolkip-shared-types';
 import { IStylableDependency } from '.';
-import {} from '@kipprice/toolkip-media-queries';
+
 /**----------------------------------------------------------------------------
  * @class Stylable
  * ----------------------------------------------------------------------------

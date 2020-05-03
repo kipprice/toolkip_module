@@ -1,8 +1,6 @@
-import { 
-    BindableElement, 
-    _UpdateableView, 
-    _BoundView 
-} from ".";
+import { _BoundView } from "./_boundView";
+import { _UpdateableView } from './updateableView';
+import { BindableElement } from './_interfaces'
 
 export function isUpdatableView<T = any>(elem: BindableElement<T>): elem is _UpdateableView<T> {
     if ((elem as any).update) { return true; }

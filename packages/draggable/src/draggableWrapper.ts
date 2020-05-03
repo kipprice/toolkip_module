@@ -1,5 +1,5 @@
 import { IDraggableOptions } from './_interfaces';
-import { StandardElement } from '@kipprice/toolkip-shared";
+import { StandardElement } from '@kipprice/toolkip-shared-types';
 import { ExistingHTML5Draggable } from "./existingDraggable";
 
 /**

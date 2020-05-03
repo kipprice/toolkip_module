@@ -2,24 +2,6 @@ import { _Stylable } from "..";
 import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
 import { StyleLibrary, PlaceholderLibrary } from "@kipprice/toolkip-style-libraries";
 
-// taken from this stack overflow post:
-// https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
-export function setupMatchMedia() {
-    Object.defineProperty(window, 'matchMedia', {
-        writable: true,
-        value: jest.fn().mockImplementation(query => ({
-            matches: false,
-            media: query,
-            onchange: null,
-            addListener: jest.fn(), // deprecated
-            removeListener: jest.fn(), // deprecated
-            addEventListener: jest.fn(),
-            removeEventListener: jest.fn(),
-            dispatchEvent: jest.fn(),
-        })),
-    });
-}
-
 class SampleStylable extends _Stylable<"color" | "width"> {
     //..................
     //#region STYLES
@@ -136,3 +118,21 @@ describe("stylable -> Stylable", () => {
         expect(StyleLibrary["_rawStyles"]).toHaveProperty("SiblingStylable");
     })
 })
+
+// taken from this stack overflow post:
+// https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
+export function setupMatchMedia() {
+    Object.defineProperty(window, 'matchMedia', {
+        writable: true,
+        value: jest.fn().mockImplementation(query => ({
+            matches: false,
+            media: query,
+            onchange: null,
+            addListener: jest.fn(), // deprecated
+            removeListener: jest.fn(), // deprecated
+            addEventListener: jest.fn(),
+            removeEventListener: jest.fn(),
+            dispatchEvent: jest.fn(),
+        })),
+    });
+}

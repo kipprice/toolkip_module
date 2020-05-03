@@ -11,6 +11,7 @@
     "include": [
         "./src"
     ],
+
     "exclude": [
         "node_modules", 
         "compiled_js", 
@@ -19,6 +20,7 @@
         "**/_(old)_*", 
         "modules", 
         "typescript/modules",
-        "dist"
+        "dist",
+        "typings"
     ]
 }

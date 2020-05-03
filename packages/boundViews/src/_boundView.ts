@@ -1,26 +1,14 @@
 //..........................................
 //#region IMPORTS
 
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
-import { bind, BoundUpdateFunction, unbind } from '@kipprice/toolkip-binding";
-import { isVisible } from '@kipprice/toolkip-htmlHelpers";
-import { ICreateElementFunc, createCustomElement } from '@kipprice/toolkip-createElements";
-import { StandardElement, isStandardElement, isKeyof, isDrawable } from '@kipprice/toolkip-shared";
-import { IUpdateFunctions, 
-    BindableElement, 
-    IViewUpdateFunc, 
-    IBoundElemDefinition,
-    _UpdateableView,
-    IViewBindingDetails,
-    BoundValue,
-    BoundProperty,
-    isBoundView,
-    isUpdatableView,
-    IBoundChildren,
-    IDrawableFactory
-} from ".";
-import { IConstructor, map } from '@kipprice/toolkip-objectHelpers";
-import { IDrawableElements } from '@kipprice/toolkip-drawable";
+import { _Drawable, IDrawableElements } from '@kipprice/toolkip-drawable';
+import { bind, BoundUpdateFunction, unbind } from '@kipprice/toolkip-binding';
+import { isVisible } from '@kipprice/toolkip-html-helpers';
+import { ICreateElementFunc, createCustomElement } from '@kipprice/toolkip-create-elements';
+import { StandardElement, isStandardElement, isKeyof, isDrawable } from '@kipprice/toolkip-shared-types';
+import { IConstructor, map } from '@kipprice/toolkip-object-helpers';
+import { IUpdateFunctions, IBoundChildren, IBoundElemDefinition, BindableElement, IViewBindingDetails, BoundValue, BoundProperty, IDrawableFactory, IViewUpdateFunc } from './_interfaces';
+import { isUpdatableView, isBoundView } from './_typeGuards';
 
 //#endregion
 //..........................................

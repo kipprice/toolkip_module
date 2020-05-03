@@ -1,9 +1,8 @@
 import { _CanvasElement } from "./canvasElement";
-import { IBasicRect } from '@kipprice/toolkip-maths/_interfaces";
+import { IBasicRect, getAngle, getDistance, getEndPoint } from '@kipprice/toolkip-maths';
 import { ElementType } from "./_interfaces";
-import { clonePointArray } from '@kipprice/toolkip-objectHelpers/cloning";
-import { getAngle, getDistance, getEndPoint } from '@kipprice/toolkip-maths/trig";
-import { IPoint } from '@kipprice/toolkip-shared";
+import { clonePointArray } from '@kipprice/toolkip-object-helpers';
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 
 export class PathElement extends _CanvasElement {

@@ -1,4 +1,4 @@
-import { IDrawableElements } from '@kipprice/toolkip-drawable/_interfaces";
+import { IDrawableElements } from '@kipprice/toolkip-drawable';
 
 /** Interface for the result of a validate function */
 export interface IValidateResult {

@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const toolkip_style_helpers_1 = require("@kipprice/toolkip-style-helpers");
+const toolkip_media_queries_1 = require("@kipprice/toolkip-media-queries");
 const toolkip_object_helpers_1 = require("@kipprice/toolkip-object-helpers");
 const toolkip_named_class_1 = require("@kipprice/toolkip-named-class");
-const toolkip_media_queries_1 = require("@kipprice/toolkip-media-queries");
 const toolkip_style_libraries_1 = require("@kipprice/toolkip-style-libraries");
 /**----------------------------------------------------------------------------
  * @class Stylable

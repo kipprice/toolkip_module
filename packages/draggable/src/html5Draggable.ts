@@ -1,7 +1,7 @@
 import { _GenericDraggable, _DraggableTarget } from "./draggable";
-import { addClass, removeClass } from '@kipprice/toolkip-styleHelpers/css";
-import { createElement } from '@kipprice/toolkip-createElements";
-import { StandardElement } from '@kipprice/toolkip-shared";
+import { addClass, removeClass } from '@kipprice/toolkip-style-helpers';
+import { createElement } from '@kipprice/toolkip-create-elements';
+import { StandardElement } from '@kipprice/toolkip-shared-types';
 
 /**----------------------------------------------------------------------------
  * @class   HTML5Draggable

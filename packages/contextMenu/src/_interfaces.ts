@@ -1,4 +1,4 @@
-import { IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces";
+import { IDictionary } from '@kipprice/toolkip-object-helpers';
 
 export interface IOptionCallback {
     (e: Event): void;

@@ -1,9 +1,9 @@
-import { StandardElement } from '@kipprice/toolkip-shared';
-import { IElemDefinition } from '@kipprice/toolkip-createElements';
-import { _BoundView, _UpdateableView } from '.';
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable';
-import { IConstructor } from '@kipprice/toolkip-objectHelpers';
-import { IDrawableElements } from '@kipprice/toolkip-drawable';
+import { StandardElement } from '@kipprice/toolkip-shared-types';
+import { IElemDefinition } from '@kipprice/toolkip-create-elements';
+import { _BoundView } from './_boundView';
+import { _UpdateableView } from './updateableView';
+import { _Drawable, IDrawableElements } from '@kipprice/toolkip-drawable';
+import { IConstructor } from '@kipprice/toolkip-object-helpers';
 
 
 /** the types of properties that can be bound */

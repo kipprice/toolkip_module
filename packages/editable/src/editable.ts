@@ -1,11 +1,11 @@
-import {_Drawable} from '@kipprice/toolkip-drawable/_drawable';
+import {_Drawable} from '@kipprice/toolkip-drawable';
 import { 
 		IEditableElems, 
 		IEditableOptions, 
 		IValidateResult, 
 		IEditableHandlers
 	} from './_interfaces';
-import { addClass, removeClass } from '@kipprice/toolkip-styleHelpers/css';
+import { addClass, removeClass } from '@kipprice/toolkip-style-helpers';
 import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces';
 import { select } from '@kipprice/toolkip-htmlHelpers/generalHelpers';
 import { _BoundView } from '@kipprice/toolkip-boundViews';

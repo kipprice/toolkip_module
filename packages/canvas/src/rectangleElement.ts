@@ -1,8 +1,8 @@
 import { _CanvasElement } from "./canvasElement";
 import { ElementType } from "./_interfaces";
-import { IBasicRect } from '@kipprice/toolkip-maths/_interfaces";
-import { cloneRect } from '@kipprice/toolkip-objectHelpers/cloning";
-import { IPoint } from '@kipprice/toolkip-shared";
+import { IBasicRect } from '@kipprice/toolkip-maths';
+import { cloneRect } from '@kipprice/toolkip-object-helpers';
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 
 /**----------------------------------------------------------------------------
