@@ -1,4 +1,4 @@
-import { _Model }  from '@kipprice/toolkip-model/_model';
+import { _Model }  from '@kipprice/toolkip-model';
 
 
 /**----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 import { IFlatStyles, TypedClassDefinition, SplitStyles, FlatClassDefinition, PlaceholderIndex, IPlaceholder } from "./_interfaces";
-import { IDictionary, map, setDictValue, cloneObject } from '@kipprice/toolkip-objectHelpers";
+import { IDictionary, map, setDictValue, cloneObject } from '@kipprice/toolkip-object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	StylePlaceholders

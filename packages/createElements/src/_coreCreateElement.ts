@@ -5,14 +5,12 @@ import {
     IAttribute,
     ClassName
  } from "./_interfaces";
-import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable } from '@kipprice/toolkip-shared";
-import { addClass } from '@kipprice/toolkip-styleHelpers/css";
-import { createCssClass } from '@kipprice/toolkip-styleLibraries";
-import { bind } from '@kipprice/toolkip-binding/helper";
-import { map } from '@kipprice/toolkip-objectHelpers";
-import { IKeyValPair, IConstructor } from '@kipprice/toolkip-objectHelpers/_interfaces";
+import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable } from '@kipprice/toolkip-shared-types';
+import { addClass, flattenStyles, FlatClassDefinition } from '@kipprice/toolkip-style-helpers';
+import { createCssClass } from '@kipprice/toolkip-style-libraries';
+import { bind } from '@kipprice/toolkip-binding';
+import { map, IKeyValPair, IConstructor  } from '@kipprice/toolkip-object-helpers';
 import { isClassDefinition } from "./_typeGuards";
-import { flattenStyles, FlatClassDefinition } from '@kipprice/toolkip-styleHelpers";
 
 
 //................................................

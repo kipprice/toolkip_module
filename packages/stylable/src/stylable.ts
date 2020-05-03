@@ -1,16 +1,10 @@
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces';
-import { IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces';
-import { isEmptyObject, getPrototype } from '@kipprice/toolkip-objectHelpers';
-import { _NamedClass } from '@kipprice/toolkip-namedClass/namedClass';
-import { flattenStyles } from '@kipprice/toolkip-styleHelpers/flattener';
-import { registerStandardMediaQueries } from '@kipprice/toolkip-mediaQueries/mediaQueries';
-import { splitStyles } from '@kipprice/toolkip-styleHelpers/placeholders";
-import { StyleLibrary } from '@kipprice/toolkip-styleLibraries/styleLibrary';
-import { PlaceholderLibrary } from '@kipprice/toolkip-styleLibraries/placeholderlibrary';
-import { combineStyles } from '@kipprice/toolkip-styleHelpers';
-import { StandardElement } from '@kipprice/toolkip-shared';
+import { IStandardStyles, flattenStyles, splitStyles, combineStyles } from '@kipprice/toolkip-style-helpers';
+import { IDictionary, isEmptyObject, getPrototype } from '@kipprice/toolkip-object-helpers';
+import { _NamedClass } from '@kipprice/toolkip-named-class';
+import { StyleLibrary, PlaceholderLibrary,  } from '@kipprice/toolkip-style-libraries';
+import { StandardElement } from '@kipprice/toolkip-shared-types';
 import { IStylableDependency } from '.';
-
+import {} from '@kipprice/toolkip-media-queries';
 /**----------------------------------------------------------------------------
  * @class Stylable
  * ----------------------------------------------------------------------------

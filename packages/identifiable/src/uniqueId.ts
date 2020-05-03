@@ -1,4 +1,4 @@
-import { IDictionary } from "..";
+import { IDictionary } from '@kipprice/toolkip-object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	IdentifierAssigner

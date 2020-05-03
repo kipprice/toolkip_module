@@ -1,6 +1,6 @@
-import { StandardElement } from '@kipprice/toolkip-shared";
+import { StandardElement } from '@kipprice/toolkip-shared-types';
 import { _Drawable } from ".";
-import { IKeyedElems } from '@kipprice/toolkip-createElements/_interfaces";
+import { IKeyedElems } from '@kipprice/toolkip-create-elements';
 
 /**
  * IDrawableElements

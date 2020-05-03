@@ -1,4 +1,4 @@
-import { StandardElement } from '@kipprice/toolkip-shared";
+import { StandardElement } from '@kipprice/toolkip-shared-types';
 
 export interface IPlaceholderReplaceOptions {
     placeholder: string;

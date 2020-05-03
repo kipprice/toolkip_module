@@ -1,5 +1,5 @@
 import { isIdentifiableModel, IIdentifiable } from "..";
-import { _Model } from "../../model";
+import { _Model } from "@kipprice/toolkip-model";
 
 describe("identfiable guards", () => {
     it("identfies an identifiable", () => {

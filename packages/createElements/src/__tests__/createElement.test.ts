@@ -1,6 +1,6 @@
 import { createElement } from "..";
-import { IDrawable } from "../../shared";
-import { StandardElement } from "../../shared";
+import { IDrawable } from "@kipprice/toolkip-shared-types";
+import { StandardElement } from "@kipprice/toolkip-shared-types";
 
 describe('basic element creation', () => {
     it('creates a basic div', () => {

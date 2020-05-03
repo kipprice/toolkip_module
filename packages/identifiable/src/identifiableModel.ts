@@ -1,6 +1,6 @@
-import { IPartial } from '@kipprice/toolkip-structs/partial';
+import { IPartial } from '@kipprice/toolkip-structs';
 import { IIdentifiable } from './_interfaces';
-import { _Serializable } from '@kipprice/toolkip-serializable/serializableModel';
+import { _Serializable } from '@kipprice/toolkip-serializable';
 import { generateUniqueId, registerUniqueId } from '.';
 
 

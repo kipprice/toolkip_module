@@ -1,6 +1,5 @@
-import { IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces";
-import { map } from '@kipprice/toolkip-objectHelpers/manipulate";
-import { nextRender, wait } from '@kipprice/toolkip-async";
+import { IDictionary, map } from '@kipprice/toolkip-object-helpers';
+import { nextRender, wait } from '@kipprice/toolkip-async';
 import { addClass, removeClass } from "./css";
 import { createStyleElement } from "./styleElement";
 import { stringifyStyle } from "./stringifier";

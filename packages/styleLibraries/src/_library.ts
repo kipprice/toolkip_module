@@ -1,7 +1,7 @@
-import { Styles, createStyleElement, combineStyles, stringifyStyles } from '@kipprice/toolkip-styleHelpers";
-import { IDictionary, isEmptyObject } from '@kipprice/toolkip-objectHelpers";
-import { removeElement } from '@kipprice/toolkip-htmlHelpers";
-import { nextRender } from '@kipprice/toolkip-async";
+import { Styles, createStyleElement, combineStyles, stringifyStyles } from '@kipprice/toolkip-style-helpers';
+import { IDictionary, isEmptyObject } from '@kipprice/toolkip-object-helpers';
+import { removeElement } from '@kipprice/toolkip-html-helpers';
+import { nextRender } from '@kipprice/toolkip-async';
 
 /**----------------------------------------------------------------------------
  * @class	Library

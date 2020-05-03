@@ -1,5 +1,5 @@
 import { IElemDefinition, IClassDefinition, ClassName } from "./_interfaces";
-import { isInterface, isString, isArray } from '@kipprice/toolkip-shared";
+import { isInterface, isString, isArray } from '@kipprice/toolkip-shared-types';
 
 /** 
  * isElemDefinition

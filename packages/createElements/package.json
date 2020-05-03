@@ -7,5 +7,14 @@
     "test": "jest",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "types": "typings/index"
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-shared-types": "^1.0.0",
+        "@kipprice/toolkip-style-helpers": "^1.0.0",
+        "@kipprice/toolkip-style-libraries": "^1.0.0",
+        "@kipprice/toolkip-binding": "^1.0.0",
+        "@kipprice/toolkip-object-helpers": "^1.0.0",
+        "@kipprice/toolkip-primitive-helpers": "^1.0.0"
+    }
 }

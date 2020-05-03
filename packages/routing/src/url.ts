@@ -1,4 +1,4 @@
-import { IKeyValPair } from '@kipprice/toolkip-objectHelpers/_interfaces";
+import { IKeyValPair } from '@kipprice/toolkip-object-helpers';
 
 
 /**

@@ -1,5 +1,5 @@
 import { TypedClassDefinition, IFontFaceDefinition, FlatStyles, FlatClassDefinition } from "./_interfaces";
-import { map } from '@kipprice/toolkip-objectHelpers";
+import { map } from '@kipprice/toolkip-object-helpers';
 import { findContainedPlaceholder } from "./placeholders";
 
 const MAX_LENGTH = 10000;

@@ -1,5 +1,5 @@
 import { HistoryNode } from "./historyNode";
-import { combineObjects } from '@kipprice/toolkip-objectHelpers/combine";
+import { combineObjects } from '@kipprice/toolkip-object-helpers';
 
 
 /**----------------------------------------------------------------------------

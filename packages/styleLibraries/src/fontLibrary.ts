@@ -1,6 +1,4 @@
 import { _Library } from "./_library";
-import { map, IDictionary } from '@kipprice/toolkip-objectHelpers";
-import { IFontFaceDefinition } from '@kipprice/toolkip-styleHelpers";
 
 /**----------------------------------------------------------------------------
  * @class	FontLibrary

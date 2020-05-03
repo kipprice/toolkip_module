@@ -1,5 +1,5 @@
 import { StyleLibrary } from './styleLibrary';
-import { FlatClassDefinition, TypedClassDefinition } from '@kipprice/toolkip-styleHelpers';
+import { FlatClassDefinition, TypedClassDefinition } from '@kipprice/toolkip-style-helpers';
 
 /**
  * createCssClass

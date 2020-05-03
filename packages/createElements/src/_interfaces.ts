@@ -1,7 +1,7 @@
-import { TypedClassDefinition, IStandardStyles } from '@kipprice/toolkip-styleHelpers";
-import { IKeyValPair, IDictionary, IConstructor } from '@kipprice/toolkip-objectHelpers";
-import { StandardElement, IDrawable, DrawableElement } from '@kipprice/toolkip-shared";
-import { BoundEvalFunction } from '@kipprice/toolkip-binding";
+import { TypedClassDefinition, IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { IKeyValPair, IDictionary, IConstructor } from '@kipprice/toolkip-object-helpers';
+import { StandardElement, IDrawable, DrawableElement } from '@kipprice/toolkip-shared-types';
+import { BoundEvalFunction } from '@kipprice/toolkip-binding';
 
 export type IAttribute = IKeyValPair<string> | string | number;
 export interface IAttributes {

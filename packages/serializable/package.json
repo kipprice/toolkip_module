@@ -7,5 +7,9 @@
     "test": "jest",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "types": "typings/index"
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-model": "^1.0.0"
+    }
 }

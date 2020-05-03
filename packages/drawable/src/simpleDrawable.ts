@@ -1,5 +1,5 @@
 import { _Drawable } from './_drawable';
-import { createElement, IElemDefinition } from '@kipprice/toolkip-createElements';
+import { IElemDefinition } from '@kipprice/toolkip-create-elements';
 import { IDrawableElements } from './_interfaces';
 
 /**----------------------------------------------------------------------------

@@ -1,3 +1,5 @@
+import { IDrawable } from "@kipprice/toolkip-shared-types";
+
 /**
  * INavigationData
  * 
@@ -43,4 +45,10 @@ export enum INavTransitionType {
 	SLIDE_RIGHT = 3,
 	SLIDE_UP = 4,
 	SLIDE_DOWN = 5
+}
+
+export interface INavigable extends IDrawable {
+    canNavigateAway(isCancel?: boolean): boolean;
+    onNavigateAway(isCancel?: boolean): any;
+    update(...params: any[]): void;
 }

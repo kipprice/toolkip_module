@@ -1,19 +1,17 @@
-import { IDictionary, IConstructor } from '@kipprice/toolkip-objectHelpers/_interfaces';
-import { rest } from '@kipprice/toolkip-primitiveHelpers/strings'; 
-import {IPartial} from '@kipprice/toolkip-structs/partial';
-import { map } from '@kipprice/toolkip-objectHelpers';
+import { IDictionary, IConstructor, map } from '@kipprice/toolkip-object-helpers';
+import { rest } from '@kipprice/toolkip-primitive-helpers'; 
+import { IPartial, isUpdatable } from '@kipprice/toolkip-structs';
 import { 
     isNullOrUndefined, 
     isArray, 
     isObject 
-} from '@kipprice/toolkip-shared';
+} from '@kipprice/toolkip-shared-types';
 import { 
     IPropertyChangeListener, 
     IModel, 
     IPropertyChangeListeners, 
     IModelChangeListener 
 } from './_interfaces';
-import { isUpdatable } from '@kipprice/toolkip-structs/_typeguards';
 
 
 /**----------------------------------------------------------------------------

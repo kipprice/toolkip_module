@@ -1,4 +1,4 @@
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers";
+import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
 import { _Stylable } from ".";
 
 

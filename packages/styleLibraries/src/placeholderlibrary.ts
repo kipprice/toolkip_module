@@ -1,9 +1,9 @@
 import { _Library } from "./_library";
-import { map, combineObjects, setDictValue, isEmptyObject, IDictionary, getKeys } from '@kipprice/toolkip-objectHelpers";
-import { IFlatStyles, indexByPlaceholder, PlaceholderIndex, mapIndexToStyle, replacePlaceholders } from '@kipprice/toolkip-styleHelpers";
+import { map, combineObjects, setDictValue, isEmptyObject, IDictionary, getKeys } from '@kipprice/toolkip-object-helpers';
+import { IFlatStyles, indexByPlaceholder, PlaceholderIndex, mapIndexToStyle, replacePlaceholders } from '@kipprice/toolkip-style-helpers';
 import { IPlaceholderReplaceOptions } from "./_interfaces";
-import { StandardElement } from '@kipprice/toolkip-shared";
-import { doesElementMatchSelector } from '@kipprice/toolkip-htmlHelpers";
+import { StandardElement } from '@kipprice/toolkip-shared-types';
+import { doesElementMatchSelector } from '@kipprice/toolkip-html-helpers';
 
 // TODO: clean up this class once there is enough test coverage to do so safely
 

@@ -1,5 +1,5 @@
 import { IStandardStyles, ICustomFonts } from ".."
-import { combineStyles } from '@kipprice/toolkip-combiner"
+import { combineStyles } from '..';
 
 describe("styleHelpers --> combiner.ts", () => {
     it("combines standard styles appropriately", () => {

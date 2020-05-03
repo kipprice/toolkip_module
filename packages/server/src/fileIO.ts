@@ -1,4 +1,4 @@
-import { createElement } from '@kipprice/toolkip-createElements';
+import { createElement } from '@kipprice/toolkip-create-elements';
 import { IFileDetails } from './_interfaces';
 
 export function loadFile(fileDetails: IFileDetails): Promise<string> {

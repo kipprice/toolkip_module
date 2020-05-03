@@ -7,5 +7,12 @@
     "test": "jest",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "types": "typings/index"
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-create-elements": "^1.0.0",
+        "@kipprice/toolkip-shared-types": "^1.0.0",
+        "@kipprice/toolkip-stylable": "^1.0.0",
+        "@kipprice/toolkip-media-queries": "^1.0.0"
+    }
 }

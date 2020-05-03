@@ -1,8 +1,6 @@
-import { trim } from '@kipprice/toolkip-primitiveHelpers/strings';
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable';
-import { IKeyValPair } from '@kipprice/toolkip-objectHelpers/_interfaces';
-import { StandardElement } from '@kipprice/toolkip-shared";
-import { DrawableElement, isDrawable } from '@kipprice/toolkip-shared';
+import { trim } from '@kipprice/toolkip-primitive-helpers';
+import { IKeyValPair } from '@kipprice/toolkip-object-helpers';
+import { StandardElement, DrawableElement, isDrawable, IDrawable } from '@kipprice/toolkip-shared-types';
 import { TypedClassDefinition } from './_interfaces';
 
 /**
@@ -116,7 +114,7 @@ export function addOrRemoveClass(elem: DrawableElement, clsName: string, shouldA
  * 
  * @returns True if the element has the CSS class applied; false otherwise
  */
-export function hasClass(elem: HTMLElement | _Drawable, cls: string): boolean {
+export function hasClass(elem: HTMLElement | IDrawable, cls: string): boolean {
   let e: DrawableElement;
   let cur_cls: string;
 
@@ -290,15 +288,15 @@ function _old_CreateClass(selector: string, attr: TypedClassDefinition | IKeyVal
  *
  * @return {string} Either the particular value for the passed in attribute, or the whole style array.
  */
-export function getComputedStyle(elem: _Drawable | HTMLElement, attr: string): CSSStyleDeclaration | string {
+export function getComputedStyle(elem: IDrawable | HTMLElement, attr: string): CSSStyleDeclaration | string {
   let style: CSSStyleDeclaration;
   let e: Element;
 
   // Handle Drawables being passed in
-  if ((<_Drawable>elem).draw !== undefined) {
-    e = (<_Drawable>elem).base;
+  if (isDrawable(elem)) {
+    e = elem.base;
   } else {
-    e = <HTMLElement>elem;
+    e = elem;
   }
 
   // Use the library function on the window first

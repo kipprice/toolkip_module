@@ -1,6 +1,6 @@
 import { MOBILE_MAX_DIM } from "./_constants";
-import { StandardElement } from '@kipprice/toolkip-shared";
-import { addClass, removeClass } from '@kipprice/toolkip-styleHelpers";
+import { StandardElement } from '@kipprice/toolkip-shared-types';
+import { addClass, removeClass } from '@kipprice/toolkip-style-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	MediaQueryListener

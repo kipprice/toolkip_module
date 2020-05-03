@@ -1,4 +1,4 @@
-import { IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces';
+import { IDictionary } from '@kipprice/toolkip-object-helpers';
 
 /**
  * Keep track of a style definition with SCSS nesting capabilities

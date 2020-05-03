@@ -1,7 +1,7 @@
-import { IFlatStyles, stringifyStyles } from "../../styleHelpers";
-import { StyleLibrary } from '@kipprice/toolkip-styleLibrary";
-import { stripSpaces } from "../../primitiveHelpers/strings";
-import { nextRender } from "../../async";
+import { IFlatStyles, stringifyStyles } from "@kipprice/toolkip-style-helpers";
+import { StyleLibrary } from '..';
+import { stripSpaces } from "@kipprice/toolkip-primitive-helpers";
+import { nextRender } from "@kipprice/toolkip-async";
 
 const stylesA: IFlatStyles = {
     ".one": {
