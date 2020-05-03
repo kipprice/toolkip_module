@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-dynamic-select",
+    "version": "1.0.0",
+    "description": "dynamic select component",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}

@@ -1,0 +1,15 @@
+{
+    "name": "@kipprice/toolkip-sockets",
+    "version": "1.0.0",
+    "description": "web sockets utility functions",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-object-helpers": "^1.0.0"
+    }
+}

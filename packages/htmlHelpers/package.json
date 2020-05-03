@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-html-helpers",
+    "version": "1.0.0",
+    "description": "html utility functions",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}

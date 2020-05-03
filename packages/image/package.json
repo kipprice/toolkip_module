@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-image",
+    "version": "1.0.0",
+    "description": "image component",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}

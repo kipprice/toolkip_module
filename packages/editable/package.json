@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-editable",
+    "version": "1.0.0",
+    "description": "editable component",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}

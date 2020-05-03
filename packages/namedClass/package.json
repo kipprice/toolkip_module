@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-named-class",
+    "version": "1.0.0",
+    "description": "keeps track of chain of classes",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}

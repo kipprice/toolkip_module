@@ -1,0 +1,11 @@
+{
+    "name": "@kipprice/toolkip-maths",
+    "version": "1.0.0",
+    "description": "maths utility functions",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.ts",
+    "module": "dist/index.ts",
+    "types": "typings/index"
+}
