@@ -1,4 +1,4 @@
-import { IPoint } from '@kipprice/toolkip-shared';
+import { IPoint } from '@kipprice/toolkip-shared-types';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
 import { createSimpleElement, IClassDefinition } from '@kipprice/toolkip-createElements';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '@kipprice/toolkip-htmlHelpers/elementPositioning';

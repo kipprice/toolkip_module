@@ -1,4 +1,4 @@
-import { isInterface, isNullOrUndefined, StandardElement } from '@kipprice/toolkip-shared";
+import { isNullOrUndefined, StandardElement } from '@kipprice/toolkip-shared-types';
 import { ISelectable, IOffsetable } from "./_interfaces";
 
 /** 

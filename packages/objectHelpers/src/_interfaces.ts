@@ -1,9 +1,3 @@
-export enum SortOrderEnum {
-    INCORRECT_ORDER = 1,
-    SAME = 0,
-    CORRECT_ORDER = -1
-}
-
 export interface IKeyValPair<T> {
     key?: string;
     val?: T;

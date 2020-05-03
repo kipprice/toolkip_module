@@ -5,7 +5,7 @@
     "license": "MIT",
     "author": "Kip Price",
     "test": "jest",
-    "main": "dist/index.ts",
-    "module": "dist/index.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
     "types": "typings/index"
 }

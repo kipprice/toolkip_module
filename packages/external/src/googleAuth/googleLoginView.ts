@@ -1,6 +1,6 @@
-import { _Drawable } from "../../drawable/_drawable";
-import { createElement } from "../../createElements";
-import { ErrorPopup } from "../../popups/errorPopup";
+import { _Drawable } from "@kipprice/toolkip-drawable";
+import { createElement } from "@kipprice/toolkip-create-elements";
+import { ErrorPopup } from "@kipprice/toolkip-popups";
 
 //#region GOOGLE SPECIFIC VARIABLES
 declare var gapi: any;

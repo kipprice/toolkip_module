@@ -1,4 +1,4 @@
-import { format } from '@kipprice/toolkip-primitiveHelpers/strings";
+import { format } from '@kipprice/toolkip-primitive-helpers';
 import { map } from "./manipulate";
 
 /**

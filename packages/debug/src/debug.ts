@@ -1,5 +1,5 @@
-import { IPoint } from '@kipprice/toolkip-shared';
-import { map } from '@kipprice/toolkip-objectHelpers';
+import { IPoint } from '@kipprice/toolkip-shared-types';
+import { map } from '@kipprice/toolkip-object-helpers';
 
 export var IS_DEBUG: boolean = false;
 

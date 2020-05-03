@@ -1,0 +1,15 @@
+{
+    "name": "@kipprice/toolkip-visual-maths",
+    "version": "1.0.0",
+    "description": "math UI utility functions",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-html-helpers": "^1.0.0"
+    }
+}

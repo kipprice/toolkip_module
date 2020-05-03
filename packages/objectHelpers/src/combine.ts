@@ -1,6 +1,6 @@
 import { map } from "./manipulate";
 import { IDictionary } from './_interfaces';
-import { isNullOrUndefined } from '@kipprice/toolkip-shared";
+import { isNullOrUndefined } from '@kipprice/toolkip-shared-types';
 
 /**
  * combineObjects

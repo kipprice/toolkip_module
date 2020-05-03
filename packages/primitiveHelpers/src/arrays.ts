@@ -1,4 +1,4 @@
-import { IEqualityFunction } from '@kipprice/toolkip-comparable/comparable';
+import { IEqualityFunction } from '@kipprice/toolkip-comparable';
 
 /**
  * contains

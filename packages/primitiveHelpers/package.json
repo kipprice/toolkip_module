@@ -5,7 +5,12 @@
     "license": "MIT",
     "author": "Kip Price",
     "test": "jest",
-    "main": "dist/index.ts",
-    "module": "dist/index.ts",
-    "types": "typings/index"
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-shared-types": "^1.0.0",
+        "@kipprice/toolkip-comparable": "^1.0.0"
+    }
 }
