@@ -9,11 +9,6 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
-    "scripts": {
-        "build": "yarn tsc -p tsconfig.json",
-        "test": "yarn jest"
-    },
-
     "dependencies": {
         "@kipprice/toolkip-shared-types": "^1.0.0",
         "@kipprice/toolkip-drawable": "^1.0.0",
@@ -23,13 +18,8 @@
         "@kipprice/toolkip-object-helpers": "^1.0.0",
         "@kipprice/toolkip-identifiable": "^1.0.0"
     },
-
-    "devDependencies": {
-        "@kipprice/toolkip-async": "^1.0.0",
-        "@types/jest": "^24.9.0",
-        "jest": "^25.1.0",
-        "jest-cli": "^24.9.0",
-        "ts-jest": "^24.3.0",
-        "typescript": "^3.8.3"
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

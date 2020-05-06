@@ -13,5 +13,9 @@
         "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
         "@kipprice/toolkip-serializable": "file:../serializable",
         "@kipprice/toolkip-structs": "file:../structs"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo \"test at the root level\" && exit 1"
     }
 }

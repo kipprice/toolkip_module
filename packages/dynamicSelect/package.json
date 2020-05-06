@@ -14,5 +14,9 @@
         "@kipprice/toolkip-data-structures": "file:../dataStructures",
         "@kipprice/toolkip-drawable": "file:../drawable",
         "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

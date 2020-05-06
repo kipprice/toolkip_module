@@ -13,5 +13,9 @@
         "@kipprice/toolkip-named-class": "file:../namedClass",
         "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
         "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

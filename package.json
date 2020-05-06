@@ -8,16 +8,16 @@
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "typings/index",
+
     "scripts": {
-        "build": "yarn build:tsc && yarn build:webpack",
-        "build:webpack": "webpack",
-        "build:tsc": "tsc -p tsconfig.json --emitDeclarationOnly",
         "watch": "yarn watch:webpack && yarn watch:tsc",
         "watch:webpack": "webpack -w",
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
         "test": "jest -- -t .test.ts",
+
         "bootstrap": "lerna bootstrap",
-        "publish": "lerna publish"
+        "publish": "lerna publish",
+        "compile": "lerna run compile"
     },
     "devDependencies": {
         "@types/jest": "^24.9.0",

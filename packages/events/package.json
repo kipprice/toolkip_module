@@ -11,5 +11,9 @@
     "dependencies": {
         "@kipprice/toolkip-comparable": "file:../comparable",
         "@kipprice/toolkip-data-structures": "file:../dataStructures"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

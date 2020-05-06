@@ -10,5 +10,9 @@
     "types": "typings/index",
     "dependencies": {
         "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo \"test at the root level\" && exit 1"
     }
 }

@@ -10,5 +10,9 @@
     "types": "typings/index",
     "dependencies": {
         "@kipprice/toolkip-shared-types": "file:../shared"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

@@ -13,5 +13,9 @@
         "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers",
         "@kipprice/toolkip-shared-types": "file:../shared",
         "@kipprice/toolkip-structs": "file:../structs"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo \"test at the root level\" && exit 1"
     }
 }

@@ -13,5 +13,9 @@
         "@kipprice/toolkip-style-helpers": "^1.0.0",
         "@kipprice/toolkip-drawable": "^1.0.0",
         "@kipprice/toolkip-create-elements": "^1.0.0"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo \"test at the root level\" && exit 1"
     }
 }

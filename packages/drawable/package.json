@@ -13,5 +13,9 @@
         "@kipprice/toolkip-media-queries": "file:../mediaQueries",
         "@kipprice/toolkip-shared-types": "file:../shared",
         "@kipprice/toolkip-stylable": "file:../stylable"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

@@ -15,5 +15,9 @@
         "@kipprice/toolkip-maths": "file:../maths",
         "@kipprice/toolkip-shared-types": "file:../shared",
         "@kipprice/toolkip-style-libraries": "file:../styleLibraries"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo \"test at the root level\" && exit 1"
     }
 }

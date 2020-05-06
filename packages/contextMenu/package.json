@@ -14,5 +14,9 @@
         "@kipprice/toolkip-drawable": "file:../drawable",
         "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
         "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }

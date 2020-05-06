@@ -1,24 +1,10 @@
 {
+    "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "esModuleInterop": true,
-        "target": "es2015",
-        "moduleResolution": "node",
-        "module": "commonjs",
-        "declaration": true,
         "outDir": "dist/",
-        "declarationDir": "typings/"
+        "declarationDir": "typings/",
     },
     "include": [
-        "./src"
-    ],
-    "exclude": [
-        "node_modules", 
-        "compiled_js", 
-        "typings", 
-        "**/_(wip)_*", 
-        "**/_(old)_*", 
-        "modules", 
-        "typescript/modules",
-        "dist"
+        "src"
     ]
 }

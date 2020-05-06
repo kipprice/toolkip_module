@@ -14,5 +14,9 @@
         "@kipprice/toolkip-html-helpers": "file:../htmlHelpers",
         "@kipprice/toolkip-shared-types": "file:../shared",
         "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
     }
 }
