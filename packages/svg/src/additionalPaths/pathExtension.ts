@@ -1,5 +1,5 @@
-import { PathElement } from '@kipprice/toolkip-elements/pathElement";
-import { IPathSVGAttributes, IPathPoint } from '@kipprice/toolkip-_interfaces";
+import { PathElement } from '../elements/pathElement';
+import { IPathSVGAttributes, IPathPoint } from '../_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	_PathExtensionElement

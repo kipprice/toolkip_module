@@ -8,8 +8,7 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-object-helpers": "^1.0.0"
+        "@kipprice/toolkip-object-helpers": "file:../objectHelpers"
     }
 }

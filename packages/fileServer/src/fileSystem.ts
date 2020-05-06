@@ -1,4 +1,3 @@
-/// <reference path="../../compiled_js/fileSystemAPI.d.ts" />
 
 /**----------------------------------------------------------------------------
  * @class   FileStorage

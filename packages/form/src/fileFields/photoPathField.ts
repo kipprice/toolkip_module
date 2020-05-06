@@ -1,9 +1,9 @@
 import { IPhotoPathElemTemplate } from "./_interfaces";
 import { FilePathField } from "./filePathField";
-import { createSimpleElement, createElement } from "../../createElements";
-import { isNullOrUndefined } from "../../shared";
+import { createSimpleElement, createElement } from "@kipprice/toolkip-create-elements";
+import { isNullOrUndefined } from "@kipprice/toolkip-shared-types";
 import { createInputElement, createLabelForInput } from "../helpers";
-import { IStandardStyles } from "../../styleHelpers/_interfaces";
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
 
 
 /**----------------------------------------------------------------------------

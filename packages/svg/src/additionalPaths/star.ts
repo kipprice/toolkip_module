@@ -1,7 +1,7 @@
 import { PolygonElement } from "./polygon";
-import { calculatePolygonInternalAngle } from "../../maths";
-import { IPoint } from "../../shared";
-import { IPathSVGAttributes, IPathPoint } from '@kipprice/toolkip-_interfaces";
+import { calculatePolygonInternalAngle } from "@kipprice/toolkip-maths";
+import { IPoint } from "@kipprice/toolkip-shared-types";
+import { IPathSVGAttributes, IPathPoint } from '../_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	StarElement

@@ -1,10 +1,9 @@
 import { _Form } from "./_form";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
-import { StandardElement } from "../../../shared";
-import { addClass, removeClass } from "../../../styleHelpers/css";
-import { createElement } from "../../createElements";
-import { wait } from "../../async";
-import { SectionField } from '@kipprice/toolkip-complexFields/sectionField";
+import { IStandardStyles, addClass, removeClass } from "@kipprice/toolkip-style-helpers";
+import { StandardElement } from "@kipprice/toolkip-shared-types";
+import { createElement } from "@kipprice/toolkip-create-elements";
+import { wait } from "@kipprice/toolkip-async";
+import { SectionField } from '../complexFields/sectionField';
 
 
 /**----------------------------------------------------------------------------

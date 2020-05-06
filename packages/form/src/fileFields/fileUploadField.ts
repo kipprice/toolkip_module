@@ -1,8 +1,8 @@
 import { IFormFileElemTemplate } from "./_interfaces";
-import { _Field } from '@kipprice/toolkip-_field";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfaces";
-import { IAttributes } from "../../createElements";
-import { createInputElement } from '@kipprice/toolkip-helpers";
+import { _Field } from '../_field';
+import { FieldTypeEnum } from '../_interfaces';
+import { IAttributes } from "@kipprice/toolkip-create-elements";
+import { createInputElement } from '../helpers';
 
 
 /**----------------------------------------------------------------------------

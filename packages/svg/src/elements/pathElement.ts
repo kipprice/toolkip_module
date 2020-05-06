@@ -1,8 +1,15 @@
 import { _SVGElem } from "./svgElement";
-import { IPathElems, IPathPoint, IPathSVGAttributes, ISVGAttributes, ICurvePoint, IArcPoint } from '@kipprice/toolkip-_interfaces";
+import { 
+	IPathElems, 
+	IPathPoint, 
+	IPathSVGAttributes, 
+	ISVGAttributes, 
+	ICurvePoint, 
+	IArcPoint 
+} from '../_interfaces';
 import { IPoint, isNullOrUndefined } from "../../../shared";
-import { cloneObject } from "../../../objectHelpers/cloning";
-import { roundToPlace } from "../../../maths/maths";
+import { cloneObject } from "@kipprice/toolkip-object-helpers";
+import { roundToPlace } from "@kipprice/toolkip-maths";
 
 
 /**----------------------------------------------------------------------------

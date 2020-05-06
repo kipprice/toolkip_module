@@ -1,6 +1,5 @@
-import { IIdentifiable, Identifier } from '@kipprice/toolkip-identifiable/_interfaces";
-import { IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces";
-import { map } from '@kipprice/toolkip-objectHelpers";
+import { IIdentifiable, Identifier } from '@kipprice/toolkip-identifiable';
+import { map, IDictionary } from '@kipprice/toolkip-object-helpers';
 
 
 /**----------------------------------------------------------------------------

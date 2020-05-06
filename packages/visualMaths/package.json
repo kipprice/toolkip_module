@@ -8,8 +8,12 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-html-helpers": "^1.0.0"
+        "@kipprice/toolkip-comparable": "file:../comparable",
+        "@kipprice/toolkip-create-elements": "file:../createElements",
+        "@kipprice/toolkip-html-helpers": "file:../htmlHelpers",
+        "@kipprice/toolkip-maths": "file:../maths",
+        "@kipprice/toolkip-shared-types": "file:../shared",
+        "@kipprice/toolkip-style-libraries": "file:../styleLibraries"
     }
 }

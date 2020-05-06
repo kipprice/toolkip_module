@@ -1,5 +1,5 @@
-import { IDrawableElements } from "../../drawable/_interfaces";
-import { TestResults } from '@kipprice/toolkip-_interfaces";
+import { IDrawableElements } from "@kipprice/toolkip-drawable";
+import { TestResults } from '../_interfaces';
 
 /**
  * IUnitTestElems

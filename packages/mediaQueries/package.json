@@ -8,9 +8,8 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-style-helpers": "^1.0.0"
+        "@kipprice/toolkip-shared-types": "file:../shared",
+        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
     }
 }

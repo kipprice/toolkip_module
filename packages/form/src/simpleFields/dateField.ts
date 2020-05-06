@@ -1,6 +1,6 @@
-import { _Field } from "../../_field";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfacesces";
-import { inputToDate, inputDateFmt, dateDiff } from "../../../primitiveHelpers/dates";
+import { _Field } from "../_field";
+import { FieldTypeEnum } from '../_interfaces';
+import { inputToDate, inputDateFmt, dateDiff } from "@kipprice/toolkip-primitive-helpers";
 
 
 /**----------------------------------------------------------------------------

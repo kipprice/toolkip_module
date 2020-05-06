@@ -1,9 +1,8 @@
 import { IPoint } from '@kipprice/toolkip-shared-types';
-import { degreesToRadians, getEndPoint, getDistance, getAngle } from './trig';
-import { createSimpleElement, IClassDefinition } from '@kipprice/toolkip-createElements';
-import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '@kipprice/toolkip-htmlHelpers/elementPositioning';
-import { StyleLibrary } from '@kipprice/toolkip-styleLibraries/styleLibrary';
-import { TypedClassDefinition } from '@kipprice/toolkip-styleHelpers';
+import { degreesToRadians, getEndPoint, getDistance, getAngle } from '@kipprice/toolkip-maths';
+import { createSimpleElement, IClassDefinition } from '@kipprice/toolkip-create-elements';
+import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '@kipprice/toolkip-html-helpers';
+import { StyleLibrary } from '@kipprice/toolkip-style-libraries';
 
 /**
  * arrangeRadially

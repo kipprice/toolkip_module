@@ -1,6 +1,6 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
+import { _Drawable } from '@kipprice/toolkip-drawable';
 import { createSVGElem } from "./svgHelpers";
-import { IElemDefinition } from '@kipprice/toolkip-createElements";
+import { IElemDefinition } from '@kipprice/toolkip-create-elements';
 
 
 export class SVGDefinitionsElement extends _Drawable {

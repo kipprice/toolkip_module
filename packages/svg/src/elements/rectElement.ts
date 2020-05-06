@@ -1,6 +1,6 @@
 import { _SVGElem } from "./svgElement";
-import { IRectSVGAttributes } from '@kipprice/toolkip-_interfaces";
-import { IBasicRect, IExtrema } from "../../../maths/_interfaces";
+import { IRectSVGAttributes } from '../_interfaces';
+import { IBasicRect, IExtrema } from "@kipprice/toolkip-maths";
 
 
 /**----------------------------------------------------------------------------

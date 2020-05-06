@@ -1,10 +1,10 @@
-import { IStandardStyles } from '../../../styleHelpers/_interfaces';
-import { _Field } from "../../_field";
-import { createSimpleElement, IAttributes } from "../../createElements";
-import { createInputElement, createLabelForInput } from '@kipprice/toolkip-helpersers";
-import { isNullOrUndefined } from "../../../shared";
+import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { _Field } from "../_field";
+import { createSimpleElement, IAttributes } from "@kipprice/toolkip-create-elements";
+import { createInputElement, createLabelForInput } from '../helpers';
+import { isNullOrUndefined } from "@kipprice/toolkip-shared-types";
 import { IFormFilePathElemTemplate, IFileSaveCallback } from './_interfaces';
-import { FieldTypeEnum } from '../../_interfaces';
+import { FieldTypeEnum } from '../_interfaces';
 
 
 /**----------------------------------------------------------------------------

@@ -8,11 +8,10 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-object-helpers": "^1.0.0",
-        "@kipprice/toolkip-structs": "^1.0.0",
-        "@kipprice/toolkip-model": "^1.0.0",
-        "@kipprice/toolkip-serializable": "^1.0.0"
+        "@kipprice/toolkip-model": "file:../model",
+        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
+        "@kipprice/toolkip-serializable": "file:../serializable",
+        "@kipprice/toolkip-structs": "file:../structs"
     }
 }

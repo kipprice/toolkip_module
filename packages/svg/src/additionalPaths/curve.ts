@@ -1,5 +1,5 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { IPathPoint } from '@kipprice/toolkip-_interfaces";
+import { IPathPoint } from '../_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	CurveElement

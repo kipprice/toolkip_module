@@ -1,7 +1,6 @@
-import {Collection} from '@kipprice/toolkip-dataStructures/collection/collection';
+import {Collection, CollectionTypeEnum} from '@kipprice/toolkip-data-structures';
 import { IEventContext, IListenerData } from './_interfaces';
-import { CollectionTypeEnum } from '@kipprice/toolkip-dataStructures/collection/_interfaces';
-import { equals } from '@kipprice/toolkip-comparable/comparable';
+import { equals } from '@kipprice/toolkip-comparable';
 import {_Event} from './event';
 
 

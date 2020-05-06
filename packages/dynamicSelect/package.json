@@ -7,5 +7,12 @@
     "test": "jest",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "types": "typings/index"
+    "types": "typings/index",
+    "dependencies": {
+        "@kipprice/toolkip-async": "file:../async",
+        "@kipprice/toolkip-create-elements": "file:../createElements",
+        "@kipprice/toolkip-data-structures": "file:../dataStructures",
+        "@kipprice/toolkip-drawable": "file:../drawable",
+        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+    }
 }

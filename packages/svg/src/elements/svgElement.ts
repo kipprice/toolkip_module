@@ -1,11 +1,11 @@
-import { _Drawable } from "../../drawable/_drawable";
-import { Collection } from "../../dataStructures/collection/collection";
-import { SVGStyle } from '@kipprice/toolkip-svgStyle";
-import { ISVGElementElems, ISVGAttributes, SVGUpdateListener } from '@kipprice/toolkip-_interfaces";
-import { IExtrema, IBasicRect } from "../../../maths/_interfaces";
-import { addClass } from "../../../styleHelpers/css";
-import { format } from "../../../primitiveHelpers/strings";
-import { createSVGElem } from '@kipprice/toolkip-svgHelpers";
+import { _Drawable } from "@kipprice/toolkip-drawable";
+import { Collection } from "@kipprice/toolkip-data-structures";
+import { SVGStyle } from '../svgStyle';
+import { ISVGElementElems, ISVGAttributes, SVGUpdateListener } from '../_interfaces';
+import { IExtrema, IBasicRect } from "@kipprice/toolkip-maths";
+import { addClass } from "@kipprice/toolkip-style-helpers";
+import { format } from "@kipprice/toolkip-primitive-helpers";
+import { createSVGElem } from '../svgHelpers';
 
 
 /**----------------------------------------------------------------------------

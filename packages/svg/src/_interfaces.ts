@@ -1,6 +1,6 @@
 import { IDrawableElements } from '@kipprice/toolkip-drawable';
-import { IAttributes } from '@kipprice/toolkip-createElements';
-import { IPoint } from '@kipprice/toolkip-shared';
+import { IAttributes } from '@kipprice/toolkip-create-elements';
+import { IPoint } from '@kipprice/toolkip-shared-types';
 
 export interface ISVGElems extends IDrawableElements {
     base: SVGElement;

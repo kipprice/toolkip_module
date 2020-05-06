@@ -1,5 +1,5 @@
 import { EventDefinition } from "./eventDefinition";
-import { Collection } from '@kipprice/toolkip-dataStructures/collection/collection";
+import { Collection } from '@kipprice/toolkip-data-structures';
 import { IListenerData, IListener } from "./_interfaces";
 import { _Event } from './event';
 

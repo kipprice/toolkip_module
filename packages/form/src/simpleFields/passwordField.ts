@@ -1,5 +1,5 @@
-import { _Field } from "../../_field";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfacesces";
+import { _Field } from "../_field";
+import { FieldTypeEnum } from '../_interfaces';
 
 
 /**----------------------------------------------------------------------------

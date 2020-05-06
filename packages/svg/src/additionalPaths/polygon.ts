@@ -1,5 +1,5 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { IPathSVGAttributes, IPathPoint } from '@kipprice/toolkip-_interfaces";
+import { IPathSVGAttributes, IPathPoint } from '../_interfaces';
 import { calculatePolygonInternalAngle } from "../../../maths";
 import { IPoint } from "../../../shared";
 

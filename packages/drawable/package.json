@@ -8,11 +8,10 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "^1.0.0",
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-stylable": "^1.0.0",
-        "@kipprice/toolkip-media-queries": "^1.0.0"
+        "@kipprice/toolkip-create-elements": "file:../createElements",
+        "@kipprice/toolkip-media-queries": "file:../mediaQueries",
+        "@kipprice/toolkip-shared-types": "file:../shared",
+        "@kipprice/toolkip-stylable": "file:../stylable"
     }
 }

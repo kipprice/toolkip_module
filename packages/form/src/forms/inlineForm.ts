@@ -1,7 +1,6 @@
 import { _Form } from "./_form";
-import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { StandardElement } from "../../shared";
-import { addClass } from "../../styleHelpers/css";
+import { IStandardStyles, addClass } from "@kipprice/toolkip-style-helpers";
+import { StandardElement } from "@kipprice/toolkip-shared-types";
 import { FormElemChangeEvent } from "../eventHandler";
 
 

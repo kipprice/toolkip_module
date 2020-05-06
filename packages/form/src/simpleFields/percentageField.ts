@@ -1,8 +1,8 @@
 import { NumberField } from "./numberField";
-import { FieldTypeEnum } from "../../_interfaces";
-import { _Field } from '@kipprice/toolkip-_fieldeld";
-import { createElement } from "../../createElements";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
+import { FieldTypeEnum } from "../_interfaces";
+import { _Field } from '../_field';
+import { createElement } from "@kipprice/toolkip-create-elements";
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
 
 
 /**---------------------------------------------------------------------------

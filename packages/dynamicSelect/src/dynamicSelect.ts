@@ -1,12 +1,9 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
-import { Collection } from '@kipprice/toolkip-dataStructures/collection/collection";
+import { _Drawable } from '@kipprice/toolkip-drawable';
 import { DynamicOption } from "./dynamicOption";
 import { IDynamicSelectElems, IDynamicOption } from "./_interfaces";
-import { CollectionTypeEnum, ICollectionElement } from '@kipprice/toolkip-dataStructures/collection/_interfaces";
-import { createElement } from '@kipprice/toolkip-createElements";
-import { removeClass, addClass } from '@kipprice/toolkip-styleHelpers/css";
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces";
-import { transition } from '@kipprice/toolkip-styleHelpers/transition";
+import { CollectionTypeEnum, ICollectionElement, Collection } from '@kipprice/toolkip-data-structures';
+import { createElement } from '@kipprice/toolkip-create-elements';
+import { removeClass, addClass, IStandardStyles, transition } from '@kipprice/toolkip-style-helpers';
 
 
 /**----------------------------------------------------------------------------

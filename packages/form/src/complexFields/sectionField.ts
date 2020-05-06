@@ -1,12 +1,11 @@
-import {  IFields, FieldTypeEnum, ICanSaveTracker, FormElementLayoutEnum, FormColor } from "../../_interfaces";
+import {  IFields, FieldTypeEnum, ICanSaveTracker, FormElementLayoutEnum, FormColor } from "../_interfaces";
 import { _CollapsibleField } from "./_collapsibleField";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
-import { _Field } from '@kipprice/toolkip-_fieldeld";
-import { isField } from '@kipprice/toolkip-helpersers";
-import { map } from "../../../objectHelpers";
-import { createSimpleElement } from "../../createElements";
-import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '@kipprice/toolkip-eventHandlerler";
-import { addClass } from "../../../styleHelpers/css";
+import { IStandardStyles, addClass } from "@kipprice/toolkip-style-helpers";
+import { _Field } from '../_field';
+import { isField } from '../helpers';
+import { map } from "@kipprice/toolkip-object-helpers";
+import { createSimpleElement } from "@kipprice/toolkip-create-elements";
+import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '../eventHandler';
 import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interfaces";
 
 

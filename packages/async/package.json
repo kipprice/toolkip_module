@@ -9,7 +9,16 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "scripts": {
+        "build": "yarn tsc -p tsconfig.json",
+        "test": "yarn jest"
+    },
+
     "devDependencies": {
-        
+        "@types/jest": "^24.9.0",
+        "jest": "^25.1.0",
+        "jest-cli": "^24.9.0",
+        "ts-jest": "^24.3.0",
+        "typescript": "^3.8.3"
     }
 }

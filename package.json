@@ -19,13 +19,6 @@
         "bootstrap": "lerna bootstrap",
         "publish": "lerna publish"
     },
-
-    "dependencies": {
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-async": "^1.0.0",
-        "@kipprice/toolkip-primitive-helpers": "^1.0.0"
-    },
-
     "devDependencies": {
         "@types/jest": "^24.9.0",
         "jest": "^25.1.0",
@@ -34,7 +27,7 @@
         "terser-webpack-plugin": "^2.3.4",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
-        "typescript": "^3.8.0-beta",
+        "typescript": "^3.8.3",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.10"
     }

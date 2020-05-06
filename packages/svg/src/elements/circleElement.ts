@@ -1,7 +1,7 @@
 import { _SVGElem } from "./svgElement";
-import { ICircleSVGAttributes, ISVGAttributes } from '@kipprice/toolkip-_interfaces";
-import { IExtrema } from "../../../maths/_interfaces";
-import { IPoint } from "../../../shared";
+import { ICircleSVGAttributes, ISVGAttributes } from '../_interfaces';
+import { IExtrema } from "@kipprice/toolkip-maths";
+import { IPoint } from "@kipprice/toolkip-shared-types";
 
 /**----------------------------------------------------------------------------
  * @class   CircleElement

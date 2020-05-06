@@ -1,5 +1,5 @@
 import { IFieldElems, IFieldConfig } from "../_interfaces";
-import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
+import { IToggleBtnOption } from "@kipprice/toolkip-object-helpers";
 
 
 //.....................

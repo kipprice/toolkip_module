@@ -1,4 +1,4 @@
-import { _UnitTester } from '@kipprice/toolkip-test";
+import { _UnitTester } from '../test';
 import { ConsoleUnitTestUI } from "./consoleUnitTestUi";
 
 /**----------------------------------------------------------------------------

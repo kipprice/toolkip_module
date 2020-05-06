@@ -1,11 +1,9 @@
 import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interfaces";
 import { _Field } from "../_field";
-import { createElement, createSimpleElement } from "../../createElements";
-import { addClass, removeClass } from "../../styleHelpers/css";
-import { transition } from "../../styleHelpers/transition";
-import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { map } from "../../objectHelpers";
-import { FormColor } from "..";
+import { createElement, createSimpleElement } from "@kipprice/toolkip-create-elements";
+import { addClass, removeClass, transition, IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { map } from "@kipprice/toolkip-object-helpers";
+import { FormColor } from "../_interfaces";
 
 
 /**----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { INumericDictionary, IDictionary } from '@kipprice/toolkip-objectHelpers/_interfaces";
+import { INumericDictionary, IDictionary } from '@kipprice/toolkip-object-helpers';
 
 
 /**----------------------------------------------------------------------------

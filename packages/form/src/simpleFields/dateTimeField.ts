@@ -1,9 +1,9 @@
-import { _Field } from "../../_field";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfacesces";
-import { createSimpleElement, createElement } from "../../createElements";
-import { createInputElement } from '@kipprice/toolkip-helpersers";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
-import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "../../../primitiveHelpers/dates";
+import { _Field } from "../_field";
+import { FieldTypeEnum } from '../_interfaces';
+import { createSimpleElement, createElement } from "@kipprice/toolkip-create-elements";
+import { createInputElement } from '../helpers';
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "@kipprice/toolkip-primitive-helpers";
 
 
 /**----------------------------------------------------------------------------

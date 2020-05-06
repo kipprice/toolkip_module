@@ -1,6 +1,6 @@
 import { _TestUI } from "./testUi";
 import { IUnitTestDetails, IVisualTestButton } from "./_interfaces";
-import { format } from '@kipprice/toolkip-primitiveHelpers/strings";
+import { format } from '@kipprice/toolkip-primitive-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	UnitTestUI

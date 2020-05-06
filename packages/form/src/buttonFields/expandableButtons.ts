@@ -1,8 +1,8 @@
-import { IToggleBtnOption } from "../../objectHelpers/_interfaces";
+import { IToggleBtnOption } from "@kipprice/toolkip-object-helpers";
 import { IExpandableElems, IFormMultiSelectButtonTemplate } from "./_interfaces";
 import { MultiSelectButtonField } from "./multiSelectButtonField";
-import { IStandardStyles } from "../../styleHelpers/_interfaces";
-import { createElement } from "../../createElements";
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { createElement } from "@kipprice/toolkip-create-elements";
 
 
 

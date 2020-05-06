@@ -1,5 +1,5 @@
 import { Popup } from "./popup";
-import { IStandardStyles, addClass, transition } from '@kipprice/toolkip-styleHelpers";
+import { IStandardStyles, addClass, transition } from '@kipprice/toolkip-style-helpers';
 
 
 export class ToastPopup extends Popup {

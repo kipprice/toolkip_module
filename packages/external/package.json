@@ -8,10 +8,9 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "^1.0.0",
-        "@kipprice/toolkip-drawable": "^1.0.0",
-        "@kipprice/toolkip-popups": "^1.0.0"
+        "@kipprice/toolkip-create-elements": "file:../createElements",
+        "@kipprice/toolkip-drawable": "file:../drawable",
+        "@kipprice/toolkip-popups": "file:../popups"
     }
 }

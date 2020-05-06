@@ -1,17 +1,15 @@
 import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString, FormColor } from "./_interfaces";
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
-import { isNullOrUndefined } from '@kipprice/toolkip-shared";
-import { hasClass, addClass, removeClass } from '@kipprice/toolkip-styleHelpers/css";
-import { createTable, createElement, IAttributes } from '@kipprice/toolkip-createElements";
-import { equals } from '@kipprice/toolkip-comparable/comparable";
-import { Tooltip } from '@kipprice/toolkip-tooltip/tooltip";
-import { IConstructor } from '@kipprice/toolkip-objectHelpers/_interfaces";
-import { transition } from '@kipprice/toolkip-styleHelpers/transition";
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces";
+import { _Drawable } from '@kipprice/toolkip-drawable';
+import { isNullOrUndefined } from '@kipprice/toolkip-shared-types';
+import { hasClass, addClass, removeClass, transition, IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { createTable, createElement, IAttributes } from '@kipprice/toolkip-create-elements';
+import { equals } from '@kipprice/toolkip-comparable';
+import { Tooltip } from '@kipprice/toolkip-tooltip';
+import { IConstructor } from '@kipprice/toolkip-object-helpers';
 import { formEventHandler, FORM_SAVABLE_CHANGE, FormSavableEvent, FORM_ELEM_CHANGE, FormElemChangeEvent } from "./eventHandler";
 import { isField, createInputElement, createLabelForInput } from "./helpers";
-import { wait } from '@kipprice/toolkip-async";
-import { join } from '@kipprice/toolkip-primitiveHelpers";
+import { wait } from '@kipprice/toolkip-async';
+import { join } from '@kipprice/toolkip-primitive-helpers';
 
 
 /**----------------------------------------------------------------------------

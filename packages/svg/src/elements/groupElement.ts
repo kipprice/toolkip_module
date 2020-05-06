@@ -1,13 +1,13 @@
 import { _SVGElem } from "./svgElement";
-import { Collection } from "../../dataStructures/collection/collection";
-import { SVGStyle } from '@kipprice/toolkip-svgStyle";
-import { ISVGAttributes, IPathPoint, IPathSVGAttributes, ICurvePoint, SVGShapeEnum } from '@kipprice/toolkip-_interfaces";
-import { IExtrema, IBasicRect } from "../../maths/_interfaces";
-import { IPoint } from "../../shared";
-import { cloneObject } from "../../objectHelpers/cloning";
+import { Collection } from "@kipprice/toolkip-data-structures";
+import { SVGStyle } from "../svgStyle";
+import { ISVGAttributes, IPathPoint, IPathSVGAttributes, ICurvePoint, SVGShapeEnum } from "../_interfaces";
+import { IExtrema, IBasicRect } from "@kipprice/toolkip-maths";
+import { IPoint } from "@kipprice/toolkip-shared-types";
+import { cloneObject } from "@kipprice/toolkip-object-helpers";
 import { PathElement } from "./pathElement";
 import { RectangleElement } from "./rectElement";
-import { IAttributes } from "../../createElements";
+import { IAttributes } from "@kipprice/toolkip-create-elements";
 import { CircleElement } from "./circleElement";
 import { 
 	ArcElement, 
@@ -19,7 +19,7 @@ import {
 	CheckElement, 
 	ExElement, 
 	PlusElement 
-} from '@kipprice/toolkip-additionalPaths";
+} from '../additionalPaths';
 import { TextElement } from "./textElement";
 
 

@@ -5,10 +5,9 @@ import {
 		IValidateResult, 
 		IEditableHandlers
 	} from './_interfaces';
-import { addClass, removeClass } from '@kipprice/toolkip-style-helpers';
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces';
-import { select } from '@kipprice/toolkip-htmlHelpers/generalHelpers';
-import { _BoundView } from '@kipprice/toolkip-boundViews';
+import { addClass, removeClass, IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { select } from '@kipprice/toolkip-html-helpers';
+import { _BoundView } from '@kipprice/toolkip-bound-views';
 import { wait } from '@kipprice/toolkip-async';
 
 /**---------------------------------------------------------------------------

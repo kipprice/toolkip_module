@@ -1,5 +1,5 @@
-import { _TestUI } from '@kipprice/toolkip-testUi";
-import { TestResults } from '@kipprice/toolkip-_interfaces";
+import { _TestUI } from '../testUi';
+import { TestResults } from '../_interfaces';
 
 
 /**----------------------------------------------------------------------------

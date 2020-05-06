@@ -8,14 +8,12 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-media-queries": "^1.0.0",
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-style-helpers": "^1.0.0",
-        "@kipprice/toolkip-style-libraries": "^1.0.0",
-        "@kipprice/toolkip-named-class": "^1.0.0",
-        "@kipprice/toolkip-object-helpers": "^1.0.0"
-        
+        "@kipprice/toolkip-media-queries": "file:../mediaQueries",
+        "@kipprice/toolkip-named-class": "file:../namedClass",
+        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
+        "@kipprice/toolkip-shared-types": "file:../shared",
+        "@kipprice/toolkip-style-helpers": "file:../styleHelpers",
+        "@kipprice/toolkip-style-libraries": "file:../styleLibraries"
     }
 }

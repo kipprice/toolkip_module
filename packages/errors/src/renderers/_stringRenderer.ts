@@ -1,4 +1,4 @@
-import { ErrorRenderer, ErrorType } from '@kipprice/toolkip-_interfaces";
+import { ErrorRenderer, ErrorType } from '../_interfaces';
 
 export abstract class _StringRenderer implements ErrorRenderer {
     public error(details: any): boolean {

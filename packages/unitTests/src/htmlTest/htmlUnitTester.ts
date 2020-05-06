@@ -1,5 +1,5 @@
-import { _UnitTester } from '@kipprice/toolkip-test";
-import { IVisualTestButton } from '@kipprice/toolkip-_interfaces";
+import { _UnitTester } from '../test';
+import { IVisualTestButton } from '../_interfaces';
 import { HTMLUnitTestUI } from "./htmlUnitTestUi";
 
 

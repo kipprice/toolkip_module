@@ -1,16 +1,11 @@
 import { IFormToggleButtonTemplate, IToggleButtonElems, IToggleButtonElem } from "./_interfaces";
-import { _Field } from "../../_field";
-import { IToggleBtnOption } from "../../../objectHelpers/_interfaces";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfacesces";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
-import { createSimpleElement, createElement } from "../../createElements";
-import { addClass } from "../../../styleHelpers/css";
-import { map } from "../../../objectHelpers";
-import { indexOf } from "../../../primitiveHelpers/arrays";
-import { wait } from "../../async";
-
-
-
+import { _Field } from "../_field";
+import { IToggleBtnOption, map } from "@kipprice/toolkip-object-helpers";
+import { FieldTypeEnum } from '../_interfaces';
+import { IStandardStyles, addClass } from "@kipprice/toolkip-style-helpers";
+import { createSimpleElement, createElement } from "@kipprice/toolkip-create-elements";
+import { indexOf } from "@kipprice/toolkip-primitive-helpers";
+import { wait } from "@kipprice/toolkip-async";
 
 /**----------------------------------------------------------------------------
  * @class   ToggleButtonField

@@ -1,14 +1,14 @@
-import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../../_interfaces";
+import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../_interfaces";
 import { _CollapsibleField } from "./_collapsibleField";
-import { _Field } from '@kipprice/toolkip-_fieldeld";
-import { isField } from '@kipprice/toolkip-helpersers";
-import { map } from "../../../objectHelpers";
-import { isNullOrUndefined } from "../../../shared";
-import { createElement } from "../../createElements";
+import { _Field } from '../_field';
+import { isField } from '../helpers';
+import { map } from "@kipprice/toolkip-object-helpers";
+import { isNullOrUndefined } from "@kipprice/toolkip-shared-types";
+import { createElement } from "@kipprice/toolkip-create-elements";
 import { ArrayChildField } from "./arrayChildField";
-import { removeElement } from "../../../htmlHelpers/generalHelpers";
-import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '@kipprice/toolkip-eventHandlerler";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
+import { removeElement } from "@kipprice/toolkip-html-helpers";
+import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '../eventHandler';
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
 import { IFormArrayTemplate, DirectionType } from "./_interfaces";
 import { isArrayChildElement } from "./_typeguards";
 

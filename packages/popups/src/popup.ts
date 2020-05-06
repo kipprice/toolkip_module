@@ -1,9 +1,8 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
+import { _Drawable } from '@kipprice/toolkip-drawable';
 import { PopupElements, IPopupDefinition } from "./_interfaces";
-import { createSimpleElement, createElement, IElemDefinition, IClassDefinition, ClassName } from '@kipprice/toolkip-createElements";
-import { addClass, removeClass } from '@kipprice/toolkip-styleHelpers/css";
-import { StandardElement, isString, isDrawable } from '@kipprice/toolkip-shared';
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers";
+import { createSimpleElement, createElement, IElemDefinition, IClassDefinition, ClassName } from '@kipprice/toolkip-create-elements';
+import { addClass, removeClass, IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { StandardElement, isString, isDrawable } from '@kipprice/toolkip-shared-types';
 
 
 /**----------------------------------------------------------------------------

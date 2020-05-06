@@ -1,8 +1,7 @@
-import { IObjectSelectTemplate, FieldTypeEnum, IObjectOption } from "../../_interfaces";
-import { _Field } from '@kipprice/toolkip-_fieldeld";
-import { ISelectOptions } from "../../../objectHelpers/_interfaces";
-import { createSelectElement } from '@kipprice/toolkip-helpersers";
-import { map } from "../../../objectHelpers";
+import { IObjectSelectTemplate, FieldTypeEnum, IObjectOption } from "../_interfaces";
+import { _Field } from '../_field';
+import { ISelectOptions, map } from "@kipprice/toolkip-object-helpers";
+import { createSelectElement } from '../helpers';
 
 
 /**----------------------------------------------------------------------------

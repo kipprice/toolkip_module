@@ -7,5 +7,20 @@
     "test": "jest",
     "main": "dist/index.js",
     "module": "dist/index.js",
-    "types": "typings/index"
+    "types": "typings/index",
+
+    "dependencies": {
+        "@kipprice/toolkip-async": "^1.0.0",
+        "@kipprice/toolkip-drawable": "^1.0.0",
+        "@kipprice/toolkip-object-helpers": "^1.0.0",
+        "@kipprice/toolkip-primitive-helpers": "^1.0.0",
+        "@kipprice/toolkip-style-helpers": "^1.0.0",
+        "@kipprice/toolkip-shared-types": "^1.0.0",
+        "@kipprice/toolkip-create-elements": "^1.0.0",
+        "@kipprice/toolkip-comparable": "^1.0.0",
+        "@kipprice/toolkip-events": "^1.0.0",
+        "@kipprice/toolkip-html-helpers": "^1.0.0",
+        "@kipprice/toolkip-popups": "^1.0.0",
+        "@kipprice/toolkip-tooltip": "^1.0.0"
+    }
 }

@@ -8,12 +8,11 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "dependencies": {
-        "@kipprice/toolkip-drawable": "^1.0.0",
-        "@kipprice/toolkip-object-helpers": "^1.0.0",
-        "@kipprice/toolkip-data-structures": "^1.0.0",
-        "@kipprice/toolkip-create-elements": "^1.0.0",
-        "@kipprice/toolkip-style-helpers": "^1.0.0"
+        "@kipprice/toolkip-create-elements": "file:../createElements",
+        "@kipprice/toolkip-data-structures": "file:../dataStructures",
+        "@kipprice/toolkip-drawable": "file:../drawable",
+        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
+        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
     }
 }

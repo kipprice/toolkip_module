@@ -1,9 +1,9 @@
-import { FieldTypeEnum, IFields } from "../../_interfaces";
+import { FieldTypeEnum, IFields } from "../_interfaces";
 import { _CollapsibleField } from "./_collapsibleField";
-import { _Field } from '@kipprice/toolkip-_fieldeld";
-import { createElement, createSimpleElement } from "../../createElements";
+import { _Field } from '../_field';
+import { createElement, createSimpleElement } from "@kipprice/toolkip-create-elements";
 import { SectionField } from "./sectionField";
-import { IStandardStyles } from "../../../styleHelpers/_interfaces";
+import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
 import { IArrayChildTemplate, IArrayChildHTMLElements, DirectionType, IArrayField } from "./_interfaces";
 
 

@@ -1,4 +1,4 @@
-import { BucketHelper } from '@kipprice/toolkip-bucketer';
+import { BucketHelper } from '..';
 describe('bucketer', () => {
     it('buckets appropriately', () => {
         let values = [

@@ -1,7 +1,7 @@
 import { Popup } from "./popup";
 import { LoginPopupElements } from "./_interfaces";
-import { ILabeledElement, createLabeledElement } from '@kipprice/toolkip-createElements";
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces";
+import { ILabeledElement, createLabeledElement } from '@kipprice/toolkip-create-elements';
+import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
 
 
 /**----------------------------------------------------------------------------

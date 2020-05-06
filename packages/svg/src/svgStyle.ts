@@ -1,7 +1,7 @@
-import { getCssPropertyName, FlatClassDefinition } from '@kipprice/toolkip-styleHelpers';
+import { getCssPropertyName, FlatClassDefinition } from '@kipprice/toolkip-style-helpers';
 import { ISVGStyle } from "./_interfaces";
-import { map } from '@kipprice/toolkip-objectHelpers/manipulate";
-import { format } from '@kipprice/toolkip-primitiveHelpers/strings";
+import { map } from '@kipprice/toolkip-object-helpers';
+import { format } from '@kipprice/toolkip-primitive-helpers';
 
 
 /**----------------------------------------------------------------------------

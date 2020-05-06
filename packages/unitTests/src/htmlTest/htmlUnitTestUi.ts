@@ -1,6 +1,6 @@
-import { _TestUI } from '@kipprice/toolkip-testUi";
+import { _TestUI } from '../testUi';
 import { UI } from "./htmlUi";
-import { TestResults, IVisualTestButton } from '@kipprice/toolkip-_interfaces";
+import { TestResults, IVisualTestButton } from '../_interfaces';
 import { VisualResults } from "./_interfaces";
 
 /**----------------------------------------------------------------------------

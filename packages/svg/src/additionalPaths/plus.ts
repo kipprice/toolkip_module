@@ -1,6 +1,6 @@
 import { _PathExtensionElement } from "./pathExtension";
 import { IPoint } from "../../../shared";
-import { IPathPoint } from '@kipprice/toolkip-_interfaces";
+import { IPathPoint } from '../_interfaces';
 
 /**
  * @class	PlusElement

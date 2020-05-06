@@ -1,7 +1,6 @@
-import { _Drawable } from '@kipprice/toolkip-drawable/_drawable";
-import { IStandardStyles } from '@kipprice/toolkip-styleHelpers/_interfaces";
-import { addClass, removeClass } from '@kipprice/toolkip-styleHelpers/css";
-import { createElement } from '@kipprice/toolkip-createElements";
+import { _Drawable } from '@kipprice/toolkip-drawable';
+import { IStandardStyles, addClass, removeClass } from '@kipprice/toolkip-style-helpers';
+import { createElement } from '@kipprice/toolkip-create-elements';
 
 export class ImageElement extends _Drawable<"imageElementPrimary"> {
 

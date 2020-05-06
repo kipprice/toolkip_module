@@ -1,6 +1,6 @@
-import { IStandardStyles } from '../../../styleHelpers/_interfaces';
-import { _Field } from "../../_field";
-import { FieldTypeEnum } from '@kipprice/toolkip-_interfacesces";
+import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { _Field } from "../_field";
+import { FieldTypeEnum } from '../_interfaces';
 
 
 /**----------------------------------------------------------------------------
