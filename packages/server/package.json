@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/server",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "server utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^1.0.6",
+        "@toolkip/create-elements": "^1.0.7",
         "@toolkip/object-helpers": "^1.0.6"
     },
     "scripts": {
