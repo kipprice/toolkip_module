@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/stylable",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "styled components",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,12 +8,10 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/media-queries": "file:../mediaQueries",
         "@toolkip/named-class": "file:../namedClass",
@@ -22,7 +20,6 @@
         "@toolkip/style-helpers": "file:../styleHelpers",
         "@toolkip/style-libraries": "file:../styleLibraries"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

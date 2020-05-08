@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/managers",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "data management utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,17 +8,14 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
-        "@toolkip/identifiable": "^1.0.0",
-        "@toolkip/object-helpers": "^1.0.0"
+        "@toolkip/identifiable": "^1.0.1",
+        "@toolkip/object-helpers": "^1.0.1"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

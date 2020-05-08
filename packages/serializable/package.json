@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/serializable",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "serializing utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,16 +8,13 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/model": "file:../model"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/canvas",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "HTML5 canvas helpers",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,12 +8,10 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-    
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/data-structures": "file:../dataStructures",
         "@toolkip/drawable": "file:../drawable",

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/events",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "event utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,17 +8,14 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/comparable": "file:../comparable",
         "@toolkip/data-structures": "file:../dataStructures"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/shields",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "shield components",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,18 +8,15 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/create-elements": "file:../createElements",
         "@toolkip/drawable": "file:../drawable",
         "@toolkip/style-helpers": "file:../styleHelpers"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

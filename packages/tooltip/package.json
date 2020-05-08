@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/tooltip",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "render tooltip component",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,21 +8,18 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
-        "@toolkip/html-helpers": "^1.0.0",
-        "@toolkip/drawable": "^1.0.0",
-        "@toolkip/maths": "^1.0.0",
-        "@toolkip/style-helpers": "^1.0.0",
-        "@toolkip/shared-types": "^1.0.0",
-        "@toolkip/create-elements": "^1.0.0"
+        "@toolkip/create-elements": "^1.0.1",
+        "@toolkip/drawable": "^1.0.1",
+        "@toolkip/html-helpers": "^1.0.1",
+        "@toolkip/maths": "^1.0.1",
+        "@toolkip/shared-types": "^1.0.1",
+        "@toolkip/style-helpers": "^1.0.1"
     },
-
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/create-elements",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "html generation utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,12 +8,10 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-    
     "dependencies": {
         "@toolkip/binding": "file:../binding",
         "@toolkip/object-helpers": "file:../objectHelpers",

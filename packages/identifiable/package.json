@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/identifiable",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "identity utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,19 +8,16 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-
     "files": [
         "dist",
         "typings"
     ],
-
     "dependencies": {
         "@toolkip/model": "file:../model",
         "@toolkip/object-helpers": "file:../objectHelpers",
         "@toolkip/serializable": "file:../serializable",
         "@toolkip/structs": "file:../structs"
     },
-    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"
