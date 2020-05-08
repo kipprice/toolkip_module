@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-maths",
+    "name": "@toolkip/maths",
     "version": "1.0.0",
     "description": "maths utility functions",
     "license": "MIT",
@@ -8,9 +8,16 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/shared-types": "file:../shared"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

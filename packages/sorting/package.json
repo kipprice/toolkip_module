@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-sorting",
+    "name": "@toolkip/sorting",
     "version": "1.0.0",
     "description": "sorting utility functions",
     "license": "MIT",
@@ -9,9 +9,15 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-object-helpers": "^1.0.0"
+        "@toolkip/object-helpers": "^1.0.0"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

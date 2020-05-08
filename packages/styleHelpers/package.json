@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-style-helpers",
+    "name": "@toolkip/style-helpers",
     "version": "1.0.0",
     "description": "style utility functions",
     "license": "MIT",
@@ -8,12 +8,19 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-async": "file:../async",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/async": "file:../async",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/primitive-helpers": "file:../primitiveHelpers",
+        "@toolkip/shared-types": "file:../shared"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

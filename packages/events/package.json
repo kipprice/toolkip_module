@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-events",
+    "name": "@toolkip/events",
     "version": "1.0.0",
     "description": "event utility functions",
     "license": "MIT",
@@ -8,10 +8,17 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-comparable": "file:../comparable",
-        "@kipprice/toolkip-data-structures": "file:../dataStructures"
+        "@toolkip/comparable": "file:../comparable",
+        "@toolkip/data-structures": "file:../dataStructures"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-popups",
+    "name": "@toolkip/popups",
     "version": "1.0.0",
     "description": "popup components",
     "license": "MIT",
@@ -8,12 +8,19 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "file:../createElements",
-        "@kipprice/toolkip-drawable": "file:../drawable",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/create-elements": "file:../createElements",
+        "@toolkip/drawable": "file:../drawable",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

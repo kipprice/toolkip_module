@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-editable",
+    "name": "@toolkip/editable",
     "version": "1.0.0",
     "description": "editable component",
     "license": "MIT",
@@ -8,14 +8,21 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-async": "file:../async",
-        "@kipprice/toolkip-bound-views": "file:../boundViews",
-        "@kipprice/toolkip-drawable": "file:../drawable",
-        "@kipprice/toolkip-html-helpers": "file:../htmlHelpers",
-        "@kipprice/toolkip-named-class": "file:../namedClass",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/async": "file:../async",
+        "@toolkip/bound-views": "file:../boundViews",
+        "@toolkip/drawable": "file:../drawable",
+        "@toolkip/html-helpers": "file:../htmlHelpers",
+        "@toolkip/named-class": "file:../namedClass",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

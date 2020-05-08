@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-managers",
+    "name": "@toolkip/managers",
     "version": "1.0.0",
     "description": "data management utility functions",
     "license": "MIT",
@@ -9,10 +9,16 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-identifiable": "^1.0.0",
-        "@kipprice/toolkip-object-helpers": "^1.0.0"
+        "@toolkip/identifiable": "^1.0.0",
+        "@toolkip/object-helpers": "^1.0.0"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

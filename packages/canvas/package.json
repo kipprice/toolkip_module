@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-canvas",
+    "name": "@toolkip/canvas",
     "version": "1.0.0",
     "description": "HTML5 canvas helpers",
     "license": "MIT",
@@ -8,13 +8,19 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+    
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-data-structures": "file:../dataStructures",
-        "@kipprice/toolkip-drawable": "file:../drawable",
-        "@kipprice/toolkip-maths": "file:../maths",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/data-structures": "file:../dataStructures",
+        "@toolkip/drawable": "file:../drawable",
+        "@toolkip/maths": "file:../maths",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

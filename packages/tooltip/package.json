@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-tooltip",
+    "name": "@toolkip/tooltip",
     "version": "1.0.0",
     "description": "render tooltip component",
     "license": "MIT",
@@ -9,14 +9,20 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-html-helpers": "^1.0.0",
-        "@kipprice/toolkip-drawable": "^1.0.0",
-        "@kipprice/toolkip-maths": "^1.0.0",
-        "@kipprice/toolkip-style-helpers": "^1.0.0",
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-create-elements": "^1.0.0"
+        "@toolkip/html-helpers": "^1.0.0",
+        "@toolkip/drawable": "^1.0.0",
+        "@toolkip/maths": "^1.0.0",
+        "@toolkip/style-helpers": "^1.0.0",
+        "@toolkip/shared-types": "^1.0.0",
+        "@toolkip/create-elements": "^1.0.0"
     },
+
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

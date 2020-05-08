@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-file-server",
+    "name": "@toolkip/file-server",
     "version": "1.0.0",
     "description": "local storage utility functions",
     "license": "MIT",
@@ -8,6 +8,12 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

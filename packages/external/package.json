@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-external",
+    "name": "@toolkip/external",
     "version": "1.0.0",
     "description": "external helpers",
     "license": "MIT",
@@ -8,11 +8,18 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "file:../createElements",
-        "@kipprice/toolkip-drawable": "file:../drawable",
-        "@kipprice/toolkip-popups": "file:../popups"
+        "@toolkip/create-elements": "file:../createElements",
+        "@toolkip/drawable": "file:../drawable",
+        "@toolkip/popups": "file:../popups"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

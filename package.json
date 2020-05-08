@@ -1,6 +1,6 @@
 {
-    "name": "@kipprice/toolkip",
-    "version": "1.0.0",
+    "name": "toolkip",
+    "version": "1.0.1",
     "description": "toolkip library",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,16 +8,18 @@
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "typings/index",
-
     "scripts": {
+        "build": "yarn build:tsc && yarn build:webpack",
+        "build:webpack": "webpack",
+        "build:tsc": "tsc -p tsconfig.json --emitDeclarationOnly",
         "watch": "yarn watch:webpack && yarn watch:tsc",
         "watch:webpack": "webpack -w",
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
         "test": "jest -- -t .test.ts",
-
         "bootstrap": "lerna bootstrap",
         "publish": "lerna publish",
-        "compile": "lerna run compile"
+        "compile": "lerna run compile",
+        "test-lerna": "lerna run test"
     },
     "devDependencies": {
         "@types/jest": "^24.9.0",

@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-debug",
+    "name": "@toolkip/debug",
     "version": "1.0.0",
     "description": "debug utility functions",
     "license": "MIT",
@@ -8,9 +8,15 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+    
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/shared-types": "file:../shared"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

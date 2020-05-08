@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-image",
+    "name": "@toolkip/image",
     "version": "1.0.0",
     "description": "image component",
     "license": "MIT",
@@ -9,11 +9,17 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-style-helpers": "^1.0.0",
-        "@kipprice/toolkip-drawable": "^1.0.0",
-        "@kipprice/toolkip-create-elements": "^1.0.0"
+        "@toolkip/style-helpers": "^1.0.0",
+        "@toolkip/drawable": "^1.0.0",
+        "@toolkip/create-elements": "^1.0.0"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

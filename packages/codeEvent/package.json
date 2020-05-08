@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-code-event",
+    "name": "@toolkip/code-event",
     "version": "1.0.0",
     "description": "signalling utility functions",
     "license": "MIT",
@@ -8,6 +8,12 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

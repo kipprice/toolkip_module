@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-navigation",
+    "name": "@toolkip/navigation",
     "version": "1.0.0",
     "description": "navigation utility functions",
     "license": "MIT",
@@ -8,13 +8,20 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-data-structures": "file:../dataStructures",
-        "@kipprice/toolkip-history": "file:../history",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/data-structures": "file:../dataStructures",
+        "@toolkip/history": "file:../history",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

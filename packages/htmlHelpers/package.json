@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-html-helpers",
+    "name": "@toolkip/html-helpers",
     "version": "1.0.0",
     "description": "html utility functions",
     "license": "MIT",
@@ -8,10 +8,17 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

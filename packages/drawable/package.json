@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-drawable",
+    "name": "@toolkip/drawable",
     "version": "1.0.0",
     "description": "drawable component",
     "license": "MIT",
@@ -8,12 +8,19 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "file:../createElements",
-        "@kipprice/toolkip-media-queries": "file:../mediaQueries",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-stylable": "file:../stylable"
+        "@toolkip/create-elements": "file:../createElements",
+        "@toolkip/media-queries": "file:../mediaQueries",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/stylable": "file:../stylable"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

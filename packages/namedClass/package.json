@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-named-class",
+    "name": "@toolkip/named-class",
     "version": "1.0.0",
     "description": "keeps track of chain of classes",
     "license": "MIT",
@@ -8,9 +8,16 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers"
+        "@toolkip/primitive-helpers": "file:../primitiveHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

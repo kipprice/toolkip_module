@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-color",
+    "name": "@toolkip/color",
     "version": "1.0.0",
     "description": "color utility functions",
     "license": "MIT",
@@ -8,14 +8,21 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-comparable": "file:../comparable",
-        "@kipprice/toolkip-maths": "file:../maths",
-        "@kipprice/toolkip-named-class": "file:../namedClass",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/comparable": "file:../comparable",
+        "@toolkip/maths": "file:../maths",
+        "@toolkip/named-class": "file:../namedClass",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/primitive-helpers": "file:../primitiveHelpers",
+        "@toolkip/shared-types": "file:../shared"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

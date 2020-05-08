@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-history",
+    "name": "@toolkip/history",
     "version": "1.0.0",
     "description": "history utility functions",
     "license": "MIT",
@@ -8,9 +8,16 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers"
+        "@toolkip/object-helpers": "file:../objectHelpers"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

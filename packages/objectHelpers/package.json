@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-object-helpers",
+    "name": "@toolkip/object-helpers",
     "version": "1.0.0",
     "description": "object utility functions",
     "license": "MIT",
@@ -8,11 +8,18 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-maths": "file:../maths",
-        "@kipprice/toolkip-primitive-helpers": "file:../primitiveHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/maths": "file:../maths",
+        "@toolkip/primitive-helpers": "file:../primitiveHelpers",
+        "@toolkip/shared-types": "file:../shared"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

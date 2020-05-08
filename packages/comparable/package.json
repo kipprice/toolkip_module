@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-comparable",
+    "name": "@toolkip/comparable",
     "version": "1.0.0",
     "description": "comparison utility functions",
     "license": "MIT",
@@ -8,8 +8,14 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+    
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-shared-types": "file:../shared"
+        "@toolkip/shared-types": "file:../shared"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-visual-maths",
+    "name": "@toolkip/visual-maths",
     "version": "1.0.0",
     "description": "math UI utility functions",
     "license": "MIT",
@@ -8,14 +8,21 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-comparable": "file:../comparable",
-        "@kipprice/toolkip-create-elements": "file:../createElements",
-        "@kipprice/toolkip-html-helpers": "file:../htmlHelpers",
-        "@kipprice/toolkip-maths": "file:../maths",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-libraries": "file:../styleLibraries"
+        "@toolkip/comparable": "file:../comparable",
+        "@toolkip/create-elements": "file:../createElements",
+        "@toolkip/html-helpers": "file:../htmlHelpers",
+        "@toolkip/maths": "file:../maths",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-libraries": "file:../styleLibraries"
     },
+
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

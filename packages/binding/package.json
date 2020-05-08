@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-binding",
+    "name": "@toolkip/binding",
     "version": "1.0.0",
     "description": "binding utility functions",
     "license": "MIT",
@@ -9,10 +9,15 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-async": "^1.0.0",
-        "@kipprice/toolkip-comparable": "^1.0.0",
-        "@kipprice/toolkip-object-helpers": "^1.0.0"
+        "@toolkip/async": "^1.0.0",
+        "@toolkip/comparable": "^1.0.0",
+        "@toolkip/object-helpers": "^1.0.0"
     },
     
     "scripts": {

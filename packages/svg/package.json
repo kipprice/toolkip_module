@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-svg",
+    "name": "@toolkip/svg",
     "version": "1.0.0",
     "description": "svg utility functions",
     "license": "MIT",
@@ -9,17 +9,23 @@
     "module": "dist/index.js",
     "types": "typings/index",
 
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-maths": "^1.0.0",
-        "@kipprice/toolkip-create-elements": "^1.0.0",
-        "@kipprice/toolkip-object-helpers": "^1.0.0",
-        "@kipprice/toolkip-primitive-helpers": "^1.0.0",
-        "@kipprice/toolkip-draggable": "^1.0.0",
-        "@kipprice/toolkip-style-helpers": "^1.0.0",
-        "@kipprice/toolkip-drawable": "^1.0.0",
-        "@kipprice/toolkip-shared-types": "^1.0.0",
-        "@kipprice/toolkip-data-structures": "^1.0.0"
+        "@toolkip/maths": "^1.0.0",
+        "@toolkip/create-elements": "^1.0.0",
+        "@toolkip/object-helpers": "^1.0.0",
+        "@toolkip/primitive-helpers": "^1.0.0",
+        "@toolkip/draggable": "^1.0.0",
+        "@toolkip/style-helpers": "^1.0.0",
+        "@toolkip/drawable": "^1.0.0",
+        "@toolkip/shared-types": "^1.0.0",
+        "@toolkip/data-structures": "^1.0.0"
     },
+
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

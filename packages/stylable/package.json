@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-stylable",
+    "name": "@toolkip/stylable",
     "version": "1.0.0",
     "description": "styled components",
     "license": "MIT",
@@ -8,14 +8,21 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+
     "dependencies": {
-        "@kipprice/toolkip-media-queries": "file:../mediaQueries",
-        "@kipprice/toolkip-named-class": "file:../namedClass",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-shared-types": "file:../shared",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers",
-        "@kipprice/toolkip-style-libraries": "file:../styleLibraries"
+        "@toolkip/media-queries": "file:../mediaQueries",
+        "@toolkip/named-class": "file:../namedClass",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/shared-types": "file:../shared",
+        "@toolkip/style-helpers": "file:../styleHelpers",
+        "@toolkip/style-libraries": "file:../styleLibraries"
     },
+    
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"

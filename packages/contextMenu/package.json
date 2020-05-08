@@ -1,5 +1,5 @@
 {
-    "name": "@kipprice/toolkip-context-menu",
+    "name": "@toolkip/context-menu",
     "version": "1.0.0",
     "description": "context menu component",
     "license": "MIT",
@@ -8,12 +8,18 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
+
+    "files": [
+        "dist",
+        "typings"
+    ],
+    
     "dependencies": {
-        "@kipprice/toolkip-create-elements": "file:../createElements",
-        "@kipprice/toolkip-data-structures": "file:../dataStructures",
-        "@kipprice/toolkip-drawable": "file:../drawable",
-        "@kipprice/toolkip-object-helpers": "file:../objectHelpers",
-        "@kipprice/toolkip-style-helpers": "file:../styleHelpers"
+        "@toolkip/create-elements": "file:../createElements",
+        "@toolkip/data-structures": "file:../dataStructures",
+        "@toolkip/drawable": "file:../drawable",
+        "@toolkip/object-helpers": "file:../objectHelpers",
+        "@toolkip/style-helpers": "file:../styleHelpers"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
