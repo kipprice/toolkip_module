@@ -5,7 +5,9 @@
  * @param   timeInMs    Time to wait before executing the 
  */
 export function wait(timeInMs: number): Promise<any> {
-    return new Promise(resolve => window.setTimeout(resolve, timeInMs) );
+    return new Promise((resolve) => {
+        window.setTimeout(resolve, timeInMs) 
+    });
 }
 
 /**

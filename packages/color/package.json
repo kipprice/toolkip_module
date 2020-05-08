@@ -13,15 +13,16 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/comparable": "file:../comparable",
-        "@toolkip/maths": "file:../maths",
-        "@toolkip/named-class": "file:../namedClass",
-        "@toolkip/object-helpers": "file:../objectHelpers",
-        "@toolkip/primitive-helpers": "file:../primitiveHelpers",
-        "@toolkip/shared-types": "file:../shared"
+        "@toolkip/comparable": "^1.0.1",
+        "@toolkip/maths": "^1.0.1",
+        "@toolkip/named-class": "^1.0.1",
+        "@toolkip/object-helpers": "^1.0.1",
+        "@toolkip/primitive-helpers": "^1.0.1",
+        "@toolkip/shared-types": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

@@ -8,6 +8,12 @@
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "typings/index",
+
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/kipprice/toolkip_module.git"
+    },
+
     "scripts": {
         "build": "yarn build:tsc && yarn build:webpack",
         "build:webpack": "webpack",
@@ -17,10 +23,11 @@
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
         "test": "jest -- -t .test.ts",
         "bootstrap": "lerna bootstrap",
-        "publish": "lerna publish",
+        "lerna-publish": "lerna publish -- --access public",
         "compile": "lerna run compile",
         "test-lerna": "lerna run test"
     },
+
     "devDependencies": {
         "@types/jest": "^24.9.0",
         "jest": "^25.1.0",

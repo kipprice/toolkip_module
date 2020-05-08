@@ -13,13 +13,14 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/model": "file:../model",
-        "@toolkip/object-helpers": "file:../objectHelpers",
-        "@toolkip/serializable": "file:../serializable",
-        "@toolkip/structs": "file:../structs"
+        "@toolkip/model": "^1.0.1",
+        "@toolkip/object-helpers": "^1.0.1",
+        "@toolkip/serializable": "^1.0.1",
+        "@toolkip/structs": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

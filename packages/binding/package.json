@@ -20,5 +20,6 @@
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

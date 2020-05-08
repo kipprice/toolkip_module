@@ -13,13 +13,14 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "file:../createElements",
-        "@toolkip/media-queries": "file:../mediaQueries",
-        "@toolkip/shared-types": "file:../shared",
-        "@toolkip/stylable": "file:../stylable"
+        "@toolkip/create-elements": "^1.0.1",
+        "@toolkip/media-queries": "^1.0.1",
+        "@toolkip/shared-types": "^1.0.1",
+        "@toolkip/stylable": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

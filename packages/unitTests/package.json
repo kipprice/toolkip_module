@@ -13,13 +13,14 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "file:../createElements",
-        "@toolkip/drawable": "file:../drawable",
-        "@toolkip/primitive-helpers": "file:../primitiveHelpers",
-        "@toolkip/style-helpers": "file:../styleHelpers"
+        "@toolkip/create-elements": "^1.0.1",
+        "@toolkip/drawable": "^1.0.1",
+        "@toolkip/primitive-helpers": "^1.0.1",
+        "@toolkip/style-helpers": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo \"test at the root level\" && exit 1"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

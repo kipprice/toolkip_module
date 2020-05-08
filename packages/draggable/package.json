@@ -13,14 +13,15 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "file:../createElements",
-        "@toolkip/drawable": "file:../drawable",
-        "@toolkip/html-helpers": "file:../htmlHelpers",
-        "@toolkip/shared-types": "file:../shared",
-        "@toolkip/style-helpers": "file:../styleHelpers"
+        "@toolkip/create-elements": "^1.0.1",
+        "@toolkip/drawable": "^1.0.1",
+        "@toolkip/html-helpers": "^1.0.1",
+        "@toolkip/shared-types": "^1.0.1",
+        "@toolkip/style-helpers": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

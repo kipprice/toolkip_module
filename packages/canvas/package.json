@@ -13,15 +13,16 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/data-structures": "file:../dataStructures",
-        "@toolkip/drawable": "file:../drawable",
-        "@toolkip/maths": "file:../maths",
-        "@toolkip/object-helpers": "file:../objectHelpers",
-        "@toolkip/shared-types": "file:../shared",
-        "@toolkip/style-helpers": "file:../styleHelpers"
+        "@toolkip/data-structures": "^1.0.1",
+        "@toolkip/drawable": "^1.0.1",
+        "@toolkip/maths": "^1.0.1",
+        "@toolkip/object-helpers": "^1.0.1",
+        "@toolkip/shared-types": "^1.0.1",
+        "@toolkip/style-helpers": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

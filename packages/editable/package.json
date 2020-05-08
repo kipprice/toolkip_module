@@ -13,15 +13,16 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/async": "file:../async",
-        "@toolkip/bound-views": "file:../boundViews",
-        "@toolkip/drawable": "file:../drawable",
-        "@toolkip/html-helpers": "file:../htmlHelpers",
-        "@toolkip/named-class": "file:../namedClass",
-        "@toolkip/style-helpers": "file:../styleHelpers"
+        "@toolkip/async": "^1.0.1",
+        "@toolkip/bound-views": "^1.0.1",
+        "@toolkip/drawable": "^1.0.1",
+        "@toolkip/html-helpers": "^1.0.1",
+        "@toolkip/named-class": "^1.0.1",
+        "@toolkip/style-helpers": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }

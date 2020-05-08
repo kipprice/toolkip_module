@@ -13,11 +13,12 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/comparable": "file:../comparable",
-        "@toolkip/data-structures": "file:../dataStructures"
+        "@toolkip/comparable": "^1.0.1",
+        "@toolkip/data-structures": "^1.0.1"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    }
+    },
+    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
 }
