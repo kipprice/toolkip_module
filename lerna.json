@@ -1,10 +1,11 @@
 {
   "npmClient": "yarn",
-  "bootstrap": {
-
-  },
+  "bootstrap": {},
   "publish": {
-    "ignoreChanges": ["*.md", "*(wip)*"],
+    "ignoreChanges": [
+      "*.md",
+      "*(wip)*"
+    ],
     "message": "chore(release): publish"
   },
   "packages": [
