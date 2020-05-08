@@ -1,5 +1,5 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { IPoint } from "../../../shared";
+import { IPoint } from "@toolkip/shared-types";
 import { IPathPoint } from '../_interfaces';
 
 /**

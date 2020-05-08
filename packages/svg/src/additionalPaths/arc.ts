@@ -2,7 +2,7 @@ import { _PathExtensionElement } from "./pathExtension";
 import { degreesToRadians } from '@toolkip/maths';
 import { IAttributes } from '@toolkip/create-elements';
 import { IPathPoint, IArcPoint } from '../_interfaces';
-import { IPoint } from "../../../shared";
+import { IPoint } from "@toolkip/shared-types";
 
 /**----------------------------------------------------------------------------
  * @class	ArcElement

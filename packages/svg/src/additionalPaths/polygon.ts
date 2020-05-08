@@ -1,7 +1,7 @@
 import { _PathExtensionElement } from "./pathExtension";
 import { IPathSVGAttributes, IPathPoint } from '../_interfaces';
-import { calculatePolygonInternalAngle } from "../../../maths";
-import { IPoint } from "../../../shared";
+import { calculatePolygonInternalAngle } from "@toolkip/maths";
+import { IPoint } from "@toolkip/shared-types";
 
 /**----------------------------------------------------------------------------
  * @class	PolygonElement

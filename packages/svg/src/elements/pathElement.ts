@@ -7,7 +7,7 @@ import {
 	ICurvePoint, 
 	IArcPoint 
 } from '../_interfaces';
-import { IPoint, isNullOrUndefined } from "../../../shared";
+import { IPoint, isNullOrUndefined } from "@toolkip/shared-types";
 import { cloneObject } from "@toolkip/object-helpers";
 import { roundToPlace } from "@toolkip/maths";
 
