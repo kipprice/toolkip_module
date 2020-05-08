@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/errors",
-    "version": "1.0.5",
+    "version": "1.0.9",
     "description": "error utility functions",
     "license": "MIT",
     "author": "Kip Price",
