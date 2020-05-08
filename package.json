@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/toolkip",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Pure TS library for easier front-end development",
     "license": "MIT",
     "author": "Kip Price",
