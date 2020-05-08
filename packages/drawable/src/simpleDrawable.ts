@@ -17,6 +17,8 @@ export class Drawable<
 
 	//.....................
 	//#region PROPERTIES
+	
+	protected static _uncoloredStyles = {};
 
 	//#endregion
 	//.....................
