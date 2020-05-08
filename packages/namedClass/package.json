@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/named-class",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "keeps track of chain of classes",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/primitive-helpers": "^1.0.3"
+        "@toolkip/primitive-helpers": "^1.0.4"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

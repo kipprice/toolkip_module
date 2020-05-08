@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/color",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "color utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,12 +13,12 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/comparable": "^1.0.3",
-        "@toolkip/maths": "^1.0.3",
-        "@toolkip/named-class": "^1.0.3",
-        "@toolkip/object-helpers": "^1.0.3",
-        "@toolkip/primitive-helpers": "^1.0.3",
-        "@toolkip/shared-types": "^1.0.3"
+        "@toolkip/comparable": "^1.0.4",
+        "@toolkip/maths": "^1.0.4",
+        "@toolkip/named-class": "^1.0.4",
+        "@toolkip/object-helpers": "^1.0.4",
+        "@toolkip/primitive-helpers": "^1.0.4",
+        "@toolkip/shared-types": "^1.0.4"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

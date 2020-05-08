@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/style-helpers",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "style utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -14,9 +14,9 @@
     ],
     "dependencies": {
         "@toolkip/async": "^1.0.3",
-        "@toolkip/object-helpers": "^1.0.3",
-        "@toolkip/primitive-helpers": "^1.0.3",
-        "@toolkip/shared-types": "^1.0.3"
+        "@toolkip/object-helpers": "^1.0.4",
+        "@toolkip/primitive-helpers": "^1.0.4",
+        "@toolkip/shared-types": "^1.0.4"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
