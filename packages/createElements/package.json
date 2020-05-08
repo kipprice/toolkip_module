@@ -1,0 +1,31 @@
+{
+    "name": "@toolkip/create-elements",
+    "version": "1.0.10",
+    "description": "html generation utility functions",
+    "license": "MIT",
+    "author": "Kip Price",
+    "test": "jest",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "typings/index",
+    "files": [
+        "dist",
+        "typings"
+    ],
+    "dependencies": {
+        "@toolkip/binding": "^1.0.10",
+        "@toolkip/object-helpers": "^1.0.10",
+        "@toolkip/primitive-helpers": "^1.0.10",
+        "@toolkip/shared-types": "^1.0.10",
+        "@toolkip/style-helpers": "^1.0.10",
+        "@toolkip/style-libraries": "^1.0.10"
+    },
+    "scripts": {
+        "compile": "tsc -p tsconfig.json",
+        "test": "echo 'test at the root level'"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "gitHead": "5210df43084ce58a5d9ccee24992ba348964a91a"
+}

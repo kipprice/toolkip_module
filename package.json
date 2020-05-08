@@ -1,30 +1,41 @@
 {
-    "name": "@kipprice/toolkip",
-    "version": "1.0.0",
-    "description": "toolkip library",
+    "name": "@toolkip/toolkip",
+    "version": "1.0.3",
+    "description": "Pure TS library for easier front-end development",
     "license": "MIT",
     "author": "Kip Price",
     "test": "jest",
     "main": "src/index.ts",
     "module": "src/index.ts",
     "types": "typings/index",
+
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/kipprice/toolkip_module.git"
+    },
+
     "scripts": {
-        "build": "npm run build:tsc && npm run build:webpack",
+        "build": "yarn build:tsc && yarn build:webpack",
         "build:webpack": "webpack",
         "build:tsc": "tsc -p tsconfig.json --emitDeclarationOnly",
-        "watch": "npm run watch:webpack && npm run watch:tsc",
+        "watch": "yarn watch:webpack && yarn watch:tsc",
         "watch:webpack": "webpack -w",
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
-        "test": "npx jest -- -t .test.ts"
+        "test": "jest -- -t .test.ts",
+        "bootstrap": "lerna bootstrap",
+        "lerna-publish": "lerna bootstrap && lerna run compile && lerna publish",
+        "compile": "lerna run compile"
     },
+
     "devDependencies": {
         "@types/jest": "^24.9.0",
         "jest": "^25.1.0",
         "jest-cli": "^24.9.0",
+        "lerna": "^3.20.2",
         "terser-webpack-plugin": "^2.3.4",
         "ts-jest": "^24.3.0",
         "ts-loader": "^6.2.1",
-        "typescript": "^3.8.0-beta",
+        "typescript": "^3.8.3",
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.10"
     }

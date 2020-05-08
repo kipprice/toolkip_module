@@ -1,0 +1,15 @@
+{
+  "npmClient": "yarn",
+  "bootstrap": {},
+  "publish": {
+    "ignoreChanges": [
+      "*.md",
+      "*(wip)*"
+    ],
+    "message": "chore(release): publish"
+  },
+  "packages": [
+    "packages/*"
+  ],
+  "version": "1.0.12"
+}
