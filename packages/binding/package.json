@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/binding",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "binding utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -14,8 +14,8 @@
     ],
     "dependencies": {
         "@toolkip/async": "^1.0.4",
-        "@toolkip/comparable": "^1.0.6",
-        "@toolkip/object-helpers": "^1.0.6"
+        "@toolkip/comparable": "^1.0.7",
+        "@toolkip/object-helpers": "^1.0.7"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

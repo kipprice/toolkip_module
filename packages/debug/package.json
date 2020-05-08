@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/debug",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "debug utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/object-helpers": "^1.0.6",
+        "@toolkip/object-helpers": "^1.0.7",
         "@toolkip/shared-types": "^1.0.6"
     },
     "scripts": {

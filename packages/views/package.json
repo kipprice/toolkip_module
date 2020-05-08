@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/views",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "view utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/drawable": "^1.0.7"
+        "@toolkip/drawable": "^1.0.8"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

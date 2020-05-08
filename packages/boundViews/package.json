@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/bound-views",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "link views to state",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,12 +13,12 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/binding": "^1.0.7",
-        "@toolkip/create-elements": "^1.0.7",
-        "@toolkip/drawable": "^1.0.7",
-        "@toolkip/html-helpers": "^1.0.7",
-        "@toolkip/identifiable": "^1.0.6",
-        "@toolkip/object-helpers": "^1.0.6",
+        "@toolkip/binding": "^1.0.8",
+        "@toolkip/create-elements": "^1.0.8",
+        "@toolkip/drawable": "^1.0.8",
+        "@toolkip/html-helpers": "^1.0.8",
+        "@toolkip/identifiable": "^1.0.7",
+        "@toolkip/object-helpers": "^1.0.7",
         "@toolkip/shared-types": "^1.0.6"
     },
     "scripts": {
