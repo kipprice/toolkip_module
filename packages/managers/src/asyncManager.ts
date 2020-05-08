@@ -1,7 +1,7 @@
-import { IIdentifiable, Identifier, IdentifiableModel } from '@kipprice/toolkip-identifiable';
+import { IIdentifiable, Identifier, IdentifiableModel } from '@toolkip/identifiable';
 import { DataManager } from "./dataManager";
 import { Loadable, Creatable, ILoadFunction, ICreateFunction } from "./_interfaces";
-import { IDictionary } from '@kipprice/toolkip-object-helpers';
+import { IDictionary } from '@toolkip/object-helpers';
 
 
 /**----------------------------------------------------------------------------

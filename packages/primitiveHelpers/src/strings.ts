@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from '@kipprice/toolkip-shared-types';
+import { isNullOrUndefined } from '@toolkip/shared-types';
 
 /**
  * piece

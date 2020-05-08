@@ -1,4 +1,4 @@
-import { IDictionary } from '@kipprice/toolkip-object-helpers';
+import { IDictionary } from '@toolkip/object-helpers';
 import { _Color, HexColor, HSLColor } from './color';
 import { HSLPieceEnum } from './_interfaces';
 

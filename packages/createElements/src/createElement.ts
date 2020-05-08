@@ -1,5 +1,5 @@
 import { IAttributes, IChild, IElemDefinition, ILabeledElement, IClassDefinition, IKeyedElems, ICreateElementFunc, ClassName } from "./_interfaces";
-import { trim, join } from '@kipprice/toolkip-primitive-helpers';
+import { trim, join } from '@toolkip/primitive-helpers';
 import { _coreCreateElement } from "./_coreCreateElement";
 
 

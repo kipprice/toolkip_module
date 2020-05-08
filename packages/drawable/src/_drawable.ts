@@ -1,8 +1,8 @@
-import { _Stylable } from '@kipprice/toolkip-stylable';
-import { createElement, IElemDefinition } from '@kipprice/toolkip-create-elements';
+import { _Stylable } from '@toolkip/stylable';
+import { createElement, IElemDefinition } from '@toolkip/create-elements';
 import { IDrawableElements } from '.';
-import { StandardElement, IDrawable } from '@kipprice/toolkip-shared-types';
-import { registerStandardMediaQueries } from '@kipprice/toolkip-media-queries';
+import { StandardElement, IDrawable } from '@toolkip/shared-types';
+import { registerStandardMediaQueries } from '@toolkip/media-queries';
 
 /**----------------------------------------------------------------------------
  * @class Drawable

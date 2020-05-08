@@ -1,4 +1,4 @@
-import { _Model }  from '@kipprice/toolkip-model';
+import { _Model }  from '@toolkip/model';
 import { IdentifiableModel } from './identifiableModel';
 
 

@@ -1,8 +1,8 @@
-import { _Drawable } from "@kipprice/toolkip-drawable";
+import { _Drawable } from "@toolkip/drawable";
 import { IUnitTestElems, VisualResults } from "./_interfaces";
-import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { IStandardStyles } from "@toolkip/style-helpers";
 import { IVisualTestButton } from '../_interfaces';
-import { createElement } from "@kipprice/toolkip-create-elements";
+import { createElement } from "@toolkip/create-elements";
 
 /**----------------------------------------------------------------------------
  * @class   HTMLTest

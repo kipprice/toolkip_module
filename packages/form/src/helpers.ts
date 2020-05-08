@@ -1,9 +1,9 @@
 import { IFieldConfig, IFields, FieldTypeEnum } from "./_interfaces";
-import { ISelectOptions, map } from '@kipprice/toolkip-object-helpers';
-import { isNullOrUndefined } from '@kipprice/toolkip-shared-types';
-import { createElement, createSimpleElement, IElemDefinition, IAttributes, IChild } from '@kipprice/toolkip-create-elements';
+import { ISelectOptions, map } from '@toolkip/object-helpers';
+import { isNullOrUndefined } from '@toolkip/shared-types';
+import { createElement, createSimpleElement, IElemDefinition, IAttributes, IChild } from '@toolkip/create-elements';
 import { _Field } from "./_field";
-import { inputDateFmt } from '@kipprice/toolkip-primitive-helpers';
+import { inputDateFmt } from '@toolkip/primitive-helpers';
 
 
 export function cloneTemplate<D>(template: IFieldConfig<D>): IFieldConfig<D> {

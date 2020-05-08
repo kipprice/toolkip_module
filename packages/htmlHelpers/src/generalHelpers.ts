@@ -1,6 +1,6 @@
-import { removeClass } from '@kipprice/toolkip-style-helpers';
+import { removeClass } from '@toolkip/style-helpers';
 import { isSelectable, hasOffsets } from "./_typeguards";
-import { isNullOrUndefined, StandardElement, IPoint } from '@kipprice/toolkip-shared-types';
+import { isNullOrUndefined, StandardElement, IPoint } from '@toolkip/shared-types';
 
 
 /**

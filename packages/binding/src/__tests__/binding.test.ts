@@ -1,5 +1,5 @@
 import { bind } from '..';
-import { nextRender } from "@kipprice/toolkip-async";
+import { nextRender } from "@toolkip/async";
 
 describe('testing binding functions', () => {
     it('binds a simple primitive', async () => {

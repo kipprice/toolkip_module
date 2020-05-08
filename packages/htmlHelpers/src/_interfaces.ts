@@ -1,4 +1,4 @@
-import { StandardElement } from '@kipprice/toolkip-shared-types';
+import { StandardElement } from '@toolkip/shared-types';
 
 //..........................................
 //#region INTERFACES AND TYPES

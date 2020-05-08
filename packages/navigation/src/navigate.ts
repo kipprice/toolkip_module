@@ -1,9 +1,9 @@
-import { Collection, ICollectionElement } from '@kipprice/toolkip-data-structures';
+import { Collection, ICollectionElement } from '@toolkip/data-structures';
 import { INavTransitionType, IHistoryEntry, INavigationData, INavigable } from "./_interfaces";
-import { HistoryChain } from '@kipprice/toolkip-history';
-import { IConstructor } from '@kipprice/toolkip-object-helpers';
-import { transition } from '@kipprice/toolkip-style-helpers';
-import { isUpdatable } from '@kipprice/toolkip-structs';
+import { HistoryChain } from '@toolkip/history';
+import { IConstructor } from '@toolkip/object-helpers';
+import { transition } from '@toolkip/style-helpers';
+import { isUpdatable } from '@toolkip/structs';
 
 
 //#region STANDARD NAVIGATION

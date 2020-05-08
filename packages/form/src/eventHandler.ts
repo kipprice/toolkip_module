@@ -1,4 +1,4 @@
-import { _Event, IEventContext, _EventHandler } from '@kipprice/toolkip-events';
+import { _Event, IEventContext, _EventHandler } from '@toolkip/events';
 
 
 /**

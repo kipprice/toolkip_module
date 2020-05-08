@@ -1,9 +1,9 @@
 import { IFormMultiSelectButtonTemplate } from "./_interfaces";
 import { _ToggleButtonField } from "./_toggleButtonField";
-import { IToggleBtnOption } from "@kipprice/toolkip-object-helpers";
+import { IToggleBtnOption } from "@toolkip/object-helpers";
 import { isNullOrUndefined } from "../../../shared";
-import { removeClass, addClass } from "@kipprice/toolkip-style-helpers";
-import { shortDate } from "@kipprice/toolkip-primitive-helpers";
+import { removeClass, addClass } from "@toolkip/style-helpers";
+import { shortDate } from "@toolkip/primitive-helpers";
 
 
 /**----------------------------------------------------------------------------

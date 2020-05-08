@@ -1,6 +1,6 @@
-import { trim } from '@kipprice/toolkip-primitive-helpers';
-import { IKeyValPair } from '@kipprice/toolkip-object-helpers';
-import { StandardElement, DrawableElement, isDrawable, IDrawable } from '@kipprice/toolkip-shared-types';
+import { trim } from '@toolkip/primitive-helpers';
+import { IKeyValPair } from '@toolkip/object-helpers';
+import { StandardElement, DrawableElement, isDrawable, IDrawable } from '@toolkip/shared-types';
 import { TypedClassDefinition } from './_interfaces';
 
 /**

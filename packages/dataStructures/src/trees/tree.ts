@@ -1,4 +1,4 @@
-import { getNextKey, map, IDictionary } from "@kipprice/toolkip-object-helpers";
+import { getNextKey, map, IDictionary } from "@toolkip/object-helpers";
 
 
 export abstract class _Tree<T> {

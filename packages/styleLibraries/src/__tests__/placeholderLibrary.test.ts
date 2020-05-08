@@ -1,6 +1,6 @@
 import { PlaceholderLibrary } from '..';
-import { stringifyStyles, IFlatStyles } from "@kipprice/toolkip-style-helpers";
-// import { createElement } from "@kipprice/toolkip-create-elements";
+import { stringifyStyles, IFlatStyles } from "@toolkip/style-helpers";
+// import { createElement } from "@toolkip/create-elements";
 
 const stylesA: IFlatStyles = {
     ".one": {

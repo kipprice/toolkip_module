@@ -2,7 +2,7 @@ import {
     IIdentifiable, 
     Identifier, 
     IdentifiableModel 
-} from '@kipprice/toolkip-identifiable';
+} from '@toolkip/identifiable';
 
 export interface Creatable<I extends IIdentifiable> {
     create: ICreateFunction<I>;

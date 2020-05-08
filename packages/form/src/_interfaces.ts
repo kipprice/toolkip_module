@@ -1,6 +1,6 @@
 import { _Field } from "./_field";
-import { _Drawable } from '@kipprice/toolkip-drawable';
-import { ISelectOptions, IDictionary } from '@kipprice/toolkip-object-helpers';
+import { _Drawable } from '@toolkip/drawable';
+import { ISelectOptions, IDictionary } from '@toolkip/object-helpers';
 
 
 //...............

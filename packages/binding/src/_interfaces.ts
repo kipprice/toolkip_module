@@ -1,4 +1,4 @@
-import { IEqualityFunction } from '@kipprice/toolkip-comparable';
+import { IEqualityFunction } from '@toolkip/comparable';
 
 export interface BoundEvalFunction<T> {
     (): T

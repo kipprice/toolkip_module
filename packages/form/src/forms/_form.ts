@@ -1,12 +1,12 @@
 import { IFormOptions, ICanSaveTracker, FormColor, IFields, IFormButton } from "../_interfaces";
-import { combineObjects } from "@kipprice/toolkip-object-helpers";
-import { StandardElement } from "@kipprice/toolkip-shared-types";
-import { createElement } from "@kipprice/toolkip-create-elements";
+import { combineObjects } from "@toolkip/object-helpers";
+import { StandardElement } from "@toolkip/shared-types";
+import { createElement } from "@toolkip/create-elements";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent, FORM_SAVABLE_CHANGE, FormSavableEvent } from '../eventHandler';
-import { addClass, removeClass, IStandardStyles } from "@kipprice/toolkip-style-helpers";
-import { ErrorPopup, YesNoPopup, YesNoEnum } from "@kipprice/toolkip-popups";
+import { addClass, removeClass, IStandardStyles } from "@toolkip/style-helpers";
+import { ErrorPopup, YesNoPopup, YesNoEnum } from "@toolkip/popups";
 import { _Field } from '../_field';
-import { _Drawable } from "@kipprice/toolkip-drawable";
+import { _Drawable } from "@toolkip/drawable";
 import { SectionField } from '../complexFields/sectionField';
 import { IFormCollapsibleTemplate } from '../complexFields/_interfaces';
 import { map } from "../../../objectHelpers";

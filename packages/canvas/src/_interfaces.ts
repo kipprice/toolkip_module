@@ -1,5 +1,5 @@
-import { IPoint } from '@kipprice/toolkip-shared-types';
-import { IDrawableElements } from '@kipprice/toolkip-drawable';
+import { IPoint } from '@toolkip/shared-types';
+import { IDrawableElements } from '@toolkip/drawable';
 
 /**
  * IDimensions

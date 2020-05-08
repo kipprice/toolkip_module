@@ -1,5 +1,5 @@
 import { _Form } from "./_form";
-import { IStandardStyles, addClass } from "@kipprice/toolkip-style-helpers";
+import { IStandardStyles, addClass } from "@toolkip/style-helpers";
 
 
 export class FullScreenForm<T> extends _Form<T> {

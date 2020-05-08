@@ -1,6 +1,6 @@
 import { PolygonElement } from "./polygon";
-import { calculatePolygonInternalAngle } from "@kipprice/toolkip-maths";
-import { IPoint } from "@kipprice/toolkip-shared-types";
+import { calculatePolygonInternalAngle } from "@toolkip/maths";
+import { IPoint } from "@toolkip/shared-types";
 import { IPathSVGAttributes, IPathPoint } from '../_interfaces';
 
 /**----------------------------------------------------------------------------

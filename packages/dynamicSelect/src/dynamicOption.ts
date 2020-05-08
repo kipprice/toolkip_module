@@ -1,8 +1,8 @@
-import { _Drawable } from '@kipprice/toolkip-drawable';
+import { _Drawable } from '@toolkip/drawable';
 import { IDynamicOption, IDynamicOptionElems, IDynamicSelect } from "./_interfaces";
-import { createElement } from '@kipprice/toolkip-create-elements';
-import { addClass, removeClass, transition, IStandardStyles } from '@kipprice/toolkip-style-helpers';
-import { nextRender } from '@kipprice/toolkip-async';
+import { createElement } from '@toolkip/create-elements';
+import { addClass, removeClass, transition, IStandardStyles } from '@toolkip/style-helpers';
+import { nextRender } from '@toolkip/async';
 
     /**----------------------------------------------------------------------------
      * @class DynamicOption

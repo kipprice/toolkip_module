@@ -1,6 +1,6 @@
-import { IDictionary, map } from '@kipprice/toolkip-object-helpers';
-import { nextRender } from '@kipprice/toolkip-async';
-import { IEqualityFunction } from '@kipprice/toolkip-comparable';
+import { IDictionary, map } from '@toolkip/object-helpers';
+import { nextRender } from '@toolkip/async';
+import { IEqualityFunction } from '@toolkip/comparable';
 import { 
 		IBindingDetails, 
 		BoundDeleteFunction as BoundSkipFunction, 

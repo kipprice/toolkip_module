@@ -1,4 +1,4 @@
-import { IDrawableElements } from '@kipprice/toolkip-drawable';
+import { IDrawableElements } from '@toolkip/drawable';
 
 export interface IDynamicSelect {
     select(opt: IDynamicOption)

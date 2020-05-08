@@ -1,6 +1,6 @@
-import { rest } from '@kipprice/toolkip-primitive-helpers';
+import { rest } from '@toolkip/primitive-helpers';
 import { _Tree } from './tree';
-import { IDictionary } from '@kipprice/toolkip-object-helpers';
+import { IDictionary } from '@toolkip/object-helpers';
 
 
 /**----------------------------------------------------------------------------

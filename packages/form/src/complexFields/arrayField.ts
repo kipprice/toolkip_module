@@ -2,13 +2,13 @@ import { FieldTypeEnum, IFields, ICanSaveTracker, FormColor } from "../_interfac
 import { _CollapsibleField } from "./_collapsibleField";
 import { _Field } from '../_field';
 import { isField } from '../helpers';
-import { map } from "@kipprice/toolkip-object-helpers";
-import { isNullOrUndefined } from "@kipprice/toolkip-shared-types";
-import { createElement } from "@kipprice/toolkip-create-elements";
+import { map } from "@toolkip/object-helpers";
+import { isNullOrUndefined } from "@toolkip/shared-types";
+import { createElement } from "@toolkip/create-elements";
 import { ArrayChildField } from "./arrayChildField";
-import { removeElement } from "@kipprice/toolkip-html-helpers";
+import { removeElement } from "@toolkip/html-helpers";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '../eventHandler';
-import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { IStandardStyles } from "@toolkip/style-helpers";
 import { IFormArrayTemplate, DirectionType } from "./_interfaces";
 import { isArrayChildElement } from "./_typeguards";
 

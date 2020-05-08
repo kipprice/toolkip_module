@@ -1,6 +1,6 @@
 import { _PathExtensionElement } from "./pathExtension";
-import { degreesToRadians } from '@kipprice/toolkip-maths';
-import { IAttributes } from '@kipprice/toolkip-create-elements';
+import { degreesToRadians } from '@toolkip/maths';
+import { IAttributes } from '@toolkip/create-elements';
 import { IPathPoint, IArcPoint } from '../_interfaces';
 import { IPoint } from "../../../shared";
 

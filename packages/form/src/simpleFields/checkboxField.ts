@@ -1,8 +1,8 @@
 import { _Field } from "../_field";
 import { FieldTypeEnum, FormElementLayoutEnum } from '../_interfaces';
-import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
+import { IStandardStyles } from "@toolkip/style-helpers";
 import { createLabelForInput } from '../helpers';
-import { createElement, createSimpleElement } from "@kipprice/toolkip-create-elements";
+import { createElement, createSimpleElement } from "@toolkip/create-elements";
 
 
 /**----------------------------------------------------------------------------

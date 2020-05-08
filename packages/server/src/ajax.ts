@@ -1,4 +1,4 @@
-import { map } from '@kipprice/toolkip-object-helpers';
+import { map } from '@toolkip/object-helpers';
 import { IAjaxParams, IAjaxDetails } from "./_interfaces";
 
 /**

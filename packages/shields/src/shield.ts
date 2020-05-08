@@ -1,7 +1,7 @@
-import { _Drawable } from '@kipprice/toolkip-drawable';
+import { _Drawable } from '@toolkip/drawable';
 import { IShieldElements } from "./_interfaces";
-import { createElement } from '@kipprice/toolkip-create-elements';
-import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { createElement } from '@toolkip/create-elements';
+import { IStandardStyles } from '@toolkip/style-helpers';
 
 
 export abstract class _Shield extends _Drawable {

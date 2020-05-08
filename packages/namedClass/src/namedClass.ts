@@ -1,5 +1,5 @@
 import { INamedClass } from './_interfaces';
-import { contains } from '@kipprice/toolkip-primitive-helpers';
+import { contains } from '@toolkip/primitive-helpers';
 
 /**----------------------------------------------------------------------------
  * _NamedClass

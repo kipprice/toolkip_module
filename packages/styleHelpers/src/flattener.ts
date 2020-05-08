@@ -1,5 +1,5 @@
 import { IStandardStyles, TypedClassDefinition } from ".";
-import { map } from '@kipprice/toolkip-object-helpers';
+import { map } from '@toolkip/object-helpers';
 import { combineStyles } from "./combiner";
 
 /**----------------------------------------------------------------------------

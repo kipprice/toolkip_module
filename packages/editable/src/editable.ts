@@ -1,14 +1,14 @@
-import {_Drawable} from '@kipprice/toolkip-drawable';
+import {_Drawable} from '@toolkip/drawable';
 import { 
 		IEditableElems, 
 		IEditableOptions, 
 		IValidateResult, 
 		IEditableHandlers
 	} from './_interfaces';
-import { addClass, removeClass, IStandardStyles } from '@kipprice/toolkip-style-helpers';
-import { select } from '@kipprice/toolkip-html-helpers';
-import { _BoundView } from '@kipprice/toolkip-bound-views';
-import { wait } from '@kipprice/toolkip-async';
+import { addClass, removeClass, IStandardStyles } from '@toolkip/style-helpers';
+import { select } from '@toolkip/html-helpers';
+import { _BoundView } from '@toolkip/bound-views';
+import { wait } from '@toolkip/async';
 
 /**---------------------------------------------------------------------------
  * @class	Editable<T>

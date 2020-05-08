@@ -1,5 +1,5 @@
-import { globalOffsetLeft, globalOffsetTop } from '@kipprice/toolkip-html-helpers';
-import { SortOrderEnum } from '@kipprice/toolkip-comparable';
+import { globalOffsetLeft, globalOffsetTop } from '@toolkip/html-helpers';
+import { SortOrderEnum } from '@toolkip/comparable';
 
 export function compareLeftPosition(elemA: HTMLElement, elemB: HTMLElement): SortOrderEnum {
 	return _comparePosition(

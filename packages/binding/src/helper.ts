@@ -1,5 +1,5 @@
 import { BoundEvalFunction, BoundUpdateFunction, BoundDeleteFunction } from './_interfaces';
-import { IEqualityFunction } from '@kipprice/toolkip-comparable';
+import { IEqualityFunction } from '@toolkip/comparable';
 import {Binder} from './binder';
 
 

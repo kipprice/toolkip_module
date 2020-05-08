@@ -1,4 +1,4 @@
-import { IDrawableElements } from "@kipprice/toolkip-drawable";
+import { IDrawableElements } from "@toolkip/drawable";
 import { _BoundView } from "../..";
 
 export abstract class SampleBV<M, E extends IDrawableElements = IDrawableElements> extends _BoundView<M> {

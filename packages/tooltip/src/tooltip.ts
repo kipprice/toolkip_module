@@ -1,11 +1,11 @@
 import { TOOLTIP_MARGIN } from './_constants';
-import {_Drawable} from '@kipprice/toolkip-drawable';
+import {_Drawable} from '@toolkip/drawable';
 import { ITooltipElements, TooltipPositionType } from "./_interfaces";
-import { IBasicRect, clientRectToBasicRect } from '@kipprice/toolkip-maths';
-import { IElemDefinition } from '@kipprice/toolkip-create-elements';
-import { isNullOrUndefined, IPoint } from '@kipprice/toolkip-shared-types';
-import { addClass, removeClass, IStandardStyles } from '@kipprice/toolkip-style-helpers';
-import { measureElement } from '@kipprice/toolkip-html-helpers';
+import { IBasicRect, clientRectToBasicRect } from '@toolkip/maths';
+import { IElemDefinition } from '@toolkip/create-elements';
+import { isNullOrUndefined, IPoint } from '@toolkip/shared-types';
+import { addClass, removeClass, IStandardStyles } from '@toolkip/style-helpers';
+import { measureElement } from '@toolkip/html-helpers';
 
 
 /**----------------------------------------------------------------------------

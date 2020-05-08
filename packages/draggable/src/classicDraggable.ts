@@ -1,6 +1,6 @@
 import { _GenericDraggable, _DraggableTarget } from "./draggable";
-import { addClass, removeClass } from '@kipprice/toolkip-style-helpers';
-import { StandardElement } from '@kipprice/toolkip-shared-types';
+import { addClass, removeClass } from '@toolkip/style-helpers';
+import { StandardElement } from '@toolkip/shared-types';
 
 
 /**----------------------------------------------------------------------------

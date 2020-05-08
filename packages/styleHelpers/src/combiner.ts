@@ -1,5 +1,5 @@
 import { TypedClassDefinition, Styles, IFontFaceDefinition } from ".";
-import { map, isEmptyObject } from '@kipprice/toolkip-object-helpers';
+import { map, isEmptyObject } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	StyleCombiner

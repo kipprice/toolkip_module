@@ -1,4 +1,4 @@
-import { IDrawableElements } from '@kipprice/toolkip-drawable';
+import { IDrawableElements } from '@toolkip/drawable';
 import { _BoundView } from './_boundView';
 import { IBoundElemDefinition } from './_interfaces';
 

@@ -1,5 +1,5 @@
 import { _BoundView } from ".."
-import { nextRender } from "@kipprice/toolkip-async";
+import { nextRender } from "@toolkip/async";
 import { SimpleBoundView } from "./classes/simpleview";
 import { ComplexBoundView } from "./classes/complexView";
 import { ComposableView } from "./classes/composableView";

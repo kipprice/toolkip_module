@@ -1,5 +1,5 @@
 import { IFieldConfig } from "../_interfaces";
-import { IAttributes } from "@kipprice/toolkip-create-elements";
+import { IAttributes } from "@toolkip/create-elements";
 
 
 export interface IFileSaveCallback {

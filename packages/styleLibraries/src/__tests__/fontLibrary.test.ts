@@ -1,4 +1,4 @@
-import { ICustomFonts, stringifyStyles } from "@kipprice/toolkip-style-helpers";
+import { ICustomFonts, stringifyStyles } from "@toolkip/style-helpers";
 import { FontLibrary } from '..'
 
 const fontsA: ICustomFonts = {

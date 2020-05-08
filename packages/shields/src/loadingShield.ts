@@ -1,7 +1,7 @@
 import { _Shield } from "./shield";
 import { ILoadingShieldElements } from "./_interfaces";
-import { createElement } from '@kipprice/toolkip-create-elements';
-import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { createElement } from '@toolkip/create-elements';
+import { IStandardStyles } from '@toolkip/style-helpers';
 
 
 /**

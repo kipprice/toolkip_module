@@ -1,4 +1,4 @@
-import { IPoint } from '@kipprice/toolkip-shared-types';
+import { IPoint } from '@toolkip/shared-types';
 import { 
 	IBasicRect, 
 	isIBasicRect, 

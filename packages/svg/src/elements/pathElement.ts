@@ -8,8 +8,8 @@ import {
 	IArcPoint 
 } from '../_interfaces';
 import { IPoint, isNullOrUndefined } from "../../../shared";
-import { cloneObject } from "@kipprice/toolkip-object-helpers";
-import { roundToPlace } from "@kipprice/toolkip-maths";
+import { cloneObject } from "@toolkip/object-helpers";
+import { roundToPlace } from "@toolkip/maths";
 
 
 /**----------------------------------------------------------------------------

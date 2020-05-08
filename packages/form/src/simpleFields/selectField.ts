@@ -1,8 +1,8 @@
 import { ISelectFieldTemplate, FieldTypeEnum } from "../_interfaces";
 import { _Field } from '../_field';
-import { ISelectOptions } from "@kipprice/toolkip-object-helpers";
+import { ISelectOptions } from "@toolkip/object-helpers";
 import { createSelectElement } from '../helpers';
-import { isNumeric } from "@kipprice/toolkip-primitive-helpers";
+import { isNumeric } from "@toolkip/primitive-helpers";
 
 
 /**----------------------------------------------------------------------------

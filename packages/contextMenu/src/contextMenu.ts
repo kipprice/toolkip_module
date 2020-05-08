@@ -1,12 +1,12 @@
-import { _Drawable } from '@kipprice/toolkip-drawable';
-import { Collection, ICollectionElement } from '@kipprice/toolkip-data-structures';
-import { createSimpleElement } from '@kipprice/toolkip-create-elements';
-import { IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { _Drawable } from '@toolkip/drawable';
+import { Collection, ICollectionElement } from '@toolkip/data-structures';
+import { createSimpleElement } from '@toolkip/create-elements';
+import { IStandardStyles } from '@toolkip/style-helpers';
 import { 
 		IContextMenuThemeColors, 
 		IOption
 	} from './_interfaces';
-import { map } from '@kipprice/toolkip-object-helpers';
+import { map } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class ContextMenu

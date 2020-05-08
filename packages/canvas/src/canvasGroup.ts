@@ -1,10 +1,10 @@
 import { _CanvasElement } from "./canvasElement";
-import { Collection, ICollectionElement } from '@kipprice/toolkip-data-structures';
+import { Collection, ICollectionElement } from '@toolkip/data-structures';
 import { ElementType, EventTypeEnum } from "./_interfaces";
-import { IBasicRect, isPointContained } from '@kipprice/toolkip-maths';
-import { clonePoint } from '@kipprice/toolkip-object-helpers';
+import { IBasicRect, isPointContained } from '@toolkip/maths';
+import { clonePoint } from '@toolkip/object-helpers';
 import { HTML5Canvas } from "./canvas";
-import { IPoint } from '@kipprice/toolkip-shared-types';
+import { IPoint } from '@toolkip/shared-types';
 
 /**----------------------------------------------------------------------------
  * @class	CanvasGroup

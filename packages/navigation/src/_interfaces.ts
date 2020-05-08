@@ -1,4 +1,4 @@
-import { IDrawable } from "@kipprice/toolkip-shared-types";
+import { IDrawable } from "@toolkip/shared-types";
 
 /**
  * INavigationData

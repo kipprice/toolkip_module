@@ -1,5 +1,5 @@
-import { IComparable, isComparable } from '@kipprice/toolkip-comparable';
-import { IDictionary } from '@kipprice/toolkip-object-helpers';
+import { IComparable, isComparable } from '@toolkip/comparable';
+import { IDictionary } from '@toolkip/object-helpers';
 import { _Tree } from './tree';
 
 

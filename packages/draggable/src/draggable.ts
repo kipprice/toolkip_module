@@ -1,8 +1,8 @@
-import { IStandardStyles, removeClass, addClass } from '@kipprice/toolkip-style-helpers';
-import { _Drawable } from '@kipprice/toolkip-drawable';
-import { StandardElement, IPoint } from '@kipprice/toolkip-shared-types';
-import { moveElemRelativePosition } from '@kipprice/toolkip-html-helpers';
-import { createElement } from '@kipprice/toolkip-create-elements';
+import { IStandardStyles, removeClass, addClass } from '@toolkip/style-helpers';
+import { _Drawable } from '@toolkip/drawable';
+import { StandardElement, IPoint } from '@toolkip/shared-types';
+import { moveElemRelativePosition } from '@toolkip/html-helpers';
+import { createElement } from '@toolkip/create-elements';
 
 /**----------------------------------------------------------------------------
  * @class   GenericDraggable

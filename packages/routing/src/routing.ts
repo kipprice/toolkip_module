@@ -1,4 +1,4 @@
-import { IKeyValPair } from '@kipprice/toolkip-object-helpers';
+import { IKeyValPair } from '@toolkip/object-helpers';
 import { ScriptLoader } from "./scriptLoader";
 import { cleanURL, splitParams } from "./url";
 

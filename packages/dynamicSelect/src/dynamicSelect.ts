@@ -1,9 +1,9 @@
-import { _Drawable } from '@kipprice/toolkip-drawable';
+import { _Drawable } from '@toolkip/drawable';
 import { DynamicOption } from "./dynamicOption";
 import { IDynamicSelectElems, IDynamicOption } from "./_interfaces";
-import { CollectionTypeEnum, ICollectionElement, Collection } from '@kipprice/toolkip-data-structures';
-import { createElement } from '@kipprice/toolkip-create-elements';
-import { removeClass, addClass, IStandardStyles, transition } from '@kipprice/toolkip-style-helpers';
+import { CollectionTypeEnum, ICollectionElement, Collection } from '@toolkip/data-structures';
+import { createElement } from '@toolkip/create-elements';
+import { removeClass, addClass, IStandardStyles, transition } from '@toolkip/style-helpers';
 
 
 /**----------------------------------------------------------------------------

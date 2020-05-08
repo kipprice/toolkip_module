@@ -1,5 +1,5 @@
-import { format } from '@kipprice/toolkip-primitive-helpers';
-import { createElement } from '@kipprice/toolkip-create-elements';
+import { format } from '@toolkip/primitive-helpers';
+import { createElement } from '@toolkip/create-elements';
 
 
 /**----------------------------------------------------------------------------

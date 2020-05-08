@@ -1,11 +1,11 @@
-import { _Drawable } from '@kipprice/toolkip-drawable';
-import { IPoint } from '@kipprice/toolkip-shared-types';
+import { _Drawable } from '@toolkip/drawable';
+import { IPoint } from '@toolkip/shared-types';
 import { ISVGElems, ISVGOptions, IPathPoint, IPathSVGAttributes, ISVGAttributes, SVGShapeEnum } from "./_interfaces";
-import { IBasicRect, IExtrema } from '@kipprice/toolkip-maths';
+import { IBasicRect, IExtrema } from '@toolkip/maths';
 import { SVGStyle } from "./svgStyle";
-import { Collection } from '@kipprice/toolkip-data-structures';
+import { Collection } from '@toolkip/data-structures';
 import { _SVGElem } from "./elements/svgElement";
-import { reconcileOptions } from '@kipprice/toolkip-object-helpers';
+import { reconcileOptions } from '@toolkip/object-helpers';
 import { createSVG } from "./svgHelpers";
 import { PathElement } from "./elements/pathElement";
 import { RectangleElement } from "./elements/rectElement";
@@ -14,7 +14,7 @@ import { ArcElement, PieSliceElement, PolygonElement, StarElement, _PathExtensio
 import { TextElement } from "./elements/textElement";
 import { GroupElement } from "./elements/groupElement";
 import { SVGDefinitionsElement } from "./svgDefinitions";
-import { makeDraggable }  from '@kipprice/toolkip-draggable';
+import { makeDraggable }  from '@toolkip/draggable';
 
 
 /**----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
-import { _NamedClass } from '@kipprice/toolkip-named-class';
-import { IEquatable } from '@kipprice/toolkip-comparable';
-import { isNullOrUndefined } from '@kipprice/toolkip-shared-types';
-import { fullHexString, charAt, rest } from '@kipprice/toolkip-primitive-helpers';
+import { _NamedClass } from '@toolkip/named-class';
+import { IEquatable } from '@toolkip/comparable';
+import { isNullOrUndefined } from '@toolkip/shared-types';
+import { fullHexString, charAt, rest } from '@toolkip/primitive-helpers';
 import { RGBEnum, IColorMultipliers, HSLPieceEnum } from "./_interfaces";
 import { HUE_INTERVAL, SATURATION_INTERVAL, SATURATION_LIMITS, LIGHT_INTERVAL, LIGHTNESS_LIMITS } from "./_constants";
-import { roundToPlace } from '@kipprice/toolkip-maths';
+import { roundToPlace } from '@toolkip/maths';
 
 
 //#region COLOR CLASS

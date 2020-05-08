@@ -1,4 +1,4 @@
-import { createSVGElement, IElemDefinition } from '@kipprice/toolkip-create-elements';
+import { createSVGElement, IElemDefinition } from '@toolkip/create-elements';
 
 
 /**----------------------------------------------------------------------------

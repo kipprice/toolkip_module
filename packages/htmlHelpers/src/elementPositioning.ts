@@ -1,4 +1,4 @@
-import { IPoint, StandardElement } from '@kipprice/toolkip-shared-types';
+import { IPoint, StandardElement } from '@toolkip/shared-types';
 
 //....................................
 //#region CALCULATE OFFSET FUNCTIONS

@@ -1,12 +1,12 @@
 //..........................................
 //#region IMPORTS
 
-import { _Drawable, IDrawableElements } from '@kipprice/toolkip-drawable';
-import { bind, BoundUpdateFunction, unbind } from '@kipprice/toolkip-binding';
-import { isVisible } from '@kipprice/toolkip-html-helpers';
-import { ICreateElementFunc, createCustomElement } from '@kipprice/toolkip-create-elements';
-import { StandardElement, isStandardElement, isKeyof, isDrawable } from '@kipprice/toolkip-shared-types';
-import { IConstructor, map } from '@kipprice/toolkip-object-helpers';
+import { _Drawable, IDrawableElements } from '@toolkip/drawable';
+import { bind, BoundUpdateFunction, unbind } from '@toolkip/binding';
+import { isVisible } from '@toolkip/html-helpers';
+import { ICreateElementFunc, createCustomElement } from '@toolkip/create-elements';
+import { StandardElement, isStandardElement, isKeyof, isDrawable } from '@toolkip/shared-types';
+import { IConstructor, map } from '@toolkip/object-helpers';
 import { IUpdateFunctions, IBoundChildren, IBoundElemDefinition, BindableElement, IViewBindingDetails, BoundValue, BoundProperty, IDrawableFactory, IViewUpdateFunc } from './_interfaces';
 import { isUpdatableView, isBoundView } from './_typeGuards';
 

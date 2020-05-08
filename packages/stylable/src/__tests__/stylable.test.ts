@@ -1,6 +1,6 @@
 import { _Stylable } from "..";
-import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
-import { StyleLibrary, PlaceholderLibrary } from "@kipprice/toolkip-style-libraries";
+import { IStandardStyles } from "@toolkip/style-helpers";
+import { StyleLibrary, PlaceholderLibrary } from "@toolkip/style-libraries";
 
 class SampleStylable extends _Stylable<"color" | "width"> {
     //..................

@@ -1,8 +1,8 @@
 import { _CanvasElement } from "./canvasElement";
-import { IBasicRect } from '@kipprice/toolkip-maths';
+import { IBasicRect } from '@toolkip/maths';
 import { ElementType } from "./_interfaces";
-import { clonePoint } from '@kipprice/toolkip-object-helpers';
-import { IPoint, isNumber } from '@kipprice/toolkip-shared-types';
+import { clonePoint } from '@toolkip/object-helpers';
+import { IPoint, isNumber } from '@toolkip/shared-types';
 
 export class CircleElement extends _CanvasElement {
 	private _center: IPoint;

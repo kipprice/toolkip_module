@@ -1,11 +1,11 @@
-import { IDictionary, IConstructor, map } from '@kipprice/toolkip-object-helpers';
-import { rest } from '@kipprice/toolkip-primitive-helpers'; 
-import { IPartial, isUpdatable } from '@kipprice/toolkip-structs';
+import { IDictionary, IConstructor, map } from '@toolkip/object-helpers';
+import { rest } from '@toolkip/primitive-helpers'; 
+import { IPartial, isUpdatable } from '@toolkip/structs';
 import { 
     isNullOrUndefined, 
     isArray, 
     isObject 
-} from '@kipprice/toolkip-shared-types';
+} from '@toolkip/shared-types';
 import { 
     IPropertyChangeListener, 
     IModel, 

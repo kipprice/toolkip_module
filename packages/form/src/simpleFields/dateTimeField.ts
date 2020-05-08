@@ -1,9 +1,9 @@
 import { _Field } from "../_field";
 import { FieldTypeEnum } from '../_interfaces';
-import { createSimpleElement, createElement } from "@kipprice/toolkip-create-elements";
+import { createSimpleElement, createElement } from "@toolkip/create-elements";
 import { createInputElement } from '../helpers';
-import { IStandardStyles } from "@kipprice/toolkip-style-helpers";
-import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "@kipprice/toolkip-primitive-helpers";
+import { IStandardStyles } from "@toolkip/style-helpers";
+import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "@toolkip/primitive-helpers";
 
 
 /**----------------------------------------------------------------------------

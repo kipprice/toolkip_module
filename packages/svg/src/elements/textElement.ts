@@ -1,8 +1,8 @@
 import { _SVGElem } from './svgElement';
-import { IPoint } from "@kipprice/toolkip-shared-types";
-import { IBasicRect } from '@kipprice/toolkip-maths';
+import { IPoint } from "@toolkip/shared-types";
+import { IBasicRect } from '@toolkip/maths';
 import { SVGStyle } from '../svgStyle';
-import { addClass, IStandardStyles } from '@kipprice/toolkip-style-helpers';
+import { addClass, IStandardStyles } from '@toolkip/style-helpers';
 import { ISVGAttributes } from '../_interfaces';
 
 

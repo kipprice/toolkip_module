@@ -1,5 +1,5 @@
 import { IExtrema } from "./_interfaces";
-import { isInterface, IPoint } from '@kipprice/toolkip-shared-types';
+import { isInterface, IPoint } from '@toolkip/shared-types';
 import { IBasicRect } from './_interfaces';
 
 /** 
