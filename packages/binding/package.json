@@ -21,5 +21,8 @@
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
     },
-    "gitHead": "2ff0a87b3c1803d66369466ee28e77f5d5ce5978"
+    "publishConfig": {
+        "access": "public"
+    },
+    "gitHead": "63ed1772a53988b46d7c83399c77fd21725514c3"
 }
