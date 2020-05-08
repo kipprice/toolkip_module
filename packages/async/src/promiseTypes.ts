@@ -20,5 +20,5 @@ export function nextRender(): Promise<any> {
         requestAnimationFrame(() => {
             resolve();
         })
-    })
+    });
 }
