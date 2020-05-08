@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/visual-maths",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "math UI utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,12 +13,12 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/comparable": "^1.0.5",
-        "@toolkip/create-elements": "^1.0.5",
-        "@toolkip/html-helpers": "^1.0.5",
-        "@toolkip/maths": "^1.0.5",
-        "@toolkip/shared-types": "^1.0.5",
-        "@toolkip/style-libraries": "^1.0.5"
+        "@toolkip/comparable": "^1.0.6",
+        "@toolkip/create-elements": "^1.0.6",
+        "@toolkip/html-helpers": "^1.0.6",
+        "@toolkip/maths": "^1.0.6",
+        "@toolkip/shared-types": "^1.0.6",
+        "@toolkip/style-libraries": "^1.0.6"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/file-server",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "local storage utility functions",
     "license": "MIT",
     "author": "Kip Price",
