@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/model",
-    "version": "1.0.7",
+    "version": "1.0.10",
     "description": "model utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,10 +13,10 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/object-helpers": "^1.0.7",
-        "@toolkip/primitive-helpers": "^1.0.7",
-        "@toolkip/shared-types": "^1.0.6",
-        "@toolkip/structs": "^1.0.5"
+        "@toolkip/object-helpers": "^1.0.10",
+        "@toolkip/primitive-helpers": "^1.0.10",
+        "@toolkip/shared-types": "^1.0.10",
+        "@toolkip/structs": "^1.0.10"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/commands",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "description": "command utility functions",
     "license": "MIT",
     "author": "Kip Price",

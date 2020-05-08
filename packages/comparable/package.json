@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/comparable",
-    "version": "1.0.7",
+    "version": "1.0.10",
     "description": "comparison utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/shared-types": "^1.0.6"
+        "@toolkip/shared-types": "^1.0.10"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

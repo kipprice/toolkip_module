@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/sorting",
-    "version": "1.0.7",
+    "version": "1.0.10",
     "description": "sorting utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/object-helpers": "^1.0.7"
+        "@toolkip/object-helpers": "^1.0.10"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
