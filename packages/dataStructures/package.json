@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/data-structures",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "data structure implementations",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,10 +13,10 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/comparable": "^1.0.2",
-        "@toolkip/named-class": "^1.0.2",
-        "@toolkip/object-helpers": "^1.0.2",
-        "@toolkip/primitive-helpers": "^1.0.2"
+        "@toolkip/comparable": "^1.0.3",
+        "@toolkip/named-class": "^1.0.3",
+        "@toolkip/object-helpers": "^1.0.3",
+        "@toolkip/primitive-helpers": "^1.0.3"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
