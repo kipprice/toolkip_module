@@ -23,9 +23,8 @@
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
         "test": "jest -- -t .test.ts",
         "bootstrap": "lerna bootstrap",
-        "lerna-publish": "lerna publish -- --access public",
-        "compile": "lerna run compile",
-        "test-lerna": "lerna run test"
+        "lerna-publish": "lerna bootstrap && lerna run compile && lerna publish",
+        "compile": "lerna run compile"
     },
 
     "devDependencies": {

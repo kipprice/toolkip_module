@@ -12,6 +12,9 @@
         "dist",
         "typings"
     ],
+    "devDependencies": {
+        "@toolkip/async": "^1.0.4"
+    },
     "dependencies": {
         "@toolkip/binding": "^1.0.8",
         "@toolkip/create-elements": "^1.0.8",
@@ -28,5 +31,5 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "11a110090cf8eb4315d4e4f701efc882bb37f054"
+    "gitHead": "5210df43084ce58a5d9ccee24992ba348964a91a"
 }

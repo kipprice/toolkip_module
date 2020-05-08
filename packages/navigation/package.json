@@ -17,7 +17,8 @@
         "@toolkip/history": "^1.0.7",
         "@toolkip/object-helpers": "^1.0.7",
         "@toolkip/shared-types": "^1.0.6",
-        "@toolkip/style-helpers": "^1.0.8"
+        "@toolkip/style-helpers": "^1.0.8",
+        "@toolkip/structs": "^1.0.5"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
@@ -26,5 +27,5 @@
     "publishConfig": {
         "access": "public"
     },
-    "gitHead": "11a110090cf8eb4315d4e4f701efc882bb37f054"
+    "gitHead": "5210df43084ce58a5d9ccee24992ba348964a91a"
 }
