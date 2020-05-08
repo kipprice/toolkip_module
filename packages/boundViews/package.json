@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/bound-views",
-    "version": "1.0.10",
+    "version": "1.0.12",
     "description": "link views to state",
     "license": "MIT",
     "author": "Kip Price",
@@ -18,7 +18,7 @@
     "dependencies": {
         "@toolkip/binding": "^1.0.10",
         "@toolkip/create-elements": "^1.0.10",
-        "@toolkip/drawable": "^1.0.10",
+        "@toolkip/drawable": "^1.0.12",
         "@toolkip/html-helpers": "^1.0.10",
         "@toolkip/identifiable": "^1.0.10",
         "@toolkip/object-helpers": "^1.0.10",

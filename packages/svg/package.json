@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/svg",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "svg utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -15,8 +15,8 @@
     "dependencies": {
         "@toolkip/create-elements": "^1.0.10",
         "@toolkip/data-structures": "^1.0.10",
-        "@toolkip/draggable": "^1.0.10",
-        "@toolkip/drawable": "^1.0.10",
+        "@toolkip/draggable": "^1.0.12",
+        "@toolkip/drawable": "^1.0.12",
         "@toolkip/maths": "^1.0.10",
         "@toolkip/object-helpers": "^1.0.10",
         "@toolkip/primitive-helpers": "^1.0.10",
