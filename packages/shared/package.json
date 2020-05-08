@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/shared-types",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "type utility functions",
     "license": "MIT",
     "author": "Kip Price",

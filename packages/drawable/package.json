@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/drawable",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "drawable component",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,10 +13,10 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^1.0.4",
-        "@toolkip/media-queries": "^1.0.4",
-        "@toolkip/shared-types": "^1.0.4",
-        "@toolkip/stylable": "^1.0.4"
+        "@toolkip/create-elements": "^1.0.5",
+        "@toolkip/media-queries": "^1.0.5",
+        "@toolkip/shared-types": "^1.0.5",
+        "@toolkip/stylable": "^1.0.5"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

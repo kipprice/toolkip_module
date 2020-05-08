@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/object-helpers",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "object utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,9 +13,9 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/maths": "^1.0.4",
-        "@toolkip/primitive-helpers": "^1.0.4",
-        "@toolkip/shared-types": "^1.0.4"
+        "@toolkip/maths": "^1.0.5",
+        "@toolkip/primitive-helpers": "^1.0.5",
+        "@toolkip/shared-types": "^1.0.5"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

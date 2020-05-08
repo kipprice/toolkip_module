@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/server",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "server utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,8 +13,8 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^1.0.4",
-        "@toolkip/object-helpers": "^1.0.4"
+        "@toolkip/create-elements": "^1.0.5",
+        "@toolkip/object-helpers": "^1.0.5"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

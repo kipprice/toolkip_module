@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/create-elements",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "html generation utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,19 +13,16 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/binding": "^1.0.4",
-        "@toolkip/object-helpers": "^1.0.4",
-        "@toolkip/primitive-helpers": "^1.0.4",
-        "@toolkip/shared-types": "^1.0.4",
-        "@toolkip/style-helpers": "^1.0.4",
-        "@toolkip/style-libraries": "^1.0.4"
+        "@toolkip/binding": "^1.0.5",
+        "@toolkip/object-helpers": "^1.0.5",
+        "@toolkip/primitive-helpers": "^1.0.5",
+        "@toolkip/shared-types": "^1.0.5",
+        "@toolkip/style-helpers": "^1.0.5",
+        "@toolkip/style-libraries": "^1.0.5"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"
-    },
-    "publishConfig": {
-        "access": "public"
     },
     "publishConfig": {
         "access": "public"
