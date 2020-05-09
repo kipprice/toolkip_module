@@ -25,8 +25,12 @@ import {
  *      _copy[CamelCasePropertyName] : get data out of JSON onto the class
  *      _save[CamelCasePropertyName] : save data into JSON from this class
  * 
+ * Accounts for referential immutability; that is, the objects directly defined
+ * will not be the objects that end up modified. Instead, copies will be made when
+ * needed to allow for safe retrieval and updating
+ * 
  * @author  Kip Price
- * @version 1.0.5
+ * @version 2.0.0 (Add referential immutability)
  * ----------------------------------------------------------------------------
  */
 export abstract class _Model<T extends IModel = IModel> {
