@@ -25,6 +25,16 @@ export class Trie extends _Tree<string> {
     //.....................
 
     //..........................................
+    //#region OVERRIDE CONSTRUCTOR
+    
+    public constructor(initialData?: string) {
+        super(initialData || "");
+    }
+    
+    //#endregion
+    //..........................................
+
+    //..........................................
     //#region HANDLE ADDING WORDS
     
     public add(word: string): void {
