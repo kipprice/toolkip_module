@@ -1,5 +1,5 @@
-import { IComparable, isComparable } from '@toolkip/comparable';
-import { IDictionary } from '@toolkip/object-helpers';
+import { IComparable, isComparable } from '@kipprice/toolkip-comparable';
+import { IDictionary } from '@kipprice/toolkip-object-helpers';
 import { _Tree } from './tree';
 
 
@@ -97,6 +97,7 @@ export class BinaryTree<T extends Comparable> extends _Tree<T> {
 		delete this._parent[sideOfParent];
 
 		// TODO: finish
+		
 	}
 
 	protected _removeMeAsTopNode(): void {
@@ -196,6 +197,13 @@ export class BinaryTree<T extends Comparable> extends _Tree<T> {
 
 		return null;
 	}
+
+	protected _getOppositeSide(side: ISubTrees): ISubTrees {
+		switch(side) {
+			case "left":	return "right";
+			case "right":	return "left";
+		}
+	}
 	
 	//#endregion
 	//..........................................
@@ -252,9 +260,16 @@ export class BinaryTree<T extends Comparable> extends _Tree<T> {
 	//#region OVERRIDES
 	
 	public toString(): string {
-		let subTrees = [];
-		if (this._subTrees.left) { subTrees.push(this._subTrees.left); }
-		if (this._subTrees.right) { subTrees.push(this._subTrees.right); }
+		let subTrees = ["_", "_"];
+		if (this._subTrees.left) { 
+			subTrees[0] = this._subTrees.left.toString(); 
+		}
+		if (this._subTrees.right) { 
+			subTrees[1] = this._subTrees.right.toString(); 
+		}
+		if (!this._subTrees.right && !this._subTrees.left) {
+			subTrees = [];
+		}
 
 		let arr = [];
 		arr.push(this._data);
