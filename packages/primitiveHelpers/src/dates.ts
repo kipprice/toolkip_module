@@ -1,10 +1,9 @@
 import { padToDigits } from "./numbers";
 import { addLeadingZeroes } from "./strings";
 
-
 /**
  * dateDiff
- * 
+ * ----------------------------------------------------------------------------
  *	Finds the difference in days between two date objects
  *
  *	@param 	a 				The first date to compare

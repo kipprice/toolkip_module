@@ -1,4 +1,4 @@
-import { _Model }  from '@toolkip/model';
+import { Model }  from '@toolkip/model';
 
 
 /**----------------------------------------------------------------------------
@@ -9,7 +9,7 @@ import { _Model }  from '@toolkip/model';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Serializable<T> extends _Model<T> {
+export class Serializable<T> extends Model<T> {
 
     /**
      * serialize
@@ -18,7 +18,7 @@ export abstract class _Serializable<T> extends _Model<T> {
      * @returns The string version of this data   
      */
     public serialize(): string {
-        let data: T = this.saveData();
+        let data: T = this.export();
         return JSON.stringify(data);
     }
 
@@ -43,7 +43,7 @@ export abstract class _Serializable<T> extends _Model<T> {
     public deserialize(data: string) : boolean {
         try {
             let parsedData: T = JSON.parse(data);
-            this._copyData(parsedData);
+            this._importData(parsedData);
             return true;
         } catch (err) {
             console.log("non JSON: " + data);

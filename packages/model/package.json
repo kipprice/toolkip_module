@@ -16,7 +16,10 @@
         "@toolkip/object-helpers": "^1.0.10",
         "@toolkip/primitive-helpers": "^1.0.10",
         "@toolkip/shared-types": "^1.0.10",
-        "@toolkip/structs": "^1.0.10"
+        "@toolkip/structs": "^1.0.10",
+        "@toolkip/code-event": "^1.0.10",
+        "@toolkip/history": "^1.0.10",
+        "@toolkip/comparable": "^1.0.10"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

@@ -22,6 +22,8 @@ export class HistoryChain<T> {
 
 	/** the current history node we are sitting on */
 	protected _curNode: HistoryNode<T>;
+	public get currentState(): T { return this._curNode.data; }
+	
 	//#endregion
 	//.....................
 
@@ -74,10 +76,9 @@ export class HistoryChain<T> {
 	public navigateBack(): T {
 		if (!this._curNode.previous) { return null; }
 
-		window.setTimeout(() => {
-			this._curNode = this._curNode.previous;
-		}, 0);
-		return this._curNode.previous.data;
+		const out = this._curNode.previous.data;
+		this._curNode = this._curNode.previous;
+		return out;
 
 	}
 
@@ -90,10 +91,9 @@ export class HistoryChain<T> {
 	public navigateForward(): T {
 		if (!this._curNode.next) { return null; }
 
-		window.setTimeout(() => {
-			this._curNode = this._curNode.next;
-		}, 0);
-		return this._curNode.next.data;
+		const out = this._curNode.next.data;
+		this._curNode = this._curNode.next;
+		return out;
 	}
 
 	/**

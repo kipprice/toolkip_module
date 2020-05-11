@@ -1,4 +1,5 @@
 import { isEquatable, isComparable } from "./_typeguards";
+import { isPrimitive, isDate } from '@toolkip/shared-types';
 
 /**
  * equals
@@ -11,13 +12,26 @@ import { isEquatable, isComparable } from "./_typeguards";
  * True if the two elements can be considered equal
  */
 export function equals<T>(orig: T, comparison: T): boolean {
+
 	// Handle the equatable case
 	if (isEquatable(orig)) {
 		return (orig as any).equals(comparison);
 	}
+	
+	// primitives can be compared directly
+	if (isPrimitive(orig)) {
+		return (orig === comparison);
 
-	// otherwise directly compare the values
-	return (orig === comparison);
+	// dates get some special handling to compare against
+	// their numeric value
+	} else if (isDate(orig)) {
+		return (+orig === +comparison);
+
+	// everything else falls back to JSON comparison
+	} else {
+		return (JSON.stringify(orig) === JSON.stringify(comparison));
+	}
+	
 }
 
 /**

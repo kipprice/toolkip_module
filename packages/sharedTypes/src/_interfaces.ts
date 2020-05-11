@@ -1,3 +1,5 @@
+export type Primitive = boolean | undefined | null | number | string | Symbol;
+
 export type StandardElement = HTMLElement | SVGElement;
 
 /**
@@ -13,6 +15,11 @@ export interface IDrawable {
 
 export type DrawableElement = StandardElement | IDrawable;
 
+/** allow duck typing for classes that allow updating */
+export interface IUpdatable {
+	update(...args: any[]): void;
+}
+
 /**
  * IPoint
  * ---------------------------------------------------------------------------
@@ -23,4 +30,3 @@ export interface IPoint {
 	y: number;
 	z?: number;
 }
-
