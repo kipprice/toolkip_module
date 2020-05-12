@@ -2,6 +2,7 @@ import { SimpleModel, ISimpleModel } from "./classes/simpleModel"
 import { ComplexModel, IComplexModel } from "./classes/complexModel";
 import { shortDate, dateDiff } from "@toolkip/primitive-helpers";
 import { Model } from "../_model";
+import { ModelEventPayload } from "../_interfaces";
 
 const createSimpleModel = () => {
     return new SimpleModel({ name: 'Kip', age: 30 });
@@ -55,6 +56,7 @@ describe('_Model', () => {
         })
     
         it ('allows models to be updated through wrapped models and events', () => {
+            expect.assertions(3);
             const nestedModel = new SimpleModel({ name: 'kippers', age: 8 });
             const model = createComplexModel({ nestedModel });
     
@@ -67,6 +69,27 @@ describe('_Model', () => {
             model.nestedModel.set('name', 'wompers');
             expect(model.nestedModel.get('name')).toEqual('wompers');
             expect(cb).toHaveBeenCalled();
+        })
+
+        it('does not remove immutability after the first wrapped model change',  () => {
+
+            expect.assertions(4)
+            const nestedModel = new SimpleModel({ name: 'kippers', age: 8 });
+            const model = createComplexModel({ nestedModel });
+
+            const cb = jest.fn((data: ModelEventPayload<IComplexModel>) => {
+                const nv: ISimpleModel = data.value as any;
+                const ov: ISimpleModel = data.oldValue as any;
+
+                expect(nv.name).not.toEqual(ov.name)
+            })
+            model.registerListener(cb);
+
+            const nm = model.nestedModel;
+            nm.set('name', 'wompers');
+            expect(model.nestedModel.get('name')).toEqual('wompers');
+            nm.set('name', 'kyaahp');
+            expect(model.nestedModel.get('name')).toEqual('kyaahp');
         })
     
         it('allows for arrays to be copied over', () => {
@@ -176,8 +199,10 @@ describe('_Model', () => {
         it('handles undoing nested changes', () => {
             const model = createComplexModel();
             const { nestedModel } = model;
+
             nestedModel.set('name', 'null');
             expect(model.nestedModel.export()).toMatchObject({ name: 'null', age: 8 });
+
             nestedModel.undo();
             expect(model.nestedModel.export()).toMatchObject({ name: 'kippers', age: 8 });
         })

@@ -1,4 +1,4 @@
-import { map } from '@toolkip/object-helpers';
+import { map, clone, Key } from '@toolkip/object-helpers';
 import { IPartial } from '@toolkip/structs';
 import { 
     isNullOrUndefined, 
@@ -8,12 +8,15 @@ import {
 import { 
     IModel,
     ModelEventCallback,
-    IModelTransforms
+    IModelTransforms,
+    ModelEventPayload,
+    ModelKey,
+    ModelValue
 } from './_interfaces';
 import { ModelEvent } from './_event';
 import { isModel } from './_typeguards';
 import { HistoryChain } from '@toolkip/history';
-import { isEquatable } from '@toolkip/comparable';
+import { equals } from '@toolkip/comparable';
 
 
 /**----------------------------------------------------------------------------
@@ -42,7 +45,6 @@ export class Model<T extends IModel = IModel> {
 
     /** keep track of the changes that this model has gone through */
     private __history: HistoryChain<T>;
-    private __isUpdatingFromHistory: boolean;
 
     /** TODO: create the event used by this model and in some way expose it */
     protected _event: ModelEvent<T>;
@@ -68,7 +70,7 @@ export class Model<T extends IModel = IModel> {
 
         // set up all of the tracking we need to do
         // on the model itself
-        this._innerModel = {} as T;
+        this._innerModel = this._getDefaultValues();
 
         // initialize the history to make this model back-trackable
         this.__history = new HistoryChain<T>();
@@ -77,7 +79,6 @@ export class Model<T extends IModel = IModel> {
         this._event = new ModelEvent<T>('modelchange');
 
         // Copy data over from the passed in interface
-        this._setDefaultValues();
         if (transforms) { this.__transforms = transforms; }
         if (dataToCopy) {
             if (isModel(dataToCopy)) { 
@@ -85,6 +86,11 @@ export class Model<T extends IModel = IModel> {
             } else {
                 this._importData(dataToCopy);
             }
+
+            // send the update notifications globally instead of with each
+            // individual change
+            this.__updateHistory();
+            this.__notifyListenersOfUpdate("_", this._getDefaultValues())
             
         }
 
@@ -97,7 +103,9 @@ export class Model<T extends IModel = IModel> {
      * ----------------------------------------------------------------------------
      * Overridable function to initialize any default data that is needed
      */
-    protected _setDefaultValues(): void {}
+    protected _getDefaultValues(): T {
+        return {} as T;
+    }
     
     //#endregion
     //..........................................
@@ -123,14 +131,23 @@ export class Model<T extends IModel = IModel> {
         // we can safely just set the new value; it is 
         // guaranteed to be a different reference than the 
         // original
+        const oldValue = this.__updateValue(key, value);
+        this.__updateHistory();
+        this.__notifyListenersOfUpdate(key, oldValue);
+    }
 
+    private __updateValue<K extends keyof T>(key: K, value: T[K]) {
         const currentValue = this._innerModel[key];
         this._innerModel[key] = value;
+        return currentValue;
+    }
 
-        // update history and our listeners
-        if (!this.__isUpdatingFromHistory) { this.__history.push(this.export()); }
-        this._notifyListeners(key, currentValue, value);
-        
+    private __updateHistory() {
+        this.__history.push(this.export());
+    }
+
+    private __notifyListenersOfUpdate<K extends keyof T>(key: ModelKey<T>, oldValue: ModelValue<T>, addlEvent?: ModelEventPayload<any>) : void {
+        this._notifyListeners(key, oldValue, this.get(key), addlEvent);
     }
     
     //#endregion
@@ -147,7 +164,7 @@ export class Model<T extends IModel = IModel> {
      */
     protected _importData<K extends keyof T>(data: IPartial<T>): void {
         map(data, (value: T[K], key: K) => {
-            this._setValue(key, this._importPiece(key, value));
+            this.__updateValue(key, this._importPiece(key, value));
         });
     }
 
@@ -183,22 +200,11 @@ export class Model<T extends IModel = IModel> {
      */
     protected _copyData<K extends keyof T>(key: K, value: T[K]): T[K] {
 
-        // handle models via their built in copy method
-        if (isModel(value)) {
-            return this._copyModel(key, value);
+        return clone<any>(value, [{
+            typeGuard: (v) => isModel(v),
+            cloner: (v, k) => this._copyModel(k as keyof T, v as any)
+        }], key);
 
-        // make shallow copies of arrays by default
-        } else if (isArray(value)) {
-            return this._copyArray(key, value);
-
-        // stringify and parse objects by default
-        } else if (isObject(value)) {
-            return this._copyObject(key, value);
-
-        // just use primitives as is
-        } else {
-            return value;
-        }
     }
 
     protected _copyModel<X extends Model<any>, K extends keyof T>(key: K, value: X): X {
@@ -212,35 +218,15 @@ export class Model<T extends IModel = IModel> {
 
         // when this new model updates, update our version too
         newModel.registerListener((data) => {
-            this._setValue(key, newModel)
+            const anotherNewModel = new Ctor(newModel);
+            const currentValue = this.__updateValue(key, anotherNewModel);
+            this.__updateHistory();
+            this._notifyListeners(key, currentValue, anotherNewModel, data);
         });
 
         return newModel;
     }
 
-    protected _copyArray<X extends Array<any>, K extends keyof T>(key: K, value: X): X {
-        const out = [];
-
-        for (let i of value) {
-            const copiedData = this._copyData(key, i);
-            out.push(copiedData);
-        }
-
-        return out as X;
-    }
-
-    protected _copyObject<X extends Object, K extends keyof T>(key: K, value: X): X {
-        const out = {} as X;
-
-        map(value, (m: any, key: string) => {
-            out[key] = this._copyData(key, m);
-        });
-
-        // ensure we copy over the prototype as well
-        Object.setPrototypeOf(out, Object.getPrototypeOf(value)); 
-
-        return out;
-    }
     
     /**
      * update
@@ -252,15 +238,17 @@ export class Model<T extends IModel = IModel> {
     }
 
     protected _updateFromHistory(model: IPartial<T>): void {
-        this.__isUpdatingFromHistory = true;
+        const currentValue = new (this as any).constructor(this.export());
         this._importData(model);
-        this.__isUpdatingFromHistory = false;
+
+        this.__notifyListenersOfUpdate("_", currentValue);
     }
+
     //#endregion
     //.......................................
 
     //....................
-    //#region SAVE DATA
+    //#region EXPORT DATA
     
     /**
      * export
@@ -305,14 +293,14 @@ export class Model<T extends IModel = IModel> {
         
     }
 
-    protected _innerExportPiece<K extends keyof T>(data: T[K]): T[K] {
-        if (data as any instanceof Array) {
+    protected _innerExportPiece<X>(data: X): X {
+        if (isArray(data)) {
             return this._exportArray(data);
         }
         else if (isModel(data)) {
             return this._exportModel(data);
         } 
-        else if (typeof data === "object") {
+        else if (isObject(data)) {
             return this._exportObject(data);
         }
         else {
@@ -320,29 +308,29 @@ export class Model<T extends IModel = IModel> {
         }
     }
 
-    protected _exportArray<K extends keyof T, A extends Array<T[K]>>(data: A): T[K] {
-        let outArr = [];
+    protected _exportArray<X extends Array<Y>, Y = any>(data: X): X {
+        let outArr: X = [] as X;
 
-        // loop through each element to save appropriately
         for (let elem of data) {
             outArr.push(this._innerExportPiece(elem));
         }
-        return outArr as any as T[K];
+
+        return outArr;
     }
 
-    protected _exportModel<K extends keyof T, M extends Model<T[K]>>(data: M): T[K] {
+    protected _exportModel<X extends IModel>(data: X): X {
         return data.export();
     }
 
-    protected _exportObject<K extends keyof T>(data: T[K]): T[K] {
-        let out: T[K] = {} as T[K];
+    protected _exportObject<X extends Object>(data: X): X {
+        let out: X = {} as X;
         map(data, (elem: any, key: string) => {
             out[key] = this._innerExportPiece(elem);
         });
         return out;
     }
 
-    protected _exportSimple<K extends keyof T>(data: T[K]): T[K] {
+    protected _exportSimple<X>(data: X): X {
         return data;
     }
     
@@ -364,14 +352,13 @@ export class Model<T extends IModel = IModel> {
      * @param   oldVal  The previous version of this key's value
      * @param   newVal  The new version of this key's value
      */
-    protected _notifyListeners<K extends keyof T>(key: K, oldVal: T[K], newVal: T[K]): void {
-        if (!this._needsUpdate(oldVal, newVal)) { return; }
-        this._notifyModelListeners(key, oldVal, newVal);
+    protected _notifyListeners(key: ModelKey<T>, oldValue: ModelValue<T>, newValue: ModelValue<T>, originatingEvent?: ModelEventPayload<any>): void {
+        if (!this._needsUpdate(oldValue, newValue)) { return; }
+        this._notifyModelListeners({ key, oldValue, value: newValue, originatingEvent });
     }
 
-    protected _needsUpdate<K extends keyof T>(oldVal: T[K], newVal: T[K]): boolean {
-        if (isEquatable(oldVal)) { return oldVal.equals(newVal); }
-        return oldVal !== newVal; 
+    protected _needsUpdate(oldVal: ModelValue<T>, newVal: ModelValue<T>): boolean {
+        return !equals(oldVal, newVal);
     }
 
     /**
@@ -380,12 +367,13 @@ export class Model<T extends IModel = IModel> {
      * Let any listeners that care about any change to the model know that this 
      * particular key has changed to this particular value
      */
-    protected _notifyModelListeners<K extends keyof T>(key: K, oldVal: T[K], newVal: T[K]): void {
-        this._event.dispatch(this, { 
-            key,
-            value: isModel(newVal)? newVal.export() : newVal,
-            oldValue: isModel(oldVal)? oldVal.export() : oldVal
-        });
+    protected _notifyModelListeners(payload: ModelEventPayload<T>): void {
+
+        // convert to the exported version of the values
+        payload.oldValue = this._innerExportPiece(payload.oldValue);
+        payload.value = this._innerExportPiece(payload.value);
+
+        this._event.dispatch(this, payload);
     }
 
 
@@ -395,12 +383,22 @@ export class Model<T extends IModel = IModel> {
     //..........................................
     //#region UNDO AND REDO
     
+    /**
+     * undo
+     * ----------------------------------------------------------------------------
+     * reverse the last change made to the model
+     */
     public undo() {
         const lastState = this.__history.navigateBack();
         if (!lastState) { return; }
         this._updateFromHistory(lastState);
     }
 
+    /**
+     * redo
+     * ----------------------------------------------------------------------------
+     * redo the last undone action to the model
+     */
     public redo() {
         const nextState = this.__history.navigateForward();
         if (!nextState) { return; }

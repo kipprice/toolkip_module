@@ -8,7 +8,10 @@ export interface IComplexModel {
     nestedArray: ISimpleModel[];
     nestedModel: SimpleModel;
     date: Date;
-    anotherDate: Date;
+
+    // optional properties
+    anotherDate?: Date;
+    nestedComplexModel?: IComplexModel;
 }
 
 export class ComplexModel extends Model<IComplexModel> {
