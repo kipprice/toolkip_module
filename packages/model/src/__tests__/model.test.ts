@@ -172,6 +172,29 @@ describe('_Model', () => {
             expect(nameCb).toBeCalledTimes(1);
             expect(modelCb).toBeCalledTimes(2);
         })
+
+        it ('notifies via the static model event', () => {
+            const modelA = createSimpleModel();
+            const modelB = createSimpleModel();
+
+            const staticCb = jest.fn();
+            Model.addEventListener(staticCb);
+            
+            modelA.set('name', 'kipperdoodle');
+            modelB.set('age', 1);
+
+            expect(staticCb).toBeCalledTimes(2);
+        })
+
+        it ('notifies for initial creation via the static model event', () => {
+            const staticCb = jest.fn();
+            Model.addEventListener(staticCb);
+
+            createSimpleModel();
+            createSimpleModel();
+
+            expect(staticCb).toBeCalledTimes(2);
+        })
     })
 
     describe('saving to simple objects', () => {

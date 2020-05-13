@@ -42,6 +42,17 @@ import { CodeEvent } from '@toolkip/code-event';
  */
 export class Model<T extends IModel = IModel> implements IEquatable {
 
+    //..........................................
+    //#region STATIC PROPERTIES
+    
+    protected static _event: ModelEvent<any> = new ModelEvent<any>('modelchange');
+    public static addEventListener(cbFunc: ModelEventCallback<any>) {
+        this._event.addEventListener(cbFunc);
+    }
+    
+    //#endregion
+    //..........................................
+
     //.....................
     //#region PROPERTIES
 
@@ -418,6 +429,7 @@ export class Model<T extends IModel = IModel> implements IEquatable {
         payload.value = this._innerExportPiece(payload.value);
 
         this._event.dispatch(this, payload);
+        Model._event.dispatch(this, payload);
     }
 
 
