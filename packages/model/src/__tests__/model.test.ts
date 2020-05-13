@@ -64,7 +64,7 @@ describe('_Model', () => {
             const cb = jest.fn((data) => {
                 expect(data.key).toEqual('nestedModel');
             })
-            model.registerListener(cb);
+            model.addEventListener(cb);
     
             model.nestedModel.set('name', 'wompers');
             expect(model.nestedModel.get('name')).toEqual('wompers');
@@ -83,7 +83,7 @@ describe('_Model', () => {
 
                 expect(nv.name).not.toEqual(ov.name)
             })
-            model.registerListener(cb);
+            model.addEventListener(cb);
 
             const nm = model.nestedModel;
             nm.set('name', 'wompers');
@@ -108,7 +108,7 @@ describe('_Model', () => {
         it('does not update if there are no clear changes', () => {
             const model = createSimpleModel();
             const fn = jest.fn();
-            model.registerListener(fn);
+            model.addEventListener(fn);
             model.set('name', 'Kip');
             expect(fn).not.toHaveBeenCalled();
         })
@@ -118,7 +118,7 @@ describe('_Model', () => {
         it('notifies listeners of changes', () => {
             const model = createSimpleModel();
             const fn = jest.fn();
-            model.registerListener(fn);
+            model.addEventListener(fn);
             model.set('name', 'kippers');
             model.set('age', 5);
             expect(fn).toBeCalledTimes(2);
@@ -129,7 +129,7 @@ describe('_Model', () => {
             const fn = jest.fn();
     
             const nestedModel = model.nestedModel;
-            nestedModel.registerListener(fn);
+            nestedModel.addEventListener(fn);
             nestedModel.set('name', 'kip');
             expect(fn).toHaveBeenCalled();
     
@@ -141,17 +141,36 @@ describe('_Model', () => {
         it('only notifies for the right target', () => {
             const model = createComplexModel();
             const parent = jest.fn();
-            model.registerListener(parent);
+            model.addEventListener(parent);
     
             const nestedModel = model.nestedModel;
             const child = jest.fn();
-            nestedModel.registerListener(child);
+            nestedModel.addEventListener(child);
     
             nestedModel.set('age', 2);
             model.set('anotherDate', new Date());
     
             expect(parent).toHaveBeenCalledTimes(2);
             expect(child).toHaveBeenCalledTimes(1);
+        })
+
+        it('notifies specific property listeners', () => {
+            const model = createSimpleModel();
+            const ageCb = jest.fn();
+            model.addPropertyListener('age', ageCb);
+
+            const nameCb = jest.fn();
+            model.addPropertyListener('name', nameCb);
+
+            const modelCb = jest.fn();
+            model.addEventListener(modelCb);
+
+            model.set('name', 'A');
+            model.set('age', 0);
+
+            expect(ageCb).toBeCalledTimes(1);
+            expect(nameCb).toBeCalledTimes(1);
+            expect(modelCb).toBeCalledTimes(2);
         })
     })
 

@@ -2,6 +2,7 @@ import { ISimpleModel, SimpleModel } from "./simpleModel";
 import { Model } from "../..";
 import { IModelTransforms } from "../../_interfaces";
 import { shortDate } from "@toolkip/primitive-helpers";
+import { StringifiedDateTransform } from "../../transforms";
 
 export interface IComplexModel {
     nestedObject: ISimpleModel;
@@ -36,7 +37,8 @@ export class ComplexModel extends Model<IComplexModel> {
             date: {
                 incoming: (date: any) => new Date(date.toString()),
                 outgoing: (date: Date) => shortDate(date) as any 
-            }
+            },
+            anotherDate: StringifiedDateTransform
         }
     }
     

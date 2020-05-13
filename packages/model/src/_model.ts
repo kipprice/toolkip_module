@@ -11,12 +11,14 @@ import {
     IModelTransforms,
     ModelEventPayload,
     ModelKey,
-    ModelValue
+    ModelValue,
+    ModelEventType
 } from './_interfaces';
 import { ModelEvent } from './_event';
 import { isModel } from './_typeguards';
 import { HistoryChain } from '@toolkip/history';
-import { equals } from '@toolkip/comparable';
+import { equals, IEquatable } from '@toolkip/comparable';
+import { CodeEvent } from '@toolkip/code-event';
 
 
 /**----------------------------------------------------------------------------
@@ -38,7 +40,7 @@ import { equals } from '@toolkip/comparable';
  * @version 2.0.0 (Add referential immutability)
  * ----------------------------------------------------------------------------
  */
-export class Model<T extends IModel = IModel> {
+export class Model<T extends IModel = IModel> implements IEquatable {
 
     //.....................
     //#region PROPERTIES
@@ -147,7 +149,13 @@ export class Model<T extends IModel = IModel> {
     }
 
     private __notifyListenersOfUpdate<K extends keyof T>(key: ModelKey<T>, oldValue: ModelValue<T>, addlEvent?: ModelEventPayload<any>) : void {
-        this._notifyListeners(key, oldValue, this.get(key), addlEvent);
+        let newValue;
+        if (key === "_") {
+            newValue = this.export();
+        } else {
+            newValue = this.get(key)
+        }
+        this._notifyListeners(key, oldValue, newValue, addlEvent);
     }
     
     //#endregion
@@ -217,7 +225,7 @@ export class Model<T extends IModel = IModel> {
         newModel._event = value._event;
 
         // when this new model updates, update our version too
-        newModel.registerListener((data) => {
+        newModel.addEventListener((data) => {
             const anotherNewModel = new Ctor(newModel);
             const currentValue = this.__updateValue(key, anotherNewModel);
             this.__updateHistory();
@@ -237,11 +245,16 @@ export class Model<T extends IModel = IModel> {
         this._importData(model);
     }
 
+    /**
+     * _updateFromHistory
+     * ----------------------------------------------------------------------------
+     * handle when the user chooses to undo or redo
+     */
     protected _updateFromHistory(model: IPartial<T>): void {
         const currentValue = new (this as any).constructor(this.export());
         this._importData(model);
 
-        this.__notifyListenersOfUpdate("_", currentValue);
+        this.__notifyListenersOfUpdate("_", currentValue.export());
     }
 
     //#endregion
@@ -340,8 +353,15 @@ export class Model<T extends IModel = IModel> {
     //...........................
     //#region MANAGE LISTENERS
 
-    public registerListener(cbFunc: ModelEventCallback<T>): void {
+    public addEventListener(cbFunc: ModelEventCallback<T>): void {
         this._event.addEventListener(cbFunc, this);
+    }
+
+    public addPropertyListener<K extends keyof T>(property: K, cbFunc: ModelEventCallback<T>): void {
+        this._event.addEventListener((payload) => {
+            if (payload.key !== property) { return; }
+            cbFunc(payload);
+        }, this)
     }
 
     /**
@@ -354,11 +374,35 @@ export class Model<T extends IModel = IModel> {
      */
     protected _notifyListeners(key: ModelKey<T>, oldValue: ModelValue<T>, newValue: ModelValue<T>, originatingEvent?: ModelEventPayload<any>): void {
         if (!this._needsUpdate(oldValue, newValue)) { return; }
-        this._notifyModelListeners({ key, oldValue, value: newValue, originatingEvent });
+        
+        const eventType = this._calculateChangeType(oldValue, newValue, originatingEvent);
+        this._notifyModelListeners({ key, oldValue, value: newValue, originatingEvent, eventType });
     }
 
     protected _needsUpdate(oldVal: ModelValue<T>, newVal: ModelValue<T>): boolean {
         return !equals(oldVal, newVal);
+    }
+
+    public equals(otherModel: IEquatable) {
+        if (!isModel(otherModel)) { return false; }
+        return equals(otherModel._innerModel, this._innerModel);
+    }
+
+    /**
+     * _calculateChangeType
+     * ----------------------------------------------------------------------------
+     * determine what type of change occurred in this event
+     * 
+     * this calculation is only used if there is not an originating event to draw 
+     * from (e.g. if a nested model raises an 'add' we will also use 'add' despite 
+     * the change at this level being a 'modify')
+     */
+    protected _calculateChangeType(oldVal: ModelValue<T>, newVal: ModelValue<T>, originatingEvent?: ModelEventPayload<any>): ModelEventType {
+        if (originatingEvent) { return originatingEvent.eventType; }
+
+        if (newVal && !oldVal) { return 'add'; }
+        if (oldVal && !newVal) { return 'remove'; }
+        return 'modify'; 
     }
 
     /**

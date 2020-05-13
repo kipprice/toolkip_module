@@ -11,20 +11,24 @@ export interface IModel {
  * client-side models
  */
 export type IModelTransforms<T> = {
-    [K in keyof T]?: {
-        incoming?: IModelTransform<T, K>;
-        outgoing?: IModelTransform<T, K>;
-    }
+    [K in keyof T]?: IModelTransform<T[K]>
 }
 
-export type IModelTransform<T, K extends keyof T> = (value: T[K]) => T[K];
+export type IModelTransform<X> = {
+    incoming?: IModelTransformFunc<X>;
+    outgoing?: IModelTransformFunc<X>;
+}
+
+export type IModelTransformFunc<X> = (value: X) => X;
 
 export type ModelKey<M extends IModel> = keyof M | "_";
 export type ModelValue<M extends IModel> = M[keyof M] | M;
+export type ModelEventType = 'add' | 'remove' | 'modify';
 
 export type ModelEventPayload<M extends IModel> = {
     key: ModelKey<M>;
     value: ModelValue<M>;
+    eventType: ModelEventType;
     oldValue?: ModelValue<M>;
     originatingEvent?: ModelEventPayload<any>;
 }
