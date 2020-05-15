@@ -1,4 +1,11 @@
-import { StandardElement, IDrawable, DrawableElement } from ".";
+import { 
+  Primitive, 
+  IUpdatable, 
+  StandardElement, 
+  IDrawable, 
+  DrawableElement
+} from "./_interfaces";
+
 
 /**
  * isNullOrUndefined
@@ -93,6 +100,26 @@ export function isBoolean(test: any): test is boolean {
   return (typeof test === "boolean");
 }
 
+/**
+ * isPrimitive
+ * ----------------------------------------------------------------------------
+ * checks if a particular element is one of the six primitive elements in JS
+ * (string, number, boolean, null, undefined, or symbol)
+ */
+export function isPrimitive(test: any): test is Primitive {
+  if (test === null) { return true; }
+  switch (typeof test) {
+    case 'boolean':
+    case 'number':
+    case 'string':
+    case 'symbol':
+    case 'undefined':
+      return true;
+    default:
+      return false;
+  }
+}
+
 /** 
  * isFunction
  * ----------------------------------------------------------------------------
@@ -125,18 +152,54 @@ export function isObject(test: any): test is Object {
   return (typeof test === typeof {});
 }
 
+/**
+ * isDate
+ * ----------------------------------------------------------------------------
+ * determines whether a given object is a date. Instanceof isn't sufficient so
+ * we also compare the prototype
+ */
+export function isDate(test: any): test is Date {
+	if (!(test instanceof Date)) { return false; }
+	const protoName = Object.prototype.toString.call(test);
+	return protoName === '[object Date]';
+}
+
+/**
+ * isStandardElement
+ * ----------------------------------------------------------------------------
+ * verify that the provided element is either an HTML or SVG element
+ */
 export function isStandardElement(test: any): test is StandardElement {
   if (test instanceof HTMLElement) { return true; }
   if (test instanceof SVGElement) { return true; }
   return false;
 }
 
-/** check if the element implements the drawable class */
+/** 
+ * isDrawable
+ * ----------------------------------------------------------------------------
+ * check if the element implements the drawable interface 
+ */
 export function isDrawable(test: any): test is IDrawable {
   return !!(test as IDrawable).draw;
 }
 
-/** check if the element is one that can be used as a drawable base */
+/** 
+ * isDrawableElement
+ * ----------------------------------------------------------------------------
+ * check if the element is one that can be used as a drawable base 
+ */
 export function isDrawableElement(test: any): test is DrawableElement {
   return (!!(test.appendChild));
+}
+
+/**
+  * isUpdatable
+  * ----------------------------------------------------------------------------
+  * Determine if this object has an update method
+  * @param test 
+  */
+ export function isUpdatable (test: any): test is IUpdatable {
+  if (!test) { return; }
+  return !!((test as any).update);
 }

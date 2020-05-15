@@ -1,5 +1,6 @@
 import { isIdentifiableModel, IIdentifiable } from "..";
-import { _Model } from "@toolkip/model";
+import { Model } from "@toolkip/model";
+import { Identifier } from "../_interfaces";
 
 describe("identfiable guards", () => {
     it("identfies an identifiable", () => {
@@ -16,7 +17,7 @@ describe("identfiable guards", () => {
             greeting: "hello",
             id: "1-test"
         }
-        const model = new Model(identifiable);
+        const model = new SimpleModel(identifiable);
         expect(isIdentifiableModel(model)).toEqual(false);
     })
 })
@@ -27,35 +28,30 @@ interface SimpleInterface {
 }
 
 
-class Model extends _Model<SimpleInterface> implements SimpleInterface {
+class SimpleModel extends Model<SimpleInterface> implements SimpleInterface {
 
     /** greeting */
-    protected _greeting: string;
-    public get greeting () : string { return this._greeting; }
+    public get greeting () : string { return this._getValue('greeting') }
     public set greeting (data : string) { this._setValue( "greeting", data ); }
     
     /** farewell */
-    protected _farewell: string;
-    public get farewell () : string { return this._farewell; }
+    public get farewell () : string { return this._getValue('farewell') }
     public set farewell (data : string) { this._setValue( "farewell", data ); }
     
- }
+}
 
-class IdModel extends _Model<SimpleInterface & IIdentifiable> { 
+class IdModel extends Model<SimpleInterface & IIdentifiable> { 
 
     /** greeting */
-    protected _greeting: string;
-    public get greeting () : string { return this._greeting; }
+    public get greeting () : string { return this._getValue('greeting') }
     public set greeting (data : string) { this._setValue( "greeting", data ); }
     
     /** farewell */
-    protected _farewell: string;
-    public get farewell () : string { return this._farewell; }
+    public get farewell () : string { return this._getValue('farewell') }
     public set farewell (data : string) { this._setValue( "farewell", data ); }
 
     /** id */
-    protected _id: string;
-    public get id () : string { return this._id; }
-    public set id (data : string) { this._setValue( "id", data ); }
+    public get id () : Identifier { return this._getValue('id') }
+    public set id (data : Identifier) { this._setValue( "id", data ); }
     
 }

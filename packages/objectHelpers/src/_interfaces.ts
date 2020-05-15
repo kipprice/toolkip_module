@@ -74,3 +74,10 @@ export interface IMapFunction<T, R> {
 export interface IQuitConditionFunction {
     (): boolean;
 }
+
+export type Key = string | number | symbol;
+
+export interface ICustomCloner<T> {
+    typeGuard: <T>(data: T, key?: Key) => boolean;
+    cloner: <T>(data: T, key?: Key) => T;
+}

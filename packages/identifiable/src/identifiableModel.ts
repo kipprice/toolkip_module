@@ -1,6 +1,6 @@
 import { IPartial } from '@toolkip/structs';
 import { IIdentifiable } from './_interfaces';
-import { _Serializable } from '@toolkip/serializable';
+import { Serializable } from '@toolkip/serializable';
 import { generateUniqueId, registerUniqueId } from '.';
 
 
@@ -12,7 +12,7 @@ import { generateUniqueId, registerUniqueId } from '.';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends _Serializable<T> implements IIdentifiable {
+export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends Serializable<T> implements IIdentifiable {
 
     //.....................
     //#region PROPERTIES
