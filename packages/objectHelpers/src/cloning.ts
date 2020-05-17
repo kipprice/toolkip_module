@@ -3,6 +3,7 @@ import { combineObjects } from "./combine";
 import { map } from './manipulate';
 import { ICustomCloner, Key } from './_interfaces';
 import { IPoint, isPrimitive, Primitive, isArray, isObject, isDate } from '@toolkip/shared-types';
+import { isCloneable } from './_typeguards';
 
 export function cloneRect(rect: IBasicRect): IBasicRect {
 	let out: IBasicRect = {
@@ -75,6 +76,9 @@ export function clone<T>(toClone: T, customCloners: ICustomCloner<any>[] = [], k
 	// default cloning methods
 	if (isPrimitive(toClone)) {
 		return _clonePrimitive(toClone);
+		
+	} else if (isCloneable<T>(toClone)) {
+		return toClone.clone();
 
 	} else if (isDate(toClone)) {
 		return _cloneDate(toClone);
