@@ -1,2 +1,2 @@
-export * from './modelArray';
+export * from './arrayModel';
 export * from './modelManager';

@@ -5,7 +5,7 @@ import { isPrimitive, isArray, isDate, isObject, Primitive } from '@toolkip/shar
 import { isIdentifiable, IIdentifiable } from '@toolkip/identifiable';
 import { ModelPrimitive, ModelDate } from '../primitiveModels';
 import { ModelObject, IdentifiableModel } from '../objectModels';
-import { ModelArray, ModelManager } from '../arrayModels';
+import { ArrayModel, ModelManager } from '../arrayModels';
 
 /**
  * createModelForData
@@ -40,7 +40,7 @@ const _createModelForData = <T = any>(data: T, transforms?: IKeyedModelTransform
 
 const _createArrayModelForData = <T>(data: T[], transforms?: IKeyedModelTransforms<T[]>): IModel<any> => {
     if (isIdentifiable(data[0])) { return new ModelManager(data as any as IIdentifiable[], transforms as any); } 
-    else { return new ModelArray(data, transforms); }
+    else { return new ArrayModel(data, transforms); }
 }
 
 // once this file is loaded, we should assign the appropriate value to the generic version
