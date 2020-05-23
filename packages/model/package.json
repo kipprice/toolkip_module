@@ -19,11 +19,13 @@
         "@toolkip/object-helpers": "^1.1.0",
         "@toolkip/primitive-helpers": "^1.1.0",
         "@toolkip/shared-types": "^1.1.0",
-        "@toolkip/structs": "^1.0.10"
+        "@toolkip/structs": "^1.0.10",
+        "@toolkip/identifiable": "^1.0.10",
+        "@toolkip/managers": "^1.1.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
-        "test": "echo \"test at the root level\" && exit 1"
+        "test": "jest -- -t .test.ts"
     },
     "publishConfig": {
         "access": "public"
