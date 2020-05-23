@@ -55,12 +55,11 @@ export function isNullOrUndefined(value: any): value is undefined | null {
  */
 export function isFalsy(value: any, falsyTypesToIgnore: FalsyTypes[] = []): boolean {
   if (!!value) { return false; }
-  const vType = typeof value;
 
   // if the type of falsy value this value is is explicitly skipped, 
   // treat that as a truthy value
   for (let ignoredType of falsyTypesToIgnore) {
-    if (ignoredType === vType) {
+    if (ignoredType === value) {
       return false;
     }
   }
