@@ -112,7 +112,6 @@ export function isPrimitive(test: any): test is Primitive {
     case 'boolean':
     case 'number':
     case 'string':
-    case 'symbol':
     case 'undefined':
       return true;
     default:
