@@ -1,5 +1,6 @@
 import { _KeyedModel } from './_keyedModel';
-import { IArrayModel, isModel } from '../_shared';
+import { IArrayModel } from '../_shared';
+import { isModel } from '../_typeguards';
 
 export abstract class _KeyedModels<T, K, X> extends _KeyedModel<T, K, X> implements IArrayModel<X, K> {
 

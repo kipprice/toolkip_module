@@ -1,5 +1,5 @@
 import { _Model } from "../abstractClasses/_model";
-import { IModel } from './_interfaces';
+import { IModel } from '../_shared/_interfaces';
 import { IdentifiableModel } from '../objectModels/identifiableModel';
 
 export const isModel = (test: any): test is IModel<any> => {
@@ -8,7 +8,6 @@ export const isModel = (test: any): test is IModel<any> => {
 }
 
 export function isIdentifiableModel(model: _Model<any>): model is IdentifiableModel<any> {
-    if (!model) { return false; }
-    if (!(model as any).id) { return false; }
-    return true;
+    if (model instanceof IdentifiableModel) { return true; }
+    return false;
 }

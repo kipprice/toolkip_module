@@ -1,6 +1,7 @@
 import { ICodeEventStandardContent } from '@toolkip/code-event';
 import { _Model } from './_model';
-import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, isModel, IModel } from '../_shared';
+import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel } from '../_shared';
+import { isModel } from '../_typeguards';
 
 /**----------------------------------------------------------------------------
  * @class	_KeyedModel

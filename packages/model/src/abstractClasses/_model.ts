@@ -6,11 +6,11 @@ import {
     IModelTransforms, 
     ModelEventCallback, 
     ModelEventType, 
-    IKeyedModelTransforms, 
-    isModel, 
+    IKeyedModelTransforms,  
     ModelEvent,
     IModel
 } from "../_shared";
+import { isModel } from '../_typeguards';
 
 /**----------------------------------------------------------------------------
  * @class	_Model
