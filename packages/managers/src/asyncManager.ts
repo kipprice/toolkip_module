@@ -1,4 +1,4 @@
-import { IIdentifiable, Identifier, IdentifiableModel } from '@toolkip/identifiable';
+import { IIdentifiable, Identifier } from '@toolkip/identifiable';
 import { DataManager } from "./dataManager";
 import { Loadable, Creatable, ILoadFunction, ICreateFunction } from "./_interfaces";
 import { IDictionary } from '@toolkip/object-helpers';
@@ -44,9 +44,10 @@ export class AsyncManager<I extends IIdentifiable>
      * ----------------------------------------------------------------------------
      * add a default value
      */
-    protected _createAndAddDefault(d: Partial<I>): void {
+    protected _createAndAddDefault(d: Partial<I>) {
         let model = this.create(d);
         this.add(model as any as I);
+        return this;
     }
 
     //#endregion

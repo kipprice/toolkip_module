@@ -1,7 +1,6 @@
 import { 
     IIdentifiable, 
-    Identifier, 
-    IdentifiableModel 
+    Identifier
 } from '@toolkip/identifiable';
 
 export interface Creatable<I extends IIdentifiable> {
