@@ -3,24 +3,86 @@ import {
   IUpdatable, 
   StandardElement, 
   IDrawable, 
-  DrawableElement
+  DrawableElement,
+  FalsyTypes
 } from "./_interfaces";
 
+/**
+ * isUndefined
+ * ----------------------------------------------------------------------------
+ * check explicitly if a value is undefined in a way that makes further
+ * manipulation within Typescript easier.
+ * @param   value   The value to check for undefined
+ * @returns True if the provided value is undefined
+ */
+export function isUndefined(value: any): value is undefined {
+  if (value === undefined) { return true; }
+  return false;
+}
 
 /**
  * isNullOrUndefined
  * ----------------------------------------------------------------------------
- * Determine whether the data passed in has value
+ * Determine whether the data passed is neither null nor undefined. Useful for
+ * checking for falsy values if empty string or 0 are valid falsy values in
+ * this particular scenario 
  * 
  * @param   value   The value to check for null / undefined
- * 
  * @returns True if the value is null or undefined
  */
-export function isNullOrUndefined(value: any, strCheck?: boolean): boolean {
+export function isNullOrUndefined(value: any): value is undefined | null {
   if (value === undefined) { return true; }
   if (value === null) { return true; }
-  if (strCheck && value === "") { return true; }
   return false;
+}
+
+/**
+ * isFalsy
+ * ----------------------------------------------------------------------------
+ * check if a provided value is falsy, within the types of falsy values that
+ * a caller particularly is looking for. For example, if you are checking for
+ * null, undefined, or empty string, but zero is valid, a caller can pass in 
+ * 'number' to the falsyTypesToIgnore parameter, and treat a zero value as
+ * truthy for this case.
+ * 
+ * @param   value               The value to evaluate for truthiness or falsiness
+ * @param   falsyTypesToIgnore  The types of falsy value the caller doesn't 
+ *                              want to trigger a 'true' response
+ * 
+ * @returns False if the value is truthy given the constraints, true otherwise
+ * 
+ * @example isFalsy(0, ['number']) // => false
+ */
+export function isFalsy(value: any, falsyTypesToIgnore: FalsyTypes[] = []): boolean {
+  if (!!value) { return false; }
+  const vType = typeof value;
+
+  // if the type of falsy value this value is is explicitly skipped, 
+  // treat that as a truthy value
+  for (let ignoredType of falsyTypesToIgnore) {
+    if (ignoredType === vType) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * isTruthy
+ * ----------------------------------------------------------------------------
+ * Counterpart to `isFalsy`; checks if the given value is truthy, or should
+ * be treated truthy despite being a falsy value. 
+ * 
+ * @param   value                     The value to check for truthiness
+ * @param   falsyTypesToTreatAsTruthy The types that should be treated as 
+ *                                    truthy even if they are falsy
+ * 
+ * @returns True if the specified value is truthy given the constraints, false
+ *          otherwise.
+ */
+export function isTruthy(value: any, falsyTypesToTreatAsTruthy: FalsyTypes[] = []): boolean {
+  return !this.isFalsy(value, falsyTypesToTreatAsTruthy);
 }
 
 /** 

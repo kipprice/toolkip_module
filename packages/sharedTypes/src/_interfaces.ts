@@ -30,3 +30,5 @@ export interface IPoint {
 	y: number;
 	z?: number;
 }
+
+export type FalsyTypes = 'undefined' | 'null' | 'string' | 'number';
