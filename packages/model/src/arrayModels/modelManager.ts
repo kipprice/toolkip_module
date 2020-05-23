@@ -2,7 +2,7 @@ import { DataManager, isDataManager } from '@toolkip/managers';
 import { IIdentifiable, Identifier } from '@toolkip/identifiable';
 import { _Model, _KeyedModel } from '../abstractClasses';
 import { IArrayModel, IKeyedModelTransforms } from '../_shared/_interfaces';
-import { IdentifiableModel } from '../objectModels/identifiableModel';
+import { MIdentifiable } from '../objectModels/identifiableModel';
 import { IDictionary, map } from '@toolkip/object-helpers';
 
 type ModelManagerInputs<T extends IIdentifiable> = DataManager<T> | T[] | IDictionary<T>;
@@ -15,7 +15,7 @@ type ModelManagerInputs<T extends IIdentifiable> = DataManager<T> | T[] | IDicti
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ModelManager<T extends IIdentifiable> 
+export class MManager<T extends IIdentifiable> 
     extends _KeyedModel<ModelManagerInputs<T>, Identifier, T>
     implements IArrayModel<T, Identifier> 
 {
@@ -26,7 +26,7 @@ export class ModelManager<T extends IIdentifiable>
     protected _getDefaultValues() { 
         return new DataManager<T>(); 
     }
-    protected _getValue(output: any, key: Identifier): IdentifiableModel<T> {
+    protected _getValue(output: any, key: Identifier): MIdentifiable<T> {
         return output.get(key);
     }
 
@@ -35,7 +35,7 @@ export class ModelManager<T extends IIdentifiable>
         return outManager.toArray();
     }
 
-    protected _setValue(output: any, key: Identifier, value: IdentifiableModel<T>): void {
+    protected _setValue(output: any, key: Identifier, value: MIdentifiable<T>): void {
         output.add(value);
     }
 

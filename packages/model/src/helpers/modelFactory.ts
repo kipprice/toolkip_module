@@ -3,9 +3,9 @@ import { _Model } from '../abstractClasses/_model';
 import { isModel } from '../_typeguards';
 import { isPrimitive, isArray, isDate, isObject, Primitive } from '@toolkip/shared-types';
 import { isIdentifiable, IIdentifiable } from '@toolkip/identifiable';
-import { ModelPrimitive, ModelDate } from '../primitiveModels';
-import { ModelObject, IdentifiableModel } from '../objectModels';
-import { ArrayModel, ModelManager } from '../arrayModels';
+import { MPrimitive, MDate } from '../primitiveModels';
+import { MObject, MIdentifiable } from '../objectModels';
+import { MArray, MManager } from '../arrayModels';
 
 /**
  * createModelForData
@@ -31,16 +31,16 @@ export const createModel = <T = any>(data: T | IModel<T>, transforms?: IKeyedMod
  * around typescripts generic handling, but it functionally returns Model<T>
  */
 const _createModelForData = <T = any>(data: T, transforms?: IKeyedModelTransforms<T>): IModel<any> => {
-    if (isPrimitive(data))      { return new ModelPrimitive(data, transforms); }
-    if (isDate(data))           { return new ModelDate(data, transforms); }
-    if (isIdentifiable(data))   { return new IdentifiableModel(data, transforms); }
+    if (isPrimitive(data))      { return new MPrimitive(data, transforms); }
+    if (isDate(data))           { return new MDate(data, transforms); }
+    if (isIdentifiable(data))   { return new MIdentifiable(data, transforms); }
     if (isArray(data))          { return _createArrayModelForData(data, transforms); }
-    if (isObject(data))         { return new ModelObject(data, transforms); }
+    if (isObject(data))         { return new MObject(data, transforms); }
 }
 
 const _createArrayModelForData = <T>(data: T[], transforms?: IKeyedModelTransforms<T[]>): IModel<any> => {
-    if (isIdentifiable(data[0])) { return new ModelManager(data as any as IIdentifiable[], transforms as any); } 
-    else { return new ArrayModel(data, transforms); }
+    if (isIdentifiable(data[0])) { return new MManager(data as any as IIdentifiable[], transforms as any); } 
+    else { return new MArray(data, transforms); }
 }
 
 // once this file is loaded, we should assign the appropriate value to the generic version

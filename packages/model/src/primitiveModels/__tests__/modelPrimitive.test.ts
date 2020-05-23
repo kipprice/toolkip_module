@@ -1,20 +1,20 @@
-import { ModelPrimitive } from "../modelPrimitive"
-import { ModelDate } from "../modelDate";
+import { MPrimitive } from "../modelPrimitive"
+import { MDate } from "../modelDate";
 
 describe('ModelPrimitive', () => {
     it('has an appropriate default value', () => {
-        const model = new ModelPrimitive<string>();
+        const model = new MPrimitive<string>();
         expect(model.getData()).toEqual(null);
     })
 
     it('sets an appropriate value', () => {
-        const model = new ModelPrimitive<string>('hello')
+        const model = new MPrimitive<string>('hello')
         expect(model.getData()).toEqual('hello');
     })
 
     it('notifies about changes', () => {
         expect.assertions(3);
-        const model = new ModelPrimitive<string>('womp');
+        const model = new MPrimitive<string>('womp');
         model.addEventListener((payload) => {
             expect(payload.oldValue).toEqual('womp');
             expect(payload.value).toEqual('wompers');
@@ -25,7 +25,7 @@ describe('ModelPrimitive', () => {
 
     it('calculates the correct change type', () => {
         expect.assertions(1);
-        const model = new ModelPrimitive<string>();
+        const model = new MPrimitive<string>();
         model.addEventListener(({ eventType }) => {
             expect(eventType).toEqual('add');
         })

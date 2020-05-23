@@ -13,7 +13,7 @@ import { map } from '@toolkip/object-helpers';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class ModelObject<T extends IModelData, K extends keyof T = keyof T> extends _KeyedModel<T, K, T[K]> {
+export class MObject<T extends IModelData, K extends keyof T = keyof T> extends _KeyedModel<T, K, T[K]> {
 
     //..........................................
     //#region IMPLEMENT ABSTRACT FUNCTIONS

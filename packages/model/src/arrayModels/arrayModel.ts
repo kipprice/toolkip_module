@@ -2,7 +2,7 @@ import { _Model, _KeyedModel } from '../abstractClasses';
 import { map } from '@toolkip/object-helpers';
 import { IArrayModel } from '../_shared/_interfaces';
 
-export class ArrayModel<T> extends _KeyedModel<T[], number, T> implements IArrayModel<T, number> {
+export class MArray<T> extends _KeyedModel<T[], number, T> implements IArrayModel<T, number> {
     protected _map(data: T[], mapFunc: (val: T, key: number) => void) {
         map(data, mapFunc);
     }

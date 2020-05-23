@@ -1,8 +1,8 @@
 import { isIdentifiableModel, isModel } from '..';
-import { IdentifiableModel, ModelObject } from '../../objectModels';
+import { MIdentifiable, MObject } from '../../objectModels';
 import { setupModelWrapping } from '../../helpers/modelFactory';
-import { ModelPrimitive } from '../../primitiveModels';
-import { ModelArray, ModelManager } from '../../arrayModels';
+import { MPrimitive } from '../../primitiveModels';
+import { MArray, MManager } from '../../arrayModels';
 
 setupModelWrapping();
 
@@ -12,7 +12,7 @@ describe('identfiable guards', () => {
             greeting: 'hello',
             id: '1-test',
         };
-        const model = new IdentifiableModel(identifiable);
+        const model = new MIdentifiable(identifiable);
         expect(isIdentifiableModel(model)).toBeTruthy();
     });
 
@@ -21,36 +21,36 @@ describe('identfiable guards', () => {
             greeting: 'hello',
             id: '1-test',
         };
-        const model = new ModelObject(identifiable);
+        const model = new MObject(identifiable);
         expect(isIdentifiableModel(model)).toBeFalsy();
     });
 });
 
 describe('model guards', () => {
     it('identifies a primitive model', () => {
-        const m = new ModelPrimitive('hello');
+        const m = new MPrimitive('hello');
         expect(isModel(m)).toBeTruthy();
     })
 
     it('identifies an object model', () => {
-        const m = new ModelObject({ name: 'Cookie Monster', age: 10 });
+        const m = new MObject({ name: 'Cookie Monster', age: 10 });
         expect(isModel(m)).toBeTruthy(); 
     })
 
     it('identifies an array model', () => {
-        const m = new ModelArray(['A', 'B', 'C']);
+        const m = new MArray(['A', 'B', 'C']);
         expect(isModel(m)).toBeTruthy();
     })
 
     it ('identifies a model manager', () => {
-        const m = new ModelManager();
+        const m = new MManager();
         expect(isModel(m)).toBeTruthy();
     })
 
     it('identifies a non-model appropriately', () => {
         const data = { name: 'Cookie Monster', age: 10 }
         expect(isModel(data)).toBeFalsy();
-        const m = new ModelObject(data);
+        const m = new MObject(data);
         expect(isModel(m)).toBeTruthy();
         expect(isModel(m.getData())).toBeFalsy();
     })

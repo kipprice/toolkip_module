@@ -2,7 +2,7 @@ import { IPartial } from '@toolkip/structs';
 import { IIdentifiable, generateUniqueId, registerUniqueId } from '@toolkip/identifiable';
 import { _KeyedModel } from '../abstractClasses/_keyedModel';
 import { IKeyedModelTransforms } from '../_shared/_interfaces';
-import { ModelObject } from './modelObject';
+import { MObject } from './modelObject';
 
 // TODO: evaluate identifier assignment and whether it can be suffix-less
 
@@ -14,7 +14,7 @@ import { ModelObject } from './modelObject';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends ModelObject<T> implements IIdentifiable {
+export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObject<T> implements IIdentifiable {
 
     //.....................
     //#region PROPERTIES
