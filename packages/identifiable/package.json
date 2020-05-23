@@ -13,9 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/model": "^1.1.0",
         "@toolkip/object-helpers": "^1.1.0",
-        "@toolkip/serializable": "^1.1.0",
         "@toolkip/structs": "^1.0.10"
     },
     "scripts": {

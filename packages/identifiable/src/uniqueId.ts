@@ -1,4 +1,5 @@
 import { IDictionary } from '@toolkip/object-helpers';
+import { InvalidIdType } from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	IdentifierAssigner
@@ -14,22 +15,22 @@ class _IdentifierAssigner {
     //#region PROPERTIES
     
     protected _lastIds: IDictionary<number> = {"id": 0 };
-    public getLastId(prefix: string) { return this._lastIds[prefix]; }
+    public getLastId(suffix: string) { return this._lastIds[suffix]; }
     
     //#endregion
     //.....................
 
-    private _cleanPrefix(prefix?: string) {
-        if (!prefix) { return "id"; }
-        return prefix.replace(/-/g, "_");
+    private _cleanSuffix(suffix?: string) {
+        if (!suffix) { return "id"; }
+        return suffix.replace(/-/g, "_");
     }
 
     private _splitId(lastId: string) {
-        const [strId, prefix] = lastId.split("-");
+        const [strId, suffix] = lastId.split("-");
         const numericId = parseInt(strId);
 
         return {
-            prefix: this._cleanPrefix(prefix), 
+            suffix: this._cleanSuffix(suffix), 
             id: numericId
         }
     }
@@ -39,17 +40,17 @@ class _IdentifierAssigner {
      * ----------------------------------------------------------------------------
      * updates the set of recognized keys 
      */
-    public generateUniqueId(prefix?: string): string {
+    public generateUniqueId(suffix?: string): string {
 
-        // set a default prefix if needed
-        prefix = this._cleanPrefix(prefix);
+        // set a default suffix if needed
+        suffix = this._cleanSuffix(suffix);
         
         // generate the next ID to use
-        const nextId = (this._lastIds[prefix] || 0) + 1;
-        this._lastIds[prefix] = nextId;
+        const nextId = (this._lastIds[suffix] || 0) + 1;
+        this._lastIds[suffix] = nextId;
         
         // return the string version of this ID
-        return `${nextId}-${prefix}`;
+        return `${nextId}-${suffix}`;
     }
 
     /**
@@ -57,34 +58,41 @@ class _IdentifierAssigner {
      * ----------------------------------------------------------------------------
      * ensure that we can load in identifiers from outside sources
      */
-    public registerId(lastId: string): boolean {
-        const { prefix, id } = this._splitId(lastId);
+    public registerId(lastId: string, supplementalSuffix?: string): boolean {
+        const { suffix, id } = this._splitId(lastId);
 
         // quit if we weren't able to parse out the 
         // id associated with this 
         if (isNaN(id)) { return false; }
 
         // verify that we need to update this ID
-        if (id <= this._lastIds[prefix]) { return false; }
+        if (id <= this._lastIds[suffix]) { return false; }
 
-        // 
-        this._lastIds[prefix] = id;
+        // register the id back
+        this._lastIds[suffix] = id;
         return true;
     }
 
-    public reset(prefix?: string): void {
-        prefix = this._cleanPrefix(prefix);
-        this._lastIds[prefix] = 0;
+    public reset(suffix?: string): void {
+        suffix = this._cleanSuffix(suffix);
+        this._lastIds[suffix] = 0;
+    }
+
+    public isInvalidId(id: string, expectedSuffix?: string): InvalidIdType {
+        const { suffix } = this._splitId(id);
+        if (!suffix && expectedSuffix) { return InvalidIdType.MISSING_SUFFIX; }
+        if (expectedSuffix !== suffix) { return InvalidIdType.WRONG_SUFFIX; }
+        return InvalidIdType.VALID;
     }
 }
 
 export const IdentifierAssigner = new _IdentifierAssigner();
 
 
-export function generateUniqueId(prefix?: string): string {
-    return IdentifierAssigner.generateUniqueId(prefix);
+export function generateUniqueId(suffix?: string): string {
+    return IdentifierAssigner.generateUniqueId(suffix);
 }
 
-export function registerUniqueId(lastId: string): boolean {
-    return this.IdentifierAssigner.registerId(lastId);
+export function registerUniqueId(lastId: string, suffix?: string): boolean {
+    return this.IdentifierAssigner.registerId(lastId, suffix);
 }
