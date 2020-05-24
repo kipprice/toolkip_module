@@ -36,6 +36,8 @@ export class HistoryChain<T> {
 	 * @param   data    The data to add
 	 */
 	public push(data: T): void {
+		if (this._preventAdditions) { return; }
+
 		let node: HistoryNode<T> = new HistoryNode<T>(data);
 
 		// case 1: first node we're adding
