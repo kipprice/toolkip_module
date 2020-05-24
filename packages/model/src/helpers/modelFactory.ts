@@ -1,7 +1,7 @@
 import { IKeyedModelTransforms, IModel, IKeyedModel, IModelTransforms } from '../_shared/_interfaces';
 import { _Model } from '../abstractClasses/_model';
-import { isModel } from '../_typeguards';
-import { isPrimitive, isArray, isDate, isObject, Primitive } from '@toolkip/shared-types';
+import { isModel } from '../_typeguards/core';
+import { isPrimitive, isArray, isDate, isObject} from '@toolkip/shared-types';
 import { isIdentifiable, IIdentifiable } from '@toolkip/identifiable';
 import { MPrimitive, MDate } from '../primitiveModels';
 import { MObject, MIdentifiable } from '../objectModels';

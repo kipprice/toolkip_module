@@ -1,9 +1,10 @@
 import { DataManager, isDataManager } from '@toolkip/managers';
 import { IIdentifiable, Identifier } from '@toolkip/identifiable';
-import { _Model, _KeyedModel } from '../abstractClasses';
-import { IArrayModel, IKeyedModelTransforms } from '../_shared/_interfaces';
+import { _Model, _KeyedModels } from '../abstractClasses';
+import { IArrayModel } from '../_shared/_interfaces';
 import { MIdentifiable } from '../objectModels/identifiableModel';
 import { IDictionary, map } from '@toolkip/object-helpers';
+import { isUndefined, isArray } from '@toolkip/shared-types';
 
 type ModelManagerInputs<T extends IIdentifiable> = DataManager<T> | T[] | IDictionary<T>;
 
@@ -16,36 +17,65 @@ type ModelManagerInputs<T extends IIdentifiable> = DataManager<T> | T[] | IDicti
  * ----------------------------------------------------------------------------
  */
 export class MManager<T extends IIdentifiable> 
-    extends _KeyedModel<ModelManagerInputs<T>, Identifier, T>
+    extends _KeyedModels<ModelManagerInputs<T>, Identifier, T>
     implements IArrayModel<T, Identifier> 
 {
 
     // keep track of everything in a data manager
     protected _innerModel: DataManager<T>;
 
-    protected _getDefaultValues() { 
-        return new DataManager<T>(); 
-    }
+    protected _getDefaultValues() {  return new DataManager<T>(); }
     protected _getValue(output: any, key: Identifier): MIdentifiable<T> {
         return output.get(key);
     }
 
+    public getModel(key: Identifier) {
+        return super.getModel(key) as MIdentifiable<T>;
+    }
+
     protected _innerGetData() {
-        const outManager = super._innerGetData() as DataManager<T>;
-        return outManager.toArray();
+        const out = super._innerGetData() as DataManager<T>;
+        return out.toArray();
+    }
+
+    public toDataManager() {
+        return super._innerGetData() as DataManager<T>;
+    }
+
+    public toArray() {
+        return this._innerGetData();
+    }
+
+    public toDictionary() {
+        const manager = this.toDataManager();
+        return manager.toDictionary();
     }
 
     protected _setValue(output: any, key: Identifier, value: MIdentifiable<T>): void {
-        output.add(value);
+        if (this._isRemoval(output, key, value)) {
+            output.remove(key);
+        } else if (this._isReplacement(output, key)) {
+            output.remove(key);
+            output.add(value);
+        } else {
+            output.add(value);
+        }
+        
     }
 
-    public clone(tx: IKeyedModelTransforms<any>) {
-        return super.clone(tx)
+    protected _isRemoval(output: any, key: Identifier, value: MIdentifiable<T>): boolean {
+        if (!isDataManager(output)) { return false; }
+        if (!output.contains(key)) { return false; }
+
+        if (isUndefined(value)) { return true; }
+        if (isUndefined(value.getData())) { return true; }
+        return false;
     }
 
-
-    protected _innerSetData(payload) {
-        super._innerSetData(payload)
+    protected _isReplacement(output: any, key: Identifier): boolean {
+        if (!isDataManager(output)) { return false; }
+        if (!output.contains(key)) { return false; }
+        return true;
     }
 
     /**
@@ -54,29 +84,32 @@ export class MManager<T extends IIdentifiable>
      * handle inputs from a variety of sources when mapping imports or exports
      */
     protected _map(data: ModelManagerInputs<T>, mapFunc: (val: T, key: Identifier) => void) {
-        if (isDataManager(data)) { 
-            const arr = data.toArray();
-            map(arr, mapFunc);
-         }
-        else { map(data, mapFunc); }
+        if (isDataManager(data)) { data.map(mapFunc); }
+        else if (isArray(data)) { 
+            map(data, (val: T, idx: number) => mapFunc(val, val.id) )
+        } else { map(data, mapFunc); }
     }
 
     //..........................................
-    //#region WRAPPERS AROUND DATA MANAGER
+    //#region HANDLERS EXPECTED FOR COLLECTIONS
     
     public add(item: T) {
-        return this._innerSet({ key: item.id, value: item, eventType: 'add' });
+        if (this.contains(item)) { return false; }
+
+        this._innerSet({ 
+            key: item.id, 
+            value: item, 
+            eventType: 'add' 
+        });
+
+        return true;
     }
 
-    public remove(id: Identifier) {
-        const removed = this._innerModel.remove(id);
-        this._innerSet({ key: removed.id, value: undefined, oldValue: removed, eventType: 'remove' })
-        return removed;
-    }
-
-    public clear() {
-        // TODO: finish
-        return this._innerModel.clear();
+    public getIndex(item: T): Identifier {
+        if (this._innerModel.contains(item.id)) {
+            return item.id; 
+        }
+        return undefined;
     }
     
     //#endregion

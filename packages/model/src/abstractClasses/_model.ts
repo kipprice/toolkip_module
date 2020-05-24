@@ -10,7 +10,7 @@ import {
     ModelEvent,
     IModel
 } from "../_shared";
-import { isModel } from '../_typeguards';
+import { isModel } from '../_typeguards/core';
 
 /**----------------------------------------------------------------------------
  * @class	_Model

@@ -62,4 +62,14 @@ describe('ModelObject', () => {
         model.set('name', 'Big Bird');
         model.set('name', 'Elmo');
     })
+
+    it('sets the whole object at once', () => {
+        const data = { name: 'Cookie Monster', age: 10 };
+        const model = new MObject<ISimpleModel>(data);
+        expect(model.getData()).toMatchObject(data);
+
+        const updatedData = { name: 'Big Bird', age: 11 }
+        model.setData(updatedData);
+        expect(model.getData()).toMatchObject(updatedData);
+    })
 })

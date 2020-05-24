@@ -1,7 +1,8 @@
 import { ICodeEventStandardContent } from '@toolkip/code-event';
 import { _Model } from './_model';
 import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel } from '../_shared';
-import { isModel } from '../_typeguards';
+import { isModel } from '../_typeguards/core';
+import { isNullOrUndefined } from '@toolkip/shared-types';
 
 /**----------------------------------------------------------------------------
  * @class	_KeyedModel
@@ -72,7 +73,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         return out;
     }
 
-    public getModel(key: K): IModel<X> {
+    public getModel(key: K) {
         return this._getValue(this._innerModel, key);
     }
 
@@ -91,8 +92,8 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     protected _innerSet( payload: ModelEventPayload<K, X>) {
         const { value, key } = payload;
 
-        const newModel = this._wrapInModel(value);
-        const oldValue = this.get(key);
+        const newModel = this._wrapInModel(value, key);
+        const oldValue = payload.oldValue || this.get(key);
 
         this._setValue(this._innerModel, key, newModel);
 
@@ -106,7 +107,22 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     }
     public set(key: K, value: X): void { this._innerSet({ key, value }); }
     
-    
+    protected _innerSetData(payload): void {
+        const { value } = payload;
+
+        if (isModel(value)) {
+            super._innerSetData({ ...payload, value: this._wrapInModel(value) });
+        } else {
+            const modelValue = this._getDefaultValues();
+
+            this._map(value, (val: X, key: K) => {
+                let updatedVal = this._wrapInModel(val, key);
+                this._setValue(modelValue, key, updatedVal);
+            })
+
+            super._innerSetData({ ...payload, value: modelValue });
+        }
+    }
     //#endregion
     //..........................................
 
@@ -125,7 +141,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
             if (transform) {
                 updatedValue = transform(val);
             }
-            this._setValue(out, key, this._wrapInModel(updatedValue))
+            this._setValue(out, key, this._wrapInModel(updatedValue, key))
         })
 
         return out;
@@ -146,17 +162,26 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     protected _wrapInModel(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
         const applicableTransform = this._getApplicableTransforms(key);
         const newModel = _Model.createModel<X>(dataToWrap, applicableTransform);
+        let oldValue = newModel.getData();
 
-        // ensure that we are listening to this model's changes
+        // if we created a new model, make sure we are listening to its changes
 
-        // TODO: is this actually necessary with the fact that 
-        // we clone over the old event listeners? maybe need a unique
-        // identifier to be able to not fire a bunch of unused events
-        newModel.addEventListener((payload) => {
-            if (!key) { return }
-            this._innerSet({ key, value: newModel as any as X, eventChain: payload })
-        })
+        // TODO: there is an edge case where a model is passed in without
+        // a listener; we should handle that as well
+        if (!isModel(dataToWrap)) {
+        
+            newModel.addEventListener((payload) => {
+                if (isNullOrUndefined(key)) { return }
 
+                // this allows us to update from formerly cloned models instead of 
+                // always using the new one we've cloned in
+                const { target } = payload;
+                this._innerSet({ key, oldValue, value: target as any as X, eventChain: payload })
+
+                // update what we treat as the most recent data
+                oldValue = isModel(target) ? target.getData() : target;
+            })
+        }
         return newModel;
     }
     

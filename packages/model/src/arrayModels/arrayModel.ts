@@ -1,8 +1,14 @@
-import { _Model, _KeyedModel } from '../abstractClasses';
+import { _Model, _KeyedModels } from '../abstractClasses';
 import { map } from '@toolkip/object-helpers';
 import { IArrayModel } from '../_shared/_interfaces';
+import { isUndefined } from '@toolkip/shared-types';
 
-export class MArray<T> extends _KeyedModel<T[], number, T> implements IArrayModel<T, number> {
+export class MArray<T> extends _KeyedModels<T[], number, T> implements IArrayModel<T, number> {
+    
+    protected _getDefaultValues(): T[] {
+        return [];
+    }
+
     protected _map(data: T[], mapFunc: (val: T, key: number) => void) {
         map(data, mapFunc);
     }
@@ -12,12 +18,22 @@ export class MArray<T> extends _KeyedModel<T[], number, T> implements IArrayMode
     }
 
     protected _setValue(output: T[], key: number, value: _Model<T>) {
-        output[key] = value as any as T;
+        if (this._shouldSplice(output, key, value)) {
+            output.splice(key, 1);
+        } else {
+            output[key] = value as any as T;
+        }
     }
 
-    protected _getDefaultValues(): T[] {
-        return [];
+    protected _shouldSplice(output: T[], key: number, value: _Model<T>): boolean {
+        if (key < 0) { return false; }
+        if (key >= output.length) { return false; }
+        if (value === undefined) { return true; }
+        if (isUndefined(value.getData())) { return true; }
+        return false;
     }
+
+    
 
     //..........................................
     //#region ADDITIONAL ARRAY-SPECIFIC FUNCTIONS
@@ -27,36 +43,9 @@ export class MArray<T> extends _KeyedModel<T[], number, T> implements IArrayMode
             key: this._innerModel.length, 
             value: element
         })
+        return true;
     }
 
-    public remove(idx: number): T {
-
-        if (idx < 0) { return null; }
-        if (idx > this._innerModel.length - 1) { return null; }
-
-        // this approach is kind of janky, but it allows us to not 
-        // raise actions for all of the nested elements that may shift
-        const updatedArray = this._innerModel.slice();
-        const outModel = updatedArray.splice(idx, 1)[0];
-
-        this._innerSetData({
-            key: idx,
-            value: updatedArray,
-            eventChain: {
-                key: idx,
-                value: undefined,
-                oldValue: outModel,
-                eventType: 'remove'
-            }
-        })
-    }
-
-    public clear() {
-        this._innerSetData({
-            value: []
-        });
-    }
-    
     //#endregion
     //..........................................
 
