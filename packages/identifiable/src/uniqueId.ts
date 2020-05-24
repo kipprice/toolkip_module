@@ -1,5 +1,4 @@
 import { IDictionary } from '@toolkip/object-helpers';
-import { InvalidIdType } from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	IdentifierAssigner
@@ -15,24 +14,27 @@ class _IdentifierAssigner {
     //#region PROPERTIES
     
     protected _lastIds: IDictionary<number> = {"id": 0 };
-    public getLastId(suffix: string) { return this._lastIds[suffix]; }
+    public getLastId(uniqueKey: string) { return this._lastIds[uniqueKey]; }
     
     //#endregion
     //.....................
 
-    private _cleanSuffix(suffix?: string) {
+    private _cleanUniqueKey(suffix?: string) {
         if (!suffix) { return "id"; }
         return suffix.replace(/-/g, "_");
     }
 
-    private _splitId(lastId: string) {
-        const [strId, suffix] = lastId.split("-");
-        const numericId = parseInt(strId);
+    private _getNumericId(lastId: string): number {
+        const pieces = lastId.split("-");
 
-        return {
-            suffix: this._cleanSuffix(suffix), 
-            id: numericId
+        let numericId = NaN;
+        for (let pc of pieces) {
+            const parsedPiece = parseInt(pc);
+            if (!isNaN(parsedPiece)) { 
+                numericId = parsedPiece;
+            }
         }
+        return numericId;
     }
 
     /**
@@ -40,17 +42,21 @@ class _IdentifierAssigner {
      * ----------------------------------------------------------------------------
      * updates the set of recognized keys 
      */
-    public generateUniqueId(suffix?: string): string {
+    public generateUniqueId(uniqueKey?: string, supplementalSuffix?: string): string {
 
         // set a default suffix if needed
-        suffix = this._cleanSuffix(suffix);
+        uniqueKey = this._cleanUniqueKey(uniqueKey);
         
         // generate the next ID to use
-        const nextId = (this._lastIds[suffix] || 0) + 1;
-        this._lastIds[suffix] = nextId;
+        const nextId = (this._lastIds[uniqueKey] || 0) + 1;
+        this._lastIds[uniqueKey] = nextId;
         
         // return the string version of this ID
-        return `${nextId}-${suffix}`;
+        if (supplementalSuffix) {
+            return `${nextId}-${supplementalSuffix}`
+        } else {
+            return `${nextId}`;
+        }
     }
 
     /**
@@ -58,41 +64,36 @@ class _IdentifierAssigner {
      * ----------------------------------------------------------------------------
      * ensure that we can load in identifiers from outside sources
      */
-    public registerId(lastId: string, supplementalSuffix?: string): boolean {
-        const { suffix, id } = this._splitId(lastId);
+    public registerId(idToRegister: string, uniqueKey?: string): boolean {
+        const lastId = this._getNumericId(idToRegister);
+        const key = this._cleanUniqueKey(uniqueKey);
 
         // quit if we weren't able to parse out the 
         // id associated with this 
-        if (isNaN(id)) { return false; }
+        if (isNaN(lastId)) { return false; }
 
         // verify that we need to update this ID
-        if (id <= this._lastIds[suffix]) { return false; }
+        if (lastId <= this._lastIds[key]) { return false; }
 
         // register the id back
-        this._lastIds[suffix] = id;
+        this._lastIds[key] = lastId;
         return true;
     }
 
-    public reset(suffix?: string): void {
-        suffix = this._cleanSuffix(suffix);
-        this._lastIds[suffix] = 0;
+    public reset(uniqueKey?: string): void {
+        const key = this._cleanUniqueKey(uniqueKey);
+        this._lastIds[key] = 0;
     }
 
-    public isInvalidId(id: string, expectedSuffix?: string): InvalidIdType {
-        const { suffix } = this._splitId(id);
-        if (!suffix && expectedSuffix) { return InvalidIdType.MISSING_SUFFIX; }
-        if (expectedSuffix !== suffix) { return InvalidIdType.WRONG_SUFFIX; }
-        return InvalidIdType.VALID;
-    }
 }
 
 export const IdentifierAssigner = new _IdentifierAssigner();
 
 
-export function generateUniqueId(suffix?: string): string {
-    return IdentifierAssigner.generateUniqueId(suffix);
+export function generateUniqueId(uniqueKey?: string, supplementalSuffix?: string): string {
+    return IdentifierAssigner.generateUniqueId(uniqueKey, supplementalSuffix);
 }
 
-export function registerUniqueId(lastId: string, suffix?: string): boolean {
-    return this.IdentifierAssigner.registerId(lastId, suffix);
+export function registerUniqueId(lastId: string, uniqueKey?: string): boolean {
+    return this.IdentifierAssigner.registerId(lastId, uniqueKey);
 }
