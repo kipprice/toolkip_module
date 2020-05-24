@@ -53,47 +53,54 @@ describe('ModelArray', () => {
             expect(cb).toHaveBeenCalledTimes(2);
         })
     })
-    
 
     describe('collection-specific functions', () => {
         it('processes adds differently', () => {
-        expect.assertions(2);
+            expect.assertions(2);
 
-        const data = { name: 'Cookie Monster', age: 10 };
-        const model = new MArray<ISimpleModel>();
-        model.addEventListener((payload) => {
-            expect(payload.eventType).toEqual('add');
+            const data = { name: 'Cookie Monster', age: 10 };
+            const model = new MArray<ISimpleModel>();
+            model.addEventListener((payload) => {
+                expect(payload.eventType).toEqual('add');
+            })
+            model.add(data);
+            expect(model.getData()).toMatchObject([ data ])
         })
-        model.add(data);
-        expect(model.getData()).toMatchObject([ data ])
-    })
 
-    it('processes removes differently', () => {
-        expect.assertions(4);
+        it('processes removes differently', () => {
+            expect.assertions(4);
 
-        const data = { name: 'Cookie Monster', age: 10 };
-        const model = new MArray<ISimpleModel>([data]);
-        model.addEventListener((payload) => {
-            expect(payload.eventType).toEqual('remove');
+            const data = { name: 'Cookie Monster', age: 10 };
+            const model = new MArray<ISimpleModel>([data]);
+            model.addEventListener((payload) => {
+                expect(payload.eventType).toEqual('remove');
+            })
+            expect(model.getData()).toMatchObject([data]);
+            model.remove(0);
+            expect(model.getData()).toMatchObject([]);
+            expect(model.getData()).toHaveLength(0);
         })
-        expect(model.getData()).toMatchObject([data]);
-        model.remove(0);
-        expect(model.getData()).toMatchObject([]);
-        expect(model.getData()).toHaveLength(0);
-    })
 
-    it('clears the array appropriately', () => {
-        expect.assertions(3);
+        it('clears the array appropriately', () => {
+            expect.assertions(3);
 
-        const data = { name: 'Cookie Monster', age: 10 };
-        const model = new MArray<ISimpleModel>([ data, data ]);
-        model.addEventListener((payload) => {
-            expect(payload.eventType).toEqual('remove');
-            expect(payload.oldValue).toHaveLength(2);
-        });
-        model.clear();
-        expect(model.getData()).toHaveLength(0);
-    })
+            const data = { name: 'Cookie Monster', age: 10 };
+            const model = new MArray<ISimpleModel>([ data, data ]);
+            model.addEventListener((payload) => {
+                expect(payload.eventType).toEqual('remove');
+                expect(payload.oldValue).toHaveLength(2);
+            });
+            model.clear();
+            expect(model.getData()).toHaveLength(0);
+        })
+
+        it('checks for containment', () => {
+            const data = ['A', 'B', 'C'];
+            const model = new MArray<string>(data);
+            expect(model.contains('A')).toBeTruthy();
+            expect(model.contains('C')).toBeTruthy();
+            expect(model.contains('D')).toBeFalsy();
+        })
     })
     
 })

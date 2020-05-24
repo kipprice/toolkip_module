@@ -1,6 +1,7 @@
 import { MIdentifiable } from '../identifiableModel';
 import { IIdentifiableModel } from './_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
+import { IIdentifiable } from '@toolkip/identifiable';
 
 setupModelWrapping();
 
@@ -16,22 +17,29 @@ describe('IdentifiableModel', () => {
     })
 
     it('does not assign an id if it is provided', () => {
-        const model = new MIdentifiable<IIdentifiableModel>({ id: '11-IdentifiableModel', name: 'Big Bird' });
-        expect(model.id).toEqual('11-IdentifiableModel');
+        const model = new MIdentifiable<IIdentifiableModel>({ id: '11', name: 'Big Bird' });
+        expect(model.id).toEqual('11');
     })
 
     it('assigns ids based on last ID', () => {
-        const modelA = new MIdentifiable<IIdentifiableModel>({ id: '20-IdentifiableModel' });
+        const modelA = new MIdentifiable<IIdentifiableModel>({ id: '20' });
         const modelB = new MIdentifiable<IIdentifiableModel>();
-        expect(modelA.id).toEqual('20-IdentifiableModel');
-        expect(modelB.id).toEqual('21-IdentifiableModel');
+        expect(modelA.id).toEqual('20');
+        expect(modelB.id).toEqual('21');
     })
 
-    it('assigns a suffix if missing', () => {
-        // TODO: make this work
-        // const modelA = new IdentifiableModel<IIdentifiableModel>({ id: '20' });
-        // const modelB = new IdentifiableModel<IIdentifiableModel>();
-        // expect(modelA.id).toEqual('20-IdentifiableModel');
-        // expect(modelB.id).toEqual('21-IdentifiableModel');
+    it('assigns a suffix if requested', () => {
+        const modelA = new MIdentifiable<IIdentifiableModel>(
+            { id: '20-model' }, 
+            null, 
+            'model'
+        );
+        const modelB = new MIdentifiable<IIdentifiableModel>(
+            null,
+            null,
+            'model'
+        )
+        expect(modelA.id).toEqual('20-model');
+        expect(modelB.id).toEqual('21-model')
     })
 })

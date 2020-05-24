@@ -2,7 +2,7 @@ import { _KeyedModel } from './_keyedModel';
 import { IArrayModel } from '../_shared';
 import { equals } from '@toolkip/comparable';
 import { isUndefined } from '@toolkip/shared-types';
-import { isModel } from '../_typeguards';
+import { isModel } from '../_typeguards/core';
 
 /**----------------------------------------------------------------------------
  * @class	_KeyedModels
@@ -47,10 +47,11 @@ export abstract class _KeyedModels<T, K, X> extends _KeyedModel<T, K, X> impleme
      * occurs
      */
     public findIndex(val: X): K {
+        let out;
         this._map(this._innerModel, (v: X, key: K) => {
-            if (equals(val, isModel(v) ? v.getData() : v )) { return key; }
+            if (equals(val, isModel(v) ? v.getData() : v )) { out = key; }
         })
-        return undefined;
+        return out;
     }
 
     public contains(val: X): boolean {

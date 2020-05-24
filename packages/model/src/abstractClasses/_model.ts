@@ -22,6 +22,28 @@ import { isModel } from '../_typeguards/core';
  */
 export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IModel<T> {
 
+        //..........................................
+    //#region CONSTRUCTOR
+    
+    public constructor(data?: Partial<T>, transforms?: IModelTransforms<T>) {
+
+        // set up all of the instance variables
+        this._innerModel = this._getDefaultValues();
+        this.__history = new HistoryChain<T>();
+        this._event = new ModelEvent<T, any, any>('modelchange');
+
+        // Copy data over from the passed in interface
+        if (transforms) { this._transforms = transforms; }
+        else { this._transforms = {}; }
+
+        if (data) { this.import(data as T) }
+    }
+
+    protected abstract _getDefaultValues(): T;
+    
+    //#endregion
+    //..........................................
+    
     //..........................................
     //#region CREATING OTHER MODELS
     
@@ -219,7 +241,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IM
     public export(): T {
         const transform = this._getApplicableTransforms()?.outgoing;
         if (transform) {
-            return transform(this._innerModel);
+            return transform(this.getData());
         } else {
             return this._innerExport();
         }
@@ -247,7 +269,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IM
     //#region CLONEABLE
     
     public clone(tx?: IModelTransforms<T>): _Model<T> {
-        const transforms = tx || this._getApplicableTransforms();
+        const transforms = tx || this._transforms;
         const Ctor = (this as any).constructor;
         const newModel = new Ctor(this.getData(), transforms);
 
@@ -263,25 +285,4 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IM
     //#endregion
     //..........................................
 
-    //..........................................
-    //#region CONSTRUCTOR
-    
-    public constructor(data?: Partial<T>, transforms?: IModelTransforms<T>) {
-
-        // set up all of the instance variables
-        this._innerModel = this._getDefaultValues();
-        this.__history = new HistoryChain<T>();
-        this._event = new ModelEvent<T, any, any>('modelchange');
-
-        // Copy data over from the passed in interface
-        if (transforms) { this._transforms = transforms; }
-        else { this._transforms = {}; }
-
-        if (data) { this.import(data as T) }
-    }
-
-    protected abstract _getDefaultValues(): T;
-    
-    //#endregion
-    //..........................................
 }

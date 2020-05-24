@@ -1,5 +1,5 @@
 import { _Model, _KeyedModel } from '../abstractClasses';
-import { IModelData } from '../_shared/_interfaces';
+import { IModelData, IObjectKeyedModelTransforms } from '../_shared/_interfaces';
 import { map } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
@@ -14,6 +14,12 @@ import { map } from '@toolkip/object-helpers';
  * ----------------------------------------------------------------------------
  */
 export class MObject<T extends IModelData, K extends keyof T = keyof T> extends _KeyedModel<T, K, T[K]> {
+
+    protected _transforms: IObjectKeyedModelTransforms<T>;
+
+    public constructor(data?: Partial<T>, transforms?: IObjectKeyedModelTransforms<T>) {
+        super(data, transforms);
+    }
 
     //..........................................
     //#region IMPLEMENT ABSTRACT FUNCTIONS

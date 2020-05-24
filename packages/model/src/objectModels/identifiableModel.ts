@@ -24,7 +24,7 @@ export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObj
     public set id(data: string) { this.set('id', data); }
 
     /** allow classes to specify a prefix to their ID easily */
-    protected static get _suffix(): string { return this.name; }
+    protected static get _uniqueKey(): string { return this.name; }
 
     //#endregion
     //.....................
@@ -36,8 +36,9 @@ export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObj
      * 
      * @returns A new ID 
      */
-    protected static _generateNewId(): string {
-        return generateUniqueId(this._suffix);
+    protected static _generateNewId(suffix?: string): string {
+        const uniqueKey = suffix || this._uniqueKey
+        return generateUniqueId(uniqueKey, suffix);
     }
 
     /**
@@ -46,8 +47,9 @@ export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObj
      * When incorporating an existing model, update the last ID used
      * @param   lastId  Most recent iD used in a model  
      */
-    protected static _updateLastId(lastId: string): void {
-        registerUniqueId(lastId);
+    protected static _updateLastId(lastId: string, suffix?: string): void {
+        const uniqueKey = suffix || this._uniqueKey;
+        registerUniqueId(lastId, uniqueKey);
     }
 
     /**
@@ -56,14 +58,14 @@ export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObj
      * Create a new model with a unique ID
      * @param   dataToCopy  If available, the interface to copy into this model 
      */
-    constructor(dataToCopy?: IPartial<T>, transforms?: IKeyedModelTransforms<T>) {
+    constructor(dataToCopy?: IPartial<T>, transforms?: IKeyedModelTransforms<T>, suffix?: string) {
         super(dataToCopy);
 
         // make sure we have an appropriate id stored statically
         if (dataToCopy?.id) {
-            (this.constructor as any)._updateLastId(dataToCopy.id)
+            (this.constructor as any)._updateLastId(dataToCopy.id, suffix)
         } else {
-            const newId = (this.constructor as any)._generateNewId();
+            const newId = (this.constructor as any)._generateNewId(suffix);
             this.set('id', newId);
         }
     }

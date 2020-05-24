@@ -7,7 +7,7 @@ describe('ModelPrimitive', () => {
         
         it('has an appropriate default value', () => {
             const model = new MPrimitive<string>();
-            expect(model.getData()).toEqual(null);
+            expect(model.getData()).toEqual(undefined);
         })
     
         it('sets an appropriate value', () => {
@@ -15,9 +15,14 @@ describe('ModelPrimitive', () => {
             expect(model.getData()).toEqual('hello');
         })
 
+        it('can set a falsy value', () => {
+            const model = new MPrimitive<string>('hello');
+            model.setData('');
+            expect(model.getData()).toEqual('');
+        })
+
     })
     
-
     describe('notifying listeners', () => {
 
         it('notifies about changes', () => {
@@ -68,5 +73,49 @@ describe('ModelPrimitive', () => {
             const model = new MPrimitive<string>( 'HELLO', { "_" : transforms } );
             expect(model.export()).toEqual('hello')
         })
+    })
+
+    describe('undo and redo', () => {
+        it('undoes changes and notifies about it', () => {
+            expect.assertions(6);
+
+            const model = new MPrimitive<string>('hello');
+            model.setData('goodbye');
+            model.setData('goodnight');
+
+            const cb = jest.fn((payload) => {
+                expect(payload.eventType).toEqual('modify');
+            })
+            model.addEventListener(cb);
+
+            expect(model.getData()).toEqual('goodnight');
+            model.undo();
+            expect(model.getData()).toEqual('goodbye');
+            model.undo();
+            expect(model.getData()).toEqual('hello');
+            
+            expect(cb).toHaveBeenCalledTimes(2);
+        })
+
+        it('redoes changes and notifies about it', () => {
+            expect.assertions(6)
+
+            const model = new MPrimitive<string>('hello');
+            model.setData('goodbye');
+
+            const cb = jest.fn((payload) => {
+                expect(payload.eventType).toEqual('modify');
+            })
+            model.addEventListener(cb);
+
+            expect(model.getData()).toEqual('goodbye');
+            model.undo();
+            expect(model.getData()).toEqual('hello');
+            model.redo();
+            expect(model.getData()).toEqual('goodbye');
+
+            expect(cb).toHaveBeenCalledTimes(2);
+        })
+        
     })
 })

@@ -5,8 +5,8 @@ import { setupModelWrapping } from '../../helpers/modelFactory';
 setupModelWrapping();
 
 const identifiables: IIdentifiableModel[] = [
-    { id: '1-IdentifiableModel', name: 'A' },
-    { id: '2-IdentifiableModel', name: 'B' }
+    { id: '1', name: 'A' },
+    { id: '2', name: 'B' }
 ];
 
 describe('ModelManager', () => {
@@ -18,7 +18,7 @@ describe('ModelManager', () => {
     it('sets values when passed into the constructor', () => {
         const model = new MManager<IIdentifiableModel>(identifiables);
         expect(model.getData()).toMatchObject(identifiables);
-        expect(model.get('1-IdentifiableModel')).toMatchObject(identifiables[0]);
+        expect(model.get('1')).toMatchObject(identifiables[0]);
     })
 
     it('sets over existing values', () => {

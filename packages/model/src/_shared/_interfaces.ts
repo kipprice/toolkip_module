@@ -5,7 +5,9 @@ import { IEquatable } from '@toolkip/comparable';
 export interface IModel<T> extends ICloneable<IModel<T>>, IEquatable {
     setData(data: T): void;
     getData(): T;
-    addEventListener(cb: ModelEventCallback<"_" | any, T | any>): void
+    addEventListener(cb: ModelEventCallback<"_" | any, T | any>): void;
+    import(data: Partial<T>): void;
+    export(): T;
 }
 
 export interface IKeyedModel<T, K, X> extends IModel<T>, IEquatable {
@@ -42,7 +44,7 @@ export interface IModelTransforms<T> {
 
 export type IObjectKeyedModelTransforms<T> = 
     IModelTransforms<T> & 
-    { [K in keyof T]: IModelTransform<T[K]> }
+    { [K in keyof T]?: IModelTransform<T[K]> }
 
 export type IStringKeyedModelTransforms<T, X> = 
     IModelTransforms<T> &
@@ -60,21 +62,6 @@ export type IKeyedModelTransforms<T, X = any> =
 export type IArrayedModelTransforms<X> = 
     INumericKeyedModelTransforms<X[], X> &
     { "*": IModelTransform<X> }
-
-//#endregion
-//..........................................
-
-
-//..........................................
-//#region KEYS AND VALUES
-
-// specific to objects
-// export type ModelObjectKey<M extends IModel> = keyof M | "_";
-// export type ModelObjectValue<M extends IModel> = M[keyof M] | M;
-
-// generic to any type of keyed model
-// export type ModelKey<M> = ModelObjectKey<M> | string | number;
-// export type ModelValue<M> = ModelObjectValue<M> | any;
 
 //#endregion
 //..........................................

@@ -5,12 +5,12 @@ import { MDate } from '../primitiveModels';
 
 export const createModelTransform = <T>(ctor: IConstructor<IModel<T>>) => {
     return {
-        incoming: (data: any) => new ctor(data)
+        incoming: (data: any) => new ctor(data) as any as T
     }
 }
 
 export const createModelDateTransform = (tx: IModelTransform<Date | string> = DefaultDateTransform) => {
     return {
-        incoming: (data: any) => new MDate(data, { "_": tx } )
+        incoming: (data: any) => new MDate(data, { "_": tx } ) as any as Date,
     }
 }

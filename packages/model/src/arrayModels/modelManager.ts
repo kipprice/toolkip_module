@@ -38,6 +38,11 @@ export class MManager<T extends IIdentifiable>
         return out.toArray();
     }
 
+    protected _innerExport() {
+        const out = super._innerExport() as DataManager<T>;
+        return out.toArray();
+    }
+
     public toDataManager() {
         return super._innerGetData() as DataManager<T>;
     }

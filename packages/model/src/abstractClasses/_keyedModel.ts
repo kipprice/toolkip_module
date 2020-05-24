@@ -19,6 +19,10 @@ import { isNullOrUndefined } from '@toolkip/shared-types';
  * ----------------------------------------------------------------------------
  */
 export abstract class _KeyedModel<T, K, X> extends _Model<T> {
+
+    public constructor(data?: Partial<T>, transforms?: IKeyedModelTransforms<T, X>) {
+        super(data, transforms);
+    }
     
     //..........................................
     //#region EVENT HANDLING
@@ -47,21 +51,45 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     //..........................................
 
     //..........................................
-    //#region GETTERS
-
+    //#region ABSTRACT FUNCTIONS
+    
     /**
      * _getValue
      * ----------------------------------------------------------------------------
      * retrieve our model data appropriately; we never will be retrieving raw data
      * ourselves but instead will rely on the models themselves to do so.
      */
-    protected abstract _getValue(output: T, key: K): IModel<X>;
+    protected abstract _getValue(output: T, key: K): X | IModel<X>;
 
-    protected abstract _map(data: T, mapFunc: (val: X, key: K) => void);
+     /**
+     * _setValue
+     * ----------------------------------------------------------------------------
+     * set the newly wrapped model into our inner model structure appropriately
+     */
+    protected abstract _setValue(output: T, key: K, value: X | IModel<X>): void;
+
+    /**
+     * _map
+     * ----------------------------------------------------------------------------
+     * allow for looping through a set of data, either within the model or within
+     * the external form of data
+     */
+    protected abstract _map(data: T, mapFunc: (val: X | IModel<X>, key: K) => void);
+    
+    
+    //#endregion
+    //..........................................
+
+    //..........................................
+    //#region GETTERS
 
     public get(key: K): X {
+        return this._innerGet(key);
+    }
+
+    protected _innerGet(key: K): X {
         const model = this._getValue(this._innerModel, key);
-        return model ?  model.getData() : undefined;
+        return isModel(model) ?  model.getData() : undefined;
     }
 
     protected _innerGetData(): T {
@@ -83,12 +111,8 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     //..........................................
     //#region SETTERS
     
-    /**
-     * _setValue
-     * ----------------------------------------------------------------------------
-     * set the newly wrapped model into our inner model structure appropriately
-     */
-    protected abstract _setValue(output: T, key: K, value: IModel<X>): void;
+    public set(key: K, value: X): void { this._innerSet({ key, value }); }
+
     protected _innerSet( payload: ModelEventPayload<K, X>) {
         const { value, key } = payload;
 
@@ -105,7 +129,6 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
 
         return newModel;
     }
-    public set(key: K, value: X): void { this._innerSet({ key, value }); }
     
     protected _innerSetData(payload): void {
         const { value } = payload;
@@ -123,6 +146,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
             super._innerSetData({ ...payload, value: modelValue });
         }
     }
+
     //#endregion
     //..........................................
 
@@ -147,9 +171,24 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         return out;
     } 
 
-    // TODO: evaluate this
+
     protected _innerExport(): T {
-        return super._innerExport();
+
+        // start with the basic form of the export
+        const out = this._getDefaultValues();
+
+        // then, loop through the transforms to make sure everything
+        // is getting applied appropriately
+        this._map(this._innerModel, (val: X, key: K) => {
+            let outValue = isModel(val) ? val.export() : val;
+            const transform = this._getApplicableTransforms(key);
+            if (transform?.outgoing) {
+                outValue = transform.outgoing(outValue);
+            }
+            this._setValue(out, key, outValue);
+        });
+
+        return out; 
     }
     
     //#endregion
@@ -160,8 +199,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     //#region MODEL WRAPPING
     
     protected _wrapInModel(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
-        const applicableTransform = this._getApplicableTransforms(key);
-        const newModel = _Model.createModel<X>(dataToWrap, applicableTransform);
+        const newModel = _Model.createModel<X>(dataToWrap);
         let oldValue = newModel.getData();
 
         // if we created a new model, make sure we are listening to its changes

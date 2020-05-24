@@ -1,4 +1,5 @@
 import { MDate } from "../modelDate";
+import { ShortDateTransform } from '../../transforms';
 
 describe('ModelDate', () => {
     it('has an appropriate default value', () => {
@@ -30,4 +31,11 @@ describe('ModelDate', () => {
         const model = new MDate(date);
         expect(model.export()).toContain('Wed May 20 2020');
     })
+
+    it('allows transform overrides', () => {
+        const dtString = '2020-05-20 00:00Z-05:00';
+        const model = new MDate(dtString, { "_": ShortDateTransform });
+        expect(model.export()).toEqual('5/20/20');
+    })
+    
 })
