@@ -21,9 +21,11 @@
         "watch": "yarn watch:webpack && yarn watch:tsc",
         "watch:webpack": "webpack -w",
         "watch:tsc": "tsc -p tsconfig.json --emitDeclarationOnly -w",
+
+        "clean": "rm -rf packages/**/dist && rm -rf packages/**/typings && rm -rf packages/**/node_modules",
         "test": "jest -- -t .test.ts",
         "bootstrap": "lerna bootstrap",
-        "lerna-publish": "lerna bootstrap && lerna run compile && lerna publish",
+        "lerna-publish": "yarn clean && lerna bootstrap && lerna run compile && lerna publish",
         "compile": "lerna run compile"
     },
 
