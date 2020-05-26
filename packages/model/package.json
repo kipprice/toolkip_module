@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/model",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "description": "model utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,15 +13,15 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/code-event": "^1.1.0",
-        "@toolkip/comparable": "^1.1.0",
-        "@toolkip/history": "^1.1.0",
-        "@toolkip/object-helpers": "^1.1.0",
-        "@toolkip/primitive-helpers": "^1.1.0",
-        "@toolkip/shared-types": "^1.1.0",
-        "@toolkip/structs": "^1.0.10",
-        "@toolkip/identifiable": "^1.0.10",
-        "@toolkip/managers": "^1.1.0"
+        "@toolkip/code-event": "^2.0.0",
+        "@toolkip/comparable": "^2.0.0",
+        "@toolkip/history": "^2.0.0",
+        "@toolkip/identifiable": "^2.0.0",
+        "@toolkip/managers": "^2.0.0",
+        "@toolkip/object-helpers": "^2.0.0",
+        "@toolkip/primitive-helpers": "^2.0.0",
+        "@toolkip/shared-types": "^2.0.0",
+        "@toolkip/structs": "^1.0.10"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

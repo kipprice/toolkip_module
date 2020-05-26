@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/sockets",
-    "version": "1.1.0",
+    "version": "2.0.0",
     "description": "web sockets utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/object-helpers": "^1.1.0"
+        "@toolkip/object-helpers": "^2.0.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
