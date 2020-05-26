@@ -6,5 +6,10 @@
     },
     "include": [
         "./src"
+    ],
+    "exclude": [
+        "typings",
+        "**/_(old)_*",
+        "**/_(wip)_*"
     ]
 }

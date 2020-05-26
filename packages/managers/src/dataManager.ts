@@ -119,6 +119,10 @@ export class DataManager<I extends IIdentifiable> {
     //..........................................
     //#region STANDARD COLLECTION FORM
 
+    public map(mapFunc: (elem: I, id: Identifier) => void) {
+        map(this._data, mapFunc)
+    }
+    
     /**
      * toArray
      * ----------------------------------------------------------------------------
@@ -126,7 +130,7 @@ export class DataManager<I extends IIdentifiable> {
      */
     public toArray(): I[] {
         let out: I[] = [];
-        map(this._data, (elem: I) => {
+        this.map((elem: I) => {
             out.push(elem);
         })
         return out;
@@ -139,7 +143,7 @@ export class DataManager<I extends IIdentifiable> {
      */
     public toDictionary(): IDictionary<I> {
         let out: IDictionary<I> = {};
-        map(this._data, (elem: I, id: Identifier) => {
+        this.map((elem: I, id: Identifier) => {
             out[id] = elem;
         });
         return out;
@@ -147,5 +151,14 @@ export class DataManager<I extends IIdentifiable> {
 
     //#endregion
     //...........................................
+
+    public clone(): DataManager<I> {
+        const out = new DataManager<I>();
+        const dataAsArray = this.toArray();
+        for (let datum of dataAsArray) {
+            out.add(datum);
+        }
+        return out;
+    }
 
 }

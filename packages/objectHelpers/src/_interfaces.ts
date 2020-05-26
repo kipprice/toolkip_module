@@ -81,3 +81,7 @@ export interface ICustomCloner<T> {
     typeGuard: <T>(data: T, key?: Key) => boolean;
     cloner: <T>(data: T, key?: Key) => T;
 }
+
+export interface ICloneable<T> {
+    clone(...addlParams: any[]): T;
+}

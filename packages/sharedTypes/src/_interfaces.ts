@@ -1,4 +1,4 @@
-export type Primitive = boolean | undefined | null | number | string | Symbol;
+export type Primitive = boolean | undefined | null | number | string;
 
 export type StandardElement = HTMLElement | SVGElement;
 
@@ -30,3 +30,5 @@ export interface IPoint {
 	y: number;
 	z?: number;
 }
+
+export type FalsyTypes = undefined | null | '' | 0;

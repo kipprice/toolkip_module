@@ -6,15 +6,15 @@ describe("identifier", () => {
     })
     it("registers a new id under the default prefix", () => {
         const id = generateUniqueId();
-        expect(id).toEqual("1-id");
+        expect(id).toEqual("1");
         expect(IdentifierAssigner.getLastId("id")).toEqual(1);
     })
 
     it("registers a new id under the ", () => {
         const genericId = generateUniqueId();
-        const testId = generateUniqueId("test");
+        const testId = generateUniqueId("test", "test");
 
-        expect(genericId).toEqual("1-id");
+        expect(genericId).toEqual("1");
         expect(testId).toEqual("1-test");
     })
 
@@ -22,7 +22,7 @@ describe("identifier", () => {
         generateUniqueId();
         generateUniqueId();
         const id = generateUniqueId();
-        expect(id).toEqual("3-id");
+        expect(id).toEqual("3");
     })
 
     it("updates an id with a later id", () => {

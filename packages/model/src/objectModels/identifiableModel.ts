@@ -1,8 +1,10 @@
 import { IPartial } from '@toolkip/structs';
-import { IIdentifiable } from './_interfaces';
-import { Serializable } from '@toolkip/serializable';
-import { generateUniqueId, registerUniqueId } from '.';
+import { IIdentifiable, generateUniqueId, registerUniqueId } from '@toolkip/identifiable';
+import { _KeyedModel } from '../abstractClasses/_keyedModel';
+import { IKeyedModelTransforms } from '../_shared/_interfaces';
+import { MObject } from './modelObject';
 
+// TODO: evaluate identifier assignment and whether it can be suffix-less
 
 /**----------------------------------------------------------------------------
  * @class   Identifiable<T>
@@ -12,18 +14,17 @@ import { generateUniqueId, registerUniqueId } from '.';
  * @version 1.0.0
  * ----------------------------------------------------------------------------
  */
-export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends Serializable<T> implements IIdentifiable {
+export class MIdentifiable<T extends IIdentifiable = IIdentifiable> extends MObject<T> implements IIdentifiable {
 
     //.....................
     //#region PROPERTIES
 
     /** unique ID for the model */
-    protected _id: string;
-    public get id(): string { return this._id; }
-    public set id(data: string) { this._id = data; }
+    public get id(): string { return this.get('id') as any as string }
+    public set id(data: string) { this.set('id', data); }
 
     /** allow classes to specify a prefix to their ID easily */
-    protected static get _prefix(): string { return this.name; }
+    protected static get _uniqueKey(): string { return this.name; }
 
     //#endregion
     //.....................
@@ -35,8 +36,9 @@ export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends 
      * 
      * @returns A new ID 
      */
-    protected static _generateNewId(): string {
-        return generateUniqueId(this._prefix);
+    protected static _generateNewId(suffix?: string): string {
+        const uniqueKey = suffix || this._uniqueKey
+        return generateUniqueId(uniqueKey, suffix);
     }
 
     /**
@@ -45,8 +47,9 @@ export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends 
      * When incorporating an existing model, update the last ID used
      * @param   lastId  Most recent iD used in a model  
      */
-    protected static _updateLastId(lastId: string): void {
-        registerUniqueId(lastId);
+    protected static _updateLastId(lastId: string, suffix?: string): void {
+        const uniqueKey = suffix || this._uniqueKey;
+        registerUniqueId(lastId, uniqueKey);
     }
 
     /**
@@ -55,14 +58,15 @@ export class IdentifiableModel<T extends IIdentifiable = IIdentifiable> extends 
      * Create a new model with a unique ID
      * @param   dataToCopy  If available, the interface to copy into this model 
      */
-    constructor(dataToCopy?: IPartial<T>) {
+    constructor(dataToCopy?: IPartial<T>, transforms?: IKeyedModelTransforms<T>, suffix?: string) {
         super(dataToCopy);
 
         // make sure we have an appropriate id stored statically
-        if (dataToCopy && dataToCopy.id) {
-            (this.constructor as any)._updateLastId(dataToCopy.id)
+        if (dataToCopy?.id) {
+            (this.constructor as any)._updateLastId(dataToCopy.id, suffix)
         } else {
-            this._id = (this.constructor as any)._generateNewId();
+            const newId = (this.constructor as any)._generateNewId(suffix);
+            this.set('id', newId);
         }
     }
 }

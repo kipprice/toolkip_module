@@ -1,9 +1,6 @@
-import { Model }  from '@toolkip/model';
-import { IdentifiableModel } from './identifiableModel';
+import { IIdentifiable } from '.';
 
-
-export function isIdentifiableModel(model: Model<any>): model is IdentifiableModel {
-    if (!model) { return false; }
-    if (!(model as any).id) { return false; }
-    return true;
+export const isIdentifiable = (test: any): test is IIdentifiable => {
+    if (test.id) { return true; }
+    return false;
 }

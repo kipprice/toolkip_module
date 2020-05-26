@@ -23,6 +23,8 @@ export class HistoryChain<T> {
 	/** the current history node we are sitting on */
 	protected _curNode: HistoryNode<T>;
 	public get currentState(): T { return this._curNode.data; }
+
+	protected _preventAdditions?: boolean;
 	
 	//#endregion
 	//.....................
@@ -34,6 +36,8 @@ export class HistoryChain<T> {
 	 * @param   data    The data to add
 	 */
 	public push(data: T): void {
+		if (this._preventAdditions) { return; }
+
 		let node: HistoryNode<T> = new HistoryNode<T>(data);
 
 		// case 1: first node we're adding
@@ -73,11 +77,17 @@ export class HistoryChain<T> {
 	 * Move bakcwards in the history chain
 	 * @returns The state we're moving to
 	 */
-	public navigateBack(): T {
+	public navigateBack(cb?: (lastState: T) => void): T {
 		if (!this._curNode.previous) { return null; }
 
 		const out = this._curNode.previous.data;
 		this._curNode = this._curNode.previous;
+
+		// allow for a callback to occur during the navigation to
+		// prevent cases where a navigation could accidentally add
+		// back the current state
+		if (cb) { this._handleNavigateCallback(out, cb) }
+
 		return out;
 
 	}
@@ -88,12 +98,29 @@ export class HistoryChain<T> {
 	 * Move forwards in the history chain
 	 * @returns The atate we're moving to
 	 */
-	public navigateForward(): T {
+	public navigateForward(cb?: (nextState: T) => void): T {
 		if (!this._curNode.next) { return null; }
 
 		const out = this._curNode.next.data;
 		this._curNode = this._curNode.next;
+
+		// process callback if provided
+		if (cb) { this._handleNavigateCallback(out, cb); }
+
 		return out;
+	}
+
+	/**
+	 * _handleNavigateCallback
+	 * ----------------------------------------------------------------------------
+	 * allow for a callback to occur during the navigation to prevent cases where 
+	 * a navigation could accidentally add back the current state during the 
+	 * restore process
+	 */
+	protected _handleNavigateCallback(state: T, cb: (state: T) => void) {
+		this._preventAdditions = true;
+		cb(state);
+		this._preventAdditions = false;
 	}
 
 	/**

@@ -20,6 +20,7 @@ export class CodeEvent<D = any, T = any> {
     //#region PROPERTIES
 
     protected _listeners: Map<T, ICodeEventCallback<D>[]>;
+    public get listeners() { return new Map(this._listeners); }
 
     protected _name: string;
     
