@@ -136,6 +136,17 @@ export function hasClass(elem: HTMLElement | IDrawable, cls: string): boolean {
   return true;
 };
 
+export function clearClass(elem: DrawableElement): void {
+  if (!elem) { return; }
+  let e: DrawableElement;
+  if (isDrawable(elem)) {
+    e = elem.base;
+  } else {
+    e = elem;
+  }
+  e.setAttribute("class", "");
+}
+
 /**
  * setProperty
  * ----------------------------------------------------------------------------

@@ -1,11 +1,18 @@
 import { TypedClassDefinition, IStandardStyles } from '@toolkip/style-helpers';
 import { IKeyValPair, IDictionary, IConstructor } from '@toolkip/object-helpers';
 import { StandardElement, IDrawable, DrawableElement } from '@toolkip/shared-types';
-import { BoundEvalFunction } from '@toolkip/binding';
+import { Selector, ModelEventFullPayload } from '@toolkip/model';
+
+export type SelectableValue<T> = T | Selector<any, T, any, any>;
+
+export interface ElemSelector<I = any, O = any> { 
+    selector: Selector<I, O, any, any>, 
+    applyCb: (payload: ModelEventFullPayload<any, O>, elem: StandardElement) => void 
+}
 
 export type IAttribute = IKeyValPair<string> | string | number;
 export interface IAttributes {
-    [key: string]: IAttribute;
+    [key: string]: SelectableValue<IAttribute>;
 }
 
 export type IChild<T extends IKeyedElems = IKeyedElems> = 
@@ -14,8 +21,8 @@ export type IChild<T extends IKeyedElems = IKeyedElems> =
     IDrawable;
 
 export interface IClassDefinition { name: ClassName, styles: IStandardStyles }
-export type ClassName = string | string[];
 
+export type ClassName = string | string[];
 
 export type IKeyedElems = IDictionary<DrawableElement>;
 
@@ -46,28 +53,30 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     key?: keyof T;
 
     /** Id to use for the element */
-    id?: string;
+    id?: SelectableValue<string>;
 
     /** CSS class to use for the element */
-    cls?: ClassName | IClassDefinition;
+    cls?: SelectableValue<ClassName | IClassDefinition>;
 
     /** the type of HTML element we are creating */
     type?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
 
     /** content that should be added to the element */
-    content?: string;
+    content?: SelectableValue<string>;
+    innerText?: SelectableValue<string>;
+    innerHTML?: SelectableValue<string>;
 
     /** content that should specifically be added before the children of this element */
-    before_content?: string;
+    before_content?: SelectableValue<string>;
 
     /** content that should specifically be added after the children of this element */
-    after_content?: string;
+    after_content?: SelectableValue<string>;
 
     /** any additional attributes that should be applied to this element */
     attr?: IAttributes;
 
     /** any specific styles to apply to this element */
-    style?: TypedClassDefinition;
+    style?: SelectableValue<TypedClassDefinition>;
 
     /** any children that should be added for this element */
     children?: IChild<T>[];
@@ -81,17 +90,14 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     /** if we're creating a namespaced element, allow for specifying it */
     namespace?: string;
 
+    /** allow the function to spin up a drawable instead of an element (will still apply classes & the like) */
+    drawable?: IConstructor<IDrawable> | (() => IDrawable);
+
     /** determine whether this element should be able to receive focus */
     focusable?: boolean;
 
-    /** allow HTML contents to be bound dynamically */
-    boundContent?: BoundEvalFunction<string>;
-
-    /** builds a custom tooltip in lieu of the standard title */
-    tooltip?: string;
-
-    /** allow the function to spin up a drawable instead of an element (will still apply classes & the like) */
-    drawable?: IConstructor<IDrawable> | (() => IDrawable);
+    /** allow for a selector to apply generally to this element */
+    selector?: ElemSelector;
 }
 
 /**

@@ -165,7 +165,7 @@ export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
  * 
  * @returns The created selector 
  */
-export const select = <I, O, X, K>(
+export const select = <I, O, X = any, K = any>(
     listenable: Selectable<I>, 
     processor?: SelectorFunc<I, O>, 
     filters?: SelectorFilters<I>

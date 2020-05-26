@@ -5,6 +5,8 @@ import { MPrimitive, MDate } from '../primitiveModels';
 import { Primitive } from '@toolkip/shared-types';
 import { MArray, MManager } from '../arrayModels';
 import { IIdentifiable } from '@toolkip/identifiable';
+import { Selector } from '../helpers/selectors';
+import { ISelector } from '../_shared/_interfaces';
 
 export const isPrimitiveModel = <T extends Primitive = Primitive>(test: any): test is MPrimitive<T> => {
     if (test instanceof MPrimitive) { return true; }
@@ -31,7 +33,12 @@ export const isManagerModel = <T extends IIdentifiable>(test: any): test is MMan
     return false;
 }
 
-export function isIdentifiableModel(model: any): model is MIdentifiable<any> {
+export const isIdentifiableModel = (model: any): model is MIdentifiable<any> => {
     if (model instanceof MIdentifiable) { return true; }
+    return false;
+}
+
+export const isSelector = (test: any): test is ISelector<any, any> => {
+    if (test instanceof Selector) { return true; }
     return false;
 }
