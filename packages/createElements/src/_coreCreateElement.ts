@@ -4,7 +4,7 @@ import {
     ICreateElementFunc, 
     IAttribute,
     ClassName,
-    ISelectableValue,
+    SelectableValue,
     IClassDefinition
  } from "./_interfaces";
 import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
@@ -13,7 +13,7 @@ import { createCssClass } from '@toolkip/style-libraries';
 import { bind } from '@toolkip/binding';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
-import { isSelector, ModelEventFullPayload } from '@toolkip/model';
+import { isSelector, ModelEventFullPayload, IKeyedModel } from '@toolkip/model';
 
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
@@ -52,6 +52,9 @@ export function _coreCreateElement<T extends IKeyedElems = IKeyedElems>(obj: IEl
     _setElemBaseContent(elem, obj);
     _addElemChildren(elem, obj, keyedElems, recurseVia);
     _setElemPostChildrenContent(obj, elem);
+
+    // if a selector is provided, set it up 
+    _setElemSelector(obj, elem);
 
     // append the element to an appropriate parent
     _appendElemToParent(obj, elem);
@@ -382,7 +385,16 @@ function _appendElemToParent<T extends IKeyedElems>(obj: IElemDefinition<T>, ele
 //..........................................
 //#region SELECTOR HELPERS
 
-const _handleSelector = <T>(value: ISelectableValue<T>, cb: (v: T, payload?: ModelEventFullPayload<any, T>) => void) => {
+const _setElemSelector = <T extends IKeyedElems>(obj: IElemDefinition<T>, elem: StandardElement) => {
+    if (!obj.selector) { return; }
+    const { selector, applyCb } = obj.selector;
+    selector.apply((payload) => { applyCb(payload, elem) })
+
+    const value = selector.getData();
+    applyCb({ value, eventType: 'none' } as any, elem);
+}
+
+const _handleSelector = <T>(value: SelectableValue<T>, cb: (v: T, payload?: ModelEventFullPayload<any, T>) => void) => {
     if (isSelector(value)) {
         value.apply((payload) => {
             cb(payload.value, payload)

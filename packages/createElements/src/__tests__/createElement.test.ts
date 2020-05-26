@@ -150,6 +150,28 @@ describe('selectable testing', () => {
         model.set('age', 8);
         expect(elem.getAttribute('href')).toEqual('https://google.com/8');
     })
+
+    it('allows for a generic selector', () => {
+        const model = setupModel();
+        const selector = setupStringSelector(model);
+
+        const elem = createElement({
+            selector: {
+                selector, 
+                applyCb: ({ value }, elem) => {
+                    if (value.indexOf('_') !== -1) {
+                        elem.style.backgroundColor = 'rgb(50, 50, 50)';
+                    } else {
+                        elem.style.backgroundColor = 'rgb(100, 100, 100)';
+                    }
+                }
+            }
+        });
+
+        expect(elem.style.backgroundColor).toEqual('rgb(50, 50, 50)');
+        model.set('name', 'Oscar');
+        expect(elem.style.backgroundColor).toEqual('rgb(100, 100, 100)');
+    })
 });
 
 class FakeDrawable implements IDrawable {

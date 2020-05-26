@@ -1,14 +1,18 @@
 import { TypedClassDefinition, IStandardStyles } from '@toolkip/style-helpers';
 import { IKeyValPair, IDictionary, IConstructor } from '@toolkip/object-helpers';
 import { StandardElement, IDrawable, DrawableElement } from '@toolkip/shared-types';
-import { BoundEvalFunction } from '@toolkip/binding';
-import { Selector } from '@toolkip/model';
+import { Selector, ModelEventFullPayload } from '@toolkip/model';
 
-export type ISelectableValue<T> = T | Selector<any, T, any, any>;
+export type SelectableValue<T> = T | Selector<any, T, any, any>;
+
+export interface ElemSelector<I = any, O = any> { 
+    selector: Selector<I, O, any, any>, 
+    applyCb: (payload: ModelEventFullPayload<any, O>, elem: StandardElement) => void 
+}
 
 export type IAttribute = IKeyValPair<string> | string | number;
 export interface IAttributes {
-    [key: string]: ISelectableValue<IAttribute>;
+    [key: string]: SelectableValue<IAttribute>;
 }
 
 export type IChild<T extends IKeyedElems = IKeyedElems> = 
@@ -49,30 +53,30 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     key?: keyof T;
 
     /** Id to use for the element */
-    id?: ISelectableValue<string>;
+    id?: SelectableValue<string>;
 
     /** CSS class to use for the element */
-    cls?: ISelectableValue<ClassName | IClassDefinition>;
+    cls?: SelectableValue<ClassName | IClassDefinition>;
 
     /** the type of HTML element we are creating */
     type?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
 
     /** content that should be added to the element */
-    content?: ISelectableValue<string>;
-    innerText?: ISelectableValue<string>;
-    innerHTML?: ISelectableValue<string>;
+    content?: SelectableValue<string>;
+    innerText?: SelectableValue<string>;
+    innerHTML?: SelectableValue<string>;
 
     /** content that should specifically be added before the children of this element */
-    before_content?: ISelectableValue<string>;
+    before_content?: SelectableValue<string>;
 
     /** content that should specifically be added after the children of this element */
-    after_content?: ISelectableValue<string>;
+    after_content?: SelectableValue<string>;
 
     /** any additional attributes that should be applied to this element */
     attr?: IAttributes;
 
     /** any specific styles to apply to this element */
-    style?: ISelectableValue<TypedClassDefinition>;
+    style?: SelectableValue<TypedClassDefinition>;
 
     /** any children that should be added for this element */
     children?: IChild<T>[];
@@ -91,6 +95,9 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
 
     /** determine whether this element should be able to receive focus */
     focusable?: boolean;
+
+    /** allow for a selector to apply generally to this element */
+    selector?: ElemSelector;
 }
 
 /**
