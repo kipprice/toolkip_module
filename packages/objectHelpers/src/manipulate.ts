@@ -112,16 +112,6 @@ export function keyCount(object: any): number {
 }
 
 /**
- * isEmptyObject
- * ----------------------------------------------------------------------------
- * Checks if the specified object doesn't have any keys
- * @returns True if no unique keys are on this object
- */
-export function isEmptyObject(object: any): boolean {
-  return (!getNextKey(object));
-}
-
-/**
  * setDictValue
  * ----------------------------------------------------------------------------
  * set a value within a dictionary, by specifying a set of keys that should be 
