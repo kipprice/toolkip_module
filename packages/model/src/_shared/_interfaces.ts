@@ -113,7 +113,7 @@ export interface IArrayModel<T, K> {
 export interface ISelector<I, O, X = any, K = any> {
     apply: (applyFunc: SelectorApplyFunc<O>) => void;
     map: (mapFunc: SelectorMapFunc<X, K>) => void;
-    select: (selectFunc: SelectorFunc<O, any>, filters?: SelectorFilters<O>) => ISelector<O, any, any, AsyncGenerator>;
+    select: (selectFunc: SelectorFunc<O, any>, filters?: SelectorFilters<O>) => ISelector<O, any, any, any>;
     addEventListener: (cb: SelectorApplyFunc<O>) => void;
     getData: () => O;
 }
