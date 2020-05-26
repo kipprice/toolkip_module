@@ -3,15 +3,17 @@ import {
     IKeyedElems,
     ICreateElementFunc, 
     IAttribute,
-    ClassName
+    ClassName,
+    ISelectableValue,
+    IClassDefinition
  } from "./_interfaces";
-import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable } from '@toolkip/shared-types';
-import { addClass, flattenStyles, FlatClassDefinition } from '@toolkip/style-helpers';
+import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
+import { addClass, flattenStyles, FlatClassDefinition, clearClass } from '@toolkip/style-helpers';
 import { createCssClass } from '@toolkip/style-libraries';
 import { bind } from '@toolkip/binding';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
-
+import { isSelector, ModelEventFullPayload } from '@toolkip/model';
 
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
@@ -45,7 +47,6 @@ export function _coreCreateElement<T extends IKeyedElems = IKeyedElems>(obj: IEl
     _setElemAttributes(elem, obj);
     _setElemStyle(elem, obj);
     _setEventListeners(elem, obj);
-    _setKipTooltip(elem, obj);
 
     // set content of the element
     _setElemBaseContent(elem, obj);
@@ -94,8 +95,11 @@ function _createStandardElement<T extends IKeyedElems>(obj: IElemDefinition<T>):
  * assign an ID to this element, and add it to the keyed array if appropriate
  */
 function _setElemIdentfiers<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: IKeyedElems, drawable?: IDrawable): void {
+    
     // set the id on the newly created object
-    if (obj.id) { elem.setAttribute("id", obj.id); }
+    if (obj.id) { 
+        _handleSelector(obj.id, (id) => elem.setAttribute("id", id) ) 
+    }
 
     // if there is a key, add this element to the keyed elements
     if (obj.key && keyedElems) { 
@@ -114,6 +118,10 @@ function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
     const cls = obj.cls;
     if (!cls) { return; }
     
+    _handleSelector( cls, (v) => _innerSetElemClass(elem, v) )
+}
+
+function _innerSetElemClass(elem: StandardElement, cls: string | string[] | IClassDefinition): void {
     if (isClassDefinition(cls)) {
 
         // create the styles generally on the page
@@ -127,15 +135,16 @@ function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
     } else {
         _setElemClassName(elem, cls);
     }
-
 }
 
 function _setElemClassName(elem: StandardElement, name: ClassName): void {
+    clearClass(elem);
+
     if (isString(name)) {
         addClass(elem, name);
-    } else {
+    } else if(isArray(name)) {
         addClass(elem, name.join(" "));
-    }
+    };
 }
 
 //...................................................
@@ -158,16 +167,40 @@ function _setElemAttributes<T extends IKeyedElems>(elem: StandardElement, obj: I
 
     // loop over all of the attributes
     map(obj.attr, (value: IAttribute, key: string) => {
-        if (isNullOrUndefined(value)) { return; }
-
-        if ((value as IKeyValPair<string>).key) {
-            let pair: IKeyValPair<string> = value as IKeyValPair<string>;
-            _setElemAttribute(elem, pair.key, pair.val);
-        } else {
-            _setElemAttribute(elem, key, value);
-        }
-
+        _handleSelector( value, (v) => _innerSetAttribute(elem, v, key) )        
     });
+}
+
+function _innerSetAttribute(elem: StandardElement, value: IAttribute, key?: string) {
+    if (isNullOrUndefined(value)) { return; }
+
+    if ((value as IKeyValPair<string>).key) {
+        let pair: IKeyValPair<string> = value as IKeyValPair<string>;
+        _setElemAttribute(elem, pair.key, pair.val);
+    } else {
+        _setElemAttribute(elem, key, value);
+    }
+}
+
+/**
+ * _setElemAttribute
+ * ---------------------------------------------------------------------------
+ * sets the actual contents of a particular attribute
+ */
+function _setElemAttribute(elem: StandardElement, key: string, value: any): void {
+
+    switch (key) {
+
+        // value gets special handling
+        case "value":
+            (elem as HTMLInputElement).value = (value as string);
+            break;
+
+        // everything else goes through set attribute
+        default:
+            elem.setAttribute(key, (value as string));
+            break;
+    }
 }
 
 /**
@@ -193,27 +226,6 @@ function _needsTabIndex<T extends IKeyedElems>(obj: IElemDefinition<T>): boolean
     return true;
 }
 
-/**
- * _setElemAttribute
- * ---------------------------------------------------------------------------
- * sets the actual contents of a particular attribute
- */
-function _setElemAttribute(elem: StandardElement, key: string, value: any): void {
-
-    switch (key) {
-
-        // value gets special handling
-        case "value":
-            (elem as HTMLInputElement).value = (value as string);
-            break;
-
-        // everything else goes through set attribute
-        default:
-            elem.setAttribute(key, (value as string));
-            break;
-    }
-}
-
 //#endregion
 //...................................................
 
@@ -225,9 +237,12 @@ function _setElemAttribute(elem: StandardElement, key: string, value: any): void
 function _setElemStyle<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
     if (!obj.style) { return; }
 
-    map(obj.style, (val: any, key: string) => {
-        elem.style[key] = val;
-    });
+    _handleSelector(obj.style, (style) => {
+        map(style, (val: any, key: string) => {
+            elem.style[key] = val;
+        });
+    })
+    
 }
 
 /**
@@ -275,17 +290,6 @@ function _setEventListeners<T extends IKeyedElems>(elem: StandardElement, obj: I
 }
 
 /**
- * _setKipTooltip
- * ---------------------------------------------------------------------------
- * set a more UI-focused tooltip on a particular element
- */
-function _setKipTooltip<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
-    if (!obj.tooltip) { return; }
-    // FIXME: don't have circular reference
-    //new Tooltip({ content: obj.tooltip }, elem as HTMLElement);
-}
-
-/**
  * _setElemBaseContent
  * ---------------------------------------------------------------------------
  * set the initial content of the element, which will be rendered before any
@@ -294,18 +298,20 @@ function _setKipTooltip<T extends IKeyedElems>(elem: StandardElement, obj: IElem
 function _setElemBaseContent<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
 
     // Set the first bit of content in the element (guaranteed to come before children)
-    if (obj.before_content) { elem.innerHTML = obj.before_content; }
+    if (obj.before_content) { _handleSelector(obj.before_content, (before_content) => elem.innerHTML = before_content ) }
 
-    // Also check for just plain "Content"
-    if (obj.content) { elem.innerHTML += obj.content; }
-
-    // also check for bound content; if we find it, add our own content updater
-    if (obj.boundContent) {
-        bind(obj.boundContent, (newVal: string) => {
-            elem.innerHTML = newVal;
-        });
-        elem.innerHTML = obj.boundContent();
-    }
+    // also check for the various content types
+    if (obj.content) { _handleSelector(
+        obj.content, 
+        (content, { oldValue }) => {
+            if (oldValue && elem.innerHTML.indexOf(oldValue) !== -1) {
+                elem.innerHTML = elem.innerHTML.replace(oldValue, content);
+            } else {
+                elem.innerHTML += content 
+            }
+        }) }
+    else if (obj.innerHTML) { _handleSelector(obj.innerHTML, (innerHTML) => elem.innerHTML = innerHTML ) }
+    else if (obj.innerText) { _handleSelector(obj.innerText, (innerText) => (elem as any).innerText = innerText ) }
 }
 
 /**
@@ -353,7 +359,7 @@ function _addElemChildren<T extends IKeyedElems>(elem: StandardElement, obj: IEl
  */
 function _setElemPostChildrenContent<T extends IKeyedElems>(obj: IElemDefinition<T>, elem: StandardElement): void {
     if (!obj.after_content) { return; }
-        
+    _handleSelector(obj.after_content, (after_content) => elem.innerHTML += obj.after_content);   
     elem.innerHTML += obj.after_content;
 }
 
@@ -372,4 +378,21 @@ function _appendElemToParent<T extends IKeyedElems>(obj: IElemDefinition<T>, ele
 
 //#endregion
 //...................................................
+
+//..........................................
+//#region SELECTOR HELPERS
+
+const _handleSelector = <T>(value: ISelectableValue<T>, cb: (v: T, payload?: ModelEventFullPayload<any, T>) => void) => {
+    if (isSelector(value)) {
+        value.apply((payload) => {
+            cb(payload.value, payload)
+        });
+        cb(value.getData(), {} as any)
+    } else {
+        cb(value as T, {} as any);
+    }
+}
+
+//#endregion
+//..........................................
 
