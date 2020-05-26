@@ -1,5 +1,5 @@
 import { MManager } from '../modelManager';
-import { IIdentifiableModel } from './_interfaces';
+import { IIdentifiableModel } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
 
 setupModelWrapping();

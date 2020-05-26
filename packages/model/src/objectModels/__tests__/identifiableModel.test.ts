@@ -1,7 +1,6 @@
 import { MIdentifiable } from '../identifiableModel';
-import { IIdentifiableModel } from './_interfaces';
+import { IIdentifiableModel } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
-import { IIdentifiable } from '@toolkip/identifiable';
 
 setupModelWrapping();
 

@@ -54,6 +54,11 @@ export abstract class _KeyedModels<T, K, X> extends _KeyedModel<T, K, X> impleme
         return out;
     }
 
+    /**
+     * contains
+     * ----------------------------------------------------------------------------
+     * determine whether the specified value exists within the model
+     */
     public contains(val: X): boolean {
         const key = this.findIndex(val);
         if (isUndefined(key)) { return false; }

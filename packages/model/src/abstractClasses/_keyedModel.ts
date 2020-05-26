@@ -1,8 +1,9 @@
 import { ICodeEventStandardContent } from '@toolkip/code-event';
 import { _Model } from './_model';
-import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel } from '../_shared';
+import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel, ModelEventType } from '../_shared';
 import { isModel } from '../_typeguards/core';
 import { isNullOrUndefined } from '@toolkip/shared-types';
+import { isEmptyObject, isEmptyArray } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	_KeyedModel
@@ -93,6 +94,8 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     }
 
     protected _innerGetData(): T {
+        if (isNullOrUndefined(this._innerModel)) { return this._innerModel; }
+
         const out = this._getDefaultValues();
         this._map(this._innerModel, (val: X, key: K) => {
             if (!isModel(val)) { return }
@@ -111,23 +114,45 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     //..........................................
     //#region SETTERS
     
-    public set(key: K, value: X): void { this._innerSet({ key, value }); }
+    public update(key: K, newValue: Partial<X>): void { 
+        const value: X = {
+            ...this.get(key),
+            ...newValue
+        }
+        this._innerSet({ key, value }); 
+    }
 
-    protected _innerSet( payload: ModelEventPayload<K, X>) {
+    public set(key: K, value: X): void {
+        this._innerSet({ key, value });
+    }
+
+    protected _innerSet( payload: Partial<ModelEventPayload<K, X>>) {
         const { value, key } = payload;
 
-        const newModel = this._wrapInModel(value, key);
-        const oldValue = payload.oldValue || this.get(key);
+        // retrieve what is already present
+        const oldModel = this.getModel(key);
 
-        this._setValue(this._innerModel, key, newModel);
+        // if we already have a model, just update it
+        if (isModel(oldModel)) {
+            oldModel.setData(value);
+            this._setValue(this._innerModel, key, oldModel);
 
-        this._sendUpdate<K, X>({ 
-            ...payload,
-            oldValue, 
-            value: newModel.getData()
-        });
+        // otherwise, we need to create a model & we need
+        // to handle notifying on our own
+        } else {
+            const oldValue = payload.oldValue || this.get(key);
+            const newModel = this._wrapInModel(value, key);
 
-        return newModel;
+            this._setValue(this._innerModel, key, newModel);
+
+            this._sendUpdate<K, X>({ 
+                ...payload,
+                oldValue, 
+                value: newModel.getData()
+            });
+        }
+
+        return this.getModel(key);
     }
     
     protected _innerSetData(payload): void {
@@ -135,6 +160,8 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
 
         if (isModel(value)) {
             super._innerSetData({ ...payload, value: this._wrapInModel(value) });
+        } else if (isNullOrUndefined(value)) { 
+            super._innerSetData(payload);
         } else {
             const modelValue = this._getDefaultValues();
 
@@ -200,26 +227,34 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     
     protected _wrapInModel(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
         const newModel = _Model.createModel<X>(dataToWrap);
-        let oldValue = newModel.getData();
-
-        // if we created a new model, make sure we are listening to its changes
-
+        
         // TODO: there is an edge case where a model is passed in without
         // a listener; we should handle that as well
         if (!isModel(dataToWrap)) {
-        
+
+            let oldValue = newModel.getData();
+
             newModel.addEventListener((payload) => {
                 if (isNullOrUndefined(key)) { return }
 
                 // this allows us to update from formerly cloned models instead of 
                 // always using the new one we've cloned in
-                const { target } = payload;
-                this._innerSet({ key, oldValue, value: target as any as X, eventChain: payload })
+                const { target, eventType } = payload;
+                const value = isModel(target) ? target.getData() : target
+
+                this._sendUpdate({
+                    eventType,
+                    key,
+                    oldValue,
+                    value,
+                    eventChain: payload
+                })
 
                 // update what we treat as the most recent data
-                oldValue = isModel(target) ? target.getData() : target;
+                oldValue = value;
             })
         }
+
         return newModel;
     }
     

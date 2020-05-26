@@ -1,4 +1,4 @@
-import { ISimpleModel, IComplexModel } from './_interfaces';
+import { ISimpleModel, IComplexModel } from '../../_shared/__tests__/_interfaces';
 import { MObject } from '..';
 import { setupModelWrapping } from '../../helpers/modelFactory';
 import { createModelDateTransform, ShortDateTransform } from '../../transforms';

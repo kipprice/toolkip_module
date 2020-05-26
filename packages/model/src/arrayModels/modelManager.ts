@@ -3,7 +3,7 @@ import { IIdentifiable, Identifier } from '@toolkip/identifiable';
 import { _Model, _KeyedModels } from '../abstractClasses';
 import { IArrayModel } from '../_shared/_interfaces';
 import { MIdentifiable } from '../objectModels/identifiableModel';
-import { IDictionary, map } from '@toolkip/object-helpers';
+import { IDictionary, map, keyCount } from '@toolkip/object-helpers';
 import { isUndefined, isArray } from '@toolkip/shared-types';
 
 type ModelManagerInputs<T extends IIdentifiable> = DataManager<T> | T[] | IDictionary<T>;
@@ -62,8 +62,9 @@ export class MManager<T extends IIdentifiable>
         } else if (this._isReplacement(output, key)) {
             output.remove(key);
             output.add(value);
-        } else {
+        } else if (!isUndefined(value)) {
             output.add(value);
+            //output.add({ id: key, ...value });
         }
         
     }
@@ -89,10 +90,13 @@ export class MManager<T extends IIdentifiable>
      * handle inputs from a variety of sources when mapping imports or exports
      */
     protected _map(data: ModelManagerInputs<T>, mapFunc: (val: T, key: Identifier) => void) {
-        if (isDataManager(data)) { data.map(mapFunc); }
-        else if (isArray(data)) { 
+        if (isDataManager(data)) { 
+            data.map(mapFunc); 
+        } else if (isArray(data)) { 
             map(data, (val: T, idx: number) => mapFunc(val, val.id) )
-        } else { map(data, mapFunc); }
+        } else { 
+            map(data, mapFunc); 
+        }
     }
 
     //..........................................

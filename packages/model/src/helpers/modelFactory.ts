@@ -1,4 +1,4 @@
-import { IKeyedModelTransforms, IModel, IKeyedModel, IModelTransforms } from '../_shared/_interfaces';
+import { IKeyedModelTransforms, IModel, IKeyedModel, IModelTransforms, IBasicModel } from '../_shared/_interfaces';
 import { _Model } from '../abstractClasses/_model';
 import { isModel } from '../_typeguards/core';
 import { isPrimitive, isArray, isDate, isObject} from '@toolkip/shared-types';

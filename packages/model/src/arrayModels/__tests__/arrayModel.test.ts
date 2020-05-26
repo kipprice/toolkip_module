@@ -1,5 +1,5 @@
 import { MArray } from '../arrayModel';
-import { ISimpleModel } from './_interfaces';
+import { ISimpleModel } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
 import { MObject } from '../../objectModels';
 

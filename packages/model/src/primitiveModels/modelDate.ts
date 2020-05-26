@@ -1,5 +1,6 @@
 import { _Model } from "../abstractClasses/_model";
 import { DefaultDateTransform } from '../transforms/dateTransforms';
+import { IBasicModel } from '../_shared';
 
 /**----------------------------------------------------------------------------
  * @class	MDate
@@ -10,7 +11,7 @@ import { DefaultDateTransform } from '../transforms/dateTransforms';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class MDate extends _Model<Date | string> {
+export class MDate extends _Model<Date | string> implements IBasicModel<Date | string> {
 
     protected _innerModel: Date;
 

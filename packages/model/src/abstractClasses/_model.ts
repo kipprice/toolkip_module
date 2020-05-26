@@ -8,7 +8,8 @@ import {
     ModelEventType, 
     IKeyedModelTransforms,  
     ModelEvent,
-    IModel
+    IModel,
+    IBasicModel
 } from "../_shared";
 import { isModel } from '../_typeguards/core';
 
@@ -20,9 +21,9 @@ import { isModel } from '../_typeguards/core';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IModel<T> {
+export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IBasicModel<T> {
 
-        //..........................................
+    //..........................................
     //#region CONSTRUCTOR
     
     public constructor(data?: Partial<T>, transforms?: IModelTransforms<T>) {
@@ -69,6 +70,10 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IM
     protected _dispatchEvent<K, X>(payload: ModelEventPayload<K, X>): void {
         this._event.dispatch(this, payload);
         _Model._event.dispatch(this, payload);
+    }
+
+    protected _copyEvent<X>(modelToCopyFrom: _Model<X>, modelToCopyTo: _Model<X>): void {
+        modelToCopyTo._event = modelToCopyFrom._event;
     }
     
     /**
