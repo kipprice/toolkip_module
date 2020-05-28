@@ -5,7 +5,8 @@ import {
     IAttribute,
     ClassName,
     SelectableValue,
-    IClassDefinition
+    IClassDefinition,
+    IChild
  } from "./_interfaces";
 import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
 import { addClass, flattenStyles, FlatClassDefinition, clearClass } from '@toolkip/style-helpers';
@@ -324,9 +325,17 @@ function _setElemBaseContent<T extends IKeyedElems>(elem: StandardElement, obj: 
  */
 function _addElemChildren<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): void {
     if (!obj.children) { return; }
+    _handleSelector(
+        obj.children,
+        (v) => {
+            _innerAddElemChildren(elem, v, obj.namespace, keyedElems, recurseVia);
+        }
+    )
+}
 
+function _innerAddElemChildren<T extends IKeyedElems>(elem: StandardElement, children: IChild<T>[], namespace?: string, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): void {
     // loop through each child
-    for (let c of obj.children) {
+    for (let c of children) {
 
         // make sure there is a child
         if (!c) {
@@ -345,14 +354,13 @@ function _addElemChildren<T extends IKeyedElems>(elem: StandardElement, obj: IEl
             // otherwise, recurse to create this child
         } else {
             let def: IElemDefinition<T> = c as IElemDefinition<T>;
-            if (obj.namespace) { def.namespace = obj.namespace; }
+            if (namespace) { def.namespace = namespace; }
             let child = recurseVia(def, keyedElems);
             elem.appendChild(child);
         }
 
 
     }
-
 }
 
 /**

@@ -1,7 +1,8 @@
-import { createElement } from "..";
+import { createElement, IChild } from "..";
 import { IDrawable } from "@toolkip/shared-types";
 import { StandardElement } from "@toolkip/shared-types";
 import { MObject, select } from '@toolkip/model';
+import { IIdentifiable } from '../../../identifiable/typings';
 
 describe('basic element creation', () => {
     it('creates a basic div', () => {
@@ -85,9 +86,21 @@ describe('basic element creation', () => {
 
 describe('selectable testing', () => {
     interface ISimpleModel { name: string, age: number }
+    interface IComplexModel { models: (ISimpleModel & IIdentifiable)[] }
 
-    const setupModel = () => {
-        const model = new MObject<ISimpleModel>({ name: 'Big Bird', age: 11 });
+    const setupModel = (data: ISimpleModel = { name: 'Big Bird', age: 11 }) => {
+        const model = new MObject<ISimpleModel>(data);
+        return model;
+    }
+
+    const setupComplexModel = (data?: IComplexModel) => {
+        if (!data)  { data = {
+            models: [
+                { id: '1', name: 'Big Bird', age: 11 },
+                { id: '2', name: 'Oscar', age: 45 }
+            ]
+        }}
+        const model = new MObject<IComplexModel>(data);
         return model;
     }
 
@@ -98,6 +111,7 @@ describe('selectable testing', () => {
         )
         return selector;
     }
+
     it('allows for selectors to be set as IDs', () => {
         const model = setupModel();
         const selector = setupStringSelector(model);
@@ -171,6 +185,22 @@ describe('selectable testing', () => {
         expect(elem.style.backgroundColor).toEqual('rgb(50, 50, 50)');
         model.set('name', 'Oscar');
         expect(elem.style.backgroundColor).toEqual('rgb(100, 100, 100)');
+    })
+
+    it('allows for mapped selectors', () => {
+        
+        const model = setupComplexModel();
+        const selector = select<IComplexModel>(model, (d) => d.models)
+                            .mapSelect<IChild<any>>((m) => { return { content: m.name }});
+        
+        const elem = createElement({
+            children: selector
+        });
+
+        expect(elem.children).toHaveLength(2);
+        expect(elem.children[0].innerHTML).toEqual('Big Bird');
+        expect(elem.children[1].innerHTML).toEqual('Oscar');
+
     })
 });
 

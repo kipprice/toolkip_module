@@ -79,7 +79,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     style?: SelectableValue<TypedClassDefinition>;
 
     /** any children that should be added for this element */
-    children?: IChild<T>[];
+    children?: SelectableValue<IChild<T>[]>;
 
     /** the parent element that this should be added to */
     parent?: StandardElement;
