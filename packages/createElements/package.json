@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/create-elements",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "description": "html generation utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -14,7 +14,7 @@
     ],
     "dependencies": {
         "@toolkip/binding": "^2.0.0",
-        "@toolkip/model": "^2.1.1",
+        "@toolkip/model": "^2.2.0",
         "@toolkip/object-helpers": "^2.0.0",
         "@toolkip/primitive-helpers": "^2.0.0",
         "@toolkip/shared-types": "^2.0.0",
