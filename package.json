@@ -25,7 +25,7 @@
         "clean": "rm -rf packages/**/dist && rm -rf packages/**/typings && rm -rf packages/**/node_modules",
         "test": "jest -- -t .test.ts",
         "bootstrap": "lerna bootstrap",
-        "lerna-publish": "yarn clean && lerna bootstrap && lerna run compile && lerna publish",
+        "lerna-publish": "yarn clean && lerna bootstrap && lerna run compile && yarn test && lerna publish",
         "compile": "lerna run compile"
     },
 
