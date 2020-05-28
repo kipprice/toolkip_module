@@ -1,9 +1,8 @@
 import { ICodeEventStandardContent } from '@toolkip/code-event';
 import { _Model } from './_model';
-import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel, ModelEventType } from '../_shared';
+import { IKeyedModelTransforms, ModelEventCallback, ModelEventPayload, IModel, ModelEventType, IKeyedModel, ModelType, IArrayModel, IBasicModel } from '../_shared';
 import { isModel } from '../_typeguards/core';
 import { isNullOrUndefined } from '@toolkip/shared-types';
-import { isEmptyObject, isEmptyArray } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	_KeyedModel
@@ -24,6 +23,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     public constructor(data?: Partial<T>, transforms?: IKeyedModelTransforms<T, X>) {
         super(data, transforms);
     }
+    public getType(): ModelType { return 'keyed' }
     
     //..........................................
     //#region EVENT HANDLING
@@ -104,8 +104,18 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         return out;
     }
 
-    public getModel(key: K) {
-        return this._getValue(this._innerModel, key);
+    public getModel(key: K, type: 'b'): IBasicModel<X>;
+    public getModel(key: K, type?: 'o'): IKeyedModel<X, any, any>;
+    public getModel(key: K, type: 'a'): IArrayModel<any, any, X> & IKeyedModel<X, any, any>;
+    public getModel(key: K): IModel<X> {
+        const m = this._getValue(this._innerModel, key);
+        if (!isModel(m)) { return null; }
+
+        switch(m.getType()) {
+            case 'array':       return m as IArrayModel<any, any, X> & IKeyedModel<X, any, any>;
+            case 'keyed':       return m as IKeyedModel<X, any, any>;
+            case 'primitive':   return m as IBasicModel<X>;
+        }
     }
 
     //#endregion

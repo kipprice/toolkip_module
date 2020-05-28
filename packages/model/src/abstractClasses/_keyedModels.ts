@@ -14,8 +14,9 @@ import { isModel } from '../_typeguards/core';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _KeyedModels<T, K, X> extends _KeyedModel<T, K, X> implements IArrayModel<X, K> {
-
+export abstract class _KeyedModels<T, K, X> extends _KeyedModel<T, K, X> implements IArrayModel<X, K, T> {
+    
+    protected _getType() { return 'array' }
     /**
      * add
      * ----------------------------------------------------------------------------

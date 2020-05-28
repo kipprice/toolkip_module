@@ -3,7 +3,7 @@ import { map } from '@toolkip/object-helpers';
 import { IArrayModel } from '../_shared/_interfaces';
 import { isUndefined } from '@toolkip/shared-types';
 
-export class MArray<T> extends _KeyedModels<T[], number, T> implements IArrayModel<T, number> {
+export class MArray<T> extends _KeyedModels<T[], number, T> implements IArrayModel<T, number, T[]> {
     
     protected _getDefaultValues(): T[] {
         return [];

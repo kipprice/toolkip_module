@@ -96,8 +96,27 @@ describe('Selectors', () => {
 
         expect(processor).toHaveBeenCalledTimes(2);
     })
-
+> 
     it('can be chained', () => {
+        interface IChainedObject { obj: ISimpleModel }
+        const model = new MObject<IChainedObject>({
+            obj: { name: 'Big Bird', age: 11 }
+        });
+
+        const cb = jest.fn();
+        select(model, (m) => m.obj)
+            .select((s) => s.name)
+            .apply(cb)
+
+        model.update('obj', { name: 'Cookie Monster' });
+        model.update('obj', { age: 10 });
+        model.getModel('obj').set('age', 8 );
+        model.getModel('obj').set('name', 'Elmo');
+
+        expect(cb).toHaveBeenCalledTimes(2);
+    })
+
+    it('can be chained to an array', () => {
 
         const results = [];
 
@@ -113,11 +132,16 @@ describe('Selectors', () => {
 
         model.update(1, { name: 'Elmer' });
         model.update(2, { name: 'Cookie Angel' });
+
+        // select applys to the last selected element, so the first age change shouldn't
+        // do anything, but the second should
+        model.update(2, { age: 11 });
         model.update(0, { age: 12 });
 
         expect(results).toMatchObject([
             'Hello Elmer!',
-            'Hello Cookie Angel!'
+            'Hello Cookie Angel!',
+            'Hello Big Bird!'
         ]);
         
     })
@@ -144,6 +168,35 @@ describe('Selectors', () => {
         ]);
     })
 
+    it('can select via a map across elements', () => {
+        let results: string[] = [];
+        const model = new MArray<ISimpleModel>();
+        select<ISimpleModel[]>(model)
+            .mapSelect<string>( (e) => e.name )
+            .apply(({ value }) => { results = value });
+
+        model.setData([
+            { name: 'Big Bird', age: 11 },
+            { name: 'Elmo', age: 8 },
+            { name: 'Cookie Monster', age: 10 }
+        ]);
+
+        expect(results).toMatchObject([
+            'Big Bird',
+            'Elmo',
+            'Cookie Monster'
+        ]);
+
+        model.update(0, { age: 12 });
+        model.update(1, { age: 7 });
+
+        expect(results).toMatchObject([
+            'Big Bird',
+            'Elmo',
+            'Cookie Monster'
+        ])
+    })
+
     it('can have multiple listeners', () => {
         const model = new MObject({ name: 'Big Bird', age: 10 });
         const nameFunc = jest.fn( ({ value }) => expect(typeof value).toEqual('string') )
@@ -168,7 +221,7 @@ describe('Selectors', () => {
             .apply((payload) => {
                 const targetModel = payload.eventChain.target as MArray<ISimpleModel>;
 
-                const subModel = targetModel.getModel(payload.key) as MObject<ISimpleModel>;
+                const subModel = targetModel.getModel(payload.key);
                 subModels.push(subModel);
 
                 select(

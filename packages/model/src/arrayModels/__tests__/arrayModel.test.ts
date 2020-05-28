@@ -43,7 +43,7 @@ describe('ModelArray', () => {
             model.addEventListener(cb)
 
     
-            const nestedModel = model.getModel(0) as MObject<ISimpleModel>;
+            const nestedModel = model.getModel(0);
             nestedModel.set('name', 'Elmo');
             expect(model.get(0)).toEqual({ ...models[0], name: 'Elmo' });
             

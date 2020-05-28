@@ -9,7 +9,8 @@ import {
     IKeyedModelTransforms,  
     ModelEvent,
     IModel,
-    IBasicModel
+    IBasicModel,
+    ModelType
 } from "../_shared";
 import { isModel } from '../_typeguards/core';
 
@@ -41,6 +42,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
     }
 
     protected abstract _getDefaultValues(): T;
+    public getType(): ModelType { return 'primitive' }
     
     //#endregion
     //..........................................

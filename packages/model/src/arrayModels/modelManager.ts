@@ -29,10 +29,6 @@ export class MManager<T extends IIdentifiable>
         return output.get(key);
     }
 
-    public getModel(key: Identifier) {
-        return super.getModel(key) as MIdentifiable<T>;
-    }
-
     protected _innerGetData() {
         const out = super._innerGetData() as DataManager<T>;
         return out.toArray();

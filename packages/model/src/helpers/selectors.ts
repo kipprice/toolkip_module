@@ -9,8 +9,10 @@ import {
     SelectorFilters, 
     SelectorFilterFunc, 
     Selectable,
-    ModelEventFullPayload
+    ModelEventFullPayload,
+    SelectorMapSelectFunc
 } from '../_shared';
+import { isNullOrUndefined } from '@toolkip/shared-types';
 
 
 /**----------------------------------------------------------------------------
@@ -23,7 +25,7 @@ import {
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
+export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, K> {
 
     //.....................
     //#region PROPERTIES
@@ -78,15 +80,17 @@ export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
             const processedData = this._processor(payload.target.getData(), payload);
             if (equals(processedData, this._lastModel)) { return; }
 
+            // update the model before calling callbacks
+            const oldValue = this._lastModel;
+            this._lastModel = processedData;
+
             this._notifyCallbacks({
                 ...payload,
                 target: this,
-                oldValue: this._lastModel,
+                oldValue,
                 value: processedData,
                 eventChain: payload
             });
-
-            this._lastModel = processedData;
         })
     }
 
@@ -115,7 +119,7 @@ export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
         if (isMappable(value)) {
             for (let mf of this._mapFuncs) {
                 map(payload.value, (val: any, key: any) => {
-                    mf(val, key);
+                    mf(val, key, payload);
                 });
             }
         }
@@ -141,7 +145,25 @@ export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
         return this;
     }
 
-    public select<OO>(processor: SelectorFunc<O, OO>, filters?: SelectorFilters<O>) {
+    public mapSelect<OO>(cb: SelectorMapSelectFunc<X, K, OO>, filters?: SelectorFilters<O>): Selector<O, OO[], any, any> {
+        return new Selector<O, OO[], any, any>(
+            this,
+            (data, payload) => {
+
+                const out = [];
+                if (isMappable(data)) {
+                    map(data, (e: X, k: any) => {
+                        out.push(cb(e, k as any, payload))
+                    })
+                }
+                return out;
+
+            },
+            filters
+        )
+    }
+
+    public select<OO>(processor: SelectorFunc<O, OO>, filters?: SelectorFilters<O>): Selector<O, OO, any, any> {
         return new Selector<O, OO, any, any>(
             this,
             processor,
@@ -165,7 +187,7 @@ export class Selector<I, O, X, K> implements ISelector<I, O, X, K> {
  * 
  * @returns The created selector 
  */
-export const select = <I, O, X = any, K = any>(
+export const select = <I = any, O = any, X = any, K = any>(
     listenable: Selectable<I>, 
     processor?: SelectorFunc<I, O>, 
     filters?: SelectorFilters<I>

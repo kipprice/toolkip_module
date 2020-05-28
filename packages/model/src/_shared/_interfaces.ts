@@ -6,12 +6,15 @@ export interface IModelData {
     [key: string]: any;
 }
 
+export type ModelType = 'primitive' | 'keyed' | 'array';
+
 export interface IBasicModel<T> extends ICloneable<IModel<T>>, IEquatable {
     setData(data: T): void;
     getData(): T;
     addEventListener(cb: ModelEventCallback<"_" | any, T | any>): void;
     import(data: T): void;
     export(): T;
+    getType(): ModelType;
 }
 
 export interface IKeyedModel<T, K, X> extends IBasicModel<T>, IEquatable {
@@ -24,7 +27,13 @@ export interface IKeyedModel<T, K, X> extends IBasicModel<T>, IEquatable {
     addEventListener(cb: ModelEventCallback<"_" | K, T | X>): void;
 }
 
-export type IModel<T, K = any, X = any> = IBasicModel<T> | IKeyedModel<T, K, X>;
+export interface IArrayModel<X, K, T = X[]> {
+    add(value: X): void;
+    remove(key: K): X;
+    clear(): void;
+}
+
+export type IModel<T, K = any, X = any> = IBasicModel<T> | IKeyedModel<T, K, X> | (IKeyedModel<T, K, X> & IArrayModel<X, K, T>);
 
 
 //..........................................
@@ -95,18 +104,6 @@ export type ModelEventCallback<K, X> =
 //..........................................
 
 //..........................................
-//#region ARRAY BASED MODELS
-
-export interface IArrayModel<T, K> {
-    add(value: T): void;
-    remove(key: K): T;
-    clear(): void;
-}
-
-//#endregion
-//..........................................
-
-//..........................................
 //#region SELECTORS
 
 // structured here
@@ -134,7 +131,8 @@ export type SelectKey<I> = string | number | keyof I
 
 export type SelectorFunc<I, O> = (model: I, payload?: ModelEventFullPayload<any, any>) => O;
 export type SelectorApplyFunc<O> = (payload: ModelEventFullPayload<any, O>) => void;
-export type SelectorMapFunc<X, K> = (elem: X, key?: K) => void;
+export type SelectorMapFunc<X, K> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => void;
+export type SelectorMapSelectFunc<X, K, O = any> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => O;
 export type SelectorFilterFunc<X> = (payload: ModelEventFullPayload<any, X>) => boolean;
 
 export type Selectable<I> = IModel<I> | ISelector<any, I>;
