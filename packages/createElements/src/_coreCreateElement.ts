@@ -344,7 +344,10 @@ function _innerAddElemChildren<T extends IKeyedElems>(elem: StandardElement, chi
         }
 
         // if the child is a drawable, draw it on the base
-        if ((isDrawable(c))) {
+        if (isArray(c)) {
+            _innerAddElemChildren(elem, c, namespace, keyedElems, recurseVia);
+
+        } else if (isDrawable(c)) {
             c.draw(elem);
 
         // if the child is already an element, just add it

@@ -18,7 +18,8 @@ export interface IAttributes {
 export type IChild<T extends IKeyedElems = IKeyedElems> = 
     StandardElement | 
     IElemDefinition<T> | 
-    IDrawable;
+    IDrawable |
+    IChild<T>[];
 
 export interface IClassDefinition { name: ClassName, styles: IStandardStyles }
 

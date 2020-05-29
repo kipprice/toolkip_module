@@ -50,6 +50,21 @@ describe('basic element creation', () => {
         expect(elem.children[0].id).toEqual('child');
     })
 
+    it('allows nesting child elements via nested arrays', () => {
+        const elem = createElement({
+            id: 'parent',
+            children: [
+                [ { id: 'childA' } ],
+                [ { id: 'childB' }, { id: 'childC' } ]
+            ]
+        });
+        expect(elem.id).toEqual('parent');
+        expect(elem.children.length).toEqual(3);
+        expect(elem.children[0].id).toEqual('childA');
+        expect(elem.children[1].id).toEqual('childB');
+        expect(elem.children[2].id).toEqual('childC');
+    })
+
     it('populates an object with keys', () => {
         const obj = { parent: null, child: null };
         createElement(
