@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/routing",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "routing utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^2.2.1",
+        "@toolkip/create-elements": "^2.2.2",
         "@toolkip/object-helpers": "^2.0.0",
         "@toolkip/primitive-helpers": "^2.0.0"
     },
