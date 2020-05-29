@@ -217,6 +217,26 @@ describe('selectable testing', () => {
         expect(elem.children[1].innerHTML).toEqual('Oscar');
 
     })
+
+    it('allows for children defined by selectors', () => {
+        const model = setupComplexModel();
+        const selector = select<IComplexModel>(model, (d) => d.models)
+                            .mapSelect<IChild<any>>((m) => { return { content: m.name }});
+        
+        const elem = createElement({
+            children: [
+                { content: 'top' },
+                selector,
+                { content: 'bottom' }
+            ]
+        });
+
+        expect(elem.children).toHaveLength(4);
+        expect(elem.children[0].innerHTML).toEqual('top');
+        expect(elem.children[1].innerHTML).toEqual('Big Bird');
+        expect(elem.children[2].innerHTML).toEqual('Oscar');
+        expect(elem.children[3].innerHTML).toEqual('bottom');
+    })
 });
 
 class FakeDrawable implements IDrawable {

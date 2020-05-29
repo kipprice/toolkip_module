@@ -336,33 +336,41 @@ function _addElemChildren<T extends IKeyedElems>(elem: StandardElement, obj: IEl
 function _innerAddElemChildren<T extends IKeyedElems>(elem: StandardElement, children: IChild<T>[], namespace?: string, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): void {
     // loop through each child
     for (let c of children) {
-
-        // make sure there is a child
         if (!c) {
             console.warn("cannot append non-existent child element");
             continue;
         }
 
-        // if the child is a drawable, draw it on the base
-        if (isArray(c)) {
-            _innerAddElemChildren(elem, c, namespace, keyedElems, recurseVia);
+        // allow child elements to be selectors as well
+        _handleSelector(
+            c,
+            (v) => {
+                _innerAddElemChild(elem, v, namespace, keyedElems, recurseVia)
+            }
+        );
+    }
+}
 
-        } else if (isDrawable(c)) {
-            c.draw(elem);
+function _innerAddElemChild<T extends IKeyedElems>(elem: StandardElement, child: IChild<T>, namespace?: string, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): void {
+    
+    // allow for arrays of children
+    if (isArray(child)) {
+        _innerAddElemChildren(elem, child, namespace, keyedElems, recurseVia);
 
-        // if the child is already an element, just add it
-        } else if ((c as HTMLElement).setAttribute) {
-            elem.appendChild(c as HTMLElement);
+    // if the child is a drawable, draw it on the base
+    } else if (isDrawable(child)) {
+        child.draw(elem);
 
-            // otherwise, recurse to create this child
-        } else {
-            let def: IElemDefinition<T> = c as IElemDefinition<T>;
-            if (namespace) { def.namespace = namespace; }
-            let child = recurseVia(def, keyedElems);
-            elem.appendChild(child);
-        }
+    // if the child is already an element, just add it
+    } else if ((child as HTMLElement).setAttribute) {
+        elem.appendChild(child as HTMLElement);
 
-
+    // otherwise, recurse to create this child
+    } else {
+        let def: IElemDefinition<T> = child as IElemDefinition<T>;
+        if (namespace) { def.namespace = namespace; }
+        let c = recurseVia(def, keyedElems);
+        elem.appendChild(c);
     }
 }
 
