@@ -19,7 +19,8 @@
         "@toolkip/primitive-helpers": "^2.0.0",
         "@toolkip/shared-types": "^2.0.0",
         "@toolkip/style-helpers": "^2.1.0",
-        "@toolkip/style-libraries": "^2.1.0"
+        "@toolkip/style-libraries": "^2.1.0",
+        "@toolkip/identifiable": "^2.0.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

@@ -23,6 +23,22 @@ import { isSelector, ModelEventFullPayload, IKeyedModel } from '@toolkip/model';
 //#region INTERNAL FUNCTIONS FOR CREATING ELEMENTS
 
 /**
+ * _coreCreateElements
+ * ----------------------------------------------------------------------------
+ * allow for multiple elements to be created at once and returned in an array
+ */
+export function _coreCreateElements<T extends IKeyedElems = IKeyedElems>(objs: IElemDefinition<T>[], keyedElems?: T, recurseVia?: ICreateElementFunc<T>): StandardElement[] {
+    if (!isArray(objs)) {
+        return [ this._coreCreateElement(objs, keyedElems, recurseVia) ];
+    } else {
+        const out = [];
+        for (let obj of objs) {
+            out.push(this._coreCreateElement(obj, keyedElems, recurseVia));
+        }
+        return out;
+    }
+}
+/**
  * _coreCreateElement
  * ---------------------------------------------------------------------------
  * create a DOM element with the specified details
@@ -417,7 +433,6 @@ const _handleSelector = <T>(value: SelectableValue<T>, cb: (v: T, payload?: Mode
     if (isSelector(value)) {
         value.apply((payload) => {
             const { value } = payload;
-            if (isNullOrUndefined(value)) { return; } 
             cb(value, payload)
         });
     } else {
