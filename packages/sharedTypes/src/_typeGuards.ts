@@ -225,6 +225,27 @@ export function isDate(test: any): test is Date {
 }
 
 /**
+ * isPromise
+ * ----------------------------------------------------------------------------
+ * checks if the provided value is the built in ECMA promise
+ */
+export function isPromise<T>(test: any): test is Promise<T> {
+  if (test instanceof Promise) { return true; }
+  return false;
+}
+
+/**
+ * isPromiseLike
+ * ----------------------------------------------------------------------------
+ * checks if the provided value supports a `then` method
+ */
+export function isPromiseLike<T>(test: any): test is PromiseLike<T> {
+  if (!test.then) { return false; }
+  if (typeof test.then !== 'function') { return false; }
+  return true;
+}
+
+/**
  * isStandardElement
  * ----------------------------------------------------------------------------
  * verify that the provided element is either an HTML or SVG element
@@ -263,3 +284,4 @@ export function isDrawableElement(test: any): test is DrawableElement {
   if (!test) { return; }
   return !!((test as any).update);
 }
+
