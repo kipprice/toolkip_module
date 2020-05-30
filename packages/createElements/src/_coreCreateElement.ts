@@ -416,9 +416,10 @@ const _setElemSelector = <T extends IKeyedElems>(obj: IElemDefinition<T>, elem: 
 const _handleSelector = <T>(value: SelectableValue<T>, cb: (v: T, payload?: ModelEventFullPayload<any, T>) => void) => {
     if (isSelector(value)) {
         value.apply((payload) => {
-            cb(payload.value, payload)
+            const { value } = payload;
+            if (isNullOrUndefined(value)) { return; } 
+            cb(value, payload)
         });
-        cb(value.getData(), {} as any)
     } else {
         cb(value as T, {} as any);
     }
