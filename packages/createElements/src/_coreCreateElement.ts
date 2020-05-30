@@ -11,7 +11,6 @@ import {
 import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
 import { addClass, flattenStyles, FlatClassDefinition, clearClass } from '@toolkip/style-helpers';
 import { createCssClass } from '@toolkip/style-libraries';
-import { bind } from '@toolkip/binding';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
 import { isSelector, ModelEventFullPayload, IKeyedModel } from '@toolkip/model';
