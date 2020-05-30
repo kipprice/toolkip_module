@@ -1,15 +1,15 @@
 import { MPrimitive } from '../../primitiveModels';
 import { select } from '../selectors';
 import { MObject } from '../../objectModels';
-import { ISimpleModel } from '../../_shared/__tests__/_interfaces';
+import { ISimpleModel, IIdentifiableModel, ICollections } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
-import { MArray } from '../../arrayModels';
+import { MArray, MManager } from '../../arrayModels';
 
 setupModelWrapping();
 
 describe('Selectors', () => {
     it('allows for selecting on un-keyed models', () => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         const model = new MPrimitive<string>();
 
@@ -18,6 +18,13 @@ describe('Selectors', () => {
         );
         
         model.setData('hello');
+        model.setData('goodbye');
+    })
+
+    it('handles applying the current value', () => {
+        const model = new MPrimitive<string>('hello');
+        select(model).apply((v) => expect(v).toBeTruthy() );
+        model.setData('good day');
         model.setData('goodbye');
     })
 
@@ -34,7 +41,7 @@ describe('Selectors', () => {
         ).apply(({ value, oldValue }) => { 
             expect(oldValue).toEqual('Big Bird is 11 years old');
             expect(value).toEqual('Big Bird is 8 years old');
-        });
+        }, true);
 
         model.set('age', 8);
 
@@ -106,7 +113,7 @@ describe('Selectors', () => {
         const cb = jest.fn();
         select(model, (m) => m.obj)
             .select((s) => s.name)
-            .apply(cb)
+            .apply(cb, true)
 
         model.update('obj', { name: 'Cookie Monster' });
         model.update('obj', { age: 10 });
@@ -128,7 +135,7 @@ describe('Selectors', () => {
 
         select(model, (data: ISimpleModel[], event) => event ? data[event.key] : null)
             .select((data: ISimpleModel) => data && `Hello ${data.name}!`)
-            .apply(({ value }) => results.push(value) )
+            .apply(({ value }) => results.push(value), true)
 
         model.update(1, { name: 'Elmer' });
         model.update(2, { name: 'Cookie Angel' });
@@ -208,8 +215,8 @@ describe('Selectors', () => {
         model.setData({ name: 'Elmo', age: 8 });
         model.set('name', 'Oscar');
 
-        expect(nameFunc).toHaveBeenCalledTimes(2);
-        expect(ageFunc).toHaveBeenCalledTimes(1);
+        expect(nameFunc).toHaveBeenCalledTimes(3);
+        expect(ageFunc).toHaveBeenCalledTimes(2);
     })
 
     it('can listen at different levels', () => {
@@ -224,15 +231,9 @@ describe('Selectors', () => {
                 const subModel = targetModel.getModel(payload.key);
                 subModels.push(subModel);
 
-                select(
-                    subModel, 
-                    (data) => {
-                        return data.name 
-                    }, 
-                    { eventTypes: [ 'modify' ] }
-                )
-                    .apply(({ value }) => results.push(value) );
-            });
+                select( subModel, (data) => data.name, { eventTypes: [ 'modify' ] } )
+                    .apply(({ value }) => results.push(value), true );
+            }, true);
 
         model.add({ name: 'Big Bird', age: 11 });
         model.add({ name: 'Elmo', age: 8 });

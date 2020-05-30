@@ -3,13 +3,6 @@ import { IKeyValPair, IDictionary, IConstructor } from '@toolkip/object-helpers'
 import { StandardElement, IDrawable, DrawableElement } from '@toolkip/shared-types';
 import { Selector, ModelEventFullPayload } from '@toolkip/model';
 
-export type SelectableValue<T> = T | Selector<any, T, any, any>;
-
-export interface ElemSelector<I = any, O = any> { 
-    selector: Selector<I, O, any, any>, 
-    applyCb: (payload: ModelEventFullPayload<any, O>, elem: StandardElement) => void 
-}
-
 export type IAttribute = IKeyValPair<string> | string | number;
 export interface IAttributes {
     [key: string]: SelectableValue<IAttribute>;
@@ -26,21 +19,6 @@ export interface IClassDefinition { name: ClassName, styles: IStandardStyles }
 export type ClassName = string | string[];
 
 export type IKeyedElems = IDictionary<DrawableElement>;
-
-export interface IButtonDefinition<T extends IKeyedElems> 
-    extends Omit<IElemDefinition<T>, "type"> 
-{
-    label: string;
-    onClick: EventListener;
-}
-
-export interface IInputDefinition<T extends IKeyedElems, V>
-    extends Omit<IElemDefinition<T>, "type">
-{
-    value: V;
-    onChange: EventListener;
-    type: string
-}
 
 /**
  * IElemDefinition
@@ -117,3 +95,45 @@ export interface ILabeledElement {
     lbl: HTMLElement;
     wrapper: HTMLElement;
 }
+
+//..........................................
+//#region INPUT HELPERS
+
+export interface IButtonDefinition<T extends IKeyedElems> 
+    extends Omit<IElemDefinition<T>, "type"> 
+{
+    label: string;
+    onClick: EventListener;
+}
+
+export type HTMLInputType = 'button' | 'checkbox' | 'color' |
+                            'date' | 'datetime-local' | 'email' |
+                            'file' | 'hidden' | 'image' | 'month' |
+                            'number' | 'password' | 'radio' | 'range' |
+                            'reset' | 'search' | 'submit' | 'tel' |
+                            'text' | 'time' | 'url' | 'week';
+
+export interface IInputDefinition<T extends IKeyedElems, V>
+    extends Omit<IElemDefinition<T>, "type">
+{
+    value?: V;
+    onChange?: EventListener;
+    type?: HTMLInputType;
+}
+
+//#endregion
+//..........................................
+
+//..........................................
+//#region SELECTOR INTERFACES
+
+export type SelectableValue<T> = T | Selector<any, T, any, any>;
+export type SelectableDefinition<T extends IKeyedElems> = SelectableValue<IElemDefinition<T> | IElemDefinition<T>[]>
+
+export interface ElemSelector<I = any, O = any> { 
+    selector: Selector<I, O, any, any>, 
+    applyCb: (payload: ModelEventFullPayload<any, O>, elem: StandardElement) => void 
+}
+
+//#endregion
+//..........................................

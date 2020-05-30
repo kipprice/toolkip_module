@@ -39,7 +39,7 @@ const _createModelForData = <T = any>(data: T, transforms?: IKeyedModelTransform
 }
 
 const _createArrayModelForData = <T>(data: T[], transforms?: IKeyedModelTransforms<T[]>): IModel<any> => {
-    if (isIdentifiable(data[0])) { return new MManager(data as any as IIdentifiable[], transforms as any); } 
+    if (data[0] && isIdentifiable(data[0])) { return new MManager(data as any as IIdentifiable[], transforms as any); } 
     else { return new MArray(data, transforms); }
 }
 
