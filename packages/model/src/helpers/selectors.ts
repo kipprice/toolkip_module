@@ -12,7 +12,6 @@ import {
     ModelEventFullPayload,
     SelectorMapSelectFunc
 } from '../_shared';
-import { isNullOrUndefined } from '@toolkip/shared-types';
 
 
 /**----------------------------------------------------------------------------
@@ -65,6 +64,28 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
         this._filterMap.customFilters.push(filterFunc);
         return this;
     }
+
+    // allow for forcing an update
+    public reselect(callbacks?: { apply?: SelectorApplyFunc<O>[], map?: SelectorMapFunc<X, K>[]}) {
+        const event = this._createReselectEvent();
+
+        if (!callbacks) { this._notifyCallbacks(event); }
+        else {
+            const { apply, map } = callbacks;
+            if (apply) { this._notifyApplySelectors(event, apply) }
+            if (map) { this._notifyMapSelectors(event, map) }
+        }
+    }
+
+    protected _createReselectEvent(): ModelEventFullPayload<any, O> {
+        return {
+            name: 'modelchange',
+            target: this,
+            oldValue: this._lastModel,
+            value: this._lastModel,
+            eventType: 'none'
+        }
+    }
    
    //#endregion
    //..........................................
@@ -111,17 +132,24 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
     }
 
     protected _notifyCallbacks(payload: ModelEventFullPayload<any, O>): void {
-        for (let af of this._applyFuncs) {
-            af(payload);
+        this._notifyApplySelectors(payload, this._applyFuncs);
+        this._notifyMapSelectors(payload, this._mapFuncs);
+    }
+
+    protected _notifyApplySelectors(payload: ModelEventFullPayload<any, O>, cbs: SelectorApplyFunc<O>[]) {
+        for (let cb of cbs) {
+            cb(payload);
         }
-    
+    }
+
+    protected _notifyMapSelectors(payload: ModelEventFullPayload<any, O>, cbs: SelectorMapFunc<X, K>[]) {
+
         const { value } = payload;
-        if (isMappable(value)) {
-            for (let mf of this._mapFuncs) {
-                map(payload.value, (val: any, key: any) => {
-                    mf(val, key, payload);
-                });
-            }
+        if (!isMappable(value)) { return }
+        for (let cb of cbs) {
+            map(value, (v: any, k: any) => {
+                cb(v, k, payload);
+            })
         }
     }
    
@@ -131,20 +159,28 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
    //..........................................
    //#region REGISTER ADDITIONAL LISTENERS
    
-    public apply(cb: SelectorApplyFunc<O>) {
+    public apply(cb: SelectorApplyFunc<O>, skipInitialNotify?: boolean) {
         this._applyFuncs.push(cb);
+        if (!skipInitialNotify) { this.reselect({ apply: [ cb ] }); }
         return this;
     }
 
-    public addEventListener(cb: SelectorApplyFunc<O>) {
-        return this.apply(cb);
+    public addEventListener(cb: SelectorApplyFunc<O>, skipInitialNotify?: boolean) {
+        return this.apply(cb, skipInitialNotify);
     }
 
-    public map(cb: SelectorMapFunc<X, K>) {
+    public map(cb: SelectorMapFunc<X, K>, skipInitialNotify?: boolean) {
         this._mapFuncs.push(cb);
+        if (!skipInitialNotify) { this.reselect({ map: [ cb ] }); }
         return this;
     }
 
+    //#endregion
+    //..........................................
+    
+    //..........................................
+    //#region ADDITIONAL SELECTORS
+    
     public mapSelect<OO>(cb: SelectorMapSelectFunc<X, K, OO>, filters?: SelectorFilters<O>): Selector<O, OO[], any, any> {
         return new Selector<O, OO[], any, any>(
             this,

@@ -16,3 +16,8 @@ export interface IComplexModel {
     basicDate: Date;
     transformedDate: Date | string;
 }
+
+export interface ICollections { 
+    users: IIdentifiableModel[], 
+    teamMembers: string[]
+}
