@@ -235,6 +235,17 @@ export function isPromise<T>(test: any): test is Promise<T> {
 }
 
 /**
+ * isPromiseLike
+ * ----------------------------------------------------------------------------
+ * checks if the provided value supports a `then` method
+ */
+export function isPromiseLike<T>(test: any): test is PromiseLike<T> {
+  if (!test.then) { return false; }
+  if (typeof test.then !== 'function') { return false; }
+  return true;
+}
+
+/**
  * isStandardElement
  * ----------------------------------------------------------------------------
  * verify that the provided element is either an HTML or SVG element
