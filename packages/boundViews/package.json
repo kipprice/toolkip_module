@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/bound-views",
-    "version": "2.2.2",
+    "version": "2.2.3",
     "description": "link views to state",
     "license": "MIT",
     "author": "Kip Price",
@@ -16,13 +16,13 @@
         "@toolkip/async": "^2.0.0"
     },
     "dependencies": {
-        "@toolkip/binding": "^2.0.0",
-        "@toolkip/create-elements": "^2.2.2",
-        "@toolkip/drawable": "^2.2.2",
-        "@toolkip/html-helpers": "^2.1.0",
-        "@toolkip/identifiable": "^2.0.0",
-        "@toolkip/object-helpers": "^2.0.0",
-        "@toolkip/shared-types": "^2.0.0"
+        "@toolkip/binding": "^2.2.3",
+        "@toolkip/create-elements": "^2.2.3",
+        "@toolkip/drawable": "^2.2.3",
+        "@toolkip/html-helpers": "^2.2.3",
+        "@toolkip/identifiable": "^2.2.3",
+        "@toolkip/object-helpers": "^2.2.3",
+        "@toolkip/shared-types": "^2.2.3"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
