@@ -1,6 +1,6 @@
 import { IPoint } from '@toolkip/shared-types';
 import { degreesToRadians, getEndPoint, getDistance, getAngle } from '@toolkip/maths';
-import { createSimpleElement, IClassDefinition } from '@toolkip/create-elements';
+import { createElement } from '@toolkip/create-elements';
 import { globalOffsetLeft, globalOffsetTop, findCommonParent } from '@toolkip/html-helpers';
 import { StyleLibrary } from '@toolkip/style-libraries';
 
@@ -83,7 +83,6 @@ export function drawLine(start: IPoint, end: IPoint, host?: HTMLElement, lbl?: s
 	let angle: number;
 	let distance: number;
 	let div: HTMLElement;
-	let lblElem: HTMLElement;
 
 	distance = getDistance(start, end);
 	angle = getAngle(start, end);
@@ -98,27 +97,27 @@ export function drawLine(start: IPoint, end: IPoint, host?: HTMLElement, lbl?: s
 	StyleLibrary.add("trigDrawing", { ".angledLine" : cls });
 
 	// Create the div and give it minimal styling to show the line
-	div = createSimpleElement("", "angledLine");
-	div.style.left = start.x + "px";
-	div.style.top = start.y + "px";
-
-	// Approriately assign the size of the element
-	div.style.width = distance + "px";
-
-	// Rotate to our specified degree
-	div.style.transform = "rotate(" + angle + "deg)";
+	div = createElement({ cls: "angledLine", style: { 
+		left: `${start.x}px`, 
+		top: `${start.y}px`,
+		width: `${distance}px`,
+		transform: `rotate(${angle}deg)`
+	} });
 
 	// Add to the specified parent element
 	if (host) { host.appendChild(div); }
 
 	// If there is also a label, create that
 	if (lbl) {
-		lblElem = createSimpleElement("", "lbl", lbl);
-		if (lblNoRotate) {
-			lblElem.style.transform = "rotate(" + (-1 * angle) + "deg)";
-			lblElem.style.transformOrigin = "(0, 0)";
-		}
-		div.appendChild(lblElem);
+		createElement({
+			cls:  "lbl", 
+			content: lbl,
+			style:  lblNoRotate ? {
+				transform: `rotate(${-1 * angle}deg)`,
+				transformOrigin: '0 0'
+			} : {},
+			parent: div
+		});
 	}
 	return div;
 };
