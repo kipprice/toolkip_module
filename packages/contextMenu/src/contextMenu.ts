@@ -1,6 +1,6 @@
 import { _Drawable } from '@toolkip/drawable';
 import { Collection, ICollectionElement } from '@toolkip/data-structures';
-import { createSimpleElement } from '@toolkip/create-elements';
+import { createElement } from '@toolkip/create-elements';
 import { IStandardStyles } from '@toolkip/style-helpers';
 import { 
 		IContextMenuThemeColors, 
@@ -159,7 +159,7 @@ export class ContextMenu extends _Drawable {
 		if (!opt.elems) { opt.elems = {}; };
 		if (!opt.elems.base) {
 			if (!parent) { parent = this._elems.option_container; }
-			opt.elems.base = createSimpleElement("", "ctxOption", opt.label, null, null, parent);
+			opt.elems.base = createElement({ cls: "ctxOption", content: opt.label, parent });
 			opt.elems.base.onclick = opt.callback;
 		}
 
@@ -227,7 +227,7 @@ export class ContextMenu extends _Drawable {
 	 */
 	private _buildSubMenu(srcOption: IOption): void {
 
-		srcOption.elems.sub_menu = createSimpleElement("", "subMenu hidden", "", null, null, srcOption.elems.base);
+		srcOption.elems.sub_menu = createElement({ cls: "subMenu hidden", parent: srcOption.elems.base });
 		srcOption.elems.base.innerHTML += "...";
 
 		if (!this._noStyles) { return; }

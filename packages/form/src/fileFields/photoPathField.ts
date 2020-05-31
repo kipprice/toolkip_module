@@ -1,6 +1,6 @@
 import { IPhotoPathElemTemplate } from "./_interfaces";
 import { FilePathField } from "./filePathField";
-import { createSimpleElement, createElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { isNullOrUndefined } from "@toolkip/shared-types";
 import { createInputElement, createLabelForInput } from "../helpers";
 import { IStandardStyles } from "@toolkip/style-helpers";
@@ -110,7 +110,7 @@ export class PhotoPathField<T extends IPhotoPathElemTemplate = IPhotoPathElemTem
      */
     protected _onCreateElements(): void {
 
-        this._elems.photoWrapper = createSimpleElement("", "photoWrapper", "", null, null, this._elems.base);
+        this._elems.photoWrapper = createElement({ cls: "photoWrapper", parent: this._elems.base });
 
         this._elems.display = createElement({
             type: "img",
@@ -120,10 +120,10 @@ export class PhotoPathField<T extends IPhotoPathElemTemplate = IPhotoPathElemTem
         }) as HTMLImageElement;
 
         // draw the photo element
-        this._elems.overlay = createSimpleElement("", "photoOverlay", "", null, null, this._elems.photoWrapper);
+        this._elems.overlay = createElement({ cls: "photoOverlay", parent: this._elems.photoWrapper });
 
         // handle setting a manual link
-        this._elems.linkBtn = createSimpleElement("", "photoBtn link", "CHANGE LINK", null, null, this._elems.overlay);
+        this._elems.linkBtn = createElement({ cls: "photoBtn link", content: "CHANGE LINK", parent: this._elems.overlay });
         this._elems.linkBtn.addEventListener("click", () => {
             let linkURL: string = window.prompt("What should the link be set to?", this._data);
 

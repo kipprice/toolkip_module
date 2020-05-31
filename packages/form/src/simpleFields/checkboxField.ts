@@ -2,7 +2,7 @@ import { _Field } from "../_field";
 import { FieldTypeEnum, FormElementLayoutEnum } from '../_interfaces';
 import { IStandardStyles } from "@toolkip/style-helpers";
 import { createLabelForInput } from '../helpers';
-import { createElement, createSimpleElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 
 
 /**----------------------------------------------------------------------------
@@ -128,7 +128,7 @@ export class CheckboxField extends _Field<boolean> {
             parent: this._elems.inputBox
         });
 
-        this._elems.innerLbl = createSimpleElement("", "innerLbl", this._config.label, null, null, this._elems.lbl);
+        this._elems.innerLbl = createElement({ cls: "innerLbl", content: this._config.label, parent: this._elems.lbl });
 
         this._handleStandardLayout();
     }

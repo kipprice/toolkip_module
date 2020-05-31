@@ -1,6 +1,6 @@
 import { IStandardStyles } from '@toolkip/style-helpers';
 import { _Field } from "../_field";
-import { createSimpleElement, IAttributes } from "@toolkip/create-elements";
+import { createElement, IAttributes } from "@toolkip/create-elements";
 import { createInputElement, createLabelForInput } from '../helpers';
 import { isNullOrUndefined } from "@toolkip/shared-types";
 import { IFormFilePathElemTemplate, IFileSaveCallback } from './_interfaces';
@@ -100,8 +100,8 @@ export class FilePathField<T extends IFormFilePathElemTemplate = IFormFilePathEl
      */
     protected _onCreateElements(): void {
         this._createStandardLabel(this._elems.base);
-        this._elems.display = createSimpleElement("", "display", this._data, null, null, this._elems.base);
-        this._elems.inputContainer = createSimpleElement("", "fileContainer", "", null, null, this._elems.base);
+        this._elems.display = createElement({ cls: "display", content: this._data, parent: this._elems.base });
+        this._elems.inputContainer = createElement({ cls: "fileContainer", parent: this._elems.base });
         this._elems.input = createInputElement(this._id + "|input", "", "file", "", null, null, this._elems.inputContainer);
         this._elems.inputLabel = createLabelForInput("Upload File", this._id + "|input", "filepath", this._elems.inputContainer);
     }

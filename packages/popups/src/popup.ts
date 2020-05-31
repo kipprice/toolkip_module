@@ -1,6 +1,6 @@
 import { _Drawable } from '@toolkip/drawable';
 import { PopupElements, IPopupDefinition } from "./_interfaces";
-import { createSimpleElement, createElement, IElemDefinition, IClassDefinition, ClassName } from '@toolkip/create-elements';
+import { createElement, IElemDefinition, IClassDefinition, ClassName } from '@toolkip/create-elements';
 import { addClass, removeClass, IStandardStyles } from '@toolkip/style-helpers';
 import { StandardElement, isString, isDrawable } from '@toolkip/shared-types';
 
@@ -216,12 +216,13 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * addContent
 	 * ----------------------------------------------------------------------------
 	 * Allows the caller to pass basic info to the popup so that 
-	 * createSimpleElement can be called
+	 * createElement can be called with the specified content
+	 * 
 	 * @param	id		ID of the element to be created
 	 * @param	cls		Class of the element to be created
 	 * @param	content	What content the element should contain
 	 */
-	public addContent(id?: string, cls?: ClassName | IClassDefinition, content?: string): void;
+	public addContent(content?: string): void;
 
 	/**
 	 * addContent
@@ -241,12 +242,12 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * @param	cls
 	 * @param	content
 	 */
-	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition), cls?: ClassName | IClassDefinition, content?: string): void {
+	public addContent(param1?: (HTMLElement | string | _Drawable | IElemDefinition)): void {
 		let elem: StandardElement;
 
 		// Create an HTMLElement if one wasn't passed in
 		if (isString(param1)) {
-			elem = createSimpleElement(param1, cls, content);
+			elem = createElement({ content: param1 });
 
 			// If a Drawable was passed in, grab its HTML element
 		} else if (isDrawable(param1)) {

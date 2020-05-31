@@ -4,7 +4,7 @@ import { IStandardStyles, addClass } from "@toolkip/style-helpers";
 import { _Field } from '../_field';
 import { isField } from '../helpers';
 import { map } from "@toolkip/object-helpers";
-import { createSimpleElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent } from '../eventHandler';
 import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interfaces";
 
@@ -150,7 +150,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         this._createCollapsibleTitle();
 
         // Create the form children section
-        this._elems.childrenContainer = createSimpleElement("", "formChildren", "", null, null, this._elems.base);
+        this._elems.childrenContainer = createElement({ cls: "formChildren", parent: this._elems.base });
         // this._createStyles();
 
         this._updateClsBasedOnLayout();

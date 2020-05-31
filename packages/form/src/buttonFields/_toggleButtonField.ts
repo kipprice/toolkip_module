@@ -3,7 +3,7 @@ import { _Field } from "../_field";
 import { IToggleBtnOption, map } from "@toolkip/object-helpers";
 import { FieldTypeEnum } from '../_interfaces';
 import { IStandardStyles, addClass } from "@toolkip/style-helpers";
-import { createSimpleElement, createElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { indexOf } from "@toolkip/primitive-helpers";
 import { wait } from "@toolkip/async";
 
@@ -117,7 +117,7 @@ export abstract class _ToggleButtonField<M, T extends IFormToggleButtonTemplate<
      */
     protected _onCreateElements(): void {
 
-        this._elems.childrenContainer = createSimpleElement("", "formChildren", "", null, null);
+        this._elems.childrenContainer = createElement({ cls: "formChildren" });
         this._createOptionsElements();
 
         this._handleStandardLayout();

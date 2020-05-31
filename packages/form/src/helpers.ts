@@ -1,7 +1,7 @@
 import { IFieldConfig, IFields, FieldTypeEnum } from "./_interfaces";
 import { ISelectOptions, map } from '@toolkip/object-helpers';
 import { isNullOrUndefined } from '@toolkip/shared-types';
-import { createElement, createSimpleElement, IElemDefinition, IAttributes, IChild } from '@toolkip/create-elements';
+import { createElement, createLabeledInput, IElemDefinition, IAttributes, IChild, createLabeledElement } from '@toolkip/create-elements';
 import { _Field } from "./_field";
 import { inputDateFmt } from '@toolkip/primitive-helpers';
 
@@ -118,25 +118,23 @@ export interface ICheckboxElems {
  */
 export function createLabeledCheckbox(id: string, cls?: string, lbl?: string, checked?: boolean): ICheckboxElems {
 
+    // create the checkbox and label
+    const [ lblElem, checkboxElem ] = createLabeledInput(
+        { cls: cls + "|lbl" },
+        { 
+            id: id, 
+            cls: cls, 
+            type: 'checkbox', 
+            attr: { checked: checked.toString() 
+        }
+    });
+
     // create the wrapper to hold the checkbox + label
-    let wrapperElem: HTMLElement = createSimpleElement(id + "|wrapper", cls + "|wrapper");
-
-    // create the checkbox itself
-    let checkboxDef: IElemDefinition = {
-        type: "input",
-        id: id,
-        cls: cls,
-        attr: {
-            type: "checkbox",
-            checked: checked.toString(),
-            name: id
-        },
-        parent: wrapperElem
-    };
-    let checkboxElem: HTMLInputElement = createElement(checkboxDef) as HTMLInputElement;
-
-    // create the label for the checkbox
-    let lblElem: HTMLElement = createSimpleElement("", cls + "|lbl", lbl, { for: id }, null, wrapperElem);
+    let wrapperElem: HTMLElement = createElement({ 
+        id: id + "|wrapper", 
+        cls: cls + "|wrapper",
+        children: [ checkboxElem, lblElem ]
+     });
 
     // return the wrapper + the checkbox
     return {

@@ -1,6 +1,6 @@
 import { _Field } from "../_field";
 import { FieldTypeEnum } from '../_interfaces';
-import { createSimpleElement, createElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { createInputElement } from '../helpers';
 import { IStandardStyles } from "@toolkip/style-helpers";
 import { shortTime, inputToDate, inputDateFmt, inputTimeFmt } from "@toolkip/primitive-helpers";
@@ -76,11 +76,11 @@ export class DateTimeField extends _Field<Date> {
 
     protected _onCreateElements(): void {
         this._createStandardLabel(this._elems.base);
-        this._elems.inputWrapper = createSimpleElement("", "inputs", "", null, null, this._elems.base);
+        this._elems.inputWrapper = createElement({ cls: "inputs", parent: this._elems.base });
 
         // draw the date
         let dateWrapper = createElement({ cls: "dateWrapper", parent: this._elems.inputWrapper })
-        let dateLbl: HTMLElement = createSimpleElement("", "lbl", "Date: ", null, null, dateWrapper);
+        createElement({cls: "lbl", content: "Date: ", parent: dateWrapper });
         this._elems.dateInput = createInputElement("", "dateInput", "date", this._data, null, null, dateWrapper);
         this._elems.dateInput.addEventListener("change", () => {
             this._changeEventFired();
@@ -89,7 +89,7 @@ export class DateTimeField extends _Field<Date> {
         // draw the time
         let timeVal: string = (this._data ? shortTime(this._data) : "");
         let timeWrapper = createElement({ cls: "timeWrapper", parent: this._elems.inputWrapper })
-        let timeLbl: HTMLElement = createSimpleElement("", "lbl", "Time: ", null, null, timeWrapper);
+        createElement({ cls: "lbl", content: "Time: ", parent: timeWrapper });
         this._elems.timeInput = createInputElement("", "timeInput", "time", timeVal, null, null, timeWrapper);
         this._elems.timeInput.addEventListener("change", () => {
             this._changeEventFired();

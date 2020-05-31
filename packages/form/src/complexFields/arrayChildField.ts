@@ -1,7 +1,7 @@
 import { FieldTypeEnum, IFields } from "../_interfaces";
 import { _CollapsibleField } from "./_collapsibleField";
 import { _Field } from '../_field';
-import { createElement, createSimpleElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { SectionField } from "./sectionField";
 import { IStandardStyles } from "@toolkip/style-helpers";
 import { IArrayChildTemplate, IArrayChildHTMLElements, DirectionType, IArrayField } from "./_interfaces";
@@ -158,7 +158,7 @@ export class ArrayChildField<M, T extends IArrayChildTemplate<M> = IArrayChildTe
             }
         });
 
-        this._elems.childrenContainer = createSimpleElement("", "formChildren", "", null, null, this._elems.base);
+        this._elems.childrenContainer = createElement({ cls: "formChildren", parent: this._elems.base });
     }
 
     protected _createClonedElement(appendToID: string): ArrayChildField<M, T> {

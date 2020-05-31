@@ -1,6 +1,6 @@
 import { IFormCollapsibleTemplate, ICollapsibleHTMLElements } from "./_interfaces";
 import { _Field } from "../_field";
-import { createElement, createSimpleElement } from "@toolkip/create-elements";
+import { createElement } from "@toolkip/create-elements";
 import { addClass, removeClass, transition, IStandardStyles } from "@toolkip/style-helpers";
 import { map } from "@toolkip/object-helpers";
 import { FormColor } from "../_interfaces";
@@ -104,7 +104,7 @@ export abstract class _CollapsibleField<M, T extends IFormCollapsibleTemplate<M>
             }
         });
 
-        this._elems.title = createSimpleElement("", "sectionHeader", this._config.label, null, null, this._elems.titleContainer);
+        this._elems.title = createElement({ cls: "sectionHeader", content: this._config.label, parent: this._elems.titleContainer });
 
         if (!this._config.uncollapsible) { this._createCollapsibility(); }
     }
