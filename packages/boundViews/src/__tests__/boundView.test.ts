@@ -16,22 +16,19 @@ describe("bound view", () => {
     it ("updates basic data", async () => {
         const simpleView = new SimpleBoundView();
         simpleView.model = { name: "Kip", count: 0 }
-        await nextRender();
         expect(simpleView.elems.name.innerHTML).toEqual("Kip");
     })
 
     it ("doesn't update when instructed to skip", async () => {
         const simpleView = new SimpleBoundView(true);
         simpleView.model = { name: "Kip", count: 0 }
-        await nextRender();
         expect(simpleView.elems.name.innerHTML).not.toEqual("Kip");
     })
 
     it("updates with custom functions", async () => {
         const simpleView = new SimpleBoundView();
         simpleView.model = { name: "Kip", count: 0 }
-        await nextRender();
-        expect(simpleView.elems.count.innerHTML).toEqual("Total: " + 0);
+        expect(simpleView.elems.count.innerHTML).toEqual("Total: 0");
     })
 
     it("creates a nested bound view", async () => {
@@ -41,10 +38,6 @@ describe("bound view", () => {
             childDict: {},
             coreChild: { name: "Kip", count: 0 }
         };
-
-        // need a render per layer that's being updated
-        await nextRender();
-        await nextRender();
 
         // verify that the child view got updated
         const childView = complexView.elems.coreChild;
@@ -64,11 +57,6 @@ describe("bound view", () => {
             childDict: {},
             coreChild: { name: "Kip", count: 0 }
         };
-
-        // need a render per layer that's being updated
-        await nextRender();
-        await nextRender();
-
         const childView = complexView.elems.childArray;
         expect(childView).toBeInstanceOf(HTMLElement);
         expect(childView.childElementCount).toEqual(2);
@@ -89,10 +77,6 @@ describe("bound view", () => {
             }, 
             coreChild: { name: "Kip", count: 0 }
         };
-
-        // need a render per layer that's being updated
-        await nextRender();
-        await nextRender();
 
         const childView = complexView.elems.childDict;
         expect(childView).toBeInstanceOf(HTMLElement);
@@ -132,9 +116,6 @@ describe("composable bound view", () => {
             count: 21
         };
 
-        await nextRender();
-        await nextRender();
-
         expect((elems.name as any).innerHTML).toEqual("kip");
     })
 
@@ -169,9 +150,6 @@ describe("composable bound view", () => {
             childArray: [],
             childDict: {}
         }
-
-        await nextRender();
-        await nextRender();
 
         const countElem = elems.core.elems.count as HTMLElement;
         expect(countElem.innerHTML).toEqual("-1");

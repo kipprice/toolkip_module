@@ -13,6 +13,7 @@ import {
     ModelType
 } from "../_shared";
 import { isModel } from '../_typeguards/core';
+import { isNullOrUndefined } from '@toolkip/shared-types';
 
 /**----------------------------------------------------------------------------
  * @class	_Model
@@ -38,7 +39,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
         if (transforms) { this._transforms = transforms; }
         else { this._transforms = {}; }
 
-        if (data) { this.import(data as T) }
+        if (!isNullOrUndefined(data)) { this.import(data as T) }
     }
 
     protected abstract _getDefaultValues(): T;

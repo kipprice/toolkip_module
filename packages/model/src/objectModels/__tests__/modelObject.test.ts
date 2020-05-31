@@ -92,6 +92,13 @@ describe('ModelObject', () => {
             expect(model.get('name')).toEqual('COOKIE MONSTER');
         })
 
+        it('can import falsy values down the line', () => {
+            const data = { name: '', age: 0 };
+            const model = new MObject<ISimpleModel>();
+            model.import(data);
+            expect(model.getData()).toMatchObject(data);
+        })
+
         it('exports with global transforms', () => {
             // TODO: 
         })

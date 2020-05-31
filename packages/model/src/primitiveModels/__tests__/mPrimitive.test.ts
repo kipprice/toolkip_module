@@ -21,6 +21,25 @@ describe('ModelPrimitive', () => {
             expect(model.getData()).toEqual('');
         })
 
+        it('can set 0', () => {
+            const model = new MPrimitive<number>(0);
+            expect(model.getData()).toEqual(0);
+        })
+
+        it('can import falsy data', () => {
+            const model = new MPrimitive<string>();
+            expect(model.getData()).toEqual(undefined);
+            model.import('');
+            expect(model.getData()).toEqual('')
+        }); 
+        
+        it('can import zero', () => {
+            const model = new MPrimitive<number>();
+            expect(model.getData()).toEqual(undefined);
+            model.import(0);
+            expect(model.getData()).toEqual(0)
+        });
+
     })
     
     describe('notifying listeners', () => {

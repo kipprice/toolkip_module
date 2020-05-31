@@ -2,13 +2,14 @@
 //#region IMPORTS
 
 import { _Drawable, IDrawableElements } from '@toolkip/drawable';
-import { bind, BoundUpdateFunction, unbind } from '@toolkip/binding';
+import { BoundUpdateFunction } from '@toolkip/binding';
 import { isVisible } from '@toolkip/html-helpers';
 import { ICreateElementFunc, createCustomElement } from '@toolkip/create-elements';
-import { StandardElement, isStandardElement, isKeyof, isDrawable } from '@toolkip/shared-types';
+import { StandardElement, isStandardElement, isKeyof, isDrawable, isNullOrUndefined } from '@toolkip/shared-types';
 import { IConstructor, map } from '@toolkip/object-helpers';
 import { IUpdateFunctions, IBoundChildren, IBoundElemDefinition, BindableElement, IViewBindingDetails, BoundValue, BoundProperty, IDrawableFactory, IViewUpdateFunc } from './_interfaces';
 import { isUpdatableView, isBoundView } from './_typeGuards';
+import { MObject, select, SelectorApplyFunc } from '@toolkip/model';
 
 //#endregion
 //..........................................
@@ -32,9 +33,9 @@ export abstract class _BoundView<
     //#region PROPERTIES
 
     /** keep track of the model associated with this view */
-    protected _model: VM;
-    public get model(): VM { return this._getModel(); }
-    public set model(data: VM) { this._setModel(data); }
+    protected _model: MObject<VM>;
+    public get model(): VM { return this._model.getData() }
+    public set model(data: VM) { this._model.import(data) }
 
     /** keep track of each of the update functions */
     protected _updateFunctions: IUpdateFunctions<VM>
@@ -54,7 +55,7 @@ export abstract class _BoundView<
         super();
 
         this._updateFunctions = {} as any;
-        this._model = {} as any;
+        this._model = new MObject<VM>();
         this._bindings = [];
         this._boundChildren = {} as any;
 
@@ -88,12 +89,14 @@ export abstract class _BoundView<
     protected _createElem(obj: IBoundElemDefinition<VM, E>): StandardElement {
         
         // use the standard function, but recurse with this one
-        let recurseFunc: ICreateElementFunc<E> = (obj: IBoundElemDefinition<VM, E>) => { return this._createElem(obj); }
+        let recurseFunc: ICreateElementFunc<E> = (obj: IBoundElemDefinition<VM, E>) => { 
+            return this._createElem(obj); 
+        }
+        
         let elem = createCustomElement<E, IBoundElemDefinition<VM, E>>(obj, this._elems, recurseFunc);
 
         // if a binding is specified, set it up
         if (obj.bindTo) { this._bindElement(elem, obj); }
-
         return elem;
     }
 
@@ -103,9 +106,9 @@ export abstract class _BoundView<
      * handle binding the element
      */
     protected async _bindElement(elem: BindableElement<any>, obj: IBoundElemDefinition<VM, E>): Promise<void> {
-        let boundElem: BindableElement<any> = elem;
 
-        // TODO: don't require that key be specified to get at a drawable
+        // grab the element that will be uodated
+        let boundElem: BindableElement<any> = elem;
         if (obj.key && obj.drawable) { 
             boundElem = this._elems[obj.key as string] as BindableElement<any>; 
         }
@@ -135,43 +138,6 @@ export abstract class _BoundView<
     //..........................................
 
     //..........................................
-    //#region MODEL HANDLING
-
-    protected _getModel(): VM {
-        let oldModel: VM = JSON.parse(JSON.stringify(this._model));
-        window.setTimeout(
-            () => this._onPotentialModelChange(oldModel),
-            0
-        );
-        return this._model;
-    }
-
-    protected _setModel(data: VM): void {
-        let oldModel: VM = this._model;
-        this._model = data;
-        window.setTimeout(
-            () => this._onPotentialModelChange(oldModel),
-            0
-        );
-    }
-
-    //#endregion
-    //..........................................
-
-    //..........................................
-    //#region EVENT HANDLERS
-
-    /**
-     * _onPotentialModelChange
-     * ----------------------------------------------------------------------------
-     * overridable function to allow for any array-based child views
-     */
-    protected _onPotentialModelChange(oldModel: VM): void { }
-
-    //#endregion
-    //..........................................
-
-    //..........................................
     //#region BINDING
 
     /**
@@ -179,49 +145,23 @@ export abstract class _BoundView<
      * ----------------------------------------------------------------------------
      * bind a particular element of the view model to the specified element
      */
-    protected _bind(elem: BindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
-        if (!bindingInfo.func) { return; }
-
-        const bindKey = bind(
-            () => {
-                // handle the null case
-                if (!this._model) { return ""; }
-
-                // handle the case where the user defined a custom value getter
-                if (bindingInfo.value) { 
-                    return bindingInfo.value(this._model);
-                }
-
-                // handle if the user specified a specific key in the model
-                if (bindingInfo.key) { 
-                    return this._model[bindingInfo.key as keyof VM]; 
-                }
-
-                // otherwise, just return the model
-                return this._model;
-            },
-            (value: BoundValue<VM>) => { 
-                bindingInfo.func(value, elem) 
-            },
-            () => this._shouldSkipBindUpdate(elem),
-            (a: BoundValue<VM>, b: BoundValue<VM>) => {
-                return (JSON.stringify(a) === JSON.stringify(b));
-            }
-        );
-
-        // keep track of all of the bindings we've created
-        this._bindings.push(bindKey);
+    protected _bind<O = BoundValue<VM>>(elem: BindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
+        const model = this._getModelForKey(bindingInfo.key);
+        const selector = select<BoundValue<VM>, O>(model, bindingInfo.value ? bindingInfo.value : (m) => m);
+        
+        selector.apply(({ value }) => {
+            if (this._shouldSkipBindUpdate(elem)) { return }
+            if (isNullOrUndefined(value)) { return; }
+            bindingInfo.func(value, elem);
+        });
     }
 
-    /**
-     * _unbindAll
-     * ----------------------------------------------------------------------------
-     * unregister all of the bindings associated with this view
-     */
-    protected _unbindAll(): void {
-        for (let b of this._bindings) {
-            unbind(b);
-        }
+    protected _getModelForKey(key: BoundProperty<VM>) {
+        if (!key) { return this._model; }
+        if (key === "_") { return this._model; }
+        return select(this._model, (m) => {
+            return m[key] 
+        });
     }
 
     /**
@@ -327,18 +267,7 @@ export abstract class _BoundView<
             return !(isVisible(elem));
         }
     }
-
     //#endregion
     //..........................................    
 
-    //..........................................
-    //#region OVERRIDES
-    
-    public erase() {
-        this._unbindAll();
-        super.erase();
-    }
-    
-    //#endregion
-    //..........................................
 }
