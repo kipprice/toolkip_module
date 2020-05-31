@@ -3,7 +3,8 @@ import {
 		IEditableElems, 
 		IEditableOptions, 
 		IValidateResult, 
-		IEditableHandlers
+		IEditableHandlers,
+		IEditableModel
 	} from './_interfaces';
 import { addClass, removeClass, IStandardStyles } from '@toolkip/style-helpers';
 import { select } from '@toolkip/html-helpers';
@@ -18,14 +19,14 @@ import { wait } from '@toolkip/async';
  * @version	1.4.0
  * ---------------------------------------------------------------------------
  */
-export class Editable<T> extends _BoundView<T, "editableLightBG", IEditableElems> {
+export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG", IEditableElems> {
 
 	//.....................
 	//#region PROPERTIES
 
 	/** use value syntax as wrapper for model */
-	public get value(): T { return this.model; }
-	public set value(val: T) { this.model = val; }
+	public get value(): T { return this.model.value; }
+	public set value(val: T) { this.model = { value: val }; }
 
 	/** the user specified options for this editable */
 	protected _options: IEditableOptions<T>;
@@ -144,7 +145,7 @@ export class Editable<T> extends _BoundView<T, "editableLightBG", IEditableElems
 		this._addHandlers(options);
 
 		// set our top level properties
-		this._model = options.defaultValue || null;
+		this.value = options.defaultValue || undefined;
 		this._isModifying = false;
 
 		this._createElements();
@@ -365,7 +366,7 @@ export class Editable<T> extends _BoundView<T, "editableLightBG", IEditableElems
 		removeClass(this._elems.input, "error");
 
 		// Resave our value through our unformat function
-		this._model = this._parse(content);
+		this.value = this._parse(content);
 
 		// Call our update function in order to notify our parent
 		if (this.onUpdate) {
@@ -442,7 +443,7 @@ export class Editable<T> extends _BoundView<T, "editableLightBG", IEditableElems
 	 * Overridable function that creates the display-version of the editable
 	 */
 	protected _renderDisplayView(): void {
-		this._elems.display.innerHTML = this._format(this._model);
+		this._elems.display.innerHTML = this._format(this.value);
 	}
 
 };

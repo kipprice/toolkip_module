@@ -65,3 +65,7 @@ export interface IEditableHandlers<T> {
     /** handle when we need to convert data to the unformatted version */
     onParseContent?: ParseContentFunction<T>;
 }
+
+export interface IEditableModel<T> {
+    value: T;
+}
