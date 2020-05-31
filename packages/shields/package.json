@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/shields",
-    "version": "2.2.3",
+    "version": "2.2.4",
     "description": "shield components",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,8 +13,8 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^2.2.3",
-        "@toolkip/drawable": "^2.2.3",
+        "@toolkip/create-elements": "^2.2.4",
+        "@toolkip/drawable": "^2.2.4",
         "@toolkip/style-helpers": "^2.2.3"
     },
     "scripts": {
