@@ -1,7 +1,7 @@
 import { _Field } from "./_field";
 import { _Drawable } from '@toolkip/drawable';
 import { ISelectOptions, IDictionary } from '@toolkip/object-helpers';
-
+import { IModel } from '@toolkip/model';
 
 //...............
 //#region ENUMS
@@ -56,7 +56,11 @@ export type IFields<F> = {
 }
 
 /** handle multiple types of evaluable elements */
-export type EvaluableElem = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | IElemWithValue;
+export type EvaluableElem = 
+    HTMLInputElement | 
+    HTMLTextAreaElement | 
+    HTMLSelectElement | 
+    IElemWithValue;
 
 //#endregion
 //...............
@@ -190,7 +194,7 @@ export interface ISelectFieldTemplate<T extends string | number> extends IFieldC
 //..........................................
 //#region TYPES AND INTERFACES
 
-export interface IFormOptions extends IFormDisplay {
+export interface IFormOptions<T> extends IFormDisplay {
     /** identifier for the form */
     id?: string;
 
@@ -209,6 +213,10 @@ export interface IFormOptions extends IFormDisplay {
     /** true if we should allow canceling the form even if there
      * are unsaved changes */
     ignoreChanges?: boolean;
+
+    /** if provided, auto-updates the form with the latest version
+     * of the model and will save back into the model at save */
+    model?: IModel<T>;
 
     /** @deprecated: use style instead */
     popupForm?: boolean;

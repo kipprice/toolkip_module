@@ -130,7 +130,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
     //.....................
     //#region PROPERTIES
 
-    protected _config: IFormOptions;
+    protected _config: IFormOptions<T>;
 
     protected _elems: {
         base: HTMLElement;
@@ -150,7 +150,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
     //..........................................
     //#region INITIALIZATION
 
-    public constructor(opts: IFormOptions, children?: IFields<T>) {
+    public constructor(opts: IFormOptions<T>, children?: IFields<T>) {
         super();
         this._config = opts || {};
         this._addClassName("Form");

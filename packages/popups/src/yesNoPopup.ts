@@ -15,7 +15,7 @@ export class YesNoPopup extends Popup {
     constructor(prompt: string, onSelection: IYesNoCallback) {
         super();
         this._onSelection = onSelection;
-        this.addContent("", "", prompt);
+        this.addContent(prompt);
         this._createButtons();
     }
 

@@ -1,8 +1,7 @@
 import { Popup } from "./popup";
 import { LoginPopupElements } from "./_interfaces";
-import { ILabeledElement, createLabeledElement } from '@toolkip/create-elements';
+import { createLabeledInput, createElement } from '@toolkip/create-elements';
 import { IStandardStyles } from '@toolkip/style-helpers';
-
 
 /**----------------------------------------------------------------------------
  * @class LoginPopup
@@ -43,13 +42,14 @@ export class LoginPopup extends Popup {
      */
     protected _createElements(): void {
         super._createElements();
-        let usernameElems: ILabeledElement = createLabeledElement({ type: "input", attr: { type: "text" } }, { content: "Username" });
-        this._elems.username = usernameElems.data as HTMLInputElement;
-        this._elems.content.appendChild(usernameElems.wrapper);
 
-        let passwordElems: ILabeledElement = createLabeledElement({ type: "input", attr: { type: "password" } }, { content: "Password" });
-        this._elems.password = passwordElems.data as HTMLInputElement;
-        this._elems.content.appendChild(passwordElems.wrapper);
+        let [ unameLbl, unameInput ] = createLabeledInput({ content: "Username" }, { type: "text" });
+        this._elems.username = unameInput;
+        this._elems.content.appendChild(createElement({ cls: 'wrapper', children: [unameLbl, unameInput] }));
+
+        const [ pwordLbl, pwordInput ] = createLabeledInput({ content: "Password" }, { type: "password" });
+        this._elems.password = pwordInput;
+        this._elems.content.appendChild(createElement({ cls: 'wrapper', children: [ pwordLbl, pwordInput ]}));
 
         this.addButton("Login", () => {
             this.erase();

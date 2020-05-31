@@ -19,6 +19,7 @@
         "@toolkip/drawable": "^2.2.2",
         "@toolkip/events": "^2.1.0",
         "@toolkip/html-helpers": "^2.1.0",
+        "@toolkip/model": "^2.2.0",
         "@toolkip/object-helpers": "^2.0.0",
         "@toolkip/popups": "^2.2.2",
         "@toolkip/primitive-helpers": "^2.0.0",

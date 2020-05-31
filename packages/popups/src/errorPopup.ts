@@ -26,7 +26,7 @@ export class ErrorPopup extends Popup {
     constructor(details: string, title?: string) {
         super();
         this.setTitle(title || "Uh-oh...that wasn't supposed to happen");
-        this.addContent("", "", details);
+        this.addContent(details);
         this.addButton("Okay", () => {
             this.erase();
             this._notifyClose();
