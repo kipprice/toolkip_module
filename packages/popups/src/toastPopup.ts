@@ -39,7 +39,7 @@ export class ToastPopup extends Popup {
         addClass(this._elems.base, "toast");
         this._showFor = showFor || 2000;
         if (title) { this.setTitle(title); }
-        this.addContent("", "", details);
+        this.addContent(details);
         this.addButton("Dismiss", () => { this.erase(); });
     }
 
