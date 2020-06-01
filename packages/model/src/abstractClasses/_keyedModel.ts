@@ -151,7 +151,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         // to handle notifying on our own
         } else {
             const oldValue = payload.oldValue || this.get(key);
-            const newModel = this._wrapInModel(value, key);
+            const newModel = this._wrapInModel<K, X>(value, key);
 
             this._setValue(this._innerModel, key, newModel);
 
@@ -169,14 +169,14 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         const { value } = payload;
 
         if (isModel(value)) {
-            super._innerSetData({ ...payload, value: this._wrapInModel(value) });
+            super._innerSetData({ ...payload, value: this._wrapInModel<K, X>(value) });
         } else if (isNullOrUndefined(value)) { 
             super._innerSetData(payload);
         } else {
             const modelValue = this._getDefaultValues();
 
             this._map(value, (val: X, key: K) => {
-                let updatedVal = this._wrapInModel(val, key);
+                let updatedVal = this._wrapInModel<K, X>(val, key);
                 this._setValue(modelValue, key, updatedVal);
             })
 
@@ -202,7 +202,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
             if (transform) {
                 updatedValue = transform(val);
             }
-            this._setValue(out, key, this._wrapInModel(updatedValue, key))
+            this._setValue(out, key, this._wrapInModel<K, X>(updatedValue, key))
         })
 
         return out;
@@ -226,46 +226,6 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         });
 
         return out; 
-    }
-    
-    //#endregion
-    //..........................................
-
-
-    //..........................................
-    //#region MODEL WRAPPING
-    
-    protected _wrapInModel(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
-        const newModel = _Model.createModel<X>(dataToWrap);
-        
-        // TODO: there is an edge case where a model is passed in without
-        // a listener; we should handle that as well
-        if (!isModel(dataToWrap)) {
-
-            let oldValue = newModel.getData();
-
-            newModel.addEventListener((payload) => {
-                if (isNullOrUndefined(key)) { return }
-
-                // this allows us to update from formerly cloned models instead of 
-                // always using the new one we've cloned in
-                const { target, eventType } = payload;
-                const value = isModel(target) ? target.getData() : target
-
-                this._sendUpdate({
-                    eventType,
-                    key,
-                    oldValue,
-                    value,
-                    eventChain: payload
-                })
-
-                // update what we treat as the most recent data
-                oldValue = value;
-            })
-        }
-
-        return newModel;
     }
     
     //#endregion

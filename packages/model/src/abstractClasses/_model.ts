@@ -69,7 +69,6 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
         this._event.addEventListener(cbFunc);
     }
     
-
     protected _dispatchEvent<K, X>(payload: ModelEventPayload<K, X>): void {
         this._event.dispatch(this, payload);
         _Model._event.dispatch(this, payload);
@@ -288,6 +287,45 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
 
     protected _cloneData<X>(data: X): X {
         return clone(data);
+    }
+    
+    //#endregion
+    //..........................................
+
+    //..........................................
+    //#region MODEL WRAPPING
+    
+    protected _wrapInModel<K, X>(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
+        const newModel = _Model.createModel<X>(dataToWrap);
+        
+        // TODO: there is an edge case where a model is passed in without
+        // a listener; we should handle that as well
+        if (!isModel(dataToWrap)) {
+
+            let oldValue = newModel.getData();
+
+            newModel.addEventListener((payload) => {
+                if (isNullOrUndefined(key)) { return }
+
+                // this allows us to update from formerly cloned models instead of 
+                // always using the new one we've cloned in
+                const { target, eventType } = payload;
+                const value = isModel(target) ? target.getData() : target
+
+                this._sendUpdate({
+                    eventType,
+                    key,
+                    oldValue,
+                    value,
+                    eventChain: payload
+                })
+
+                // update what we treat as the most recent data
+                oldValue = value;
+            })
+        }
+
+        return newModel;
     }
     
     //#endregion
