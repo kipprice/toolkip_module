@@ -9,7 +9,7 @@ import { StandardElement, isStandardElement, isKeyof, isDrawable, isNullOrUndefi
 import { IConstructor, map } from '@toolkip/object-helpers';
 import { IUpdateFunctions, IBoundChildren, IBoundElemDefinition, BindableElement, IViewBindingDetails, BoundValue, BoundProperty, IDrawableFactory, IViewUpdateFunc } from './_interfaces';
 import { isUpdatableView, isBoundView } from './_typeGuards';
-import { MObject, select, SelectorApplyFunc } from '@toolkip/model';
+import { Model, select } from '@toolkip/model';
 
 //#endregion
 //..........................................
@@ -33,9 +33,11 @@ export abstract class _BoundView<
     //#region PROPERTIES
 
     /** keep track of the model associated with this view */
-    protected _model: MObject<VM>;
+    protected _model: Model<VM>;
     public get model(): VM { return this._model.getData() }
-    public set model(data: VM) { this._model.import(data) }
+    public set model(data: VM) { 
+        this._model.import(data) 
+    }
 
     /** keep track of each of the update functions */
     protected _updateFunctions: IUpdateFunctions<VM>
@@ -55,7 +57,7 @@ export abstract class _BoundView<
         super();
 
         this._updateFunctions = {} as any;
-        this._model = new MObject<VM>();
+        this._model = new Model<VM>();
         this._bindings = [];
         this._boundChildren = {} as any;
 
@@ -147,20 +149,24 @@ export abstract class _BoundView<
      */
     protected _bind<O = BoundValue<VM>>(elem: BindableElement<VM>, bindingInfo: IViewBindingDetails<VM>): void {
         const model = this._getModelForKey(bindingInfo.key);
-        const selector = select<BoundValue<VM>, O>(model, bindingInfo.value ? bindingInfo.value : (m) => m);
+        const selector = select<BoundValue<VM>, O>(model, 
+            bindingInfo.value ? 
+            bindingInfo.value : 
+            (m) => m
+        );
         
         selector.apply(({ value }) => {
             if (this._shouldSkipBindUpdate(elem)) { return }
             if (isNullOrUndefined(value)) { return; }
             bindingInfo.func(value, elem);
-        });
+        }, true);
     }
 
     protected _getModelForKey(key: BoundProperty<VM>) {
         if (!key) { return this._model; }
         if (key === "_") { return this._model; }
         return select(this._model, (m) => {
-            return m[key] 
+            return m ? m[key] : undefined;
         });
     }
 

@@ -297,11 +297,10 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
     
     protected _wrapInModel<K, X>(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
         const newModel = _Model.createModel<X>(dataToWrap);
-        
+
         // TODO: there is an edge case where a model is passed in without
         // a listener; we should handle that as well
         if (!isModel(dataToWrap)) {
-
             let oldValue = newModel.getData();
 
             newModel.addEventListener((payload) => {

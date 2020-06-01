@@ -53,15 +53,31 @@ describe('Generic model', () => {
     })
 
     it('listens to events on the model', () => {
+        expect.assertions(2);
+
         const data = { name : 'Big Bird', age: 10 };
         const model = new Model<ISimpleModel>(data);
-        model.addEventListener(({ key, value}) => {
-            expect(value).toEqual(11);
-            expect(key).toEqual('name')
+        model.addEventListener((payload) => {
+            const { value } = payload;
+            expect(value).toMatchObject({ name: 'Big Bird', age: 11 });
         })
         const nestedModel = model.getModel();
         nestedModel.set('age', 11);
         expect(model.getData()).toMatchObject({ name: 'Big Bird', age: 11 });
+    })
+
+    it('carries over listeners when the model changes', () => {
+        expect.assertions(2);
+        const data = { name: 'Big Bird', age: 10 };
+        const model = new Model<ISimpleModel>();
+
+        const cb = jest.fn(({ value }) => {
+            expect(value).toMatchObject(model.getData())
+        });
+        model.addEventListener(cb);
+        
+        model.setData(data);
+        expect(cb).toBeCalledTimes(1);
     })
     
 })

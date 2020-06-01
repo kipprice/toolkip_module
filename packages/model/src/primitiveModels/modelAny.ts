@@ -8,7 +8,7 @@ export class Model<T = any> extends _Model<T> {
     protected _getDefaultValues(): T { return undefined; }
 
     public setData(data: T): void {
-        const newValue = this._wrapInModel(data);
+        const newValue = this._wrapInModel(data, this._transforms);
         this._innerSetData({ value: newValue as any as T });
     }
 

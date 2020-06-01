@@ -1,4 +1,4 @@
-import { MPrimitive } from '../../primitiveModels';
+import { MPrimitive, Model } from '../../primitiveModels';
 import { select } from '../selectors';
 import { MObject } from '../../objectModels';
 import { ISimpleModel, IIdentifiableModel, ICollections } from '../../_shared/__tests__/_interfaces';
@@ -247,5 +247,31 @@ describe('Selectors', () => {
             'Oscar',
             'Bert'
         ]);
+    })
+
+    it('can chain selectors through select', () => {
+        const model = new Model<ISimpleModel>({ name: 'Big Bird', age: 10 });
+        const firstSelector = select(model, (m) => m.name);
+        const secondSelector = select(firstSelector, (name) => name.toUpperCase());
+        secondSelector.apply(({ value }) => {
+             expect(value).toEqual("BIG BIRD");
+        })
+    
+    })
+
+    it('can listen for a model that does not yet exist', () => {
+        const model = new Model<any>();
+
+        const firstSelector = select(model, (m) => m?.name );
+
+        const secondSelector = select(firstSelector, 
+            (name) => name?.toUpperCase() );
+
+        secondSelector.apply((payload) => {
+            const { value } = payload;
+            expect(value).toEqual('OSCAR');
+        }, true);
+
+        model.import({ name: 'Oscar', age: 45 });
     })
 })
