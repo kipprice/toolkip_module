@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/editable",
-    "version": "2.2.5",
+    "version": "2.2.6",
     "description": "editable component",
     "license": "MIT",
     "author": "Kip Price",
@@ -14,7 +14,7 @@
     ],
     "dependencies": {
         "@toolkip/async": "^2.0.0",
-        "@toolkip/bound-views": "^2.2.5",
+        "@toolkip/bound-views": "^2.2.6",
         "@toolkip/drawable": "^2.2.5",
         "@toolkip/html-helpers": "^2.2.3",
         "@toolkip/named-class": "^2.2.3",

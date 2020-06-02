@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/bound-views",
-    "version": "2.2.5",
+    "version": "2.2.6",
     "description": "link views to state",
     "license": "MIT",
     "author": "Kip Price",
