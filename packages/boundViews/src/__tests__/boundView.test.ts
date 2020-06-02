@@ -1,12 +1,13 @@
 import { _BoundView } from ".."
-import { nextRender } from "@toolkip/async";
 import { SimpleBoundView } from "./classes/simpleview";
 import { ComplexBoundView } from "./classes/complexView";
-import { ComposableView } from "./classes/composableView";
-import { ISimpleModel, IComplexModel } from "./classes/_interfaces";
+import { setupMatchMedia } from './_shared';
+import { ArrayBoundView } from './classes/arrayView';
+import { nextRender } from '@toolkip/async';
+
+setupMatchMedia();
 
 describe("bound view", () => {
-    setupMatchMedia();
 
     it("creates a simple bound view", () => {
         const simpleView = new SimpleBoundView();
@@ -19,7 +20,18 @@ describe("bound view", () => {
         expect(simpleView.elems.name.innerHTML).toEqual("Kip");
     })
 
-    it ("doesn't update when instructed to skip", async () => {
+    it('updates array data', async () => {
+        const arrayView = new ArrayBoundView();
+        arrayView.model = [
+            { name: 'Big Bird', count: 0 },
+            { name: 'Oscar', count: 10 }
+        ];
+        arrayView.draw();
+        await nextRender();
+        expect(arrayView.base.children).toHaveLength(2);
+    })
+
+    it ('does not update when instructed to skip', async () => {
         const simpleView = new SimpleBoundView(true);
         simpleView.model = { name: "Kip", count: 0 }
         expect(simpleView.elems.name.innerHTML).not.toEqual("Kip");
@@ -88,89 +100,3 @@ describe("bound view", () => {
         expect(grandChildView.children[1].innerHTML).toEqual("Total: 1");
     })
 })
-
-describe("composable bound view", () => {
-    it("creates a composed bound view", async () => {
-        const elems: {
-            base: HTMLElement;
-            name: HTMLElement;
-            count: HTMLElement
-        } = {} as any;
-
-        const composed = new ComposableView<ISimpleModel>({
-            cls: "base",
-            children: [
-                { key: "name", bindTo: "name" },
-                { bindTo: "count" }
-            ]
-        }, elems);
-        
-        expect(elems.base).toBeTruthy();
-        expect(elems.base.childElementCount).toEqual(2);
-        
-        expect(elems.name).toBeTruthy();
-        expect(elems.count).toBeFalsy();
-
-        composed.model = {
-            name: "kip",
-            count: 21
-        };
-
-        expect((elems.name as any).innerHTML).toEqual("kip");
-    })
-
-    it("creates a nested composed view", async () => {
-
-        const elems: {
-            base: HTMLElement;
-            core: ComposableView<ISimpleModel>;
-        } = {} as any;
-
-        const composed = new ComposableView<IComplexModel>({
-            children: [
-                { key: "core", bindTo: "coreChild", drawable: () => new ComposableView<ISimpleModel>({
-                    children: [
-                        { bindTo: "name" },
-                        { bindTo: "count", key: "count" }
-                    ]
-                }) },
-                { bindTo: "childArray", key: "array" },
-                { bindTo: "childDict" }
-            ]
-        }, elems);
-
-        expect(elems.core).toBeTruthy();
-        expect((elems.core as any).base.childElementCount).toEqual(2);
-        
-        composed.model = {
-            coreChild: {
-                name: "abc",
-                count: -1
-            }, 
-            childArray: [],
-            childDict: {}
-        }
-
-        const countElem = elems.core.elems.count as HTMLElement;
-        expect(countElem.innerHTML).toEqual("-1");
-    })
-})
-
-
-// taken from this stack overflow post:
-// https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
-export function setupMatchMedia() {
-    Object.defineProperty(window, 'matchMedia', {
-        writable: true,
-        value: jest.fn().mockImplementation(query => ({
-            matches: false,
-            media: query,
-            onchange: null,
-            addListener: jest.fn(), // deprecated
-            removeListener: jest.fn(), // deprecated
-            addEventListener: jest.fn(),
-            removeEventListener: jest.fn(),
-            dispatchEvent: jest.fn(),
-        })),
-    });
-}

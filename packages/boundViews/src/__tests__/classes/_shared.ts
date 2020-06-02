@@ -10,9 +10,6 @@ export abstract class SampleBV<M, E extends IDrawableElements = IDrawableElement
     }
 
     protected _shouldSkipBindUpdate(elem) { 
-        if (this._checkVisibility) {
-            return super._shouldSkipBindUpdate(elem)
-        }
-        return false;
+        return this._checkVisibility;
     }
 }

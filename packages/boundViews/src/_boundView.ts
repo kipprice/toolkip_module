@@ -1,6 +1,6 @@
 //..........................................
 //#region IMPORTS
-
+import { nextRender } from '@toolkip/async';
 import { _Drawable, IDrawableElements } from '@toolkip/drawable';
 import { BoundUpdateFunction } from '@toolkip/binding';
 import { isVisible } from '@toolkip/html-helpers';
@@ -9,7 +9,7 @@ import { StandardElement, isStandardElement, isKeyof, isDrawable, isNullOrUndefi
 import { IConstructor, map } from '@toolkip/object-helpers';
 import { IUpdateFunctions, IBoundChildren, IBoundElemDefinition, BindableElement, IViewBindingDetails, BoundValue, BoundProperty, IDrawableFactory, IViewUpdateFunc } from './_interfaces';
 import { isUpdatableView, isBoundView } from './_typeGuards';
-import { Model, select } from '@toolkip/model';
+import { Model, select, Selector } from '@toolkip/model';
 
 //#endregion
 //..........................................
@@ -44,7 +44,7 @@ export abstract class _BoundView<
     public get updateFunctions(): IUpdateFunctions<VM> { return this._updateFunctions; }
     public set updateFunctions(data: IUpdateFunctions<VM>) { this._updateFunctions = data; }
 
-    protected _bindings: string[];
+    protected _bindings: Selector<any>[];
     protected _boundChildren: IBoundChildren<VM>;
 
     //#endregion
@@ -160,6 +160,14 @@ export abstract class _BoundView<
             if (isNullOrUndefined(value)) { return; }
             bindingInfo.func(value, elem);
         }, true);
+
+        this._bindings.push(selector);
+    }
+
+    protected _reselect() {
+        for (let b of this._bindings) {
+            b.reselect();
+        }
     }
 
     protected _getModelForKey(key: BoundProperty<VM>) {
@@ -263,17 +271,27 @@ export abstract class _BoundView<
     /**
      * _shouldSkipBindUpdate
      * ----------------------------------------------------------------------------
-     * determines whether this view is currently visible; if not, skips updates 
-     * related to bound model
+     * overridable method that determines whether the view should be updating; this
+     * may be changed for listener intensive applications to check if the element is 
+     * visible before running the selector
      */
-    protected _shouldSkipBindUpdate(elem: BindableElement<VM>) {
-        if (isDrawable(elem)) {
-            return !(isVisible(elem.base))
-        } else {
-            return !(isVisible(elem));
-        }
-    }
+    protected _shouldSkipBindUpdate(elem: BindableElement<VM>) { return false; }
+    
     //#endregion
     //..........................................    
 
+    //..........................................
+    //#region OVERRIDES
+    
+    public draw(parent?: StandardElement, force?: boolean) {
+        super.draw(parent, force);
+
+        // in the cases that do stop updates when the object isn't
+        // visible, we want to auto restart them on drawing
+        nextRender()
+            .then(() => this._reselect());
+    }
+    
+    //#endregion
+    //..........................................
 }
