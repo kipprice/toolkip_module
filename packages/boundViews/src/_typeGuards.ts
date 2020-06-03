@@ -8,7 +8,6 @@ export function isUpdatableView<T = any>(elem: BindableElement<T>): elem is _Upd
 }
 
 export function isBoundView<T = any>(elem: BindableElement<T>): elem is _BoundView<T> {
-    console.log("checking for bound view: " + (elem instanceof _BoundView));
     if (elem instanceof _BoundView) { return true; }
     return false;
 }

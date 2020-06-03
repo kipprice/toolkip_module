@@ -14,6 +14,7 @@ import { createCssClass } from '@toolkip/style-libraries';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
 import { isSelector, ModelEventFullPayload, IKeyedModel } from '@toolkip/model';
+
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
 
@@ -318,15 +319,7 @@ function _setEventListeners<T extends IKeyedElems>(elem: StandardElement, obj: I
 function _setElemBaseContent<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
 
     // also check for the various content types
-    if (obj.content) { _handleSelector(
-        obj.content, 
-        (content, { oldValue }) => {
-            if (oldValue && elem.innerHTML.indexOf(oldValue) !== -1) {
-                elem.innerHTML = elem.innerHTML.replace(oldValue, content);
-            } else {
-                elem.innerHTML += content 
-            }
-        }) }
+    if (obj.content) { _handleSelector(obj.content, (innerHTML) => elem.innerHTML = innerHTML )}
     else if (obj.innerHTML) { _handleSelector(obj.innerHTML, (innerHTML) => elem.innerHTML = innerHTML ) }
     else if (obj.innerText) { _handleSelector(obj.innerText, (innerText) => (elem as any).innerText = innerText ) }
 }
