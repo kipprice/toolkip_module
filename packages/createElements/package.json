@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/create-elements",
-    "version": "2.2.5",
+    "version": "2.2.7",
     "description": "html generation utility functions",
     "license": "MIT",
     "author": "Kip Price",

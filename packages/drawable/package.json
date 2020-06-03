@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/drawable",
-    "version": "2.2.5",
+    "version": "2.2.7",
     "description": "drawable component",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^2.2.5",
+        "@toolkip/create-elements": "^2.2.7",
         "@toolkip/media-queries": "^2.2.3",
         "@toolkip/shared-types": "^2.2.3",
         "@toolkip/stylable": "^2.2.3",
