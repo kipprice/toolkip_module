@@ -37,7 +37,9 @@ export class MObject<T extends IModelData, K extends keyof T = keyof T> extends 
     //#region GETTER AND SETTERS
     
     protected _getValue<_K extends keyof T>(model: T, key: _K) { return model[key]; }
-    public get(key: K): T[K] { return super.get(key); }
+    public get<_K extends K>(key: _K): T[_K] { 
+        return super.get(key) as T[_K]; 
+    }
 
     protected _setValue<_K extends keyof T>(model: T, key: _K, value: _Model<T[_K]>) {
         model[key] = value as T[_K]; 
