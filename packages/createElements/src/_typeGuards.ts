@@ -9,9 +9,7 @@ import { isInterface, isString, isArray } from '@toolkip/shared-types';
 export function isIElemDefinition(test: any): test is IElemDefinition {
     let out: boolean;
     let comp: IElemDefinition = {
-        after_content: "",
         attr: null,
-        before_content: "",
         children: null,
         cls: "",
         content: "",

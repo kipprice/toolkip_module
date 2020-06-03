@@ -14,7 +14,6 @@ import { createCssClass } from '@toolkip/style-libraries';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
 import { isSelector, ModelEventFullPayload, IKeyedModel } from '@toolkip/model';
-
 //................................................
 //#region PUBLIC FUNCTIONS FOR CREATING ELEMENTS
 
@@ -64,10 +63,12 @@ export function _coreCreateElement<T extends IKeyedElems = IKeyedElems>(obj: IEl
     _setElemStyle(elem, obj);
     _setEventListeners(elem, obj);
 
-    // set content of the element
-    _setElemBaseContent(elem, obj);
-    _addElemChildren(elem, obj, keyedElems, recurseVia);
-    _setElemPostChildrenContent(obj, elem);
+    // set content of the element; content and children are mutually exclusive
+    if (obj.children) {
+        _addElemChildren(elem, obj, keyedElems, recurseVia);
+    } else {
+        _setElemBaseContent(elem, obj);
+    }
 
     // if a selector is provided, set it up 
     _setElemSelector(obj, elem);
@@ -316,9 +317,6 @@ function _setEventListeners<T extends IKeyedElems>(elem: StandardElement, obj: I
  */
 function _setElemBaseContent<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
 
-    // Set the first bit of content in the element (guaranteed to come before children)
-    if (obj.before_content) { _handleSelector(obj.before_content, (before_content) => elem.innerHTML = before_content ) }
-
     // also check for the various content types
     if (obj.content) { _handleSelector(
         obj.content, 
@@ -343,12 +341,15 @@ function _addElemChildren<T extends IKeyedElems>(elem: StandardElement, obj: IEl
     _handleSelector(
         obj.children,
         (v) => {
+            // clear out existing children & add new ones
+            elem.innerHTML = "";
             _innerAddElemChildren(elem, v, obj.namespace, keyedElems, recurseVia);
         }
     )
 }
 
 function _innerAddElemChildren<T extends IKeyedElems>(elem: StandardElement, children: IChild<T>[], namespace?: string, keyedElems?: T, recurseVia?: ICreateElementFunc<T>): void {
+    
     // loop through each child
     for (let c of children) {
         if (!c) {
@@ -390,28 +391,21 @@ function _innerAddElemChild<T extends IKeyedElems>(elem: StandardElement, child:
 }
 
 /**
- * _setElemPostChildrenContent
- * ---------------------------------------------------------------------------
- * if there is content specified after children, set it here
- */
-function _setElemPostChildrenContent<T extends IKeyedElems>(obj: IElemDefinition<T>, elem: StandardElement): void {
-    if (!obj.after_content) { return; }
-    _handleSelector(obj.after_content, (after_content) => elem.innerHTML += obj.after_content);   
-    elem.innerHTML += obj.after_content;
-}
-
-/**
  * _appendElemToParent
  * ---------------------------------------------------------------------------
  * add this element to a parent element
  */
 function _appendElemToParent<T extends IKeyedElems>(obj: IElemDefinition<T>, elem: StandardElement): void {
     if (!obj.parent) { return; }
+
+    // make sure we handle drawables through standard means
+    if (isDrawable(elem)) { 
+        elem.draw(obj.parent);
+    } else {
+        obj.parent.appendChild(elem);
+    }
     
-    obj.parent.appendChild(elem);
 }
-
-
 
 //#endregion
 //...................................................

@@ -40,16 +40,11 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     /** the type of HTML element we are creating */
     type?: keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap;
 
-    /** content that should be added to the element */
+    /** content that should be added to the element; will be ignored if 
+     ** a value for children is provided */
     content?: SelectableValue<string>;
     innerText?: SelectableValue<string>;
     innerHTML?: SelectableValue<string>;
-
-    /** content that should specifically be added before the children of this element */
-    before_content?: SelectableValue<string>;
-
-    /** content that should specifically be added after the children of this element */
-    after_content?: SelectableValue<string>;
 
     /** any additional attributes that should be applied to this element */
     attr?: IAttributes;
