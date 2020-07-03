@@ -1,46 +1,99 @@
-import { trim } from '@toolkip/primitive-helpers';
+import { trim, indexOf } from '@toolkip/primitive-helpers';
 import { IKeyValPair } from '@toolkip/object-helpers';
 import { StandardElement, DrawableElement, isDrawable, IDrawable } from '@toolkip/shared-types';
 import { TypedClassDefinition } from './_interfaces';
+
+
+const getClassableElement = (elem: DrawableElement): StandardElement => {
+  if (isDrawable(elem)) {
+    return elem.base;
+  } else {
+    return elem as StandardElement;
+  }
+}
+
+/**
+ * getClass
+ * ----------------------------------------------------------------------------
+ * grab the current class value for an element
+ * @param   elem  The element to grab class names from
+ * @returns The current class names applied to the element
+ */
+export function getClass(elem: DrawableElement): string {
+  const e = getClassableElement(elem);
+  return e.getAttribute('class') || '';
+}
+
+export function getClasses(elem: DrawableElement): string[] {
+  const cls = getClass(elem);
+  if (!cls) { return []; }
+  return cls.split(' ');
+}
 
 /**
  * addClass
  * ----------------------------------------------------------------------------
  * Allows a user to safely add a CSS class to an element's existing list of CSS classes
  * @param   elem      The element that should have its class updated
- * @param   newClass  The class to add the element
+ * @param   clsName  The class to add the element
  * 
- * @returns the provided element
+ * @returns the updated element
  */
-export function addClass(elem: DrawableElement, newClass: string): DrawableElement {
-  let cls: string;
-  let e: StandardElement;
-
-  if (!elem || !newClass) return;
+export function addClass(elem: DrawableElement, clsName: string): DrawableElement {
+  if (!elem || !clsName) return;
 
   // Handle Drawables being passed in
-  if (isDrawable(elem)) {
-    e = elem.base;
-  } else {
-    e = elem as StandardElement;
-  }
+  const e = getClassableElement(elem);
 
   // Still suport setting the class if the class is not originally set
-  cls = e.getAttribute("class");
+  const cls = e.getAttribute("class");
   if (!cls) {
-    e.setAttribute("class", newClass);
+    e.setAttribute("class", trim(clsName));
     return;
   }
 
-  cls = " " + cls + " ";
-
-  if (cls.indexOf(" " + newClass + " ") === -1) {
-    cls = cls + newClass;
-    e.setAttribute("class", trim(cls));
+  const paddedCls = " " + cls + " ";
+  if (paddedCls.indexOf(' ' + clsName + ' ') === -1) {
+    e.setAttribute("class", trim(cls + ' ' + clsName));
   }
 
   return elem;
 };
+
+/**
+ * addClasses
+ * ----------------------------------------------------------------------------
+ * adds multiple classes to the specified element; will not add duplicate 
+ * classes.
+ * 
+ * @param   elem      The element to add classes to 
+ * @param   clsNames  All of the class names to apply
+ * 
+ * @returns The updated element
+ */
+export function addClasses(elem: DrawableElement, ...clsNames: string[]) {
+  if (
+    !elem ||
+    !clsNames ||
+    clsNames.length === 0
+  ) { return; }
+
+  const e = getClassableElement(elem);
+  const classes = getClasses(elem);
+
+  // loop through the provided classes
+  for (let clsName of clsNames) {
+    if (!clsName) { continue; }
+    if (indexOf(classes, clsName) !== -1) { continue; }
+  
+    classes.push(clsName);
+  }
+
+  // apply the class as a string
+  e.setAttribute('class', classes.join(' '))
+
+  return elem;
+}
 
 /**
  * removeClass
@@ -49,20 +102,17 @@ export function addClass(elem: DrawableElement, newClass: string): DrawableEleme
  * CSS classes
  * 
  * @param   elem      The element that should have its class updated
- * @param   newClass  The class to remove from the element
+ * @param   clsName  The class to remove from the element
  * 
- * @returns the provided element
+ * @returns the updated element
  */
-export function removeClass(elem: DrawableElement, oldClass: string): DrawableElement {
-  ;
-  let cls: string;
-  let len: number;
-  let e: StandardElement;
+export function removeClass(elem: DrawableElement, clsName: string): DrawableElement {
 
   // Quit if we're missing something
-  if (!elem || !oldClass) return;
+  if (!elem || !clsName) return;
 
   // Handle Drawables being passed in
+  let e: StandardElement;
   if (isDrawable(elem)) {
     e = elem.base;
   } else {
@@ -70,9 +120,9 @@ export function removeClass(elem: DrawableElement, oldClass: string): DrawableEl
   }
 
   // Pull out the CSS class
-  cls = " " + e.getAttribute("class") + " ";
-  len = cls.length;
-  cls = cls.replace(" " + oldClass + " ", " ");
+  let cls = " " + e.getAttribute("class") + " ";
+  const len = cls.length;
+  cls = cls.replace(" " + clsName + " ", " ");
 
   // Only reset the class attribute if it actually changed
   if (cls.length !== len) {
@@ -114,7 +164,7 @@ export function addOrRemoveClass(elem: DrawableElement, clsName: string, shouldA
  * 
  * @returns True if the element has the CSS class applied; false otherwise
  */
-export function hasClass(elem: HTMLElement | IDrawable, cls: string): boolean {
+export function hasClass(elem: DrawableElement, cls: string): boolean {
   let e: DrawableElement;
   let cur_cls: string;
 
@@ -136,7 +186,14 @@ export function hasClass(elem: HTMLElement | IDrawable, cls: string): boolean {
   return true;
 };
 
-export function clearClass(elem: DrawableElement): void {
+/**
+ * clearClass
+ * ----------------------------------------------------------------------------
+ * clear out all class names from an element
+ * @param   elem  the element to clear out
+ * @returns The updated element
+ */
+export function clearClass(elem: DrawableElement): DrawableElement {
   if (!elem) { return; }
   let e: DrawableElement;
   if (isDrawable(elem)) {
@@ -145,6 +202,23 @@ export function clearClass(elem: DrawableElement): void {
     e = elem;
   }
   e.setAttribute("class", "");
+  return elem;
+}
+
+/**
+ * toggleClass
+ * ----------------------------------------------------------------------------
+ * quick helper for allowing a class to be swapped on or off; checks if the 
+ * class is already applied and if so, removes it; otherwise, it adds the
+ * class.
+ * 
+ * @param   elem    The element to apply the class to
+ * @param   clsName The class name to apply or remove
+ * 
+ * @returns The updated element
+ */
+export function toggleClass(elem: DrawableElement, clsName: string) {
+  return addOrRemoveClass(elem, clsName, !hasClass(elem, clsName));
 }
 
 /**
