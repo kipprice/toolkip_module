@@ -37,7 +37,7 @@ class _StyleStringifier {
         let curStr: string = "";
 
         // create all of the individual styles
-        map(styles, (cssDeclaration: TypedClassDefinition | IFontFaceDefinition[], selector: string) => {
+        map(styles as any, (cssDeclaration: TypedClassDefinition | IFontFaceDefinition[], selector: string) => {
             let clsStr = this.generateContentForStyle(selector, cssDeclaration);
             if (!clsStr) { return; }
 

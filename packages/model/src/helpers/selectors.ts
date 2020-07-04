@@ -189,7 +189,7 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
 
                 const out = [];
                 if (isMappable(data)) {
-                    map(data, (e: X, k: any) => {
+                    map(data as any, (e: X, k: any) => {
                         out.push(cb(e, k as any, payload))
                     })
                 }

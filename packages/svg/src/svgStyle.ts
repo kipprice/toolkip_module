@@ -117,7 +117,7 @@ export class SVGStyle implements ISVGStyle {
 	public merge<K extends keyof ISVGStyle>(style: ISVGStyle): void {
 		let mappable: ISVGStyle = ((style as SVGStyle)._innerStyle) || style;
 
-		map(mappable, (value: ISVGStyle[K], key: K) => {
+		map(mappable as any, (value: ISVGStyle[K], key: K) => {
 			if (!this._innerStyle[key] || (this._innerStyle[key] === "None")) {
 				this._innerStyle[key] = value;
 			}

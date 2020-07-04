@@ -96,7 +96,7 @@ class _StyleCombiner {
         
         // loop through all of the definitions & their properties
         for (let def of definitions) {
-            map(def, (val: string, property: string) => {
+            map(def as any, (val: string, property: string) => {
                 mergedDef[property] = val;
             });
         }

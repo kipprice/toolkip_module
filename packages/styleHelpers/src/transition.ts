@@ -141,7 +141,7 @@ class _TransitionController {
      * the real measurement
      */
     protected _replacePlaceholders(classDef: ITransitionStyle, elem: HTMLElement): ITransitionStyle {
-        map(classDef, (value: string, key: string) => {
+        map(classDef as any, (value: string, key: string) => {
             value = value.replace("<width>", (elem.offsetWidth + 1) + "px");
             value = value.replace("<height>", elem.offsetHeight + "px");
             value = value.replace("<left>", elem.offsetLeft + "px");
