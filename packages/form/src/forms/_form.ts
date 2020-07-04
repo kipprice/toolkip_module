@@ -1,16 +1,16 @@
-import { IFormOptions, ICanSaveTracker, FormColor, IFields, IFormButton } from "../_interfaces";
-import { combineObjects } from "@toolkip/object-helpers";
+import { map, combineObjects } from "@toolkip/object-helpers";
+import { _Stylable } from "@toolkip/stylable";
 import { StandardElement } from "@toolkip/shared-types";
 import { createElement } from "@toolkip/create-elements";
-import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent, FORM_SAVABLE_CHANGE, FormSavableEvent } from '../eventHandler';
 import { addClass, removeClass, IStandardStyles } from "@toolkip/style-helpers";
 import { ErrorPopup, YesNoPopup, YesNoEnum } from "@toolkip/popups";
-import { _Field } from '../_field';
 import { _Drawable } from "@toolkip/drawable";
+import { IFormOptions, ICanSaveTracker, FormColor, IFields, IFormButton } from "../_interfaces";
+import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent, FORM_SAVABLE_CHANGE, FormSavableEvent } from '../eventHandler';
+import { _Field } from '../_field';
 import { SectionField } from '../complexFields/sectionField';
 import { IFormCollapsibleTemplate } from '../complexFields/_interfaces';
-import { map } from "../../../objectHelpers";
-import { _Stylable } from "../../../stylable";
+
 
 
 export abstract class _Form<T> extends _Drawable<FormColor> {

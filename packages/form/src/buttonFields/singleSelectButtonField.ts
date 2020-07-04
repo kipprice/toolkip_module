@@ -1,8 +1,7 @@
-import { IFormSingleSelectButtonTemplate } from "./_interfaces";
-import { _ToggleButtonField } from "./_toggleButtonField";
 import { IToggleBtnOption } from "@toolkip/object-helpers";
 import { removeClass, addClass } from "@toolkip/style-helpers";
-
+import { IFormSingleSelectButtonTemplate } from "./_interfaces";
+import { _ToggleButtonField } from "./_toggleButtonField";
 
 /**----------------------------------------------------------------------------
  * @class   SingleSelectButtonField

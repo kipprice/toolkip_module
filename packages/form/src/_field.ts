@@ -1,16 +1,42 @@
-import { IFieldConfig, FieldTypeEnum, FormElementLayoutEnum, IListenerFunction, IFieldElems, EvaluableElem, ValidationType, ICanSaveTracker, IErrorString, FormColor } from "./_interfaces";
 import { _Drawable } from '@toolkip/drawable';
 import { isNullOrUndefined } from '@toolkip/shared-types';
-import { hasClass, addClass, removeClass, transition, IStandardStyles } from '@toolkip/style-helpers';
-import { createTable, createElement, IAttributes } from '@toolkip/create-elements';
+import {
+    hasClass,
+    addClass,
+    removeClass,
+    transition,
+    IStandardStyles,
+} from '@toolkip/style-helpers';
+import {
+    createTable,
+    createElement,
+    IAttributes,
+} from '@toolkip/create-elements';
 import { equals } from '@toolkip/comparable';
 import { Tooltip } from '@toolkip/tooltip';
 import { IConstructor } from '@toolkip/object-helpers';
-import { formEventHandler, FORM_SAVABLE_CHANGE, FormSavableEvent, FORM_ELEM_CHANGE, FormElemChangeEvent } from "./eventHandler";
-import { isField, createInputElement, createLabelForInput } from "./helpers";
 import { wait } from '@toolkip/async';
 import { join } from '@toolkip/primitive-helpers';
-
+import {
+    IFieldConfig,
+    FieldTypeEnum,
+    FormElementLayoutEnum,
+    IListenerFunction,
+    IFieldElems,
+    EvaluableElem,
+    ValidationType,
+    ICanSaveTracker,
+    IErrorString,
+    FormColor,
+} from './_interfaces';
+import {
+    formEventHandler,
+    FORM_SAVABLE_CHANGE,
+    FormSavableEvent,
+    FORM_ELEM_CHANGE,
+    FormElemChangeEvent,
+} from './eventHandler';
+import { isField, createInputElement, createLabelForInput } from './helpers';
 
 /**----------------------------------------------------------------------------
  * @class	Field
@@ -20,13 +46,15 @@ import { join } from '@toolkip/primitive-helpers';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> extends _Drawable<FormColor> {
-
+export abstract class _Field<
+    M,
+    T extends IFieldConfig<M> = IFieldConfig<M>
+> extends _Drawable<FormColor> {
     //..........................................
     //#region CONSTANTS
 
     /** store the standard class for all form elements */
-    protected readonly _standardCls: string = "kipFormElem";
+    protected readonly _standardCls: string = 'kipFormElem';
 
     //#endregion
     //..........................................
@@ -36,17 +64,25 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
 
     /** id of the element */
     protected _id: string;
-    public get id(): string { return this._id; }
+    public get id(): string {
+        return this._id;
+    }
 
     /** what type of field this is */
     protected abstract get _type(): FieldTypeEnum;
-    public get type(): FieldTypeEnum { return this._type; }
+    public get type(): FieldTypeEnum {
+        return this._type;
+    }
 
     /** keep track of the form template */
     protected _config: T;
-    public get template(): T { return this._config; }
+    public get template(): T {
+        return this._config;
+    }
 
-    protected get _defaultLayout(): FormElementLayoutEnum { return FormElementLayoutEnum.MULTILINE; }
+    protected get _defaultLayout(): FormElementLayoutEnum {
+        return FormElementLayoutEnum.MULTILINE;
+    }
 
     /** abstract property for the default value of child elements */
     protected abstract get _defaultValue(): M;
@@ -56,15 +92,21 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
 
     /** the current value of the element */
     protected _data: M;
-    public get data(): M { return this._data; }
-    public set data(data: M) { this.update(data, false); } // TODO: evaluate if we'd ever need to fire events here
+    public get data(): M {
+        return this._data;
+    }
+    public set data(data: M) {
+        this.update(data, false);
+    } // TODO: evaluate if we'd ever need to fire events here
 
     /** handle listeners for events */
     protected _listeners: IListenerFunction<M>[];
 
     /** keep track of whether we are currently in an error state */
     protected _hasErrors: boolean;
-    public get hasErrors(): boolean { return this._hasErrors; }
+    public get hasErrors(): boolean {
+        return this._hasErrors;
+    }
 
     protected _isHidden: boolean;
 
@@ -79,7 +121,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
 
     /** input element */
     public get input(): EvaluableElem {
-        if (!this._elems.input) { return null; }
+        if (!this._elems.input) {
+            return null;
+        }
         return this._elems.input;
     }
 
@@ -99,101 +143,99 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
 
     /** placeholder for individual CSS styles */
     protected static _uncoloredStyles: IStandardStyles = {
-        ".kipFormElem, .kipFormElem input, .kipFormElem select, .kipFormElem textarea": {
-            fontSize: "1em",
-            width: "100%",
-            boxSizing: "border-box",
-            fontFamily: "Segoe UI, Open Sans, Helvetica",
+        '.kipFormElem, .kipFormElem input, .kipFormElem select, .kipFormElem textarea': {
+            fontSize: '1em',
+            width: '100%',
+            boxSizing: 'border-box',
+            fontFamily: 'Segoe UI, Open Sans, Helvetica',
         },
 
-        ".kipFormElem": {
-            marginTop: "10px",
-            position: "relative"
+        '.kipFormElem': {
+            marginTop: '10px',
+            position: 'relative',
         },
 
-        ".kipFormElem.hidden": {
-            display: "none"
+        '.kipFormElem.hidden': {
+            display: 'none',
             // TODO: allow for transitions
         },
 
-        ".kipFormElem input, .kipFormElem textarea, .kipFormElem select": {
-            border: "1px solid #CCC",
-            borderRadius: "3px"
+        '.kipFormElem input, .kipFormElem textarea, .kipFormElem select': {
+            border: '1px solid #CCC',
+            borderRadius: '3px',
         },
 
-        ".kipFormElem textarea": {
-            minHeight: "100px",
-            maxWidth: "100%"
+        '.kipFormElem textarea': {
+            minHeight: '100px',
+            maxWidth: '100%',
         },
 
-        ".kipFormElem .labelContainer": {
-            display: "flex",
-            alignItems: "center"
+        '.kipFormElem .labelContainer': {
+            display: 'flex',
+            alignItems: 'center',
         },
 
-        ".kipFormElem .helpTextIcon": {
-            width: "19px",
-            height: "19px",
-            boxSizing: "border-box",
-            paddingTop: "4px",
-            backgroundColor: "<formSubTheme>",
-            color: "#FFF",
-            borderRadius: "50%",
-            fontSize: "0.8em",
-            textAlign: "center",
-            fontFamily: "SpecialElite",
-            cursor: "pointer",
+        '.kipFormElem .helpTextIcon': {
+            width: '19px',
+            height: '19px',
+            boxSizing: 'border-box',
+            paddingTop: '4px',
+            backgroundColor: '<formSubTheme>',
+            color: '#FFF',
+            borderRadius: '50%',
+            fontSize: '0.8em',
+            textAlign: 'center',
+            fontFamily: 'SpecialElite',
+            cursor: 'pointer',
 
             nested: {
-                "&:hover": {
-                    transform: "scale(1.1)"
-                }
-            }
+                '&:hover': {
+                    transform: 'scale(1.1)',
+                },
+            },
         },
 
-        ".kipFormElem .lbl": {
-            fontSize: "0.9em",
-            color: "#666",
-            width: "100%",
-            boxSizing: "border-box"
+        '.kipFormElem .lbl': {
+            fontSize: '0.9em',
+            color: '#666',
+            width: '100%',
+            boxSizing: 'border-box',
         },
 
-        ".kipFormElem.required .lbl": {
+        '.kipFormElem.required .lbl': {},
 
-        },
-
-        ".kipFormElem.required .lbl:after": {
+        '.kipFormElem.required .lbl:after': {
             content: '"*"',
-            color: "<formSubTheme>",
-            fontWeight: "bold",
-            position: "absolute",
-            marginLeft: "2px"
+            color: '<formSubTheme>',
+            fontWeight: 'bold',
+            position: 'absolute',
+            marginLeft: '2px',
         },
 
-        ".kipFormElem .error": {
-            color: "#C30",
-            fontSize: "0.7em",
-            fontStyle: "italic"
+        '.kipFormElem .error': {
+            color: '#C30',
+            fontSize: '0.7em',
+            fontStyle: 'italic',
         },
 
-        ".kipFormElem.flex": {
-            display: "flex",
-            alignItems: "center",
+        '.kipFormElem.flex': {
+            display: 'flex',
+            alignItems: 'center',
             nested: {
-                "> div:not(.error), > label, > span, > input": {
-                    width: "auto",
-                    marginRight: "10px"
-                }
-            }
+                '> div:not(.error), > label, > span, > input': {
+                    width: 'auto',
+                    marginRight: '10px',
+                },
+            },
         },
 
-        ".kipFormElem.multiline": {
+        '.kipFormElem.multiline': {
             nested: {
-                "input, textarea, select": {
-                    marginTop: "5px"
-                }
-            }
-        }
+                'input, textarea, select': {
+                    marginTop: '5px',
+                },
+            },
+        },
     };
 
     //#endregion
@@ -207,17 +249,20 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * ----------------------------------------------------------------------------
      * Create a Form Element
      * @param   id      The ID of the element; should be unique in the form
-     * @param   data    a template or existing form element 
+     * @param   data    a template or existing form element
      */
     constructor(id: string, data?: T | _Field<M, T>) {
         super();
-        this._addClassName("FormElement");
+        this._addClassName('FormElement');
         this._id = id;
         this._hasErrors = false;
 
         //  parse the template for this element
-        if (isField(data)) { this._parseFieldTemplate(data.template as T); }
-        else { this._parseFieldTemplate(data); }
+        if (isField(data)) {
+            this._parseFieldTemplate(data.template as T);
+        } else {
+            this._parseFieldTemplate(data);
+        }
 
         this._createElements();
     }
@@ -227,7 +272,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * ----------------------------------------------------------------------------
      * handle element creation at our own pace
      */
-    protected _shouldSkipCreateElements() { return true; }
+    protected _shouldSkipCreateElements() {
+        return true;
+    }
 
     //#endregion
     //..........................................
@@ -241,21 +288,32 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * parse the template for this particular field
      */
     protected _parseFieldTemplate(template: T): void {
-
         // ensure template is never null
-        if (isNullOrUndefined(template)) { template = {} as T; }
+        if (isNullOrUndefined(template)) {
+            template = {} as T;
+        }
 
         // save off the template
         this._config = template;
 
         // set appropriate defaults on the template
-        if (!template.label) { template.label = this._id; }
-        if (!template.layout) { template.layout = this._defaultLayout; }
-        if (!template.defaultValue) { template.defaultValue = this._defaultValue; }
+        if (!template.label) {
+            template.label = this._id;
+        }
+        if (!template.layout) {
+            template.layout = this._defaultLayout;
+        }
+        if (!template.defaultValue) {
+            template.defaultValue = this._defaultValue;
+        }
 
         // verify that we check for valid falsey values
-        if (isNullOrUndefined(template.value)) { template.value = template.defaultValue; }
-        if (isNullOrUndefined(template.validationType)) { template.validationType = ValidationType.KEEP_ERROR_VALUE; }
+        if (isNullOrUndefined(template.value)) {
+            template.value = template.defaultValue;
+        }
+        if (isNullOrUndefined(template.validationType)) {
+            template.validationType = ValidationType.KEEP_ERROR_VALUE;
+        }
 
         // handle our special cases
         this._processTemplateClass();
@@ -274,32 +332,35 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     protected _processTemplateClass(): void {
         let template = this._config;
         template.cls = join(
-            " ",
-            this._standardCls,                      // class for all form elements
-            this._defaultCls,                       // class for this particular form element
-            template.cls,                           // class specified in template
-            template.required ? "required" : ""     // required class (if appropriate)
+            ' ',
+            this._standardCls, // class for all form elements
+            this._defaultCls, // class for this particular form element
+            template.cls, // class specified in template
+            template.required ? 'required' : '' // required class (if appropriate)
         );
     }
 
     /**
      * _processRequiredElement
      * ----------------------------------------------------------------------------
-     * if this element is required, indicate that we're not ready to save if we 
+     * if this element is required, indicate that we're not ready to save if we
      * don't yet have data
      */
     protected _processRequiredElement(): void {
-
         // quit if this element isn't required, or if we already have a value
-        if (!this._config.required) { return; }
-        if (this._data) { return; }
+        if (!this._config.required) {
+            return;
+        }
+        if (this._data) {
+            return;
+        }
 
         // otherwise, send a message that this element is not ready to save
         formEventHandler.dispatchEvent(
             FORM_SAVABLE_CHANGE,
             new FormSavableEvent({
                 hasErrors: false,
-                hasMissingRequired: true
+                hasMissingRequired: true,
             })
         );
     }
@@ -307,16 +368,19 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _registerOnOtherChangeListener
      * ----------------------------------------------------------------------------
-     * listen for other fields changing, if a listener was provided in the 
+     * listen for other fields changing, if a listener was provided in the
      * template
      */
     protected _registerOnOtherChangeListener(): void {
-
         // don't add a listener if there's nothing to listen to
-        if (!this._config.onOtherChange) { return; }
+        if (!this._config.onOtherChange) {
+            return;
+        }
 
         formEventHandler.addEventListener(FORM_ELEM_CHANGE, {
-            func: (ev: FormElemChangeEvent<any>) => { this._handleOtherChange(ev); }
+            func: (ev: FormElemChangeEvent<any>) => {
+                this._handleOtherChange(ev);
+            },
         });
     }
 
@@ -329,22 +393,26 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _createElements
      * ----------------------------------------------------------------------------
-     * creates all elements for this input 
+     * creates all elements for this input
      */
     protected _createElements(): void {
-
         // generate the elements that are shared between all form elements
-        createElement({
-            cls: this._config.cls,
-            key: "base",
+        createElement(
+            {
+                cls: this._config.cls,
+                key: 'base',
 
-            children: [{
-                cls: "error",
-                key: "error"
-            }]
-        }, this._elems as any);
+                children: [
+                    {
+                        cls: 'error',
+                        key: 'error',
+                    },
+                ],
+            },
+            this._elems as any
+        );
 
-        // Let the child handle actually creating the elements that make 
+        // Let the child handle actually creating the elements that make
         // up the specific nature of the element
         this._onCreateElements();
 
@@ -353,13 +421,15 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
             this._registerInputListeners(this._elems.input as HTMLInputElement);
         }
 
-        // generate the styles for the element 
-        // (we need to do this manually because form elements aren't 
+        // generate the styles for the element
+        // (we need to do this manually because form elements aren't
         //  Drawable elements)
         // this._createStyles();
 
         // detect whether the element starts hidden
-        if (hasClass(this._elems.base, "hidden")) { this._isHidden = true; }
+        if (hasClass(this._elems.base, 'hidden')) {
+            this._isHidden = true;
+        }
     }
 
     /**
@@ -376,11 +446,11 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * updated
      */
     protected _registerInputListeners(input: HTMLInputElement): void {
-        input.addEventListener("input", () => {
+        input.addEventListener('input', () => {
             this._changeEventFired(true);
         });
 
-        input.addEventListener("change", () => {
+        input.addEventListener('change', () => {
             this._changeEventFired();
         });
     }
@@ -404,14 +474,13 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _handleStandardLayout
      * ----------------------------------------------------------------------------
-     * helper to handle an elements layout based on their config 
-     * 
+     * helper to handle an elements layout based on their config
+     *
      * @returns True if the layout was valid; false otherwise
      */
     protected _handleStandardLayout(): boolean {
         let l = FormElementLayoutEnum;
         switch (this._config.layout) {
-
             // label displays in table cell, elemnt in other table cell
             case l.TABLE:
                 this._tableLayout();
@@ -437,55 +506,58 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     }
 
     /**
-    * _tableLayout
-    *----------------------------------------------------------------------------
-    * draws elements in a table format 
-    */
+     * _tableLayout
+     *----------------------------------------------------------------------------
+     * draws elements in a table format
+     */
     protected _tableLayout(): void {
-
         // build the cells that will hold the elements
         let cells = [];
         for (var i = 0; i < 2; i += 1) {
             let cell: HTMLTableCellElement = createElement({
-                type: "td",
-                cls: "frmCel"
+                type: 'td',
+                cls: 'frmCel',
             }) as HTMLTableCellElement;
             cells[i] = cell;
         }
 
         // add the label and the input to the table cells
-        if (this._labelElem) { cells[0].appendChild(this._labelElem); }
-        if (this._elems.input) { cells[1].appendChild(this._elems.input); }
+        if (this._labelElem) {
+            cells[0].appendChild(this._labelElem);
+        }
+        if (this._elems.input) {
+            cells[1].appendChild(this._elems.input);
+        }
 
         // create the actual table element & add it to the core element
-        this._elems.table = createTable("", "", cells);
+        this._elems.table = createTable('', '', cells);
         this._elems.base.appendChild(this._elems.table);
     }
 
     /**
      * _flexLayout
      * ----------------------------------------------------------------------------
-     * handle a flex layout of label: elem 
+     * handle a flex layout of label: elem
      */
     protected _flexLayout(): void {
         this._addStandardElemsToCore();
-        addClass(this._elems.base, "flex");
+        addClass(this._elems.base, 'flex');
     }
 
     /**
      * _multiLineLayout
      * ----------------------------------------------------------------------------
-     * handle a multiline layout of label on top of input 
+     * handle a multiline layout of label on top of input
      */
     protected _multiLineLayout(): void {
         this._addStandardElemsToCore();
-        addClass(this._elems.base, "multiline");
+        addClass(this._elems.base, 'multiline');
     }
 
     /**
      * _labelAfterLayout
      * ----------------------------------------------------------------------------
-     * handle displaying the label element after the input 
+     * handle displaying the label element after the input
      */
     protected _labelAfterLayout(): void {
         this._elems.base.appendChild(this._elems.input);
@@ -501,7 +573,7 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * save
      * ----------------------------------------------------------------------------
-     * handle saving the data from this form 
+     * handle saving the data from this form
      * @returns The data contained within this form element
      */
     public async save<K extends keyof M>(internalUpdate?: boolean): Promise<M> {
@@ -512,13 +584,13 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * canSave
      * ----------------------------------------------------------------------------
      * Determines whether this element has the option for saving
-     * 
+     *
      * @returns True if this element is prepared to save
      */
     public canSave(): ICanSaveTracker {
         return {
             hasErrors: this._hasErrors,
-            hasMissingRequired: this._hasBlankRequiredElems()
+            hasMissingRequired: this._hasBlankRequiredElems(),
         };
     }
 
@@ -528,8 +600,12 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * Check if this element has any misisng required elements
      */
     protected _hasBlankRequiredElems(): boolean {
-        if (!this._config.required) { return false; }
-        if (this._data !== this._config.defaultValue) { return false; }
+        if (!this._config.required) {
+            return false;
+        }
+        if (this._data !== this._config.defaultValue) {
+            return false;
+        }
         return true;
     }
 
@@ -546,21 +622,25 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * @param   data    The data to populate in this field
      */
     public update(data: M, allowEvents: boolean): void {
-
         // check if the value has changed, and if so, notify others
         let changed: boolean = !this._testEquality(data);
-        if (changed && allowEvents) { window.setTimeout(() => { this._dispatchChangeEvent(); }, 0); }
+        if (changed && allowEvents) {
+            window.setTimeout(() => {
+                this._dispatchChangeEvent();
+            }, 0);
+        }
 
         // clear the form ahead of time
         this.clear();
 
         // if there's no data, grab the default value from the config
-        if (isNullOrUndefined(data)) { data = this._config.defaultValue; }
+        if (isNullOrUndefined(data)) {
+            data = this._config.defaultValue;
+        }
 
         // set the data and update the UI
         this._data = data;
         this._updateUI(data);
-
     }
 
     /**
@@ -578,7 +658,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * update the UI elements to have the right data, when the data has changed
      */
     protected _updateUI(data: M): void {
-        if (!this._elems.input) { return; }
+        if (!this._elems.input) {
+            return;
+        }
         this._elems.input.value = data;
     }
 
@@ -598,7 +680,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * clear out the form element
      */
     protected _clearUI(): void {
-        if (!this._elems.input) { return; }
+        if (!this._elems.input) {
+            return;
+        }
         this._elems.input.value = this._config.defaultValue;
     }
 
@@ -614,37 +698,42 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * Set focus to the input of this form element
      */
     public focus(): boolean {
-        if (!this._elems.input) { return false; }
+        if (!this._elems.input) {
+            return false;
+        }
         this._elems.input.focus();
         return true;
     }
 
     /**
-    * _dispatchSavableChangeEvent
-    * ----------------------------------------------------------------------------
-    * let any listeners know that we updated the savable status of this element
-    */
+     * _dispatchSavableChangeEvent
+     * ----------------------------------------------------------------------------
+     * let any listeners know that we updated the savable status of this element
+     */
     protected _dispatchSavableChangeEvent(): void {
         formEventHandler.dispatchEvent(
             FORM_SAVABLE_CHANGE,
             new FormSavableEvent({
-                target: this
-            }),
+                target: this,
+            })
         );
     }
 
     /**
      * _dispatchChangeEvent
      * ----------------------------------------------------------------------------
-     * let any listeners know that we updated our stuff 
+     * let any listeners know that we updated our stuff
      */
     protected _dispatchChangeEvent(subkey?: string): void {
-        formEventHandler.dispatchEvent(FORM_ELEM_CHANGE, new FormElemChangeEvent({
-            key: this._id,
-            subkey: subkey,
-            data: this._data,
-            target: this
-        }));
+        formEventHandler.dispatchEvent(
+            FORM_ELEM_CHANGE,
+            new FormElemChangeEvent({
+                key: this._id,
+                subkey: subkey,
+                data: this._data,
+                target: this,
+            })
+        );
     }
 
     /**
@@ -653,7 +742,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * wrapper around our listener to ensure the data gets parsed appropriately
      */
     protected _handleOtherChange(ev: FormElemChangeEvent<any>): void {
-        if (!this._config.onOtherChange) { return; }
+        if (!this._config.onOtherChange) {
+            return;
+        }
         this._config.onOtherChange(ev.context.key, ev.context.data, this);
     }
 
@@ -666,26 +757,31 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _changeEventFired
      * ----------------------------------------------------------------------------
-     * handle when the input element has changed in order to kick off the 
+     * handle when the input element has changed in order to kick off the
      * validation process
      */
     protected _changeEventFired(fieldStillHasFocus?: boolean): void {
-
         // clear out any current errors
         this._clearErrors();
 
         // if we don't validate until the field has lost focus, continue on
-        if (fieldStillHasFocus && !this._shouldValidateBeforeBlur()) { return; }
+        if (fieldStillHasFocus && !this._shouldValidateBeforeBlur()) {
+            return;
+        }
 
         // notify listeners that something that might affect savability has occurred
         wait(0).then(() => this._dispatchSavableChangeEvent());
 
         // grab & validate the data from the field
         let value: M = this._getValueFromField(fieldStillHasFocus);
-        if (this._testEquality(value)) { return; }
+        if (this._testEquality(value)) {
+            return;
+        }
 
         let validationResult = this._validate(value);
-        if (!validationResult) { return; }
+        if (!validationResult) {
+            return;
+        }
 
         // notify event listeners that something has successfully changed
         this._dispatchChangeEvent();
@@ -702,10 +798,12 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _shouldValidateBeforeBlur
      * ----------------------------------------------------------------------------
-     * determine whether validation should occur on every change, or whether it 
+     * determine whether validation should occur on every change, or whether it
      * should only occur upon moving focus away from the field
      */
-    protected _shouldValidateBeforeBlur(): boolean { return true; }
+    protected _shouldValidateBeforeBlur(): boolean {
+        return true;
+    }
 
     //#endregion
     //.............................................
@@ -717,15 +815,14 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * _validate
      * ----------------------------------------------------------------------------
      * validate that the current value of this field is appropriate
-     * @param   value   data we are validating 
+     * @param   value   data we are validating
      * @returns true if the validation succeeded, false otherwise
      */
     protected _validate(value: M): boolean {
-
         // spin up the object that will get updated if the validation encounters an error
         let errorString: IErrorString = {
-            title: "",
-            details: ""
+            title: '',
+            details: '',
         };
 
         // run through our custom validation
@@ -741,7 +838,6 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
             this._onValidationError(errorString);
             return false;
         }
-
     }
 
     /**
@@ -750,7 +846,6 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      *  runs the user-defined validation function & returns the result
      */
     protected _runValidation(data: M, errorString: IErrorString): boolean {
-
         // run it through the user-defined eval function
         if (this._config.onValidate) {
             if (!this._config.onValidate(data, errorString)) {
@@ -787,7 +882,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * update the error element of this field to show the appropriate message
      */
     protected _updateErrorElem(err: IErrorString): void {
-        if (!this._elems.error) { return; }
+        if (!this._elems.error) {
+            return;
+        }
 
         let msg: string = this._buildValidationErrorDisplay(err);
         this._elems.error.innerHTML = msg;
@@ -799,11 +896,12 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * update the input element when a validation attempt failed
      */
     protected _updateInputOnError(): void {
-        if (!this._elems.input) { return; }
+        if (!this._elems.input) {
+            return;
+        }
 
         let value: M;
         switch (this._config.validationType) {
-
             case ValidationType.CLEAR_ERROR_VALUE:
                 value = this._config.defaultValue;
                 break;
@@ -814,7 +912,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
 
             case ValidationType.NO_BLUR_PROCESSED:
                 value = this._elems.input.value;
-                window.setTimeout(() => { this._elems.input.focus(); }, 10);
+                window.setTimeout(() => {
+                    this._elems.input.focus();
+                }, 10);
                 break;
 
             case ValidationType.RESTORE_OLD_VALUE:
@@ -826,7 +926,6 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
                 break;
         }
         this._elems.input.value = value;
-
     }
 
     /**
@@ -836,23 +935,25 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * validation function
      */
     protected _buildValidationErrorDisplay(err: IErrorString) {
-        if (!err) { return "Invalid data"; }
+        if (!err) {
+            return 'Invalid data';
+        }
 
         let msg: string;
-        msg = err.title ? err.title + ": " : "Uh-oh: ";
-        msg += err.details || (this._id + "'s data couldn't be saved");
+        msg = err.title ? err.title + ': ' : 'Uh-oh: ';
+        msg += err.details || this._id + "'s data couldn't be saved";
         return msg;
     }
 
     /**
      * _clearErrors
      * ----------------------------------------------------------------------------
-     * clear all of the errors 
+     * clear all of the errors
      *
      */
     protected _clearErrors(): void {
         if (this._elems.error) {
-            this._elems.error.innerHTML = "";
+            this._elems.error.innerHTML = '';
         }
     }
 
@@ -865,16 +966,18 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _createStandardInput
      *----------------------------------------------------------------------------
-     *  create a standard input based on the form type 
+     *  create a standard input based on the form type
      */
     protected _createStandardInput(): void {
         let attr: IAttributes = {};
 
-        if (this._config.useGhostText) { attr.placeholder = this._config.label; }
+        if (this._config.useGhostText) {
+            attr.placeholder = this._config.label;
+        }
 
         this._elems.input = createInputElement(
-            this._id + "|input",
-            "input",
+            this._id + '|input',
+            'input',
             FieldTypeEnum[this.type],
             this._data,
             attr
@@ -884,28 +987,38 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _createStandardLabel
      * ----------------------------------------------------------------------------
-     *  create a standard label for the input 
+     *  create a standard label for the input
      */
     protected _createStandardLabel(embedIn?: HTMLElement): void {
         let lbl: string = this._config.label;
-        if (this._config.useGhostText) { lbl = ""; }
+        if (this._config.useGhostText) {
+            lbl = '';
+        }
 
         this._elems.lblContainer = createElement({
-            cls: "labelContainer",
-            parent: embedIn
+            cls: 'labelContainer',
+            parent: embedIn,
         });
 
-        this._elems.lbl = createLabelForInput(lbl, this._id, "lbl", this._elems.lblContainer);
+        this._elems.lbl = createLabelForInput(
+            lbl,
+            this._id,
+            'lbl',
+            this._elems.lblContainer
+        );
 
         if (this._config.helpText) {
             this._elems.helpTextIcon = createElement({
-                type: "span",
-                cls: "helpTextIcon",
-                content: "?",
-                parent: this._elems.lblContainer
+                type: 'span',
+                cls: 'helpTextIcon',
+                content: '?',
+                parent: this._elems.lblContainer,
             });
 
-            let tooltip: Tooltip = new Tooltip({ content: this._config.helpText }, this._elems.helpTextIcon);
+            let tooltip: Tooltip = new Tooltip(
+                { content: this._config.helpText },
+                this._elems.helpTextIcon
+            );
         }
     }
 
@@ -916,7 +1029,7 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      */
     protected _createStandardLabeledInput(shouldEmbed?: boolean): void {
         this._createStandardInput();
-        this._createStandardLabel((shouldEmbed ? this._elems.input : null));
+        this._createStandardLabel(shouldEmbed ? this._elems.input : null);
     }
 
     //#endregion
@@ -928,10 +1041,15 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     /**
      * _cloneFormElement
      * ----------------------------------------------------------------------------
-     * wrapper around the cloning method so we don't run into protection issues 
+     * wrapper around the cloning method so we don't run into protection issues
      */
-    protected _cloneFormElement(elemToClone: _Field<any>, appendToID?: string): _Field<any> {
-        if (!appendToID) { appendToID = ""; }
+    protected _cloneFormElement(
+        elemToClone: _Field<any>,
+        appendToID?: string
+    ): _Field<any> {
+        if (!appendToID) {
+            appendToID = '';
+        }
         return elemToClone._createClonedElement(appendToID);
     }
 
@@ -939,14 +1057,17 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * _createClonedElement
      * ----------------------------------------------------------------------------
      * creates a new version of the same form element
-     * 
-     * @param   appendToID  ID to add to the current elem ID when cloning (to 
+     *
+     * @param   appendToID  ID to add to the current elem ID when cloning (to
      *                      avoid id conflicts)
-     * 
+     *
      * @returns The cloned form element
      */
     protected _createClonedElement(appendToID: string): _Field<M, T> {
-        return new (this.constructor as IConstructor<_Field<M, T>>)(this._id + appendToID, this._config);
+        return new (this.constructor as IConstructor<_Field<M, T>>)(
+            this._id + appendToID,
+            this._config
+        );
     }
 
     //#endregion
@@ -956,7 +1077,9 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
     //#region GET ELEMENTS AFTER CREATION
 
     public getField(id: string): _Field<any> {
-        if (id === this._id) { return this; }
+        if (id === this._id) {
+            return this;
+        }
         return null;
     }
 
@@ -972,14 +1095,16 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * ensure that this field is shown
      */
     public async show(): Promise<void> {
-        if (!this._isHidden) { return; }
+        if (!this._isHidden) {
+            return;
+        }
         this._isHidden = false;
 
-        removeClass(this._elems.base, "hidden");
+        removeClass(this._elems.base, 'hidden');
         await transition(
             this._elems.base,
-            { height: "0" },
-            { height: "<height>" },
+            { height: '0' },
+            { height: '<height>' },
             200
         );
     }
@@ -990,21 +1115,20 @@ export abstract class _Field<M, T extends IFieldConfig<M> = IFieldConfig<M>> ext
      * ensure that this field isn't shown
      */
     public async hide(): Promise<void> {
-        if (this._isHidden) { return; }
+        if (this._isHidden) {
+            return;
+        }
         this._isHidden = true;
 
         await transition(
             this._elems.base,
-            { maxHeight: "<height>", overflow: "hidden" },
-            { maxHeight: "0 !important", overflow: "hidden" },
+            { maxHeight: '<height>', overflow: 'hidden' },
+            { maxHeight: '0 !important', overflow: 'hidden' },
             200
         );
-        addClass(this._elems.base, "hidden");
+        addClass(this._elems.base, 'hidden');
     }
 
     //#endregion
     //..........................................
-
-
 }
-

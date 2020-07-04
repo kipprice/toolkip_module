@@ -1,6 +1,5 @@
-import { IFieldElems, IFieldConfig } from "../_interfaces";
 import { IToggleBtnOption } from "@toolkip/object-helpers";
-
+import { IFieldElems, IFieldConfig } from "../_interfaces";
 
 //.....................
 //#region INTERFACES
