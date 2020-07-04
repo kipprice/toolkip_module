@@ -12,6 +12,7 @@ import {
     ModelEventFullPayload,
     SelectorMapSelectFunc
 } from '../_shared';
+import { Model } from '../primitiveModels';
 
 
 /**----------------------------------------------------------------------------
@@ -229,4 +230,23 @@ export const select = <I = any, O = any, X = any, K = any>(
     filters?: SelectorFilters<I>
 ): Selector<I, O, X, K> => {
     return new Selector(listenable, processor, filters);
+}
+
+/**
+ * rawSelect
+ * ----------------------------------------------------------------------------
+ * add a listener to data this is not yet in model form. This will not allow
+ * for updates effectively, but it will make simplifying data more feasible
+ * 
+ * @param   rawData     The data to turn into a model
+ * @param   processor   What function to run to select on the data
+ * @param   filters     Any filters that should be applied to changes on the model
+ */
+export const rawSelect = <I = any, O = any, X = any, K = any>(
+    rawData: I,
+    processor?: SelectorFunc<I, O>,
+    filters?: SelectorFilters<I>
+): Selector<I, O, X, K>  =>{
+    const model = new Model(rawData);
+    return new Selector(model, processor, filters);
 }

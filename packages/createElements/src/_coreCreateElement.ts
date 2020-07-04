@@ -60,6 +60,7 @@ export function _coreCreateElement<T extends IKeyedElems = IKeyedElems>(obj: IEl
     // set attributes of the element
     _setElemIdentfiers(elem, obj, keyedElems, drawable);
     _setElemClass(elem, obj);
+    _setElemStyles(elem, obj);
     _setElemAttributes(elem, obj);
     _setElemStyle(elem, obj);
     _setEventListeners(elem, obj);
@@ -139,25 +140,23 @@ function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
     const cls = obj.cls;
     if (!cls) { return; }
     
-    _handleSelector( cls, (v) => _innerSetElemClass(elem, v) )
+    _handleSelector( cls, (v) => _innerSetElemClass(elem, v, obj) )
 }
 
-function _innerSetElemClass(elem: StandardElement, cls: string | string[] | IClassDefinition): void {
+function _innerSetElemClass<T extends IKeyedElems>(elem: StandardElement, cls: string | string[] | IClassDefinition, obj?: IElemDefinition<T>): void {
     if (isClassDefinition(cls)) {
-
-        // create the styles generally on the page
-        const flattenedStyles = flattenStyles(cls.styles);
-        map(flattenedStyles, (value: FlatClassDefinition, selector: string) => {
-            createCssClass(selector, value);
-        })
-
+        _setElemStyles(elem, { styles: cls.styles });
         _setElemClassName(elem, cls.name);
 
     } else {
         _setElemClassName(elem, cls);
     }
 }
-
+/**
+ * _setElemClassName    
+ * ----------------------------------------------------------------------------
+ * assign an appropriate class name to the element
+ */
 function _setElemClassName(elem: StandardElement, name: ClassName): void {
     clearClass(elem);
 
@@ -166,6 +165,22 @@ function _setElemClassName(elem: StandardElement, name: ClassName): void {
     } else if(isArray(name)) {
         addClass(elem, name.join(" "));
     };
+}
+
+/**
+ * _setElemStyles
+ * ----------------------------------------------------------------------------
+ * generate the CSS styles associated with this element if not already 
+ * generated
+ */
+function _setElemStyles<T extends IKeyedElems>(elem: StandardElement, obj: IElemDefinition<T>): void {
+    const styles = obj.styles;
+    if (!styles) { return; }
+
+    const flattenedStyles = flattenStyles(styles);
+    map(flattenedStyles, (value: FlatClassDefinition, selector: string) => {
+        createCssClass(selector, value, 'create_elements');
+    })
 }
 
 //...................................................

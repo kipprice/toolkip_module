@@ -1,4 +1,5 @@
-import { IMapFunction, IQuitConditionFunction } from "./_interfaces";
+import { IMapFunction, IQuitConditionFunction, Mappable, IShouldInclude } from "./_interfaces";
+import { isArray } from '@toolkip/shared-types';
 
 /**
  * map
@@ -6,28 +7,28 @@ import { IMapFunction, IQuitConditionFunction } from "./_interfaces";
  * Loop through all keys in an object or array and perform an action on each 
  * element. Similar to Array.map.
  * 
- * @param   object      The object to loop through
+ * @param   toMap      The object to loop through
  * @param   callback    What to do with each element
  * @param   shouldQuit  Function to evaluate whether we are done looping
  */
-export function map<T = any>(object: any, callback: IMapFunction<any, T>, shouldQuit?: IQuitConditionFunction): T[] {
+export function map<T = any>(toMap: Mappable<T>, callback?: IMapFunction<T, any>, shouldQuit?: IQuitConditionFunction): T[] {
   let out: T[] = [];
-  if (!object) { return out; }
+
+  if (!toMap) { return out; }
 
   // Use the default map function if available
-  if (object.map) {
+  if (isArray(toMap)) {
     let done: boolean;
-    object.map((value: any, key: any, arr: any) => {
+    toMap.map((value: T, key: number, arr: T[]) => {
       if (done) { return; }
 
-      let result = callback(value, key, arr);
+      let result = callback ? callback(value, key, arr) : value;
       out.push(result);
 
       // if we have a quit condition, test it & quit if appropriate
       if (!shouldQuit) { return; }
       if (shouldQuit()) { done = true; }
-    }
-    );
+    });
 
     // Otherwise, do a standard object map
   } else {
@@ -35,10 +36,10 @@ export function map<T = any>(object: any, callback: IMapFunction<any, T>, should
     let key: string;
 
     // Do it safely with the appropriate checks
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
+    for (key in toMap) {
+      if (toMap.hasOwnProperty(key)) {
 
-        let result = callback(object[key], key, cnt);
+        let result = callback ? callback(toMap[key], key, toMap) : toMap[key];
         if (result) { out.push(result); }
 
         cnt += 1;
@@ -50,6 +51,18 @@ export function map<T = any>(object: any, callback: IMapFunction<any, T>, should
     }
 
   }
+
+  return out;
+}
+
+export function filter<T = any>(toFilter: Mappable<T>, shouldInclude: IShouldInclude<T>): T[] {
+  const out = [];
+
+  map<T>(toFilter, (elem: T, key: any, src: Mappable<T>) => {
+    if (shouldInclude(elem, key, src)) {
+      out.push(elem);
+    }
+  })
 
   return out;
 }

@@ -2,6 +2,7 @@ import { Styles, createStyleElement, combineStyles, stringifyStyles } from '@too
 import { IDictionary, isEmptyObject } from '@toolkip/object-helpers';
 import { removeElement } from '@toolkip/html-helpers';
 import { nextRender } from '@toolkip/async';
+import { equals } from '@toolkip/comparable';
 
 /**----------------------------------------------------------------------------
  * @class	Library
@@ -73,15 +74,22 @@ export abstract class _Library {
      */
     public add(uniqueKey: string, styles: Styles, force?: boolean ) {
 
-        let existingStyles = this._getOrCreateExistingStyles(uniqueKey);
-        if (!isEmptyObject(existingStyles) && !force) { return; }
+        const existingStyles = this._getOrCreateExistingStyles(uniqueKey);
+        const mergedStyles = this._merge([ existingStyles, styles ]);
+        if (!this._shouldAdd(existingStyles, mergedStyles, force)) { return; }
 
         // merge in with any styles that are already set for this element
         // & update the associated element 
-        let mergedStyles = this._merge([ existingStyles, styles ]);
         this._rawStyles[uniqueKey] = mergedStyles;
         this._updateElems(mergedStyles, uniqueKey)
         
+    }
+
+    protected _shouldAdd(existingStyles, mergedStyles, force) {
+        if (force) { return true; }
+        if (isEmptyObject(existingStyles)) { return true; }
+        if (!equals(existingStyles, mergedStyles)) { return true; }
+        return false;
     }
 
     /**
@@ -150,6 +158,11 @@ export abstract class _Library {
     public getElemForKey(uniqueKey: string): HTMLStyleElement {
         if (!this._elems[uniqueKey]) { return null; }
         return this._elems[uniqueKey];
+    }
+
+    public get(uniqueKey: string): Styles {
+        if (!this._rawStyles[uniqueKey]) { return null; }
+        return this._rawStyles[uniqueKey];
     }
     
     //#endregion

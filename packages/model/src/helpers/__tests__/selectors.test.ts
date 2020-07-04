@@ -1,5 +1,5 @@
 import { MPrimitive, Model } from '../../primitiveModels';
-import { select } from '../selectors';
+import { select, rawSelect } from '../selectors';
 import { MObject } from '../../objectModels';
 import { ISimpleModel, IIdentifiableModel, ICollections } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
@@ -273,5 +273,16 @@ describe('Selectors', () => {
         }, true);
 
         model.import({ name: 'Oscar', age: 45 });
+    })
+})
+
+describe('Raw Selectors', () => {
+    it('allows selecting on non-models', () => {
+        const obj = { name: 'Big Bird', age: 10 };
+        const fn = jest.fn(({ value }) => { expect(value).toEqual('Big Bird') })
+        rawSelect(obj, (o) => o.name)
+            .apply(fn);
+
+        expect(fn).toHaveBeenCalledTimes(1);
     })
 })

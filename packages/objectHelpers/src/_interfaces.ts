@@ -48,10 +48,13 @@ export interface IToggleBtnOption<T> {
  * ----------------------------------------------------------------------------
  * generic interface for key value pairs
  */
-export type IDictionary<T, K extends string = string> = {
-    [key in K]: T;
-}
+export type IDictionary<T, K extends string | number> = Record<K, T>;
 
+/** 
+ * INumericDictionary 
+ * ----------------------------------------------------------------------------
+ * @deprecated
+*/
 export type INumericDictionary<T, K extends number = number> = {
     [key in K]: T;
 }
@@ -63,7 +66,13 @@ export type INumericDictionary<T, K extends number = number> = {
  * allow for map function, similar to Array.map 
  */
 export interface IMapFunction<T, R> {
-    (elem: T, key: string | number | keyof any, idx: number): R;
+    (elem: T, key: string | number | keyof any, src: Mappable<T>): R;
+}
+
+export type Mappable<T = any> = T[] | Record<string | number | symbol, T>;
+
+export interface IShouldInclude<T = any> {
+    (value: T, key: string | number | keyof any, src: Mappable<T>): boolean;
 }
 
 /**

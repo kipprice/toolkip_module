@@ -27,6 +27,8 @@ class _StyleCombiner {
 
         // Go through each of the themes & each of their selectors
         for (let style of styles) {
+            if (!style) { continue; }
+            
             map(style, (curCls: TypedClassDefinition | IFontFaceDefinition[], selector: string) => {
 
                 // font face styles

@@ -1,6 +1,7 @@
 import { createElement, IChild, createElements } from "..";
 import { IDrawable } from "@toolkip/shared-types";
 import { StandardElement } from "@toolkip/shared-types";
+import { StyleLibrary } from '@toolkip/style-libraries';
 
 describe('basic element creation', () => {
     it('creates a basic div', () => {
@@ -27,6 +28,21 @@ describe('basic element creation', () => {
     it('creates an element with several classnames', () => {
         const elem = createElement({ cls: ['hello', 'world'] });
         expect(elem.className).toEqual('hello world');
+    })
+
+    it('creates a set of styles', () => {
+        createElement({ styles: { '.cls': { fontSize: '10pt' } }});
+        const result = StyleLibrary.get('create_elements');
+        expect(result).toMatchObject({ '.cls': { fontSize: '10pt' }})
+    })
+
+    it('creates a set of styles even when provided in the cls field', () => {
+        createElement({ cls: { 
+            name: 'other', 
+            styles: { '.other': { fontSize: '5pt' } } 
+        }});
+        const result = StyleLibrary.get('create_elements');
+        expect(result).toMatchObject({ '.other': { fontSize: '5pt' }})
     })
 
     it('creates an element with the specified content', () => {
