@@ -130,7 +130,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
             if (isField(this._childTemplate)) {
                 this._childTemplate.replacePlaceholder(placeholder, newValue, force);
             } else {
-                map(this._childTemplate, (child: _Field<any>) => {
+                map(this._childTemplate as any, (child: _Field<any>) => {
                     child.replacePlaceholder(placeholder, newValue, force);
                 });
             }
@@ -414,7 +414,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
             hasMissingRequired: false
         };
         map(
-            this._children,
+            this._children as any,
             (child: _Field<M[K]>) => {
                 let childCanSave: ICanSaveTracker = child.canSave();
                 canSave.hasErrors = canSave.hasErrors || childCanSave.hasErrors;

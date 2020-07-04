@@ -92,7 +92,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.replacePlaceholder(uniqueId, color, force);
         } else {
-            map(this._children, (child: _Field<any>) => {
+            map(this._children as any, (child: _Field<any>) => {
                 child.replacePlaceholder(uniqueId, color, force);
             });
         }
@@ -192,7 +192,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             this._children = {} as IFields<M>;
 
             // go through each of the children
-            map(children, (template: _Field<M[K]>, key: K) => {
+            map(children as any, (template: _Field<M[K]>, key: K) => {
                 let elem: _Field<M[K]> = this._parseChild(template);
                 (this._children as IFields<M>)[key] = elem;
             });
@@ -244,7 +244,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             data = {} as any;
 
             let promises: Promise<any>[] = map(
-                this._children,
+                this._children as any,
                 async (elem: _Field<M[K]>, key: K): Promise<any> => {
                     return this._updateInternalField(key, elem, data, internalOnly);
                 }
@@ -303,7 +303,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
                 hasMissingRequired: false
             };
 
-            map(this._children,
+            map(this._children as any,
                 (child: _Field<M[K]>) => {
                     let childCanSave: ICanSaveTracker = child.canSave();
                     canSave.hasErrors = canSave.hasErrors || childCanSave.hasErrors;
@@ -325,7 +325,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.clear();
         } else {
-            map(this._children, (elem: _Field<M[K]>, key: K) => {
+            map(this._children as any, (elem: _Field<M[K]>, key: K) => {
                 elem.clear();
             });
         }
@@ -342,7 +342,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             return this._children.focus();
         } else {
             let isFocused: boolean;
-            map(this._children, (value: _Field<M[K]>, key: K) => {
+            map(this._children as any, (value: _Field<M[K]>, key: K) => {
                 if (value.focus()) { isFocused = true; }
             }, () => { return isFocused; })
             return isFocused;
@@ -366,7 +366,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
         if (isField(this._children)) {
             this._children.update(data, allowEvents), allowEvents;
         } else {
-            map(this._children, (elem: _Field<M[K]>, key: K) => {
+            map(this._children as any, (elem: _Field<M[K]>, key: K) => {
                 elem.update(data[key], allowEvents);
             });
         }
@@ -447,7 +447,7 @@ export class SectionField<M extends Object, T extends IFormCollapsibleTemplate<M
             return this._children.getField(id);
         } else {
             let result: _Field<any>;
-            map(this._children, (child: _Field<any>) => {
+            map(this._children as any, (child: _Field<any>) => {
                 if (result) { return }
                 result = child.getField(id);
             }, () => { return !!result; })

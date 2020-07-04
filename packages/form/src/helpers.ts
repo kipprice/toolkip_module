@@ -73,7 +73,7 @@ export function createSelectOptions(options: ISelectOptions, defaultSelection?: 
         optElems.push(createElement(def) as HTMLOptionElement);
     }
 
-    map(options, (lbl: string, value: string) => {
+    map(options as any, (lbl: string, value: string) => {
         let def: IElemDefinition = _createSelectOption(lbl, value, value === defaultSelection);
         optElems.push(createElement(def) as HTMLOptionElement);
     });

@@ -11,8 +11,8 @@ import { isArray } from '@toolkip/shared-types';
  * @param   callback    What to do with each element
  * @param   shouldQuit  Function to evaluate whether we are done looping
  */
-export function map<T = any>(toMap: Mappable<T>, callback?: IMapFunction<T, any>, shouldQuit?: IQuitConditionFunction): T[] {
-  let out: T[] = [];
+export function map<T = any, R = any>(toMap: Mappable<T>, callback?: IMapFunction<T, R>, shouldQuit?: IQuitConditionFunction): R[] {
+  let out: R[] = [];
 
   if (!toMap) { return out; }
 
@@ -23,7 +23,7 @@ export function map<T = any>(toMap: Mappable<T>, callback?: IMapFunction<T, any>
       if (done) { return; }
 
       let result = callback ? callback(value, key, arr) : value;
-      out.push(result);
+      out.push(result as any);
 
       // if we have a quit condition, test it & quit if appropriate
       if (!shouldQuit) { return; }
@@ -40,7 +40,7 @@ export function map<T = any>(toMap: Mappable<T>, callback?: IMapFunction<T, any>
       if (toMap.hasOwnProperty(key)) {
 
         let result = callback ? callback(toMap[key], key, toMap) : toMap[key];
-        if (result) { out.push(result); }
+        if (result) { out.push(result as any); }
 
         cnt += 1;
 

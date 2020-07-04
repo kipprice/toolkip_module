@@ -32,14 +32,6 @@ describe('styleLibrary', () => {
         expect(StyleLibrary['_rawStyles']).toMatchObject({ "A": stylesA });
     })
 
-    it("doesn't add styles with the same key without the force flag", () => {
-        StyleLibrary.add("test", stylesA);
-        StyleLibrary.add("test", stylesB);
-        expect(StyleLibrary["_rawStyles"].test).toMatchObject(stylesA);
-        expect(StyleLibrary["_elems"].test.innerHTML)
-            .toEqual(stringifyStyles(stylesA)[0]);
-    })
-
     it('it adds multiple distinct styles to rawStyles appropriately', () => {
         StyleLibrary.add("A", stylesA);
         StyleLibrary.add("B", stylesB);
