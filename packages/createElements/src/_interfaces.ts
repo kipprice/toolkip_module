@@ -53,7 +53,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     style?: SelectableValue<TypedClassDefinition>;
 
     /** creates CSS styles that will be added to the global state if not already present */
-    styles?: IStandardStyles;
+    styles?: SelectableValue<IStandardStyles> | SelectableValue<IStandardStyles>[];
 
     /** any children that should be added for this element */
     children?: SelectableValue<IChild<T>[]>;

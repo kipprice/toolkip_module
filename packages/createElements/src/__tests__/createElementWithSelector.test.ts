@@ -1,6 +1,7 @@
 import { MObject, select } from '@toolkip/model';
 import { IIdentifiable } from '../../../identifiable/typings';
 import { createElement, IChild } from '..';
+import { StyleLibrary } from '@toolkip/style-libraries';
 
 describe('create element with selectors', () => {
     interface ISimpleModel { name: string, age: number }
@@ -157,5 +158,21 @@ describe('create element with selectors', () => {
         expect(elem.children).toHaveLength(2);
         expect(elem.children[0].innerHTML).toEqual('top');
         expect(elem.children[1].innerHTML).toEqual('bottom');
+    })
+
+    it('allows selecting on styles', () => {
+        const model = new MObject({ color: '#333' });
+        const elem = createElement({
+            styles: [
+               { '.nonselected': { fontSize: '10pt' }},
+               select(model, (m) => {
+                   return { '.selected': { color: m.color }}
+               })
+            ]
+        })
+        model.set('color', '#AAA');
+
+        const result = StyleLibrary.get('create_elements');
+        expect(result).toMatchObject({ '.selected': { color: '#AAA' }})
     })
 })

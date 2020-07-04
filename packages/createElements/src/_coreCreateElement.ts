@@ -9,7 +9,7 @@ import {
     IChild
  } from "./_interfaces";
 import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
-import { addClass, flattenStyles, FlatClassDefinition, clearClass } from '@toolkip/style-helpers';
+import { addClass, flattenStyles, FlatClassDefinition, clearClass, IStandardStyles } from '@toolkip/style-helpers';
 import { createCssClass } from '@toolkip/style-libraries';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
@@ -177,6 +177,20 @@ function _setElemStyles<T extends IKeyedElems>(elem: StandardElement, obj: IElem
     const styles = obj.styles;
     if (!styles) { return; }
 
+    let styleArray;
+    if (isArray(styles)) {
+        styleArray = [ ...styles ];
+    } else {
+        styleArray = [ styles ]
+    }
+
+    for (let s of styleArray) {
+        _handleSelector( s, (v) => _innerSetElemStyles(elem, v) )
+    }
+    
+}
+
+function _innerSetElemStyles(elem: StandardElement, styles: IStandardStyles): void {
     const flattenedStyles = flattenStyles(styles);
     map(flattenedStyles, (value: FlatClassDefinition, selector: string) => {
         createCssClass(selector, value, 'create_elements');
