@@ -48,7 +48,7 @@ export interface IToggleBtnOption<T> {
  * ----------------------------------------------------------------------------
  * generic interface for key value pairs
  */
-export type IDictionary<T, K extends string | number> = Record<K, T>;
+export type IDictionary<T, K extends string | number = string | number> = Record<K, T>;
 
 /** 
  * INumericDictionary 

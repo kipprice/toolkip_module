@@ -7,7 +7,7 @@ import { IDictionaryKeys,
 		CollectionSortFunction, 
 		SortFunction 
 	} from './_interfaces';
-import { IMapFunction } from '@toolkip/object-helpers';
+import { IMapFunction, IDictionary } from '@toolkip/object-helpers';
 
 /**----------------------------------------------------------------------------
  * @class	Collection
@@ -292,6 +292,8 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 	public map<R>(mapFunc: IMapFunction<T, R>): void {
 		if (!mapFunc) { return; }
 
+		const dict = this.toValueDictionary();
+
 		this.resetLoop();
 		while (this.hasNext()) {
 			let pair: ICollectionElement<T> = this.getNext();
@@ -299,10 +301,10 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 
 			let value: T = pair.value;
 			let key: string = pair.key;
-			let idx: number = this.getIndex(key);
 
-			mapFunc(value, key, idx);
+			mapFunc(value, key, dict);
 		}
+
 		this.resetLoop();
 	}
 
@@ -380,14 +382,28 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 	 * Return a sorted array of the elements in this collection
 	 */
 	public toArray(): Array<ICollectionElement<T>> {
-		let arr: ICollectionElement<T>[];
-		let key: string;
+		const arr: ICollectionElement<T>[] = [];
 
-		for (key of this._sortedData) {
+		for (let key of this._sortedData) {
 			arr.push(this._data[key]);
 		}
 
 		return arr;
+	}
+
+	/**
+	 * toDictionary
+	 * ----------------------------------------------------------------------------
+	 * get the dictionary version of this collection
+	 */
+	public toDictionary(): IDictionary<ICollectionElement<T>> {
+		const out: IDictionary<ICollectionElement<T>> = {};
+
+		for (let key of this._sortedData) {
+			out[key] = this._data[key];
+		}
+
+		return out;
 	}
 
 	/**
@@ -401,6 +417,19 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 			arr.push(value);
 		});
 		return arr;
+	}
+
+	/**
+	 * toValueDictionary
+	 * ----------------------------------------------------------------------------
+	 * return dictionary form of just the values in this collection
+	 */
+	public toValueDictionary(): IDictionary<T> {
+		const out: IDictionary<T> = {};
+		this.map((value: T, key: string) => {
+			out[key] = value;
+		})
+		return out;
 	}
 
 	//#endregion
@@ -649,7 +678,7 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 	 */
 	public toString(): string {
 		let outStr: string = "";
-		this.map((elem: T, key: string, idx: number) => {
+		this.map((elem: T, key: string) => {
 			if (outStr.length > 0) { outStr += ", "; }
 			outStr += format("{0} => {1}", key, elem.toString());
 		});
@@ -672,7 +701,7 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 
 		// verify our key arrays match
 		let mismatch: boolean = false;
-		this.map((elem: T, key: string, idx: number) => {
+		this.map((elem: T, key: string) => {
 
 			// check that this key exists in the other collection
 			if (!other._data[key]) {
