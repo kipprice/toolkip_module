@@ -95,18 +95,17 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 		let idx: number;
 		let elem: ICollectionElement<T>;
 		let sortedIdx: number;
-		let skipSortedPush: boolean;
+
+		// check if we already have data registered under this key
+		const keyAlreadyAdded = (!!this._data[key]);
 
 		// Verify that there isn't anything currently linked to this key
-		if ((this._addType === CollectionTypeEnum.IgnoreDuplicateKeys) && (this._data[key])) {
+		if ((this._addType === CollectionTypeEnum.IgnoreDuplicateKeys) && keyAlreadyAdded) {
 			return -1;
 		}
 
-		// If we already have data, we don't need to add this key to our sorted index again
-		if (this._data[key]) { skipSortedPush = true; }
-
 		// Grab the spot that this element will be added to in our sorted index
-		sortedIdx = this._sortedData.length;
+		sortedIdx = keyAlreadyAdded ? this._sortedData.indexOf(key) : this._sortedData.length;
 
 		// Create our new object
 		elem = {
@@ -120,7 +119,7 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 		this._data[key] = elem;
 
 		// Push to our sorted index if needed
-		if (!skipSortedPush) { this._sortedData.push(key); }
+		if (!keyAlreadyAdded) { this._sortedData.push(key); }
 
 		return sortedIdx;
 	}
@@ -413,9 +412,9 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 	 */
 	public toValueArray(): Array<T> {
 		let arr: T[] = [];
-		this.map((value: T) => {
-			arr.push(value);
-		});
+		for (let key of this._sortedData) {
+			arr.push(this._data[key].value);
+		};
 		return arr;
 	}
 
@@ -426,9 +425,9 @@ export class Collection<T> extends _NamedClass implements IEquatable {
 	 */
 	public toValueDictionary(): IDictionary<T> {
 		const out: IDictionary<T> = {};
-		this.map((value: T, key: string) => {
-			out[key] = value;
-		})
+		for (let key of this._sortedData) {
+			out[key] = this._data[key].value;
+		};
 		return out;
 	}
 
