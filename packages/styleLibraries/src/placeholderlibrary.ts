@@ -205,7 +205,10 @@ class _PlaceholderLibrary extends _Library{
     //#region HELPERS
     
     private _replacePlaceholderViaIndex(opts: IPlaceholderReplaceOptions): IFlatStyles {
-        const styles = this._indexedPlaceholders[opts.placeholder][opts.uniqueKey];
+        if (!this._indexedPlaceholders[opts.placeholder]) {
+            this._indexedPlaceholders[opts.placeholder] = {}
+        }
+        const styles = this._indexedPlaceholders[opts.placeholder][opts.uniqueKey] || {};
         let mappedStyles = mapIndexToStyle(
             styles, 
             this._rawStyles[opts.uniqueKey] as IFlatStyles

@@ -1,16 +1,16 @@
-import { map, combineObjects } from "@toolkip/object-helpers";
-import { _Stylable } from "@toolkip/stylable";
-import { StandardElement } from "@toolkip/shared-types";
-import { createElement } from "@toolkip/create-elements";
-import { addClass, removeClass, IStandardStyles } from "@toolkip/style-helpers";
-import { ErrorPopup, YesNoPopup, YesNoEnum } from "@toolkip/popups";
-import { _Drawable } from "@toolkip/drawable";
+import { map, combineObjects } from '@toolkip/object-helpers';
+import { _Stylable } from '@toolkip/stylable';
+import { StandardElement } from '@toolkip/shared-types';
+import { createElement } from '@toolkip/create-elements';
+import { addClass, removeClass, IStandardStyles } from '@toolkip/style-helpers';
+import { ErrorPopup, YesNoPopup, YesNoEnum } from '@toolkip/popups';
+import { _Drawable, IDrawableElements } from '@toolkip/drawable';
+import { generateUniqueId } from '@toolkip/identifiable';
 import { IFormOptions, ICanSaveTracker, FormColor, IFields, IFormButton } from "../_interfaces";
 import { formEventHandler, FORM_ELEM_CHANGE, FormElemChangeEvent, FORM_SAVABLE_CHANGE, FormSavableEvent } from '../eventHandler';
 import { _Field } from '../_field';
 import { SectionField } from '../complexFields/sectionField';
 import { IFormCollapsibleTemplate } from '../complexFields/_interfaces';
-
 
 
 export abstract class _Form<T> extends _Drawable<FormColor> {
@@ -132,7 +132,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
 
     protected _config: IFormOptions<T>;
 
-    protected _elems: {
+    protected _elems: IDrawableElements & {
         base: HTMLElement;
         background: HTMLElement;
         formContainer: HTMLElement;
@@ -223,7 +223,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
         };
 
         // create the core section
-        this._elems.coreSection = new SectionField<T>(this._id, template, elems);
+        this._elems.coreSection = new SectionField<T>(generateUniqueId(), template, elems);
         this._applyThemes();
         this._addEventHandlers();
 
@@ -324,7 +324,7 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
                     e.preventDefault();
                 }
             }
-        }, this._elems);
+        }, this._elems as any);
     }
 
     protected _addEventHandlers(): void {
@@ -657,12 +657,12 @@ export abstract class _Form<T> extends _Drawable<FormColor> {
 
     public replacePlaceholder(pName: FormColor, pVal: any, force?: boolean) {
         super.replacePlaceholder(pName, pVal, force);
-        this._elems.coreSection.replacePlaceholder(pName, pVal, force);
+        this._elems.coreSection?.replacePlaceholder(pName, pVal, force);
     }
 
     public overridePlaceholder(pName: FormColor, pVal: any) {
         super.overridePlaceholder(pName, pVal);
-        this._elems.coreSection.overridePlaceholder(pName, pVal);
+        this._elems.coreSection?.overridePlaceholder(pName, pVal);
     }
     
     //#endregion

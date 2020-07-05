@@ -98,7 +98,7 @@ export class ArrayField<M, T extends IFormArrayTemplate<M> = IFormArrayTemplate<
                     userSelect: "none",
                     webkitUserSelect: "none",
                     mozUserSelect: "none",
-                    msUserSelect: "none",
+                    //msUserSelect: "none",
 
                     nested: {
                         ".mobile &": {
