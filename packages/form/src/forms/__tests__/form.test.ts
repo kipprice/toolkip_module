@@ -3,6 +3,7 @@ import { _Form } from '../_form';
 import { FullScreenForm } from '../fullScreenForm';
 import { PopupForm } from '../popupForm';
 import { TextField, NumberField } from '../../simpleFields';
+import { InlineForm } from '../inlineForm';
 
 setupMatchMedia();
 
@@ -35,6 +36,14 @@ describe('Embedded Form', () => {
         expect(frm).toBeInstanceOf(_Form);
     })
 
+    it('creates with elements', () => {
+        const frm = new EmbeddedForm({ }, formChildren);
+        expect(frm).toBeInstanceOf(_Form);
+        const nameField = frm.base.querySelector("#name\\|input");
+        expect(nameField).toBeTruthy();
+        expect(nameField).toBeInstanceOf(HTMLInputElement);
+    })
+
 })
 
 describe('Fullscreen Form', () => {
@@ -58,5 +67,19 @@ describe('Popup Form', () => {
         const frm = new PopupForm({});
         expect(frm).toBeInstanceOf(_Form);
     })
+
+    it('creates with elements', () => {
+        const frm = new PopupForm({ }, formChildren);
+        expect(frm).toBeInstanceOf(_Form);
+        const nameField = frm.base.querySelector("#name\\|input");
+        expect(nameField).toBeTruthy();
+        expect(nameField).toBeInstanceOf(HTMLInputElement);
+    })
 })
 
+describe('Inline Form', () => {
+    it('creates inline form', () => {
+        const frm = new InlineForm({});
+        expect(frm).toBeInstanceOf(_Form)
+    })
+})
