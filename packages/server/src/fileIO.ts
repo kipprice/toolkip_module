@@ -3,7 +3,7 @@ import { IFileDetails } from './_interfaces';
 
 export function loadFile(fileDetails: IFileDetails): Promise<string> {
     return new Promise((resolve, reject) => {
-        this._innerLoadFile(fileDetails, resolve, reject)
+        _innerLoadFile(fileDetails, resolve, reject)
     })
 }
 /**
