@@ -1,6 +1,14 @@
 import { createElement } from '@toolkip/create-elements';
 import { IFileDetails } from './_interfaces';
 
+/**
+ * loadFile
+ * ----------------------------------------------------------------------------
+ * load a file from a particular URL
+ * 
+ * @param   url         The URL to load a file from
+ * 
+ */
 export function loadFile(fileDetails: IFileDetails): Promise<string> {
     return new Promise((resolve, reject) => {
         _innerLoadFile(fileDetails, resolve, reject)
