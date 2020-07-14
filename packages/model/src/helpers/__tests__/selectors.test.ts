@@ -1,7 +1,7 @@
 import { MPrimitive, Model } from '../../primitiveModels';
 import { select, rawSelect } from '../selectors';
 import { MObject } from '../../objectModels';
-import { ISimpleModel, IIdentifiableModel, ICollections } from '../../_shared/__tests__/_interfaces';
+import { ISimpleModel } from '../../_shared/__tests__/_interfaces';
 import { setupModelWrapping } from '../../helpers/modelFactory';
 import { MArray, MManager } from '../../arrayModels';
 
@@ -273,6 +273,25 @@ describe('Selectors', () => {
         }, true);
 
         model.import({ name: 'Oscar', age: 45 });
+    })
+
+    it('can return nested selectors', () => {
+        const model = new MObject<ISimpleModel>({ name: 'Big Bird', age: 10 });
+        const firstSelector = select(model, (m) => m.name);
+        const secondSelector = select(model, (m) => m.age);
+
+        const nestedSelects = firstSelector.select((name) => {
+            return secondSelector.select((age) => {
+                return `${name} is ${age} years old`
+            })
+        });
+
+        expect(nestedSelects.getData()).toEqual('Big Bird is 10 years old');
+        model.set('name', 'Oscar');
+        expect(nestedSelects.getData()).toEqual('Oscar is 10 years old');
+        model.set('age', 42);
+        expect(nestedSelects.getData()).toEqual('Oscar is 42 years old');
+
     })
 })
 

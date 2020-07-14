@@ -13,6 +13,7 @@ import {
     SelectorMapSelectFunc
 } from '../_shared';
 import { Model } from '../primitiveModels';
+import { isSelector } from '../_typeguards';
 
 
 /**----------------------------------------------------------------------------
@@ -47,10 +48,28 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
    //#region CREATE AND SETUP THE SELECTOR
    
     public constructor(model: Selectable<I>, processor?: SelectorFunc<I, O>, filters?: SelectorFilters<I>) {
+        this._model = model;
         this._processor = processor || ((data: I) => { return data as any as O; });
-        this._lastModel = this._processor(model.getData(), {} as any);
         this._setupFilters(filters || {});
+        this._lastModel = this._process(model, {} as any, true);
         this._addEventListener(model);
+    }
+
+    protected _process(model: Selectable<I>, payload, initial?: boolean): O {
+        const result = this._processor(model.getData(), payload);
+        if (isSelector(result)) {
+            if (initial) { 
+                result.addEventListener((payload) => {
+                    this._updateFromModel({
+                        ...payload,
+                        target: model
+                    } as ModelEventFullPayload<any, any>);
+                })
+            }
+            return result.getData()
+        } else {
+            return result;
+        }
     }
 
     protected _setupFilters({ keys = [], eventTypes = []}: SelectorFilters<I>) {
@@ -70,8 +89,9 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
     public reselect(callbacks?: { apply?: SelectorApplyFunc<O>[], map?: SelectorMapFunc<X, K>[]}) {
         const event = this._createReselectEvent();
 
-        if (!callbacks) { this._notifyCallbacks(event); }
-        else {
+        if (!callbacks) { 
+            this._notifyCallbacks(event) 
+        } else {
             const { apply, map } = callbacks;
             if (apply) { this._notifyApplySelectors(event, apply) }
             if (map) { this._notifyMapSelectors(event, map) }
@@ -97,23 +117,27 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
    
    protected _addEventListener(model: Selectable<I>) {
         model.addEventListener((payload) => {
-            if (this._isFiltered(payload)) { return; }
-
-            const processedData = this._processor(payload.target.getData(), payload);
-            if (equals(processedData, this._lastModel)) { return; }
-
-            // update the model before calling callbacks
-            const oldValue = this._lastModel;
-            this._lastModel = processedData;
-
-            this._notifyCallbacks({
-                ...payload,
-                target: this,
-                oldValue,
-                value: processedData,
-                eventChain: payload
-            });
+            return this._updateFromModel(payload);
         })
+    }
+
+    protected _updateFromModel(payload: ModelEventFullPayload<any, I>) {
+        if (this._isFiltered(payload)) { return; }
+
+        const processedData = this._process(payload.target, payload);
+        if (equals(processedData, this._lastModel)) { return; }
+
+        // update the model before calling callbacks
+        const oldValue = this._lastModel;
+        this._lastModel = processedData;
+
+        this._notifyCallbacks({
+            ...payload,
+            target: this,
+            oldValue,
+            value: processedData,
+            eventChain: payload
+        });
     }
 
     protected _isFiltered(payload: ModelEventFullPayload<any, I>) {

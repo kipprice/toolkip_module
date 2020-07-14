@@ -129,7 +129,7 @@ export type SelectorFilterMaps<I> = {
 
 export type SelectKey<I> = string | number | keyof I
 
-export type SelectorFunc<I, O> = (model: I, payload?: ModelEventFullPayload<any, any>) => O;
+export type SelectorFunc<I, O, OO = O> = (model: I, payload?: ModelEventFullPayload<any, any>) => O | ISelector<O, OO>;
 export type SelectorApplyFunc<O> = (payload: ModelEventFullPayload<any, O>) => void;
 export type SelectorMapFunc<X, K> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => void;
 export type SelectorMapSelectFunc<X, K, O = any> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => O;

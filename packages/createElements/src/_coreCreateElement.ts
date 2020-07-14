@@ -9,7 +9,7 @@ import {
     IChild
  } from "./_interfaces";
 import { StandardElement, isNullOrUndefined, isString, IDrawable, isDrawable, isArray } from '@toolkip/shared-types';
-import { addClass, flattenStyles, FlatClassDefinition, clearClass, IStandardStyles } from '@toolkip/style-helpers';
+import { addClass, flattenStyles, FlatClassDefinition, clearClass, IStandardStyles, removeClass } from '@toolkip/style-helpers';
 import { createCssClass } from '@toolkip/style-libraries';
 import { map, IKeyValPair, IConstructor  } from '@toolkip/object-helpers';
 import { isClassDefinition } from "./_typeGuards";
@@ -143,7 +143,7 @@ function _setElemClass<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
     _handleSelector( cls, (v) => _innerSetElemClass(elem, v, obj) )
 }
 
-function _innerSetElemClass<T extends IKeyedElems>(elem: StandardElement, cls: string | string[] | IClassDefinition, obj?: IElemDefinition<T>): void {
+function _innerSetElemClass<T extends IKeyedElems>(elem: StandardElement, cls: ClassName | IClassDefinition, obj?: IElemDefinition<T>): void {
     if (isClassDefinition(cls)) {
         _setElemStyles(elem, { styles: cls.styles });
         _setElemClassName(elem, cls.name);
@@ -163,7 +163,16 @@ function _setElemClassName(elem: StandardElement, name: ClassName): void {
     if (isString(name)) {
         addClass(elem, name);
     } else if(isArray(name)) {
-        addClass(elem, name.join(" "));
+        for (let c of name) {
+            if (!c) { continue; }
+            _handleSelector(c, (cls, { oldValue }) => {
+                const trimmedCls = cls.trim();
+                if (!trimmedCls) { return; }
+
+                if (oldValue) { removeClass(elem, oldValue) }    
+                addClass(elem, trimmedCls)
+            });
+        }
     };
 }
 
@@ -289,7 +298,9 @@ function _setElemStyle<T extends IKeyedElems>(elem: StandardElement, obj: IElemD
 
     _handleSelector(obj.style, (style) => {
         map(style, (val: any, key: string) => {
-            elem.style[key] = val;
+            _handleSelector(val, (v) => {
+                elem.style[key] = v;
+            })
         });
     })
     

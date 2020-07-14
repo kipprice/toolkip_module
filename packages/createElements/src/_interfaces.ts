@@ -8,6 +8,10 @@ export interface IAttributes {
     [key: string]: SelectableValue<IAttribute>;
 }
 
+export type SelectableTypedClassDefinition = {
+    [K in keyof TypedClassDefinition]: SelectableValue<TypedClassDefinition[K]>
+}
+
 export type IChild<T extends IKeyedElems = IKeyedElems> = 
     StandardElement | 
     IElemDefinition<T> | 
@@ -16,7 +20,7 @@ export type IChild<T extends IKeyedElems = IKeyedElems> =
 
 export interface IClassDefinition { name: ClassName, styles: IStandardStyles }
 
-export type ClassName = string | string[];
+export type ClassName = string | (string | SelectableValue<string>)[];
 
 export type IKeyedElems = IDictionary<DrawableElement>;
 
@@ -50,7 +54,7 @@ export interface IElemDefinition<T extends IKeyedElems = IKeyedElems> {
     attr?: IAttributes;
 
     /** any specific styles to apply to this element */
-    style?: SelectableValue<TypedClassDefinition>;
+    style?: SelectableValue<SelectableTypedClassDefinition>;
 
     /** creates CSS styles that will be added to the global state if not already present */
     styles?: SelectableValue<IStandardStyles> | SelectableValue<IStandardStyles>[];
