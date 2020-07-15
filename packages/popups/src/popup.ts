@@ -135,7 +135,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	constructor(obj?: IPopupDefinition) {
 		super();
 		
-		if (obj.themeColor) {
+		if (obj?.themeColor) {
 			this.replacePlaceholder("btnBackground", obj.themeColor);
 		}
 
