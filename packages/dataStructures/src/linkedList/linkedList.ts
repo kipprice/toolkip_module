@@ -1,7 +1,6 @@
 import { LinkedNode } from './linkedNode';
 import { isEquatable } from '@toolkip/comparable';
 
-
 /**---------------------------------------------------------------------------
  * @class   LinkedList<T>
  * ---------------------------------------------------------------------------
