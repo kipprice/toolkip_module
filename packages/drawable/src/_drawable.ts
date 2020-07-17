@@ -14,7 +14,8 @@ import { registerStandardMediaQueries } from '@toolkip/media-queries';
  */
 export abstract class _Drawable<
 	Placeholders extends string = string,
-	Elems extends IDrawableElements = IDrawableElements
+	Elems extends IDrawableElements = IDrawableElements,
+	Options extends any = any
 > extends _Stylable<Placeholders> implements IDrawable {
 
 	//.....................
@@ -41,7 +42,7 @@ export abstract class _Drawable<
 	 * Create a Drawable element
 	 * @param	baseElemTemplate	If provided, the template upon which to create the base element
 	 */
-	constructor() {
+	constructor(createElemOpts?: Options) {
 
 		// Initialize both the stylable parts of this and the 
 		super();
@@ -55,7 +56,7 @@ export abstract class _Drawable<
 		if (this._shouldSkipCreateElements()) { return; }
 
 		// actually create the elements associated with this class
-		this._createElements();
+		this._createElements(createElemOpts || {} as Options);
 		this._registerMediaListeners(true);
 	}
 
@@ -79,7 +80,7 @@ export abstract class _Drawable<
 	 * Function that will be overridden by child classes when they are creating
 	 * the elements that make up a Drawable
 	 */
-	protected abstract _createElements(...args: any[]): void;
+	protected abstract _createElements(opts: Options, ...args: any[]): void;
 
 	protected _createBase(elemDefinition: IElemDefinition<Elems>): StandardElement {
 		// ensure that we always have our base element

@@ -5,6 +5,10 @@ import { CollectionTypeEnum, ICollectionElement, Collection } from '@toolkip/dat
 import { createElement } from '@toolkip/create-elements';
 import { removeClass, addClass, IStandardStyles, transition } from '@toolkip/style-helpers';
 
+export type DynamicSelectOptions = {
+    cls?: string;
+    placeholder?: string;
+}
 
 /**----------------------------------------------------------------------------
  * @class DynamicSelect
@@ -16,7 +20,7 @@ import { removeClass, addClass, IStandardStyles, transition } from '@toolkip/sty
  * @version 1.0.1
  * ----------------------------------------------------------------------------
  */
-export abstract class _DynamicSelect extends _Drawable {
+export abstract class _DynamicSelect extends _Drawable<'fontSize'> {
 
     //.....................
     //#region PROPERTIES
@@ -65,30 +69,36 @@ export abstract class _DynamicSelect extends _Drawable {
 
         ".dynamicSelect": {
             position: "relative",
-            fontFamily: "Segoe UI, Open Sans, Helvetica",
+            boxSizing: 'border-box',
 
             nested: {
+
+                '.visibleBar': {
+                    display: 'flex',
+                    alignItems: 'center'
+                },
+
                 "input": {
                     position: "relative",
-                    fontSize: "2em",
-                    zIndex: "3"
+                    fontSize: '<fontSize:2em>',
+                    zIndex: "3",
+                    width: '100%',
+                    boxSizing: 'border-box'
                 },
 
                 ".clearBtn": {
                     color: "#555",
                     transition: "all ease-in-out .1s",
-                    position: "absolute",
-                    left: "calc(100% - 25px)",
-                    top: "0",
-                    width: "20px",
-                    height: "20px",
-                    fontSize: "20px",
+                    marginLeft: 'calc(<fontSize:2rem> * -0.8)',
                     cursor: "pointer",
-                    transformOrigin: "50% 100%",
+                    transformOrigin: "50% 50%",
+                    transform: 'rotate(45deg)',
+                    zIndex: '4',
+                    fontSize: '<fontSize:2rem>',
 
                     nested: {
                         "&:hover": {
-                            transform: "scale(1.1)"
+                            transform: "scale(1.1) rotate(45deg)"
                         }
                     }
                 },
@@ -100,11 +110,13 @@ export abstract class _DynamicSelect extends _Drawable {
                     minWidth: "200px",
                     maxHeight: "300px",
                     overflowY: "auto",
-                    position: "absolute",
                     left: "0",
-                    top: "3em",
+                    top: "calc(<fontSize:2em> + 1em)",
                     display: "inline-block",
                     zIndex: "2",
+                    boxSizing: 'border-box',
+                    width: 'calc(100% - 2px)',
+
 
                     nested: {
                         ".loading": {
@@ -148,8 +160,8 @@ export abstract class _DynamicSelect extends _Drawable {
      * ----------------------------------------------------------------------------
      * Create the Dynamic Select element
      */
-    constructor() {
-        super();
+    constructor(opts?: DynamicSelectOptions) {
+        super(opts);
 
         // initialize our collection
         this._availableOptions = new Collection<DynamicOption>();
@@ -167,16 +179,21 @@ export abstract class _DynamicSelect extends _Drawable {
      * ----------------------------------------------------------------------------
      * Generate the elements needed by the dynamic select field
      */
-    protected _createElements(): void {
+    protected _createElements(opts: DynamicSelectOptions): void {
         this._elems = {} as any;
 
         this._elems.base = createElement({
-            cls: "dynamicSelect"
+            cls: ["dynamicSelect", opts?.cls]
         });
+
+        const visibleBar = createElement({ cls: 'visibleBar', parent: this._elems.base })
 
         this._elems.input = createElement({
             type: "input",
-            parent: this._elems.base,
+            parent: visibleBar,
+            attr: {
+                placeholder: opts?.placeholder || ''
+            },
             eventListeners: {
                 input: (e: Event) => { this._onQueryTextChange(e); },
                 keydown: (e: KeyboardEvent) => { this._onKeyEvent(e); },
@@ -185,10 +202,12 @@ export abstract class _DynamicSelect extends _Drawable {
             }
         }) as HTMLInputElement;
 
+        
+
         this._elems.clearBtn = createElement({
             cls: "clearBtn",
-            content: "x",
-            parent: this._elems.base,
+            content: "&#x002B;",
+            parent: visibleBar,
             eventListeners: {
                 click: () => { this._elems.input.value = ""; }
             }

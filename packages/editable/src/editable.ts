@@ -138,7 +138,7 @@ export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG"
 		// Call the Drawable constructor
 		super();
 		this._addClassName("Editable");
-		this.replacePlaceholder("editableLightBG", options.lightBg || "rgba(0,0,0,.2)" );
+		this.replacePlaceholder("editableLightBG", options.lightBg || "rgba(0,0,0,.1)" );
 
 		// Store details about the options
 		this._addProperties(options);
@@ -157,12 +157,7 @@ export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG"
 	 * add the properties that are relevant to the editable
 	 */
 	private _addProperties(options: IEditableOptions<T>) {
-		this._options = {
-			inputType: options.inputType,
-			defaultValue: options.defaultValue,
-			isMultiline: options.isMultiline,
-			lightBg: options.lightBg
-		}
+		this._options = { ...options };
 	}
 
 	/**
@@ -238,7 +233,7 @@ export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG"
 	 * If true, doesn't run the element creation until manually called
 	 * @returns	True
 	 */
-	protected _shouldSkipCreateElements(): boolean { return true; }
+	protected _shouldSkipCreateElements() { return true; }
 	//#endregion
 	//.................................
 
@@ -251,13 +246,14 @@ export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG"
 	 * Create elements for the editable 
 	 */
 	protected _createElements(): void {
+		if (!this._options) { return; }
 
 		this._createBase({
 			key: "base",
 			cls: "editable" + (this._options.isMultiline ? " multiline" : ""),
 			children: [
 				{ key: "display", cls: "display unselectable", focusable: true },
-				{ key: "label", type: "input", cls: "input hidden", attr: { type: this._options.inputType } },
+				{ key: "input", type: "input", cls: "input hidden", attr: { type: this._options.inputType } },
 			]
 		});
 
@@ -302,6 +298,7 @@ export class Editable<T> extends _BoundView<IEditableModel<T>, "editableLightBG"
 	private _handleFocusEvent(e?: Event): void {
 		if (!this._isModifying) { this.modify(); }
 	}
+
 	//#endregion
 	//....................................
 

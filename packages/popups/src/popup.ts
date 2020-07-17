@@ -13,7 +13,7 @@ import { StandardElement, isString, isDrawable } from '@toolkip/shared-types';
  * @version 1.0.2
  * ----------------------------------------------------------------------------
  */
-export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground", PopupElements> {
+export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackground", PopupElements, IPopupDefinition> {
 
 	//.....................
 	//#region PROPERTIES
@@ -33,91 +33,111 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 			top: "0",
 			width: "100%",
 			height: "100%",
-
 		},
 
 		".popup": {
 			display: "flex",
 			alignItems: "center",
 			justifyContent: "center",
-			fontFamily: "Segoe UI, OpenSans, Helvetica",
 			position: "fixed",
 			width: "100%",
 			height: "100%",
 			left: "0",
 			top: "0",
 			zIndex: "5",
+
+			nested: {
+
+				".frame": {
+					position: "absolute",
+					backgroundColor: "<popupBackground:#FFF>",
+					borderRadius: "3px",
+					boxShadow: "1px 1px 5px 2px rgba(0,0,0,.2)",
+					display: "block",
+					borderTop: "10px solid <stripe>",
+					padding: "10px",
+					maxHeight: "90%",
+					overflowY: "auto",
+					overflowX: 'hidden'
+				},
+
+				'.titleFlex': {
+					display: 'flex',
+					marginBottom: '5px'
+				},
+
+				'.popupTitle': {
+					fontSize: "1.3em",
+					fontWeight: "bold",
+					flexGrow: '1'
+				},
+
+				".popupTitle.hasContent": {
+					marginBottom: "5px"
+				},
+
+				".closeBtn": {
+					width: "16px",
+					height: "16px",
+					borderRadius: "8px",
+					cursor: "pointer",
+					left: "calc(100% - 18px)",
+					top: "2px",
+					color: "#333",
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+					transition: "all ease-in-out .1s",
+					flexShrink: '0',
+					marginRight: '-8px',
+					marginTop: '-8px',
+					paddingLeft: '10px',
+					opacity: '0.4',
+					transformOrigin: '50% 50%',
+
+					nested: {
+						".x": {
+							paddingBottom: "2px",
+							transformOrigin: '50% 50%',
+							transform: 'rotate(45deg)',
+							fontSize: '1.2rem'
+						},
+
+						"&:hover": {
+							transform: "scale(1.1)",
+							opacity: '1'
+						}
+					}
+				},
+
+				".content": {
+					fontSize: "0.9em"
+				},
+
+				".buttonContainer": {
+					display: "flex",
+					marginTop: "8px",
+					justifyContent: "flex-end",
+
+					nested: {
+						".popupButton": {
+							padding: "2px 10px",
+							backgroundColor: "<btnBackground:#333>",
+							color: "#FFF",
+							cursor: "pointer",
+							marginLeft: "15px",
+							borderRadius: "30px",
+							transition: "all ease-in-out .1s"
+						},
+
+						".popupButton:hover": {
+							transform: "scale(1.1)"
+						},
+					}
+				},
+			}
 		},
 
-		".frame": {
-			position: "absolute",
-			backgroundColor: "<popupBackground:#FFF>",
-			borderRadius: "3px",
-			boxShadow: "1px 1px 5px 2px rgba(0,0,0,.2)",
-			display: "block",
-			borderTop: "10px solid <stripe>",
-			padding: "10px",
-			maxHeight: "90%",
-			overflowY: "auto"
-		},
-
-		".popup .popupTitle": {
-			fontSize: "1.3em",
-			fontWeight: "bold"
-		},
-
-		".popup .popupTitle.hasContent": {
-			marginBottom: "5px"
-		},
-
-		".popup .content": {
-			fontSize: "0.9em"
-		},
-
-		".popup .buttonContainer": {
-			display: "flex",
-			marginTop: "8px",
-			justifyContent: "flex-end"
-		},
-
-		".popup .buttonContainer .popupButton": {
-			padding: "2px 10px",
-			backgroundColor: "<btnBackground:#333>",
-			color: "#FFF",
-			cursor: "pointer",
-			marginLeft: "15px",
-			borderRadius: "30px",
-			transition: "all ease-in-out .1s"
-		},
-
-		".popup .buttonContainer .popupButton:hover": {
-			transform: "scale(1.1)"
-		},
-
-		".popup .closeBtn": {
-			width: "16px",
-			height: "16px",
-			borderRadius: "8px",
-			cursor: "pointer",
-			position: "absolute",
-			left: "calc(100% - 7px)",
-			top: "-15px",
-			backgroundColor: "#DDD",
-			boxShadow: "1px 1px 5px 2px rgba(0,0,0,.1)",
-			color: "#333",
-			display: "flex",
-			justifyContent: "center",
-			alignItems: "center",
-			transition: "all ease-in-out .1s"
-		},
-
-		".popup .closeBtn .x": {
-			paddingBottom: "2px"
-		},
-
-		".popup .closeBtn:hover": {
-			transform: "scale(1.1)"
-		}
 	}
 
 	//#endregion
@@ -133,7 +153,7 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * @param 	obj 	If included, contains info on how to create this popup
 	 */
 	constructor(obj?: IPopupDefinition) {
-		super();
+		super(obj);
 		
 		if (obj?.themeColor) {
 			this.replacePlaceholder("btnBackground", obj.themeColor);
@@ -151,18 +171,20 @@ export class Popup extends _Drawable<"btnBackground" | "stripe" | "popupBackgrou
 	 * ----------------------------------------------------------------------------
 	 * Creates all of the elements needed for this popup
 	 */
-	protected _createElements(): void {
+	protected _createElements(obj: IPopupDefinition): void {
 		this._createBase({
-			cls: "popup" + (this._addlCls ? " " + this._addlCls : ""),
+			cls: ["popup", this._addlCls, obj.cls],
 			children: [
 				{ key: "overlay", cls: "overlay", eventListeners: { click: () => this.erase() } },
 				
 				{ key: "frame", cls: "frame", children: [
-					{ key: "title", cls: "popupTitle" },
-					{ key: "closeBtn", cls: "closeBtn",  
-						children: [{ cls: "x", content: "x" }], 
-						eventListeners: { click: () => this.erase() } 
-					},
+					{ cls: 'titleFlex', children: [
+						{ key: "title", cls: "popupTitle" },
+						{ key: "closeBtn", cls: "closeBtn",  
+							children: [{ cls: "x", content: "&#x002B;" }], 
+							eventListeners: { click: () => this.erase() } 
+						}
+					]},
 					{ key: "content", cls: "content"},
 					{ key: "buttonContainer", cls: "buttonContainer" }
 				]},

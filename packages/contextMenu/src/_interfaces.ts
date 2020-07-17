@@ -1,4 +1,5 @@
 import { IDictionary } from '@toolkip/object-helpers';
+import { ContextMenuOption } from './contextMenuOption';
 
 export interface IOptionCallback {
     (e: Event): void;
@@ -7,10 +8,15 @@ export interface IOptionCallback {
 export interface IOption {
     label: string;
     callback?: IOptionCallback;
-    elems?: {
-        base?: HTMLElement,
-        sub_menu?: HTMLElement
-    };
+}
+
+export type ContextMenuOptions = {
+    colors: Partial<Record<ContextMenuThemeColors, string>>;
+    cls: string;
+}
+
+export type IOptionDrawable = IOption & {
+    option: ContextMenuOption;
 }
 
 export enum ContextMenuColors {
@@ -23,13 +29,12 @@ export enum ContextMenuColors {
     
 }
 
-export interface IContextMenuThemeColors extends IDictionary<string> {
-    menuBG: string; 
-    menuText: string; 
-    menuOptBG: string; 
-    menuBorder: string; 
-    menuOptNested: string; 
-    menuBorderNested: string; 
-    menuSelectedText: string; 
-    menuSelectedBorder: string;
-}
+export type ContextMenuThemeColors = 
+    'menuBG' |
+    'menuText' |
+    'menuOptBG' |
+    'menuBorder' |
+    'menuOptNested' |
+    'menuBorderNested' |
+    'menuSelectedText' |
+    'menuSelectedBorder';

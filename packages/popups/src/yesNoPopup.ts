@@ -1,5 +1,5 @@
 import { Popup } from "./popup";
-import { IYesNoCallback, YesNoEnum } from "./_interfaces";
+import { IYesNoCallback, YesNoEnum, IPopupDefinition } from "./_interfaces";
 
 
 export class YesNoPopup extends Popup {
@@ -12,8 +12,8 @@ export class YesNoPopup extends Popup {
      * @param   prompt  What to ask the user
      * 
      */
-    constructor(prompt: string, onSelection: IYesNoCallback) {
-        super();
+    constructor(prompt: string, onSelection: IYesNoCallback, options?: IPopupDefinition) {
+        super(options);
         this._onSelection = onSelection;
         this.addContent(prompt);
         this._createButtons();

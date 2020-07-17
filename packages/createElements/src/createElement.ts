@@ -1,5 +1,4 @@
-import { IAttributes, IChild, IElemDefinition, ILabeledElement, IClassDefinition, IKeyedElems, ICreateElementFunc, ClassName } from "./_interfaces";
-import { trim, join } from '@toolkip/primitive-helpers';
+import { IElemDefinition, IKeyedElems, ICreateElementFunc } from "./_interfaces";
 import { _coreCreateElement, _coreCreateElements } from "./_coreCreateElement";
 import { SVG_NAMESPACE } from './_constants';
 
@@ -65,7 +64,7 @@ export function createCustomElement<T extends IKeyedElems, I extends IElemDefini
  */
 export function createSVGElement<T extends IKeyedElems>(def: IElemDefinition<T>, keyedElems?: T): SVGElement {
     if (!def) { return; }
-    def.type = "svg";
+    def.type = def.type || "svg";
     def.namespace = SVG_NAMESPACE;
     return _coreCreateElement(def, keyedElems) as SVGElement;
 }

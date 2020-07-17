@@ -33,32 +33,6 @@ export function removeSubclassFromAllElements(cls: string, subcls: string, excep
 };
 
 /**
- * addResizingElement (UNIMPLEMENTED)
- * ----------------------------------------------------------------------------
- * Adds an element to the document that should resize with the document
- * 
- * @param   elem        The element that should resize
- * @param   fixedRatio  If provided, keeps the image at this fixed ratio of w:h at all document sizes
- * @param   forceInitW  Optionally force the initial width to a certain value
- * @param   forceInitH  Optionally force the initial height to a certain value
- * 
- */
-function addResizingElement(elem, fixedRatio, forceInitW, forceInitH) {
-    // TODO: implement
-};
-
-/**
- * resizeElement (UNIMPLEMENTED)
- * ----------------------------------------------------------------------------
- * Resizes an element to be the same ratio as it previously was
- * @param   obj   The element to resize
- * 
- */
-function resizeElement(obj) {
-    // TODO: implement
-};
-
-/**
 * isChildEventTarget
 * ----------------------------------------------------------------------------
 * Checks if a child of the current task is being targeted by the event
@@ -327,4 +301,25 @@ export function doesElementMatchSelector(elem: StandardElement, selector: string
     if (!elem) { return false; }
     if (!elem.matches) { return false; }
     return elem.matches(selector);
+}
+
+/**
+ * insertAfter
+ * ----------------------------------------------------------------------------
+ * counterpart to insertBefore; takes in the element to insert and the element
+ * that shouldbecome its previous sibling
+ * 
+ * @param   newElem         The element to insert
+ * @param   previousElem    The element to insert after
+ */
+export function insertAfter(newElem: StandardElement, previousElem: StandardElement): void {
+    if (!previousElem || !newElem) { return; }
+    const parent = previousElem.parentNode;
+    const nextSibling = previousElem.nextSibling;
+    
+    if (nextSibling) {
+        parent.insertBefore(newElem, nextSibling);
+    } else {
+        parent.appendChild(newElem);
+    }
 }

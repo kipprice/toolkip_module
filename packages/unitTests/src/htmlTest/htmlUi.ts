@@ -108,17 +108,16 @@ export class UI extends _Drawable {
 
         ".visualTestBtn": {
             color: "#FFF",
-            padding: "2px 10px",
-            borderRadius: "3px",
             cursor: "pointer",
             width: "auto",
-            marginBottom: "8px"
+            margin: "1rem 0",
         },
 
         ".innerBtn": {
             backgroundColor: "#06C",
             display: "inline-block",
-            padding: "2px 10px"
+            borderRadius: '50px',
+            padding: "0.3rem 1rem",
         }
     }
 
@@ -155,7 +154,7 @@ export class UI extends _Drawable {
                 { content: btn.label, cls: "innerBtn" }
             ],
             eventListeners:{
-                click: () => { btn.callback(); }
+                click: () => { btn.callback(btnElem); }
             }
         });
     }

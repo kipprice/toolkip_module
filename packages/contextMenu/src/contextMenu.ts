@@ -1,12 +1,14 @@
 import { _Drawable } from '@toolkip/drawable';
-import { Collection, ICollectionElement } from '@toolkip/data-structures';
-import { createElement } from '@toolkip/create-elements';
+import { Collection } from '@toolkip/data-structures';
 import { IStandardStyles } from '@toolkip/style-helpers';
 import { 
-		IContextMenuThemeColors, 
-		IOption
+		ContextMenuThemeColors,
+		IOption,
+		IOptionDrawable,
+		ContextMenuOptions
 	} from './_interfaces';
 import { map } from '@toolkip/object-helpers';
+import { ContextMenuOption } from './contextMenuOption';
 
 /**----------------------------------------------------------------------------
  * @class ContextMenu
@@ -16,7 +18,7 @@ import { map } from '@toolkip/object-helpers';
  * @version 1.0
  * ----------------------------------------------------------------------------
  */
-export class ContextMenu extends _Drawable {
+export class ContextMenu extends _Drawable<ContextMenuThemeColors> {
 
 	//.....................
 	//#region PROPERTIES
@@ -31,10 +33,7 @@ export class ContextMenu extends _Drawable {
 	protected _target: HTMLElement;					
 
 	/** The collection of options available in our context menu */
-	protected _options: Collection<IOption>;	
-
-	/** true if we should not create our standard styles */					
-	protected _noStyles: boolean;											
+	protected _options: Collection<IOptionDrawable>;					
 
 	/** The elements we need for the option menu */
 	protected _elems: {
@@ -52,48 +51,23 @@ export class ContextMenu extends _Drawable {
 	//#region STYLES
 
 	/** collection of theme colors for the context menu */
-	protected _colors: IContextMenuThemeColors;
+	protected _colors: Partial<Record<ContextMenuThemeColors, string>>;
 
 	/** the styles to use for the standard context menu */
 	protected static _uncoloredStyles: IStandardStyles = {
 		".ctxMenu": {
-			backgroundColor: "<menuBG>",
-			color: "<menuText>",
-			fontFamily: "'Calibri Light', Helvetica",
+			backgroundColor: "<menuBG:#FFF>",
+			color: "<menuText:#000>",
+			fontFamily: "sans-serif",
 			boxShadow: "1px 1px 3px 2px rgba(0,0,0,.1)",
 			fontSize: "14px",
 			borderRadius: "4px",
 			paddingTop: "2px",
 			paddingBottom: "2px",
 			width: "10%",
-			position: "absolute"
+			position: "absolute",
+			zIndex: '10'
 		},
-
-		".ctxMenu .subMenu": {
-			backgroundColor: "<menuOptBG>",
-			width: "100%",
-			top: "-2px",
-			boxShadow: "1px 1px 1px 1px rgba(0,0,0,.1)",
-			left: "calc(100% - 1px)",
-			borderLeft: "1px solid <menuBorder>"
-		},
-
-		".ctxMenu .subMenu .subMenu": {
-			backgroundColor: "<menuOptNested>",
-			borderLeft: "1px solid <menuBorderNested>"
-		},
-
-		".ctxMenu .ctxOption" : {
-			padding: "4px 10px",
-			cursor: "pointer",
-			position: "relative"
-		},
-
-		".ctxMenu .ctxOption:hover": {
-			backgroundColor: "<menuSelectedText>",
-			color: "<menuOptBG>",
-			borderLeft: "7px solid <menuSelectedBorder>"
-		}
 	}
 	
 	//#endregion
@@ -104,21 +78,20 @@ export class ContextMenu extends _Drawable {
 	 * ----------------------------------------------------------------------------
 	 * Creates a custom context (right-click) menu for a given element
 	 * @param 	target    	The element to create the custom menu for
-	 * @param 	noStyles	True if we shouldn't create css classes for the standard menu styles
-	 * @param	colors		Optional set of theme colors to use for the menu
-	 * 
+	 * @param	opts		Any additiona options that should be applied to the 
+	 * 						context menu
+	 * @returns	The created context menu
 	 */
-	constructor(target: HTMLElement, noStyles?: boolean, colors?: IContextMenuThemeColors) {
+	constructor(target: HTMLElement, opts?: ContextMenuOptions) {
 
 		// Initialize our Drawable
-		super();
-		//super({cls: "ctxMenu"});
+		super(opts);
+		
 		this._addClassName("ContextMenu");
 
 		// Set our initial properties
 		this._target = target;
-		this._noStyles = noStyles;
-		this._colors = colors || {
+		this._colors = opts?.colors || {
 			menuBG: "rgba(40,40,40,1)", 
 			menuText: "#FFF", 
 			menuOptBG: "rgba(40,40,40,.9)", 
@@ -130,7 +103,7 @@ export class ContextMenu extends _Drawable {
 		};
 
 		// Initialize the option array
-		this._options = new Collection<IOption>();
+		this._options = new Collection<IOptionDrawable>();
 
 		// Create our other elements
 		this._createElements();
@@ -155,16 +128,16 @@ export class ContextMenu extends _Drawable {
 		// Make sure the option label is unique
 		if (this._options.hasElement(opt.label)) { return false; }
 
-		// Create the element for the option if not included
-		if (!opt.elems) { opt.elems = {}; };
-		if (!opt.elems.base) {
-			if (!parent) { parent = this._elems.option_container; }
-			opt.elems.base = createElement({ cls: "ctxOption", content: opt.label, parent });
-			opt.elems.base.onclick = opt.callback;
-		}
+		// Create the option element & add to our connection
+		const optDrawable = new ContextMenuOption(opt);
+		optDrawable.draw(parent || this._elems.option_container);
+		this._options.add(opt.label, {
+			...opt,
+			option: optDrawable
+		});
 
-		// Add the option to our collection
-		this._options.add(opt.label, opt);
+		// quit if there are no sub options to add
+		if (!subOptions) { return true; }
 
 		// Loop through suboptions and add them as well
 		let sub_success: boolean = true;
@@ -189,60 +162,23 @@ export class ContextMenu extends _Drawable {
 	 */
 	public addSubOption(srcOption: IOption, subOption: IOption): boolean {
 
-		// Try to grab the option from our collection if not passed in correctly
-		if (!srcOption.elems) {
-
-			// If this is a new option, create it first
-			if (!this._options.hasElement(srcOption.label)) {
-				this.addOption(srcOption);
-			}
-
-			// Try to grab the option from our collection
-			srcOption = this._getOption(srcOption.label);
-
-			// Quit if we couldn't find an option
-			if (!srcOption) {
-				return false;
-			}
+		// If this is a new option, create it first
+		if (!this._options.hasElement(srcOption.label)) {
+			this.addOption(srcOption);
 		}
+
+		// Try to grab the option from our collection
+		const optionDrawable = this._getOption(srcOption.label);
 
 		// Quit if the option hasn't been appropriately initialized
-		if (!srcOption.elems) { return false; }
+		if (!optionDrawable) { return false; }
+		if (!optionDrawable.option) { return false; }
 
-		// Create the submenu div if it's missing
-		if (!srcOption.elems.sub_menu) {
-			this._buildSubMenu(srcOption);
-		}
-
-		// Add the actual sub menu
-		this.addOption(subOption, [], srcOption.elems.sub_menu);
-
-	}
-
-	/**
-	 * _buildSubMenu
-	 * ----------------------------------------------------------------------------
-	 * creates a sub menu 
-	 * @param	srcOption	The option to nest under
-	 */
-	private _buildSubMenu(srcOption: IOption): void {
-
-		srcOption.elems.sub_menu = createElement({ cls: "subMenu hidden", parent: srcOption.elems.base });
-		srcOption.elems.base.innerHTML += "...";
-
-		if (!this._noStyles) { return; }
-
-		// Handle mouse-over only if we didn't add standard classes
-		srcOption.elems.sub_menu.style.display = "none";
-
-		srcOption.elems.base.addEventListener("mouseover", () => {
-			srcOption.elems.sub_menu.style.display = "block";
+		const subOptionDrawable = optionDrawable.option.addOption(subOption);
+		this._options.add(subOption.label, {
+			...subOption,
+			option: subOptionDrawable
 		});
-
-		srcOption.elems.base.addEventListener("mouseout", () => {
-			srcOption.elems.sub_menu.style.display = "none";
-		});
-
 
 	}
 
@@ -253,16 +189,9 @@ export class ContextMenu extends _Drawable {
 	 * @param	lbl		The label of the option we are grabbing
 	 * @returns	The option with this label
 	 */
-	private _getOption(lbl: string): IOption {
+	private _getOption(lbl: string): IOptionDrawable {
 		if (!lbl) { return null; }
-		let iCol: ICollectionElement<IOption> = this._options.getElement(lbl);
-
-		// Grab the value of the element in our collection
-		if (iCol) {
-			return iCol.value;
-		} else {
-			return null;
-		}
+		return this._options.getValue(lbl);
 	}
 
 	/**
@@ -273,19 +202,12 @@ export class ContextMenu extends _Drawable {
 	 * @returns	True if the option was removed
 	 */
 	public removeOption(lbl: string): boolean {
-		let opt: IOption;
-		let iCol: ICollectionElement<IOption>;
 
-		iCol = this._options.remove(lbl);
+		const iCol = this._options.remove(lbl);
 		if (!iCol) { return false; }
-		opt = iCol.value;
 
-		// Also remove the HTML element added by this option
-		if (opt.elems.base.parentNode) {
-			opt.elems.base.parentNode.removeChild(opt.elems.base);
-		} else {
-			return false;
-		}
+		const opt = iCol.value;
+		opt.option.erase();
 
 		// Return true if we made it this far
 		return true;
@@ -300,18 +222,14 @@ export class ContextMenu extends _Drawable {
 	public clearOptions(): void {
 
 		this._options.resetLoop(true);
-		let opt: IOption;
-		let iCol: ICollectionElement<IOption>;
 
 		// Remove all HTML ELements
 		while (this._options.hasNext(true)) {
-			iCol = this._options.getNext(true);
+			const iCol = this._options.getNext(true);
 			if (!iCol) { continue; }
 
-			opt = iCol.value;
-			if (opt.elems.base.parentNode) {
-				opt.elems.base.parentNode.removeChild(opt.elems.base);
-			}
+			const opt = iCol.value;
+			opt.option.erase();
 		}
 
 		// Clear the collection
@@ -328,15 +246,7 @@ export class ContextMenu extends _Drawable {
 	private _addEventListeners(): void {
 
 		// Erase the currently showing context menu always on mousedown and on right-click
-		if (!ContextMenu._windowListenersAdded) {
-			window.addEventListener("contextmenu", () => {
-				this._hideExistingMenu();
-			});
-			window.addEventListener("mousedown", () => {
-				this._hideExistingMenu();
-			});
-			ContextMenu._windowListenersAdded;
-		}
+		this._addWindowListeners()
 
 		// Show this menu when it's target is hit
 		this._target.addEventListener("contextmenu", (e: MouseEvent) => {
@@ -346,7 +256,7 @@ export class ContextMenu extends _Drawable {
 			this.erase();
 
 			// Show the normal rclick menu when holding control
-			if (e.ctrlKey) { return true; }
+			if (e.altKey) { return true; }
 
 			// Stop bubbling since we have found our target
 			e.stopPropagation();
@@ -357,25 +267,13 @@ export class ContextMenu extends _Drawable {
 			pos_y = e.clientY;
 
 			// Adjust the display
-			this.base.style.left = (pos_x + "px");
-			this.base.style.top = (pos_y + "px");
+			this._positionBubble(pos_x, pos_y);
 
 			// Draw in our best guess position
 			this.draw(document.body);
+			ContextMenu._showingMenu = this;
 
-			// If we're too far over, shift it.
-			if ((pos_x + this.base.offsetWidth) > window.innerWidth) {
-				pos_x = (window.innerWidth - this.base.offsetWidth);
-			}
-
-			// If we're too low, move up
-			if ((pos_y + this.base.offsetHeight) > window.innerHeight) {
-				pos_y = (window.innerHeight - this.base.offsetHeight);
-			}
-
-			// Adjust the display
-			this.base.style.left = (pos_x + "px");
-			this.base.style.top = (pos_y + "px");
+			this._adjustBubble(pos_x, pos_y);
 
 			// prevent the real r-click menu
 			return false;
@@ -383,33 +281,64 @@ export class ContextMenu extends _Drawable {
 
 	};
 
+	protected _addWindowListeners(): void {
+		if (ContextMenu._windowListenersAdded) { return; }
+
+		window.addEventListener("contextmenu", () => {
+			this._hideExistingMenu();
+		});
+
+		window.addEventListener("click", () => {
+			this._hideExistingMenu();
+		});
+
+		ContextMenu._windowListenersAdded;
+	}
+
+	protected _adjustBubble(pos_x: number, pos_y: number) {
+		// If we're too far over, shift it.
+		if ((pos_x + this.base.offsetWidth) > window.innerWidth) {
+			pos_x = (window.innerWidth - this.base.offsetWidth);
+		}
+
+		// If we're too low, move up
+		if ((pos_y + this.base.offsetHeight) > window.innerHeight) {
+			pos_y = (window.innerHeight - this.base.offsetHeight);
+		}
+
+		// Adjust the display
+		this._positionBubble(pos_x, pos_y)
+	}
+
+	protected _positionBubble(pos_x: number, pos_y: number) {
+		this.base.style.left = (pos_x + "px");
+		this.base.style.top = (pos_y + "px");
+	}
+
 	/**
 	 * _createElements
 	 * ----------------------------------------------------------------------------
 	 * Creates the basic elements of the context menu & optionally adds the 
 	 * standard classes
 	 */
-	protected _createElements(): void {
+	protected _createElements(opts?: ContextMenuOptions): void {
 		this._createBase({
-			cls: "ctxMenu",
+			cls: ["ctxMenu", opts?.cls],
 			children: [{
 				cls: "optionContainer", key: "option_container"
 			}]
 		});
-		this._setThemeColors();
+
+		this._setColors();
 	};
 
-	/**
-	 * _setThemeColors
-	 * ----------------------------------------------------------------------------
-	 * Sets the theme colors for the context menu
-	 */
-	protected _setThemeColors(): void {
-		map(this._colors, (color: string, uniqueId: string) => { 
-			// TODO: convert over
-			// this.setThemeColor(uniqueId, color);
-		});
+	protected _setColors() {
+		if (!this._colors)
+		map(this._colors, (color: string, key: ContextMenuThemeColors) => {
+			this.replacePlaceholder(key, color)
+		})
 	}
+
 
 	/**
 	 * _hideExistingMenu
@@ -417,11 +346,10 @@ export class ContextMenu extends _Drawable {
 	 * Hides whatever context menu is currently showing 
 	 */
 	private _hideExistingMenu(): void {
-		if (ContextMenu._showingMenu) {
-			if (ContextMenu._showingMenu.base.parentNode) {
-				ContextMenu._showingMenu.base.parentNode.removeChild(ContextMenu._showingMenu.base);
-			}
-		}
+		const currentMenu = ContextMenu._showingMenu;
+		if (!currentMenu) { return; }
+		if (!currentMenu.base.parentNode) { return; }
+		currentMenu.erase();
 	}
 
 

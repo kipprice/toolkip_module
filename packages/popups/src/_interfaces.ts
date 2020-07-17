@@ -14,6 +14,7 @@ export type PopupElements = {
 
 export interface IPopupDefinition {
     themeColor?: string;
+    cls?: string;
 }
 
 export interface LoginPopupElements extends PopupElements {

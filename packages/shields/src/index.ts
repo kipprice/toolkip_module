@@ -1,3 +1,4 @@
 export * from './_interfaces';
-export * from './loadingShield';
 export * from './shield';
+export * from './composableShield';
+export * from './loadingShield';

@@ -1,4 +1,5 @@
 import { Popup } from "./popup";
+import { IPopupDefinition } from './_interfaces';
 
 /**----------------------------------------------------------------------------
  * @class	ErrorPopup
@@ -23,8 +24,8 @@ export class ErrorPopup extends Popup {
      * ----------------------------------------------------------------------------
      * create a popup that shows an error to the user
      */
-    constructor(details: string, title?: string) {
-        super();
+    constructor(details: string, title?: string, options?: IPopupDefinition) {
+        super(options);
         this.setTitle(title || "Uh-oh...that wasn't supposed to happen");
         this.addContent(details);
         this.addButton("Okay", () => {

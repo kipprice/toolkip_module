@@ -15,7 +15,8 @@
     "dependencies": {
         "@toolkip/create-elements": "^2.3.4",
         "@toolkip/drawable": "^2.3.4",
-        "@toolkip/style-helpers": "^2.3.0"
+        "@toolkip/style-helpers": "^2.3.0",
+        "@toolkip/shared-types": "^2.2.3"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

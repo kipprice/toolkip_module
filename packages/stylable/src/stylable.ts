@@ -109,9 +109,9 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
     private static _createSelfStyles(uniqueKey: string, mergedStyles: IStandardStyles, forceOverride?: boolean): void {
         
         // if we don't have styles, or we've already created, quit
-        if (isEmptyObject(mergedStyles)) { return; }
-        if (!this.hasOwnProperty("_uncoloredStyles")) { return; }
-        if (StyleLibrary.hasStyles(uniqueKey) && !forceOverride) { return; }
+        if (this._shouldSkipSelfStyles(uniqueKey, mergedStyles, forceOverride)) { 
+            return; 
+        }
 
         // ==> flatten & split our styles
         let flattenedStyles = flattenStyles(mergedStyles);
@@ -122,7 +122,23 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
         PlaceholderLibrary.add(uniqueKey, split.withPlaceholders, forceOverride);
 
     }
-    
+
+    private static _shouldSkipSelfStyles(uniqueKey: string, mergedStyles: IStandardStyles, forceOverride: boolean): boolean {
+        if (isEmptyObject(mergedStyles)) { return true; }
+        if (forceOverride) { return false; }
+        if (!this.hasOwnProperty("_uncoloredStyles")) { return true; }
+        
+        // this line is a little duplicative; the stylelibrary itself checks for styles
+        // and it checks more narrowly (e.g. it checks that the start object and the
+        // resulting object aren't the same)
+        //
+        // The way we create stylables, this is probably okay, but if there are cases 
+        // where we need styles to be recompiled, probably better to remove this line
+        // and trust the StyleLibrary to do its thing
+        if (StyleLibrary.hasStyles(uniqueKey)) { return; }
+        return false;
+    }
+
     //#endregion
     //..........................................
 
@@ -162,7 +178,7 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
      * replaces the "preemptivelyCreateStyles" function
      */
     private _createStyles(forceOverride?: boolean) {
-        if (this._shouldSkipStyles()) { return; }
+        if (this._shouldSkipStyles(forceOverride)) { return; }
         (this.constructor as any).createStyles(
             this._uniqueKey,
             this._mergedStyles,
@@ -176,7 +192,9 @@ export abstract class _Stylable<P extends string = string> extends _NamedClass {
      * determine if we should create styles for this class, based on whether
      * there are actually styles to create
      */
-    private _shouldSkipStyles(): boolean {
+    private _shouldSkipStyles(forceOverride?: boolean): boolean {
+        if (forceOverride) { return false; }
+
         const c = this.constructor;
         
         // check if the properties are our own
