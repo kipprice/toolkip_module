@@ -80,7 +80,7 @@ export abstract class _Drawable<
 	 * Function that will be overridden by child classes when they are creating
 	 * the elements that make up a Drawable
 	 */
-	protected abstract _createElements(opts: Options, ...args: any[]): void;
+	protected abstract _createElements(opts?: Options, ...args: any[]): void;
 
 	protected _createBase(elemDefinition: IElemDefinition<Elems>): StandardElement {
 		// ensure that we always have our base element
