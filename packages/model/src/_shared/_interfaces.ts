@@ -15,6 +15,7 @@ export interface IBasicModel<T> extends ICloneable<IModel<T>>, IEquatable {
     import(data: T): void;
     export(): T;
     getType(): ModelType;
+    addModelListener<K, X>(modelToListenTo: IModel<X>, key: K): void
 }
 
 export interface IKeyedModel<T, K, X> extends IBasicModel<T>, IEquatable {
@@ -45,7 +46,8 @@ export type IModel<T, K = any, X = any> = IBasicModel<T> | IKeyedModel<T, K, X> 
  * client-side models
  */
 
-export type IModelTransformFunc<X> = (value: X) => X;
+export type IModelTransformFunc<X, K = any, T = any> = 
+    (value: X, key?: K, parentModel?: IModel<T>) => X;
 
 export type IModelTransform<X> = {
     incoming?: IModelTransformFunc<X>;

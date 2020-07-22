@@ -1,17 +1,17 @@
-import { IEquatable, equals } from "@toolkip/comparable";
+import { IEquatable, equals } from '@toolkip/comparable';
 import { ICloneable, clone } from '@toolkip/object-helpers';
 import { HistoryChain } from '@toolkip/history';
-import { 
-    ModelEventPayload, 
-    IModelTransforms, 
-    ModelEventCallback, 
-    ModelEventType, 
-    IKeyedModelTransforms,  
+import {
+    ModelEventPayload,
+    IModelTransforms,
+    ModelEventCallback,
+    ModelEventType,
+    IKeyedModelTransforms,
     ModelEvent,
     IModel,
     IBasicModel,
-    ModelType
-} from "../_shared";
+    ModelType,
+} from '../_shared';
 import { isModel } from '../_typeguards/core';
 import { isNullOrUndefined } from '@toolkip/shared-types';
 
@@ -23,36 +23,45 @@ import { isNullOrUndefined } from '@toolkip/shared-types';
  * @version	1.0.0
  * ----------------------------------------------------------------------------
  */
-export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IBasicModel<T> {
-
+export abstract class _Model<T>
+    implements IEquatable, ICloneable<_Model<T>>, IBasicModel<T> {
     //..........................................
     //#region CONSTRUCTOR
-    
-    public constructor(data?: Partial<T>, transforms?: IModelTransforms<T>) {
 
+    public constructor(data?: Partial<T>, transforms?: IModelTransforms<T>) {
         // set up all of the instance variables
         this._innerModel = this._getDefaultValues();
         this.__history = new HistoryChain<T>();
         this._event = new ModelEvent<T, any, any>('modelchange');
 
         // Copy data over from the passed in interface
-        if (transforms) { this._transforms = transforms; }
-        else { this._transforms = {}; }
+        if (transforms) {
+            this._transforms = transforms;
+        } else {
+            this._transforms = {};
+        }
 
-        if (!isNullOrUndefined(data)) { this.import(data as T) }
+        if (!isNullOrUndefined(data)) {
+            this.import(data as T);
+        }
     }
 
     protected abstract _getDefaultValues(): T;
-    public getType(): ModelType { return 'primitive' }
-    
+    public getType(): ModelType {
+        return 'primitive';
+    }
+
     //#endregion
     //..........................................
-    
+
     //..........................................
     //#region CREATING OTHER MODELS
-    
-    public static createModel: <T = any>(data: T | IModel<T>, transforms?: IKeyedModelTransforms<T>) => IModel<T>
-    
+
+    public static createModel: <T = any>(
+        data: T | IModel<T>,
+        transforms?: IKeyedModelTransforms<T>
+    ) => IModel<T>;
+
     //#endregion
     //..........................................
 
@@ -64,20 +73,27 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
         this._event.addEventListener(cbFunc);
     }
 
-    protected static _event: ModelEvent<any, any, any> = new ModelEvent<any, any, any>('modelchange');
+    protected static _event: ModelEvent<any, any, any> = new ModelEvent<
+        any,
+        any,
+        any
+    >('modelchange');
     public static addEventListener(cbFunc: ModelEventCallback<any, any>) {
         this._event.addEventListener(cbFunc);
     }
-    
+
     protected _dispatchEvent<K, X>(payload: ModelEventPayload<K, X>): void {
         this._event.dispatch(this, payload);
         _Model._event.dispatch(this, payload);
     }
 
-    protected _copyEvent<X>(modelToCopyFrom: _Model<X>, modelToCopyTo: _Model<X>): void {
+    protected _copyEvent<X>(
+        modelToCopyFrom: _Model<X>,
+        modelToCopyTo: _Model<X>
+    ): void {
         modelToCopyTo._event = modelToCopyFrom._event;
     }
-    
+
     /**
      * _notifyListeners
      * ---------------------------------------------------------------------------
@@ -89,8 +105,13 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
     protected _notifyListeners<K, X>(payload: ModelEventPayload<K, X>): void {
         const { oldValue, value: newValue, eventChain } = payload;
         if (equals(oldValue, newValue)) { return; }
-        if (!payload.eventType) { 
-            payload.eventType = this._calculateChangeType(oldValue, newValue, eventChain);
+
+        if (!payload.eventType) {
+            payload.eventType = this._calculateChangeType(
+                oldValue,
+                newValue,
+                eventChain
+            );
         }
         this._dispatchEvent(payload);
     }
@@ -99,17 +120,27 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
      * _calculateChangeType
      * ----------------------------------------------------------------------------
      * determine what type of change occurred in this event
-     * 
-     * this calculation is only used if there is not an originating event to draw 
-     * from (e.g. if a nested model raises an 'add' we will also use 'add' despite 
+     *
+     * this calculation is only used if there is not an originating event to draw
+     * from (e.g. if a nested model raises an 'add' we will also use 'add' despite
      * the change at this level being a 'modify')
      */
-    protected _calculateChangeType<X>(oldVal:X, newVal: X, eventChain?: ModelEventPayload<any, any>): ModelEventType {
-        if (eventChain) { return eventChain.eventType; }
+    protected _calculateChangeType<X>(
+        oldVal: X,
+        newVal: X,
+        eventChain?: ModelEventPayload<any, any>
+    ): ModelEventType {
+        if (eventChain) {
+            return eventChain.eventType;
+        }
 
-        if (newVal && !oldVal) { return 'add'; }
-        if (oldVal && !newVal) { return 'remove'; }
-        return 'modify'; 
+        if (newVal && !oldVal) {
+            return 'add';
+        }
+        if (oldVal && !newVal) {
+            return 'remove';
+        }
+        return 'modify';
     }
 
     //#endregion
@@ -117,11 +148,11 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
 
     //..........................................
     //#region TRANSFORM HANDLING
-    
+
     protected _transforms: IModelTransforms<T>;
 
     protected _getApplicableTransforms() {
-        return this._transforms["_"];
+        return this._transforms['_'];
     }
 
     //#endregion
@@ -129,7 +160,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
 
     //..........................................
     //#region HISTORY HANDLING
-    
+
     /** keep track of the changes that this model has gone through */
     private __history: HistoryChain<T>;
 
@@ -144,11 +175,12 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
      */
     public undo() {
         this.__history.navigateBack((lastState) => {
-            if (!lastState) { return; }
+            if (!lastState) {
+                return;
+            }
             this.import(lastState);
             return;
         });
-        
     }
 
     /**
@@ -158,11 +190,12 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
      */
     public redo() {
         this.__history.navigateForward((nextState) => {
-            if (!nextState) { return; }
+            if (!nextState) {
+                return;
+            }
             this.import(nextState);
             return;
         });
-        
     }
 
     //#endregion
@@ -170,7 +203,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
 
     //..........................................
     //#region GETTERS AND SETTERS
-    
+
     protected _innerModel: T;
 
     /**
@@ -178,12 +211,12 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
      * ----------------------------------------------------------------------------
      * retrieve data from within the model
      */
-    public getData(): T { 
-        return this._innerGetData()
+    public getData(): T {
+        return this._innerGetData();
     }
 
     protected _innerGetData(): T {
-        return this._cloneData(this._innerModel); 
+        return this._cloneData(this._innerModel);
     }
 
     /**
@@ -201,7 +234,7 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
         const { value: newData } = payload;
         const clonedData = this._cloneData(newData as T);
         this._innerModel = clonedData;
-        
+
         this._sendUpdate({ ...payload, oldValue, value: this.getData() });
     }
 
@@ -215,11 +248,11 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
 
     //..........................................
     //#region IMPORT & EXPORT DATA
-    
+
     /**
      * _import
      * ----------------------------------------------------------------------------
-     * loads in data from the specified type into this particular model. Also 
+     * loads in data from the specified type into this particular model. Also
      * handles transforming any data that needs transforming
      */
     public import(data: T) {
@@ -233,12 +266,12 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
         }
 
         this.setData(importedData);
-    };
+    }
 
     protected _innerImport(data: T): T {
         return data;
     }
-    
+
     /**
      * _export
      * ----------------------------------------------------------------------------
@@ -257,24 +290,26 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
     protected _innerExport(): T {
         return this.getData();
     }
-    
+
     //#endregion
     //..........................................
 
     //..........................................
     //#region EQUATABLE
-    
+
     public equals(otherModel: IEquatable) {
-        if (!isModel(otherModel)) { return false; }
+        if (!isModel(otherModel)) {
+            return false;
+        }
         return equals(otherModel.getData(), this.getData());
     }
-    
+
     //#endregion
     //..........................................
 
     //..........................................
     //#region CLONEABLE
-    
+
     public clone(tx?: IModelTransforms<T>): _Model<T> {
         const transforms = tx || this._transforms;
         const Ctor = (this as any).constructor;
@@ -288,46 +323,56 @@ export abstract class _Model<T> implements IEquatable, ICloneable<_Model<T>>, IB
     protected _cloneData<X>(data: X): X {
         return clone(data);
     }
-    
+
     //#endregion
     //..........................................
 
     //..........................................
     //#region MODEL WRAPPING
-    
-    protected _wrapInModel<K, X>(dataToWrap: X | IModel<X>, key?: K): IModel<X> {
+
+    protected _wrapInModel<K, X>(
+        dataToWrap: X | IModel<X>,
+        key?: K
+    ): IModel<X> {
         const newModel = _Model.createModel<X>(dataToWrap);
 
-        // TODO: there is an edge case where a model is passed in without
-        // a listener; we should handle that as well
+        // If a user passes a model here, they will be 
+        // responsible for calling `addModelListener`
         if (!isModel(dataToWrap)) {
-            let oldValue = newModel.getData();
-
-            newModel.addEventListener((payload) => {
-                if (isNullOrUndefined(key)) { return }
-
-                // this allows us to update from formerly cloned models instead of 
-                // always using the new one we've cloned in
-                const { target, eventType } = payload;
-                const value = isModel(target) ? target.getData() : target
-
-                this._sendUpdate({
-                    eventType,
-                    key,
-                    oldValue,
-                    value,
-                    eventChain: payload
-                })
-
-                // update what we treat as the most recent data
-                oldValue = value;
-            })
+            this.addModelListener(newModel, key)
         }
 
         return newModel;
     }
-    
+
+    /**
+     * addModelListener
+     * ----------------------------------------------------------------------------
+     * associate a change from another model to the change events on this model
+     */
+    public addModelListener<K, X>(modelToListenTo: IModel<X>, key: K): void {
+        let oldValue = modelToListenTo.getData();
+
+        modelToListenTo.addEventListener((payload) => {
+            if (isNullOrUndefined(key)) { return; }
+
+            // this allows us to update from formerly cloned models instead of
+            // always using the new one we've cloned in
+            const { target, eventType } = payload;
+            const value = isModel(target) ? target.getData() : target;
+
+            this._sendUpdate({
+                eventType,
+                key,
+                oldValue,
+                value,
+                eventChain: payload,
+            });
+
+            // update what we treat as the most recent data
+            oldValue = value;
+        });
+    }
     //#endregion
     //..........................................
-
 }

@@ -200,7 +200,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
             let updatedValue: X = val;
             const transform = this._getApplicableTransforms(key)?.incoming;
             if (transform) {
-                updatedValue = transform(val);
+                updatedValue = transform(val, key, this);
             }
             this._setValue(out, key, this._wrapInModel<K, X>(updatedValue, key))
         })
@@ -218,9 +218,9 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         // is getting applied appropriately
         this._map(this._innerModel, (val: X, key: K) => {
             let outValue = isModel(val) ? val.export() : val;
-            const transform = this._getApplicableTransforms(key);
-            if (transform?.outgoing) {
-                outValue = transform.outgoing(outValue);
+            const transform = this._getApplicableTransforms(key)?.outgoing;
+            if (transform) {
+                outValue = transform(outValue, key, this);
             }
             this._setValue(out, key, outValue);
         });
