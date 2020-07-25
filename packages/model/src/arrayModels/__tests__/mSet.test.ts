@@ -24,6 +24,7 @@ describe('MSet', () => {
         }, {
             set: createModelTransform(MSet)
         });
+        
         const fn = jest.fn();
         model.addEventListener(fn);
         model.set('set', ['a']);

@@ -13,6 +13,7 @@
         "typings"
     ],
     "dependencies": {
+        "@toolkip/async": "^2.0.0",
         "@toolkip/code-event": "^2.0.0",
         "@toolkip/comparable": "^2.2.3",
         "@toolkip/history": "^2.3.0",

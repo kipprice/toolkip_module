@@ -293,6 +293,25 @@ describe('Selectors', () => {
         expect(nestedSelects.getData()).toEqual('Oscar is 42 years old');
 
     })
+
+    it('can run a filter select', () => {
+        expect.assertions(3);
+
+        const model = new MArray<ISimpleModel>([ { name: 'Big Bird', age: 10 }, { name: 'Oscar', age: 42 } ]);
+        const selector = select(model, (m) => m)
+                .filterSelect((model) => model.age < 15 ? true : false)
+                .mapSelect((m) => m.name);
+
+        let val = null;
+        const cb = jest.fn((payload) => {
+            val = payload.value;
+        })
+        selector.apply(cb);
+        expect(val).toMatchObject(['Big Bird']);
+        model.add({ name: 'Elmo', age: 8 })
+        expect(val).toMatchObject(['Big Bird', 'Elmo']);
+        expect(cb).toHaveBeenCalledTimes(2);
+    })
 })
 
 describe('Raw Selectors', () => {

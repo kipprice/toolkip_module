@@ -1,7 +1,7 @@
 import { _Model, _KeyedModels } from '../abstractClasses';
 import { map } from '@toolkip/object-helpers';
 import { IArrayModel } from '../_shared/_interfaces';
-import { isUndefined } from '@toolkip/shared-types';
+import { isUndefined, isNullOrUndefined } from '@toolkip/shared-types';
 
 export class MArray<T> extends _KeyedModels<T[], number, T> implements IArrayModel<T, number, T[]> {
     
@@ -20,7 +20,7 @@ export class MArray<T> extends _KeyedModels<T[], number, T> implements IArrayMod
     protected _setValue(output: T[], key: number, value: _Model<T>) {
         if (this._shouldSplice(output, key, value)) {
             output.splice(key, 1);
-        } else {
+        } else if (!isNullOrUndefined(value)) {
             output[key] = value as any as T;
         }
     }

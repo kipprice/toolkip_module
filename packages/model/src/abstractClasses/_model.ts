@@ -13,7 +13,7 @@ import {
     ModelType,
 } from '../_shared';
 import { isModel } from '../_typeguards/core';
-import { isNullOrUndefined } from '@toolkip/shared-types';
+import { isNullOrUndefined, isFalsy } from '@toolkip/shared-types';
 
 /**----------------------------------------------------------------------------
  * @class	_Model
@@ -25,6 +25,7 @@ import { isNullOrUndefined } from '@toolkip/shared-types';
  */
 export abstract class _Model<T>
     implements IEquatable, ICloneable<_Model<T>>, IBasicModel<T> {
+
     //..........................................
     //#region CONSTRUCTOR
 
@@ -204,19 +205,33 @@ export abstract class _Model<T>
     //..........................................
     //#region GETTERS AND SETTERS
 
-    protected _innerModel: T;
+    protected _lastClone: T = null;
+
+    protected __innerModel: T;
+    protected get _innerModel() { return this.__innerModel; }
+    protected set _innerModel(val: T) { 
+        this.__innerModel = val; 
+        this._lastClone = null; 
+    }
 
     /**
      * get
      * ----------------------------------------------------------------------------
      * retrieve data from within the model
      */
-    public getData(): T {
-        return this._innerGetData();
+    public getData(noCache?: boolean): T {
+        return this._innerGetData(noCache);
     }
 
-    protected _innerGetData(): T {
-        return this._cloneData(this._innerModel);
+    protected _clearCache() {
+        this._lastClone = null;
+    }
+
+    protected _innerGetData(noCache?: boolean): T {
+        if (noCache || isNullOrUndefined(this._lastClone)) { 
+            this._lastClone = this._cloneData(this._innerModel); 
+        }
+        return this._lastClone;
     }
 
     /**
@@ -235,7 +250,11 @@ export abstract class _Model<T>
         const clonedData = this._cloneData(newData as T);
         this._innerModel = clonedData;
 
-        this._sendUpdate({ ...payload, oldValue, value: this.getData() });
+        this._sendUpdate({ 
+            ...payload, 
+            oldValue, 
+            value: this.getData(true) 
+        });
     }
 
     protected _sendUpdate<K, X>(payload: ModelEventPayload<K, X>): void {
@@ -355,7 +374,8 @@ export abstract class _Model<T>
 
         modelToListenTo.addEventListener((payload) => {
             if (isNullOrUndefined(key)) { return; }
-
+            this._clearCache();
+            
             // this allows us to update from formerly cloned models instead of
             // always using the new one we've cloned in
             const { target, eventType } = payload;

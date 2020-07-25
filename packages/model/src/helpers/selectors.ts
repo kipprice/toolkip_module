@@ -1,4 +1,4 @@
-import { arrayToMap, map, isMappable } from '@toolkip/object-helpers';
+import { arrayToMap, map, isMappable, filter } from '@toolkip/object-helpers';
 import { equals } from '@toolkip/comparable';
 import {
     ISelector, 
@@ -10,7 +10,8 @@ import {
     SelectorFilterFunc, 
     Selectable,
     ModelEventFullPayload,
-    SelectorMapSelectFunc
+    SelectorMapSelectFunc,
+    SelectorFilterSelectFunc
 } from '../_shared';
 import { Model } from '../primitiveModels';
 import { isSelector } from '../_typeguards';
@@ -51,7 +52,7 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
         this._model = model;
         this._processor = processor || ((data: I) => { return data as any as O; });
         this._setupFilters(filters || {});
-        this._lastModel = this._process(model, {} as any, true);
+        this._lastModel = this._process(model, { target: model } as any, true);
         this._addEventListener(model);
     }
 
@@ -219,6 +220,19 @@ export class Selector<I, O = I, X = any, K = any> implements ISelector<I, O, X, 
                 }
                 return out;
 
+            },
+            filters
+        )
+    }
+
+    public filterSelect<OO>(cb: SelectorFilterSelectFunc<X, K>, filters?: SelectorFilters<O>): Selector<O, OO[], any, any> {
+        return new Selector<O, OO[], any, any>(
+            this,
+            (data, payload) => {
+                if (!isMappable(data)) { return data as any; }
+                return filter(data as any, (e: X, k: any) => {
+                    return cb(e, k, payload)
+                })
             },
             filters
         )

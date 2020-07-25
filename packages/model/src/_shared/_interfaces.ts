@@ -10,7 +10,7 @@ export type ModelType = 'primitive' | 'keyed' | 'array';
 
 export interface IBasicModel<T> extends ICloneable<IModel<T>>, IEquatable {
     setData(data: T): void;
-    getData(): T;
+    getData(noCache?: boolean): T;
     addEventListener(cb: ModelEventCallback<"_" | any, T | any>): void;
     import(data: T): void;
     export(): T;
@@ -135,6 +135,7 @@ export type SelectorFunc<I, O, OO = O> = (model: I, payload?: ModelEventFullPayl
 export type SelectorApplyFunc<O> = (payload: ModelEventFullPayload<any, O>) => void;
 export type SelectorMapFunc<X, K> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => void;
 export type SelectorMapSelectFunc<X, K, O = any> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => O;
+export type SelectorFilterSelectFunc<X, K> = (elem: X, key?: K, payload?: ModelEventFullPayload<any, any>) => boolean;
 export type SelectorFilterFunc<X> = (payload: ModelEventFullPayload<any, X>) => boolean;
 
 export type Selectable<I> = IModel<I> | ISelector<any, I>;

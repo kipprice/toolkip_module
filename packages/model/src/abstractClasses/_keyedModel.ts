@@ -96,11 +96,15 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     protected _innerGetData(): T {
         if (isNullOrUndefined(this._innerModel)) { return this._innerModel; }
 
+        if (!isNullOrUndefined(this._lastClone)) { return this._lastClone; }
+
         const out = this._getDefaultValues();
         this._map(this._innerModel, (val: X, key: K) => {
             if (!isModel(val)) { return }
             this._setValue(out, key as K, val.getData());
         })
+
+        this._lastClone = out;
         return out;
     }
 
@@ -143,6 +147,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
         const oldModel = this.getModel(key);
 
         // if we already have a model, just update it
+        // this will additionally send the update 
         if (isModel(oldModel)) {
             oldModel.setData(value);
             this._setValue(this._innerModel, key, oldModel);
@@ -155,10 +160,11 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
 
             this._setValue(this._innerModel, key, newModel);
 
+            this._clearCache();
             this._sendUpdate<K, X>({ 
                 ...payload,
                 oldValue, 
-                value: newModel.getData()
+                value: newModel.getData(true)
             });
         }
 
@@ -166,16 +172,23 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
     }
     
     protected _innerSetData(payload): void {
-        const { value } = payload;
+        const { value: newValue } = payload;
 
-        if (isModel(value)) {
-            super._innerSetData({ ...payload, value: this._wrapInModel<K, X>(value) });
-        } else if (isNullOrUndefined(value)) { 
+        // if the value passed in is already a model, 
+        // wrap its contents
+        if (isModel(newValue)) {
+            super._innerSetData({ ...payload, value: this._wrapInModel<K, X>(newValue) });
+        
+        // if it's a null value, take it as is
+        } else if (isNullOrUndefined(newValue)) { 
             super._innerSetData(payload);
+
+        // otherwise, loop through the model to make sure that
+        // it's all models within
         } else {
             const modelValue = this._getDefaultValues();
 
-            this._map(value, (val: X, key: K) => {
+            this._map(newValue, (val: X, key: K) => {
                 let updatedVal = this._wrapInModel<K, X>(val, key);
                 this._setValue(modelValue, key, updatedVal);
             })
@@ -202,7 +215,7 @@ export abstract class _KeyedModel<T, K, X> extends _Model<T> {
             if (transform) {
                 updatedValue = transform(val, key, this);
             }
-            this._setValue(out, key, this._wrapInModel<K, X>(updatedValue, key))
+            this._setValue(out, key, updatedValue)
         })
 
         return out;

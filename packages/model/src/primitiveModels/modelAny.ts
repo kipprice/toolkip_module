@@ -2,6 +2,7 @@
 import { _Model } from '../abstractClasses/_model';
 import { isModel } from '../_typeguards/core';
 import { IArrayModel, IKeyedModel, IBasicModel } from '../_shared';
+import { MManager } from '../arrayModels';
 
 export class Model<T = any> extends _Model<T> {
 
@@ -20,7 +21,8 @@ export class Model<T = any> extends _Model<T> {
     public getModel(asType?: 'o'): IKeyedModel<T, any, any>;
     public getModel(asType: 'b'): IBasicModel<T>;
     public getModel(asType: 'a'): IArrayModel<any, any, T>;
-    public getModel(asType: 'a' | 'o' | 'b' = 'o') {
+    public getModel(asType: 'm'): MManager<any>;
+    public getModel(asType: 'a' | 'o' | 'b' | 'm' = 'o') {
         if (!isModel(this._innerModel)) { return undefined; }
         return this._innerModel as any;
     }
