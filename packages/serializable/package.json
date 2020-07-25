@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/serializable",
-    "version": "2.3.6",
+    "version": "2.4.0",
     "description": "serializing utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,7 +13,7 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/model": "^2.3.6"
+        "@toolkip/model": "^2.4.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
