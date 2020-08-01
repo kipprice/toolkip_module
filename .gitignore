@@ -9,3 +9,4 @@ typings
 coverage
 compiled_js
 dist
+yarn-error.log

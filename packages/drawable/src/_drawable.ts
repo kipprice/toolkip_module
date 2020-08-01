@@ -82,9 +82,25 @@ export abstract class _Drawable<
 	 */
 	protected abstract _createElements(opts?: Options, ...args: any[]): void;
 
+	/**
+	 * _createBase
+	 * ----------------------------------------------------------------------------
+	 * wrapper around this._createElement; sets the root level key to "base" if not
+	 * provided.
+	 */
 	protected _createBase(elemDefinition: IElemDefinition<Elems>): StandardElement {
 		// ensure that we always have our base element
 		if (!elemDefinition.key) { elemDefinition.key = "base" };
+		return this._createElement(elemDefinition);
+	}
+
+	/**
+	 * _createElement
+	 * ----------------------------------------------------------------------------
+	 * wrapper around createElement; automatically includes the elements linked
+	 * to this Drawable
+	 */
+	protected _createElement(elemDefinition: IElemDefinition<Elems>): StandardElement {
 		return createElement<Elems>(elemDefinition, this._elems);
 	}
 
