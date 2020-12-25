@@ -1,5 +1,4 @@
 export * from './_constants';
 export * from './_interfaces';
-export * from './color';
-export * from './global';
+export * from './colors';
 export * from './helpers';

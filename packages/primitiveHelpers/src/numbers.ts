@@ -37,7 +37,7 @@ export function fullHexString(val: number, length: number): string {
 
     length = length || 0;
 
-    outHexString = val.toString(16);
+    outHexString = val.toString(16).toUpperCase();
 
     if (outHexString.length < length) {
         for (i = 0; i < (length - outHexString.length); i += 1) {

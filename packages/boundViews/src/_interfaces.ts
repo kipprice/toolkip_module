@@ -19,6 +19,7 @@ export type BoundChild<
 > = 
     StandardElement | 
     IBoundElemDefinition<VM, E> | 
+    IBoundBridgeElemDefinition |
     _Drawable;
 
 export interface BoundPair<VM = any> {
@@ -33,6 +34,15 @@ export interface IBoundElemDefinition<
 > extends IElemDefinition<E> {
     bindTo?: BoundProperty<VM> | IViewBindingDetails<VM>;
     children?: BoundChild<VM, E>[];
+}
+
+export interface IBoundBridgeElemDefinition<
+    VM = any, 
+    E extends IDrawableElements = IDrawableElements
+> extends IBoundElemDefinition<VM, E> {
+
+    /** deprecated: use 'bindTo' instead */
+    boundTo?: BoundProperty<VM> | IViewBindingDetails<VM>;
 }
 
 /** allow for overriding the default binding behavior */

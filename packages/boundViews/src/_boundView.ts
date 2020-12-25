@@ -80,7 +80,7 @@ export abstract class _BoundView<
      */
     protected _createBase(obj: IBoundElemDefinition<VM, E>): StandardElement {
         if (!obj.key) { obj.key = "base"; }
-        return this._createElem(obj);
+        return this._createElement(obj);
     }
 
     /**
@@ -88,11 +88,11 @@ export abstract class _BoundView<
      * ----------------------------------------------------------------------------
      * handle creating any individual element that's a part of this view
      */
-    protected _createElem(obj: IBoundElemDefinition<VM, E>): StandardElement {
+    protected _createElement(obj: IBoundElemDefinition<VM, E>): StandardElement {
         
         // use the standard function, but recurse with this one
         let recurseFunc: ICreateElementFunc<E> = (obj: IBoundElemDefinition<VM, E>) => { 
-            return this._createElem(obj); 
+            return this._createElement(obj); 
         }
         
         let elem = createCustomElement<E, IBoundElemDefinition<VM, E>>(obj, this._elems, recurseFunc);

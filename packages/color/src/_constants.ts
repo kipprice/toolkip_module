@@ -18,3 +18,16 @@ export const LIGHTNESS_LIMITS = {
     max: 80,
     min: 35
 }
+
+// https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-procedure
+export const LIGHT_THRESHOLD = 0.03928
+export const LIGHT_DIVISOR = 12.92;
+export const DARK_DIVISOR = 1.055;
+export const DARK_POW = 2.4;
+export const DARK_ADDEND = 0.055;
+
+export const LUM_ADDEND = 0.05;
+
+export const RED_MULT = 0.2126;
+export const GREEN_MULT = 0.7152;
+export const BLUE_MULT = 0.0722;
