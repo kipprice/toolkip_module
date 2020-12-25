@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/diffing",
-    "version": "2.3.0",
+    "version": "2.5.0",
     "description": "diffing utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -8,18 +8,14 @@
     "main": "dist/index.js",
     "module": "dist/index.js",
     "types": "typings/index",
-    
     "repository": {
         "type": "git",
         "url": "https://github/kipprice/toolkip_module/packages/diffing"
     },
-
     "files": [
         "dist",
         "typings"
     ],
-    "dependencies": {
-    },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
         "test": "echo 'test at the root level'"

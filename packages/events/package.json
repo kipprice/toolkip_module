@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/events",
-    "version": "2.3.5",
+    "version": "2.5.0",
     "description": "event utility functions",
     "license": "MIT",
     "author": "Kip Price",
@@ -14,7 +14,7 @@
     ],
     "dependencies": {
         "@toolkip/comparable": "^2.2.3",
-        "@toolkip/data-structures": "^2.3.5"
+        "@toolkip/data-structures": "^2.5.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",

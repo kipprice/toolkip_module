@@ -1,6 +1,6 @@
 {
     "name": "@toolkip/external",
-    "version": "2.4.1",
+    "version": "2.5.0",
     "description": "external helpers",
     "license": "MIT",
     "author": "Kip Price",
@@ -13,9 +13,9 @@
         "typings"
     ],
     "dependencies": {
-        "@toolkip/create-elements": "^2.4.0",
-        "@toolkip/drawable": "^2.4.1",
-        "@toolkip/popups": "^2.4.1"
+        "@toolkip/create-elements": "^2.5.0",
+        "@toolkip/drawable": "^2.5.0",
+        "@toolkip/popups": "^2.5.0"
     },
     "scripts": {
         "compile": "tsc -p tsconfig.json",
